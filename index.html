@@ -23,7 +23,11 @@
 <script>
   var socket = io();
   $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
+    var blah = prompt("what room sir?");
+
+      socket.emit('create room', {room: blah});
+
+    socket.emit('chat message', {message: $('#m').val(), room: blah});
     $('#m').val('');
     return false;
   });
