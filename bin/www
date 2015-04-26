@@ -98,7 +98,16 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('rooms', function() {
-    socket.emit('rooms', socket.rooms);
+
+    var allRooms = []
+    for(var room in io.sockets.adapter.rooms){
+        if(room !== socket.id) {
+          allRooms.push(room);
+        }
+    }
+
+    console.log(io.sockets.adapter.rooms);
+    socket.emit('all rooms', allRooms);
   });
 });
 
