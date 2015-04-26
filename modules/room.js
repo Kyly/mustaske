@@ -17,4 +17,5 @@ Room = {
     socket.join(data.room);
   }
 };
+
 exports.Room = Room;
