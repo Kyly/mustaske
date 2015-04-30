@@ -1,7 +1,7 @@
 var logMax = 5; // Small for testing
 
 function ChatRepo(){
-  this.chatLog = {};
+  this.questionLog = {};
 }
 
 /**
@@ -13,7 +13,7 @@ ChatRepo.prototype.addRoom = function(room_id) {
   if (this.hasRoom(room_id))
     return false;
   else {
-    this.chatLog[room_id] = ['Welcome! New room created with room id: ' + room_id];
+    this.questionLog[room_id] = ['Welcome! New room created with room id: ' + room_id];
     return true;
   }
 }
@@ -22,7 +22,7 @@ ChatRepo.prototype.addRoom = function(room_id) {
  * Deletes a chat log
  */
 ChatRepo.prototype.purgeRoom = function(room_id) {
-    delete chatLog[room_id];
+    delete this.questionLog[room_id];
 }
 
 /**
@@ -31,9 +31,9 @@ ChatRepo.prototype.purgeRoom = function(room_id) {
  *
  * If room does not exist then exception is thrown.
  */
-ChatRepo.prototype.logChat = function(room_id, data) {
+ChatRepo.prototype.logQuestion = function(room_id, data) {
     if (this.hasRoom(room_id)) {
-      var roomlog = this.chatLog[room_id];
+      var roomlog = this.questionLog[room_id];
 
       // Remove least voted msg
       if (roomlog.length > logMax)
@@ -49,11 +49,15 @@ ChatRepo.prototype.upvoteMessage = function(data) {
 
 }
 
+ChatRepo.prototype.downvoteMessage = function(data) {
+
+}
+
 /**
  * Simple boolean returns true if room is in chat
  */
 ChatRepo.prototype.hasRoom = function (room_id) {
-  return (room_id in chatLog);
+  return (room_id in this.questionLog);
 }
 
 /**

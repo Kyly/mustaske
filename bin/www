@@ -92,6 +92,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('message', function (message) {
+    console.log(io);
     socket.broadcast.to(message.room).emit('message', {
       text: nickNames[socket.id] + ': ' + message.text
     });
@@ -106,7 +107,7 @@ io.sockets.on('connection', function (socket) {
         }
     }
 
-    console.log(io.sockets.adapter.rooms);
+    // console.log(io.sockets.adapter.rooms);
     socket.emit('all rooms', allRooms);
   });
 
