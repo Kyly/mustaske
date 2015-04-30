@@ -109,6 +109,11 @@ io.sockets.on('connection', function (socket) {
     console.log(io.sockets.adapter.rooms);
     socket.emit('all rooms', allRooms);
   });
+
+  socket.on('askQuestion', function (question) {
+    console.log(question.text);
+  });
+
 });
 
 /**
