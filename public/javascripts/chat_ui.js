@@ -63,7 +63,6 @@ $(document).ready(function() {
     }
 
     $('#room-list div').click(function() {
-      console.log(socket);  
       chatApp.processCommand(
         $('#room').text(),
         '/join ' + $(this).text()
