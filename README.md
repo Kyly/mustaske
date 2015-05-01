@@ -20,7 +20,7 @@ Then to run the test simply enter the following from the projects root directory
   npm test
 ```
 
-You see something like the:
+You see something like:
 ```
 > supapp@0.0.0 test /home/kyly/GDrive/sp15/cse110/supapp
 > mocha ./test/*.js
