@@ -1,13 +1,21 @@
 // Room model
 // TODO Needs tests
-
+var QuestionRepo = require('./')
 
 function Rooms() {
   this.chatrepos = {}  // Hash containing chat repositories
 }
 
 
-Rooms.prototype.
+Rooms.prototype.addRoom(socket, data) {
+
+  // Create new chatrepo for room if does not exist
+  if (data.room in this.chatrepos)
+    return false;
+
+  this.chatrepos[data.room] = new Chat
+
+}
 Room = {
   createRoom: function(socket, data){
 
