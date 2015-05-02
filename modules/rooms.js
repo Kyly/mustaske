@@ -7,7 +7,7 @@ function Rooms() {
 }
 
 
-Rooms.prototype.addRoom = function(data) {
+Rooms.prototype.addRoom = function(room_id, data) {
 
   // Create new chatrepo for room if does not exist
   if (this.hasRoom(data.room))
@@ -36,7 +36,7 @@ Rooms.prototype.purgeRoom = function(room_id) {
  * Call upvoteQuestion on room
  */
 Rooms.prototype.upvoteQuestion = function(room_id, data) {
-  // Check if room exist
+  // TODO Sanity check: Check if room exist
   if (!this.hasRoom(room_id))
     throw "Room does not exist!";
 
@@ -44,7 +44,7 @@ Rooms.prototype.upvoteQuestion = function(room_id, data) {
 }
 
 Rooms.prototype.downvoteQuestion = function(room_id, data) {
-  // Check if room exist
+  // TODO Sanity Check: Check if room exist
   if (!this.hasRoom(room_id))
     throw "Room does not exist!";
 
