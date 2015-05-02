@@ -1,16 +1,12 @@
-var logMax = 5; // Small for testing
 var Heap = require('heap');
 
 function QuestionRepo(){
-  this.questionLog = {};
+  this.questionRepo = {};
+  this.orderedQuestions = [];
 
-  // this.minHeap = new Heap(function(a, b) {
+  // this.maxHeap = new Heap(function(a, b) {
   //   return b.score - a.score;
   // });
-
-  this.maxHeap = new Heap(function(a, b) {
-    return b.score - a.score;
-  });
 }
 
 /**
@@ -18,70 +14,63 @@ function QuestionRepo(){
  * voted list is removed.
  *
  * If room does not exist then exception is thrown.
+ *
+ * data = {quesiton: Question}
  */
-QuestionRepo.prototype.logQuestion = function(room_id, data) {
-    if (this.hasRoom(room_id)) {
-      var roomlog = this.questionLog[room_id];
-
-      // Remove least voted msg
-      if (roomlog.length > logMax)
-        roomlog.shift();
-
-      roomlog.unshift(data);
-    }
-    else
-      throw "Room does not exists!";
+QuestionRepo.prototype.logQuestion = function(data) {
+  this.orderedQuestions.unshift(data.question);
+  this.questionRepo[data.question.id] = data.question;
 }
 
 /**
  * Upvotes a question in the repository
+ *
+ * data = {question: Question, voter: id}
  */
 QuestionRepo.prototype.upvoteQuestion = function(data) {
 
-  // Find index of question to be upvoted
-  var questionIndex = maxHeap.nodes.indexOf(data.id);
-
   // If question does not exist in max heap add it
-  if (questionIndex === -1) {
-    var question = questionLog[data.id];
+  if (!this.hasQuestion(data.quesiton)) {
+    var question = questionRepo[data.question.id];
     question.upvote(data.voter);
-    maxHeap.push(question);
   }
 
   else {
-      // Upvote question in place
-      var result = maxHeap.nodes[questionIndex].upvote(data.voter);
-      // If question was upvoted then reorder heap
-      if (result)
-        maxHeap.heapify();
+      var question = questionRepo[data.question.id];
+      var upvoted = question.upvote(data.voter);
   }
 }
 
+/**
+ * data = {question: Question, voter: id}
+ */
 QuestionRepo.prototype.downvoteQuestion = function(data) {
+  // If question does not nothing is done
+  if (this.hasQuestion(data.quesiton)) {
+    var question = questionRepo[data.question.id];
+    var upvoted = question.upvote(data.voter);
 
+    // If question was upvoted then reorder heap
+    if (upvoted)
+      maxHeap.heapify();
+  }
 }
 
-
-
-/**
- * This alows us to move a chat up or down in a list
- * Example code: [1, 2, 3].move(0, 1) gives [2, 1, 3].
+/*
+ *
  */
-Array.prototype.move = function (old_index, new_index) {
-    while (old_index < 0) {
-        old_index += this.length;
-    }
-    while (new_index < 0) {
-        new_index += this.length;
-    }
-    if (new_index >= this.length) {
-        var k = new_index - this.length;
-        while ((k--) + 1) {
-            this.push(undefined);
-        }
-    }
-    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
-    return this; // for testing purposes
+QuestionRepo.prototype.hasQuestion = function(question) {
+  return question.id in this.questionRepo;
+}
+
+QuestionRepo.prototype.getTopVoted = function(n) {
+  return Heap.nlargest(this.orderedQuestions, n, function(a, b) {
+    return b.score - a.score;
+  });
+}
+
+QuestionRepo.prototype.getQuestions = function(n) {
+  return this.orderedQuestions.slice(0,n+1);
 }
 
 module.exports = QuestionRepo;

@@ -7,14 +7,14 @@ function Rooms() {
 }
 
 
-Rooms.prototype.addRoom = function(room_id, data) {
+Rooms.prototype.addRoom = function(data) {
 
   // Create new chatrepo for room if does not exist
-  if (this.hasRoom(data.room))
+  if (this.hasRoom(data.room_id))
     return false;
 
   // Create new room with question repository
-  this.questionrepos[data.room] = {owner: data.owner, questions: new QuestionRepo()};
+  this.questionrepos[data.room_id] = {owner: data.owner, questions: new QuestionRepo()};
   return true;
 }
 
@@ -35,20 +35,27 @@ Rooms.prototype.purgeRoom = function(room_id) {
 /**
  * Call upvoteQuestion on room
  */
-Rooms.prototype.upvoteQuestion = function(room_id, data) {
+Rooms.prototype.upvoteQuestion = function(data) {
   // TODO Sanity check: Check if room exist
-  if (!this.hasRoom(room_id))
+  if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.questionrepos[room_id].upvoteQuestion(data);
+  this.questionrepos[data.room_id].upvoteQuestion(data);
 }
 
-Rooms.prototype.downvoteQuestion = function(room_id, data) {
+Rooms.prototype.downvoteQuestion = function(data) {
   // TODO Sanity Check: Check if room exist
-  if (!this.hasRoom(room_id))
+  if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.questionrepos[room_id].downvoteQuestion(data);
+  this.questionrepos[data.room_id].downvoteQuestion(data);
+}
+
+/**
+ * Expects data = {room: id, question: Question}
+ */
+Rooms.prototype.logQuestion = function (data) {
+  this.questionrepos[data.room_id].logQuestion(data);
 }
 
 module.exports = Rooms;
