@@ -1,7 +1,7 @@
 var Heap = require('heap');
 
 function Questions(){
-  this.questions = {};
+  this.questionHash = {};
   this.orderedQuestions = [];
 
 }
@@ -14,9 +14,9 @@ function Questions(){
  *
  * data = {quesiton: Question}
  */
-QuestionRepo.prototype.logQuestion = function(question) {
+Questions.prototype.logQuestion = function(question) {
   this.orderedQuestions.unshift(question);
-  this.questionRepo[data.question.id] = question;
+  this.questionHash[data.question.id] = question;
 }
 
 /**
@@ -24,16 +24,16 @@ QuestionRepo.prototype.logQuestion = function(question) {
  *
  * data = {question: Question, voter: id}
  */
-QuestionRepo.prototype.upvoteQuestion = function(data) {
+Questions.prototype.upvoteQuestion = function(data) {
 
   // If question does not exist in max heap add it
   if (!this.hasQuestion(data.quesiton)) {
-    var question = questionRepo[data.question.id];
+    var question = questionHash[data.question.id];
     question.upvote(data.voter);
   }
 
   else {
-      var question = questionRepo[data.question.id];
+      var question = questionHash[data.question.id];
       var upvoted = question.upvote(data.voter);
   }
 }
@@ -41,10 +41,10 @@ QuestionRepo.prototype.upvoteQuestion = function(data) {
 /**
  * data = {question: Question, voter: id}
  */
-QuestionRepo.prototype.downvoteQuestion = function(data) {
+Questions.prototype.downvoteQuestion = function(data) {
   // If question does not nothing is done
   if (this.hasQuestion(data.quesiton)) {
-    var question = questionRepo[data.question.id];
+    var question = questionHash[data.question.id];
     var upvoted = question.upvote(data.voter);
   }
 }
@@ -52,18 +52,18 @@ QuestionRepo.prototype.downvoteQuestion = function(data) {
 /*
  *
  */
-QuestionRepo.prototype.hasQuestion = function(question) {
-  return question.id in this.questionRepo;
+Questions.prototype.hasQuestion = function(question) {
+  return question.id in this.Questions;
 }
 
-QuestionRepo.prototype.getTopVoted = function(n) {
+Questions.prototype.getTopVoted = function(n) {
   return Heap.nlargest(this.orderedQuestions, n, function(a, b) {
     return b.score - a.score;
   });
 }
 
-QuestionRepo.prototype.getQuestions = function(n) {
+Questions.prototype.getQuestions = function(n) {
   return this.orderedQuestions.slice(0,n+1);
 }
 
-module.exports = QuestionRepo;
+module.exports = Questions;

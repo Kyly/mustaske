@@ -35,6 +35,12 @@ Chat.prototype.processCommand = function(currentRoom, command) {
       this.socket.emit('nameAttempt', name);
       break;
 
+    case 'q':
+      words.shift();
+      var question = words.join(' ');
+      this.socket.emit('question', question);
+      break;
+
     default:
       message = 'Unrecognized command.';
       break;
