@@ -1,22 +1,17 @@
 var logMax = 5; // Small for testing
+var Heap = require('heap');
 
 function QuestionRepo(){
   this.questionLog = {};
-}
 
-// /**
-//  * Add room to chat log if room is not already in chat.
-//  * If room already exits then returns false.
-//  */
-// QuestionRepo.prototype.addRoom = function(room_id) {
-//   // Check if room already exists
-//   if (this.hasRoom(room_id))
-//     return false;
-//   else {
-//     this.questionLog[room_id] = ['Welcome! New room created with room id: ' + room_id];
-//     return true;
-//   }
-// }
+  // this.minHeap = new Heap(function(a, b) {
+  //   return b.score - a.score;
+  // });
+
+  this.maxHeap = new Heap(function(a, b) {
+    return b.score - a.score;
+  });
+}
 
 /**
  * Adds message to end of list. If log if full then the least
@@ -38,11 +33,31 @@ QuestionRepo.prototype.logQuestion = function(room_id, data) {
       throw "Room does not exists!";
 }
 
-QuestionRepo.prototype.upvoteMessage = function(data) {
+/**
+ * Upvotes a question in the repository
+ */
+QuestionRepo.prototype.upvoteQuestion = function(data) {
 
+  // Find index of question to be upvoted
+  var questionIndex = maxHeap.nodes.indexOf(data.id);
+
+  // If question does not exist in max heap add it
+  if (questionIndex === -1) {
+    var question = questionLog[data.id];
+    question.upvote(data.voter);
+    maxHeap.push(question);
+  }
+
+  else {
+      // Upvote question in place
+      var result = maxHeap.nodes[questionIndex].upvote(data.voter);
+      // If question was upvoted then reorder heap
+      if (result)
+        maxHeap.heapify();
+  }
 }
 
-QuestionRepo.prototype.downvoteMessage = function(data) {
+QuestionRepo.prototype.downvoteQuestion = function(data) {
 
 }
 

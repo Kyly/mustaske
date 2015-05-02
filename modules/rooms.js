@@ -29,7 +29,26 @@ Rooms.prototype.hasRoom = function (room_id) {
  * Deletes a chat log
  */
 Rooms.prototype.purgeRoom = function(room_id) {
-    delete this.questionrepos[room_id];
+  delete this.questionrepos[room_id];
+}
+
+/**
+ * Call upvoteQuestion on room
+ */
+Rooms.prototype.upvoteQuestion = function(room_id, data) {
+  // Check if room exist
+  if (!this.hasRoom(room_id))
+    throw "Room does not exist!";
+
+  this.questionrepos[room_id].upvoteQuestion(data);
+}
+
+Rooms.prototype.downvoteQuestion = function(room_id, data) {
+  // Check if room exist
+  if (!this.hasRoom(room_id))
+    throw "Room does not exist!";
+
+  this.questionrepos[room_id].downvoteQuestion(data);
 }
 
 module.exports = Rooms;
