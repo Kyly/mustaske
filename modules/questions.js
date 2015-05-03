@@ -57,12 +57,12 @@ Questions.prototype.hasQuestion = function(question) {
 
 Questions.prototype.getTopVoted = function(n) {
   return Heap.nlargest(this.orderedQuestions, n, function(a, b) {
-    return b.score - a.score;
+    return a.score - b.score;
   });
 }
 
 Questions.prototype.getQuestions = function(n) {
-  return this.orderedQuestions.slice(0,n+1);
+  return this.orderedQuestions.slice(0,n);
 }
 
 module.exports = Questions;

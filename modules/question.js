@@ -5,7 +5,7 @@ function Question (data) {
   this.question       = data.question;
   this.comments       = [];
   this.voters         = [this.asker];
-  this.score          = 0;
+  this.score          = data.score;
   this.time           = new Date().getTime();
 };
 
