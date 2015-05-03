@@ -20,7 +20,24 @@ function Rooms() {
  *         or {}
  */
 Rooms.prototype.createRoom = function(data) {
+  var uniqueID = uuid.v1();
+  var roomData = {room_id: uniqueID, room_name: data.room_name,
+    owner: data.owner_id};
+  //var newRoom = new Room(roomData);
+  this.rooms[uniqueID] = new Room(roomData);
+  return roomData;
+}
 
+/**
+ * @param roomId = String
+ * @return data = {name : string,room_id : string, questions : array,
+ *    top_questions : array}
+ */
+Rooms.prototype.joinRoom = function(roomId) {
+  var room = this.rooms[roomId];
+  var roomData = {room_name: room.name, room_id: room.id,
+    questions: room.getQuestions(), top_questions: room.getTopVoted(5)};
+  return roomData;
 }
 
 /**
@@ -41,7 +58,7 @@ Rooms.prototype.addRoom = function(data) {
 /**
  * Simple boolean returns true if room is in chat
  *
- * @param room_id
+ * @param room_id = String
  * @return True if room exists
  */
 Rooms.prototype.hasRoom = function (room_id) {

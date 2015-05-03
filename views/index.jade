@@ -11,10 +11,13 @@ block content
 
   #help Chat commands:
     ul
-      li Change nickname: 
+      li Change nickname:
         code /nick [username]
-      li Join/create room: 
-        code /join [room name]
+      li Join room:
+        code /join [room_id]
+      li Create room:
+        code /create [room_name]
+      
 
   script(src='/socket.io/socket.io.js')
   script(src='/javascripts/jquery-1.7.2.min.js')

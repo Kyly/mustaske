@@ -5,10 +5,10 @@
 var Questions = require('./questions');
 
 function Room (data) {
-  this.id             = data.id;
-  this.name           = data.name;
+  this.id             = data.room_id;
+  this.name           = data.room_name;
   this.questions      = new Questions();
-  this.owner          = data.owner;
+  this.owner          = data.owner_id;
 };
 
 /** Checks to see if the question already exists. Adds the question to the
@@ -44,5 +44,12 @@ Room.prototype.downvoteQuestion = function(data) {
 Room.prototype.getTopVoted = function(n) {
   return this.questions.getTopVoted(n);
 }
+
+/**TODO
+ * returns all questions
+ */
+ Room.prototype.getQuestions = function() {
+   return this.questions.getQuestions();
+ }
 
 module.exports = Room;

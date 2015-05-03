@@ -19,15 +19,16 @@ function Controller () {
   this.nickNames    = {};
   this.namesUsed    = [];
   this.nameIndex;
-  this.roomsObj     = new Rooms();  // TODO change to room once we are done with demo
+  this.roomsObj     = new Rooms();  // TODO change to rooms once we are done with demo
 }
 
 /**
- * TODO function headers...
+ * This is what gets called when a client initially connects to the server
  */
 Controller.prototype.initialConnect = function(socket) {
-  socket.join('Lobby');
-  socket.emit('join room', {room: 'Lobby'})
+  var newRoomId = this.createRoom(socket, 'Lobby').room_id;
+  socket.join(newRoomId);
+  socket.emit('join room', this.roomsObj.joinRoom(newRoomId))
 
   var name = 'Guest' + this.guestNumber;
   this.nickNames[socket.id] = name;
@@ -41,7 +42,8 @@ Controller.prototype.initialConnect = function(socket) {
 }
 
 /**
- * TODO function headers...
+ * This gets called when a client disconnects from the server by way of
+ * either closing the page in their browser or some unforseen connection problem
  */
 Controller.prototype.disconnect = function(socket) {
   nameIndex = this.namesUsed.indexOf(this.nickNames[socket.id]);
@@ -50,6 +52,9 @@ Controller.prototype.disconnect = function(socket) {
 }
 
 /**
+ * This handles the flow of data when a 'join room' emit is received by
+ * the server
+ *
  * @param socket: IO object
  * @param roomId: id of room to join
  * @return {room_name: String, top_questions: Array,
@@ -57,24 +62,38 @@ Controller.prototype.disconnect = function(socket) {
  *          or false if room does not exist
  */
 Controller.prototype.joinRoom = function(socket, roomId) {
-  socket.leave(roomId.previousRoom);
+  //socket.leave(roomId.previousRoom);
 
   // TODO Check if room exist
-  socket.join(roomId.newRoom);
-  socket.emit('join room', {roomId: roomId.newRoom});
+  if(this.roomsObj.hasRoom(roomId)) {
+    socket.join(roomId);
+    socket.emit('join room', this.roomsObj.joinRoom(roomId));
+  }
+  else
+    //console.log(this.roomsObj);
+    return false;
 }
 
 /**
+ * This handles the flow of data when a 'create room' emit is received by
+ * the server
+ *
  * @param socket: Socket IO object
  * @param roomName: name of new room
  * @return Room name and room id
  */
  Controller.prototype.createRoom = function(socket, roomName) {
-   //TODO function body
+   var createData = {room_name: roomName, owner_id: socket.id};
+   var returnData = this.roomsObj.createRoom(createData);
+   socket.join(returnData.room_id);
+   socket.emit('create room', {room_name: returnData.room_name, room_id: returnData.room_id});
+   return {room_name: returnData.room_name, room_id: returnData.room_id};
  }
 
  /**
-  * TODO function headers...
+  * This handles the flow of data when a 'close room' emit is received by
+  * the server
+  *
   * @param socket: Socket IO object
   * @param roomId: UUID of room to be closed
   * @return true if room closes, else false
@@ -176,7 +195,7 @@ Controller.prototype.rooms = function(socket, io) {
       }
   }
 
-  console.log(io.sockets.adapter.rooms);
+  //console.log(io.sockets.adapter.rooms);
   socket.emit('all rooms', allRooms);
 }
 
