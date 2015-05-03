@@ -41,21 +41,15 @@ describe('Questions', function(){
 
       // Set up
       var qs = new Questions();
-      var q = new Question({
-          id             : 'testid',
-          asker          : 'me',
-          questionTitle  : 'some question',
-          question       : 'Some text',
-          comments       : [],
-          voters         : ['me'],
-          score          : 0,
-          time           : new Date().getTime()
-        }
-      );
+      var q = {
+          asker_id       : '0',
+          question_text  : 'Some text',
+        };
 
       // Assign
-      qs.addQuestion(q);
+      var ques = qs.addQuestion(q);
 
+      console.log(ques);
       // Assert
       expect(qs.hasQuestion('testid')).to.be.true;
     });
