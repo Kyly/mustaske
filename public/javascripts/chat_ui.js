@@ -41,7 +41,7 @@ $(document).ready(function() {
   });
 
   socket.on('join room', function(result) {
-    $('#room').text(result.room);
+    $('#room').text(result.roomId);
     $('#messages').append(divSystemContentElement('Room changed.'));
   });
 

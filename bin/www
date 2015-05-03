@@ -33,7 +33,9 @@ server.on('listening', onListening);
 /**
  * Set up io and io actions. IO actions must match those outlined in the
  * IO document. Functions that are called from an 'on' event, reside in the
- * modules/controller.js file and must be named the same as the IO action.
+ * modules/controller.js file and must be named the same as the IO action,
+ * but in camelCase. Also, the first parameter in all these functions must be
+ * 'socket' which is a reference to the socket object that made the 'emit'.
  */
 
 var io = require('socket.io').listen(server);

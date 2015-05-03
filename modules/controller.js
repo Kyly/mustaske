@@ -1,6 +1,8 @@
 /**
  * This Controller will handle all the logic after an emit is received. All
- * Business Layer modules included must be required here to work properly.
+ * Business Layer modules included must be required here to work properly. All
+ * functions written here MUST take a reference to the calling 'socket' or else
+ * the function will have no idea where to send the data back to.
  */
 
 /**
@@ -8,6 +10,10 @@
  */
 var Rooms     = require('./rooms');
 
+/**
+ * Put all variables that are needed 'globally' by the server here.
+ * More than likely, this will just be the Rooms() instance.
+ */
 function Controller () {
   this.guestNumber  = 1;
   this.nickNames    = {};
@@ -47,9 +53,9 @@ Controller.prototype.disconnect = function(socket) {
  * TODO function headers...
  */
 Controller.prototype.joinRoom = function(socket, roomId) {
-  socket.leave(room.previousRoom);
-  socket.join(room.newRoom);
-  socket.emit('join room', {room: room.newRoom});
+  socket.leave(roomId.previousRoom);
+  socket.join(roomId.newRoom);
+  socket.emit('join room', {roomId: roomId.newRoom});
 }
 
 /**
@@ -108,7 +114,8 @@ Controller.prototype.joinRoom = function(socket, roomId) {
     //TODO function body
   }
 
-//below is used in the chat demo
+//below is used in the chat demo and shouldn't be used in actual app
+//******************************************************************
 
   /**
    * TODO function headers...
@@ -161,11 +168,5 @@ Controller.prototype.rooms = function(socket, io) {
   socket.emit('all rooms', allRooms);
 }
 
-/**
- * TODO function headers...
- */
-Controller.prototype.askQuestion = function(socket, question) {
-  console.log(question.text);
-}
 
 module.exports = Controller;

@@ -38,7 +38,7 @@ Chat.prototype.processCommand = function(currentRoom, command) {
     case 'q':
       words.shift();
       var question = words.join(' ');
-      this.socket.emit('question', question);
+      this.socket.emit('new question', question);
       break;
 
     default:
