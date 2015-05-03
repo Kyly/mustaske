@@ -11,7 +11,7 @@ Chat.prototype.sendMessage = function(room, text) {
 };
 
 Chat.prototype.changeRoom = function(currentRoom, newRoom) {
-  this.socket.emit('join', {
+  this.socket.emit('join room', {
     newRoom: newRoom,
     previousRoom: currentRoom
   });

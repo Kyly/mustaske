@@ -40,7 +40,7 @@ $(document).ready(function() {
     $('#messages').append(divSystemContentElement(message));
   });
 
-  socket.on('joinResult', function(result) {
+  socket.on('join room', function(result) {
     $('#room').text(result.room);
     $('#messages').append(divSystemContentElement('Room changed.'));
   });

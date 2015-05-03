@@ -21,7 +21,7 @@ function Controller () {
  */
 Controller.prototype.initialConnect = function(socket) {
   socket.join('Lobby');
-  socket.emit('joinResult', {room: 'Lobby'})
+  socket.emit('join room', {room: 'Lobby'})
 
   var name = 'Guest' + this.guestNumber;
   this.nickNames[socket.id] = name;
@@ -46,37 +46,95 @@ Controller.prototype.disconnect = function(socket) {
 /**
  * TODO function headers...
  */
-Controller.prototype.nameAttempt = function(socket, name) {
-  if (name.indexOf('Guest') == 0) {
-    socket.emit('nameResult', {
-      success: false,
-      message: 'Names cannot begin with "Guest".'
-    });
-  } else {
-    if (this.namesUsed.indexOf(name) == -1) {
-      this.namesUsed.push(name);
-      this.nickNames[socket.id] = name;
-      socket.emit('nameResult', {
-        success: true,
-        name: name
-      });
-    } else {
-      socket.emit('nameResult', {
-        success: false,
-        message: 'That name is already in use.'
-      });
-    }
-  }
+Controller.prototype.joinRoom = function(socket, roomId) {
+  socket.leave(room.previousRoom);
+  socket.join(room.newRoom);
+  socket.emit('join room', {room: room.newRoom});
 }
 
 /**
  * TODO function headers...
  */
-Controller.prototype.join = function(socket, room) {
-  socket.leave(room.previousRoom);
-  socket.join(room.newRoom);
-  socket.emit('joinResult', {room: room.newRoom});
-}
+ Controller.prototype.createRoom = function(socket, roomName) {
+   //TODO function body
+ }
+
+ /**
+  * TODO function headers...
+  */
+  Controller.prototype.closeRoom = function(socket) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.newQuestion = function(socket, question) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.upvoteQuestion = function(socket, questionId) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.downvoteQuestion = function(socket, questionId) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.dismissQuestion = function(socket, questionId) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.topQuestions = function(socket, n) {
+    //TODO function body
+  }
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.allQuestions = function(socket) {
+    //TODO function body
+  }
+
+//below is used in the chat demo
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.nameAttempt = function(socket, name) {
+    if (name.indexOf('Guest') == 0) {
+      socket.emit('nameResult', {
+        success: false,
+        message: 'Names cannot begin with "Guest".'
+      });
+    } else {
+      if (this.namesUsed.indexOf(name) == -1) {
+        this.namesUsed.push(name);
+        this.nickNames[socket.id] = name;
+        socket.emit('nameResult', {
+          success: true,
+          name: name
+        });
+      } else {
+        socket.emit('nameResult', {
+          success: false,
+          message: 'That name is already in use.'
+        });
+      }
+    }
+  }
 
 /**
  * TODO function headers...

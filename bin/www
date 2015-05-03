@@ -47,12 +47,46 @@ io.sockets.on('connection', function (socket) {
     controller.disconnect(socket);
   });
 
-  socket.on('nameAttempt', function(name) {
-    controller.nameAttempt(socket, name);
+  socket.on('join room', function(roomId) {
+    controller.joinRoom(socket, roomId);
   });
 
-  socket.on('join', function(room) {
-    controller.join(socket, room);
+  socket.on('create room', function(roomName) {
+    controller.createRoom(socket, roomName);
+  });
+
+  socket.on('close room', function() {
+    controller.closeRoom(socket);
+  });
+
+  socket.on('new question', function(question) {
+    controller.newQuestion(socket, question);
+  });
+
+  socket.on('upvote question', function(questionId) {
+    controller.upvoteQuestion(socket, questionId);
+  });
+
+  socket.on('downvote question', function(questionId) {
+    controller.downvoteQuestion(socket, questionId);
+  });
+
+  socket.on('dismiss question', function(questionId) {
+    controller.dismissQuestion(socket, questionId);
+  });
+
+  socket.on('top questions', function(question, n) {
+    controller.topQuestions(socket, n);
+  });
+
+  socket.on('all questions', function() {
+    controller.allQuestions(socket);
+  });
+
+//all on events below are used only in demo app
+
+  socket.on('nameAttempt', function(name) {
+    controller.nameAttempt(socket, name);
   });
 
   socket.on('message', function (message) {
