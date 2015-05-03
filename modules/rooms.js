@@ -1,6 +1,7 @@
 // Room model
 // TODO Needs tests
 var Questions = require('./questions');
+var Room = require('./room');
 
 function Rooms() {
   this.rooms = {}  // Hash containing chat repositories
@@ -8,7 +9,7 @@ function Rooms() {
 
 
 /**
- * data = {room_id: id, owner: id}
+ * data = {room_id: id, owner: id, name: string}
  */
 Rooms.prototype.addRoom = function(data) {
 
@@ -17,7 +18,8 @@ Rooms.prototype.addRoom = function(data) {
     return false;
 
   // Create new room with question repository
-  this.rooms[data.room_id] = {owner: data.owner, questions: new Questions()};
+  this.rooms[data.room_id] = new Room({id: data.room_id, owner: data.owner,
+    name: data.name});
   return true;
 }
 
@@ -38,7 +40,7 @@ Rooms.prototype.purgeRoom = function(room_id) {
 /**
  * Call upvoteQuestion on room
  *
- * data = {room_id: id, quesiton_id: id, voter_id: id}
+ * data = {room_id: id, question_id: id, voter_id: id}
  */
 Rooms.prototype.upvoteQuestion = function(data) {
   // TODO Sanity check: Check if room exist
@@ -56,14 +58,14 @@ Rooms.prototype.downvoteQuestion = function(data) {
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.rooms[data.room_id].downvoteQuestion(data.question);
+  this.rooms[data.room_id].downvoteQuestion(data);
 }
 
 /**
  * Expects data = {room_id: id, question: Question}
  */
 Rooms.prototype.logQuestion = function (data) {
-  this.rooms[data.room_id].logQuestion(data.question);
+  this.rooms[data.room_id].addQuestion(data.question);
 }
 
 module.exports = Rooms;

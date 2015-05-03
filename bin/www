@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('supapp:server');
 var http = require('http');
-//var Rooms =
+var Controller = require('../modules/controller');
+var controller = new Controller();
 /**
  * Get port from environment and store in Express.
  */
@@ -32,86 +33,35 @@ server.on('listening', onListening);
  * Set up io and io actions
  */
 
-var io = require('socket.io').listen(server)
-  , guestNumber = 1
-  , nickNames = {}
-  , namesUsed = []
-  , name
-  , nameIndex;
+var io = require('socket.io').listen(server);
 
 io.set('log level', 1);
 
 io.sockets.on('connection', function (socket) {
-  socket.join('Lobby');
-  socket.emit('joinResult', {room: 'Lobby'});
+  controller.initialConnect(socket);
 
   socket.on('disconnect', function() {
-    nameIndex = namesUsed.indexOf(nickNames[socket.id]);
-    delete namesUsed[nameIndex];
-    delete nickNames[socket.id];
+    controller.disconnect(socket);
   });
-
-  name = 'Guest' + guestNumber;
-  nickNames[socket.id] = name;
-  socket.emit('nameResult', {
-    success: true,
-    name: name
-  });
-
-  namesUsed.push(name);
-  guestNumber += 1;
 
   socket.on('nameAttempt', function(name) {
-    if (name.indexOf('Guest') == 0) {
-      socket.emit('nameResult', {
-        success: false,
-        message: 'Names cannot begin with "Guest".'
-      });
-    } else {
-      if (namesUsed.indexOf(name) == -1) {
-        namesUsed.push(name);
-        nickNames[socket.id] = name;
-        socket.emit('nameResult', {
-          success: true,
-          name: name
-        });
-      } else {
-        socket.emit('nameResult', {
-          success: false,
-          message: 'That name is already in use.'
-        });
-      }
-    }
+    controller.nameAttempt(socket, name);
   });
 
   socket.on('join', function(room) {
-    socket.leave(room.previousRoom);
-    socket.join(room.newRoom);
-    socket.emit('joinResult', {room: room.newRoom});
+    controller.join(socket, room);
   });
 
   socket.on('message', function (message) {
-    console.log(io);
-    socket.broadcast.to(message.room).emit('message', {
-      text: nickNames[socket.id] + ': ' + message.text
-    });
+    controller.message(socket, message);
   });
 
   socket.on('rooms', function() {
-
-    var allRooms = []
-    for(var room in io.sockets.adapter.rooms){
-        if(room !== socket.id) {
-          allRooms.push(room);
-        }
-    }
-
-    // console.log(io.sockets.adapter.rooms);
-    socket.emit('all rooms', allRooms);
+    controller.rooms(socket, io);
   });
 
   socket.on('askQuestion', function (question) {
-    console.log(question.text);
+    controller.askQuestion(socket, question);
   });
 
 });

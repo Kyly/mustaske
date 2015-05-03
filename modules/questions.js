@@ -21,30 +21,30 @@ Questions.prototype.logQuestion = function(question) {
 /**
  * Upvotes a question in the repository
  *
- * data = {question_id: id, voter: id}
+ * data = {room_id: id, question_id: id, voter_id: id}
  */
 Questions.prototype.upvoteQuestion = function(data) {
 
   // If question does not exist in max heap add it
-  if (!this.hasQuestion(data.quesiton)) {
+  if (!this.hasQuestion(data.question_id)) {
     var question = questionHash[data.question_id];
-    question.upvote(data.voter);
+    question.upvote(data.voter_id);
   }
 
   else {
       var question = questionHash[data.question_id];
-      var upvoted = question.upvote(data.voter);
+      var upvoted = question.upvote(data.voter_id);
   }
 }
 
 /**
- * data = {question: id, voter: id}
+ * data = {room_id: id, question_id: id, voter: id}
  */
 Questions.prototype.downvoteQuestion = function(data) {
   // If question does not nothing is done
-  if (this.hasQuestion(data.quesiton)) {
+  if (this.hasQuestion(data.question_id)) {
     var question = questionHash[data.question_id];
-    var upvoted = question.upvote(data.voter);
+    var upvoted = question.upvote(data.voter_id);
   }
 }
 
