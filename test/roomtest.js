@@ -1,3 +1,7 @@
+/**
+ * TODO file header
+ */
+
 var Room = require('../modules/room');
 var Question = require('../modules/question')
 
@@ -19,7 +23,7 @@ describe('Room', function(){
         {
           id             : 'testid',
           asker          : 'me',
-          questionTitle  : 'some quesiton',
+          questionTitle  : 'some question',
           question       : 'Some text',
           comments       : [],
           voters         : ['me'],
@@ -31,7 +35,7 @@ describe('Room', function(){
         {
           id             : 'badid',
           asker          : 'me',
-          questionTitle  : 'some quesiton',
+          questionTitle  : 'some question',
           question       : 'Some text',
           comments       : [],
           voters         : ['me'],
@@ -46,5 +50,5 @@ describe('Room', function(){
       assert(!room.hasQuestion(badQuestion));
     })
   })
-  
+
 })

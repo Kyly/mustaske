@@ -1,11 +1,11 @@
 /**
-  * This Controller, will handl all the logic after an emit is received. All
-  * Business Layer modules included must be required here to work properly.
-  */
+ * This Controller will handle all the logic after an emit is received. All
+ * Business Layer modules included must be required here to work properly.
+ */
 
 /**
-  * Put all the requires for modules here.
-  */
+ * Put all the requires for modules here.
+ */
 var Rooms     = require('./rooms');
 
 function Controller () {
@@ -16,6 +16,9 @@ function Controller () {
   this.roomsList    = new Rooms();
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.initialConnect = function(socket) {
   socket.join('Lobby');
   socket.emit('joinResult', {room: 'Lobby'})
@@ -31,12 +34,18 @@ Controller.prototype.initialConnect = function(socket) {
   this.guestNumber += 1;
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.disconnect = function(socket) {
   nameIndex = this.namesUsed.indexOf(this.nickNames[socket.id]);
   delete this.namesUsed[nameIndex];
   delete this.nickNames[socket.id];
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.nameAttempt = function(socket, name) {
   if (name.indexOf('Guest') == 0) {
     socket.emit('nameResult', {
@@ -60,12 +69,18 @@ Controller.prototype.nameAttempt = function(socket, name) {
   }
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.join = function(socket, room) {
   socket.leave(room.previousRoom);
   socket.join(room.newRoom);
   socket.emit('joinResult', {room: room.newRoom});
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.message = function(socket, message) {
   //console.log(io);
   socket.broadcast.to(message.room).emit('message', {
@@ -73,6 +88,9 @@ Controller.prototype.message = function(socket, message) {
   });
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.rooms = function(socket, io) {
   var allRooms = []
   for(var room in io.sockets.adapter.rooms){
@@ -85,6 +103,9 @@ Controller.prototype.rooms = function(socket, io) {
   socket.emit('all rooms', allRooms);
 }
 
+/**
+ * TODO function headers...
+ */
 Controller.prototype.askQuestion = function(socket, question) {
   console.log(question.text);
 }

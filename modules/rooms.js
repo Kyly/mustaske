@@ -1,5 +1,8 @@
-// Room model
-// TODO Needs tests
+/**
+ * Rooms Model
+ * TODO file header
+ */
+ 
 var Questions = require('./questions');
 var Room = require('./room');
 
