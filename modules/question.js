@@ -5,7 +5,7 @@
 function Question (data) {
   this.id             = data.id;
   this.asker          = data.asker;
-  this.questionTitle  = data.questionTitle;
+  // this.questionTitle  = data.questionTitle;
   this.question       = data.question;
   this.comments       = [];
   this.voters         = [this.asker];

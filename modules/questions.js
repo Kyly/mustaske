@@ -2,8 +2,9 @@
  * Questions model and member funtions.
  */
 
-var Heap = require('heap');
-var uuid = require('node-uuid');
+var Heap     = require('heap');
+var uuid     = require('node-uuid');
+var Question = require('./question');
 
 function Questions() {
   this.questionHash = {};      // All quesitons
@@ -19,17 +20,18 @@ function Questions() {
  * @return newly created fucntion
  */
 Questions.prototype.addQuestion = function(data) {
-
+  console.log(data);
   var newQuestion = new Question({
       id             : uuid.v1(),
       asker          : data.asker_id,
-      question       : question_text,
+      question       : data.question_text,
       comments       : [],
       voters         : [data.asker_id],
       score          : 0,
       time           : new Date().getTime()
   });
 
+  console.log(newQuestion);
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
 
