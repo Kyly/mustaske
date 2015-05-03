@@ -13,7 +13,7 @@ function Controller () {
   this.nickNames    = {};
   this.namesUsed    = [];
   this.nameIndex;
-  this.rooms        = new Rooms();
+  this.roomsList    = new Rooms();
 }
 
 Controller.prototype.initialConnect = function(socket) {
