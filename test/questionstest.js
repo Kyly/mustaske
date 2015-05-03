@@ -23,7 +23,7 @@ describe('Questions', function(){
           score          : 0,
           time           : new Date().getTime()
         }
-      )
+      );
 
       // Assign
       qs.logQuestion(q);

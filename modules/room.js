@@ -29,14 +29,14 @@ Room.prototype.hasQuestion = function(question) {
   *   data = {room_id: id, question_id: id, voter_id: id}
   */
 Room.prototype.upvoteQuestion = function(data) {
-  this.questions.upvoteQuestion(data)
+  this.questions.upvoteQuestion(data);
 }
 
 /**TODO
   *   data = {room_id: id, question_id: id, voter_id: id}
   */
 Room.prototype.downvoteQuestion = function(data) {
-  this.questions.downvoteQuestion(data)
+  this.questions.downvoteQuestion(data);
 }
 
 /**TODO
