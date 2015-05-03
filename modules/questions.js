@@ -20,7 +20,6 @@ function Questions() {
  * @return newly created fucntion
  */
 Questions.prototype.addQuestion = function(data) {
-  console.log(data);
   var newQuestion = new Question({
       id             : uuid.v1(),
       asker          : data.asker_id,
@@ -31,7 +30,6 @@ Questions.prototype.addQuestion = function(data) {
       time           : new Date().getTime()
   });
 
-  console.log(newQuestion);
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
 
