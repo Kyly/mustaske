@@ -1,12 +1,15 @@
 // Room model
 // TODO Needs tests
-var QuestionRepo = require('./questionrepo');
+var Questions = require('./questions');
 
 function Rooms() {
-  this.questionrepos = {}  // Hash containing chat repositories
+  this.rooms = {}  // Hash containing chat repositories
 }
 
 
+/**
+ * data = {room_id: id, owner: id}
+ */
 Rooms.prototype.addRoom = function(data) {
 
   // Create new chatrepo for room if does not exist
@@ -14,7 +17,7 @@ Rooms.prototype.addRoom = function(data) {
     return false;
 
   // Create new room with question repository
-  this.questionrepos[data.room_id] = {owner: data.owner, questions: new QuestionRepo()};
+  this.rooms[data.room_id] = {owner: data.owner, questions: new Questions()};
   return true;
 }
 
@@ -22,40 +25,45 @@ Rooms.prototype.addRoom = function(data) {
  * Simple boolean returns true if room is in chat
  */
 Rooms.prototype.hasRoom = function (room_id) {
-  return (room_id in this.questionrepos);
+  return (room_id in this.rooms);
 }
 
 /**
- * Deletes a chat log
+ * Deletes a chat log.
  */
 Rooms.prototype.purgeRoom = function(room_id) {
-  delete this.questionrepos[room_id];
+  delete this.rooms[room_id];
 }
 
 /**
  * Call upvoteQuestion on room
+ *
+ * data = {room_id: id, quesiton_id: id, voter_id: id}
  */
 Rooms.prototype.upvoteQuestion = function(data) {
   // TODO Sanity check: Check if room exist
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.questionrepos[data.room_id].upvoteQuestion(data);
+  this.rooms[data.room_id].upvoteQuestion(data);
 }
 
+/**
+ * data = {room_id: id, question_id: id, voter_id: id}
+ */
 Rooms.prototype.downvoteQuestion = function(data) {
   // TODO Sanity Check: Check if room exist
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.questionrepos[data.room_id].downvoteQuestion(data);
+  this.rooms[data.room_id].downvoteQuestion(data.question);
 }
 
 /**
- * Expects data = {room: id, question: Question}
+ * Expects data = {room_id: id, question: Question}
  */
 Rooms.prototype.logQuestion = function (data) {
-  this.questionrepos[data.room_id].logQuestion(data);
+  this.rooms[data.room_id].logQuestion(data.question);
 }
 
 module.exports = Rooms;

@@ -3,30 +3,41 @@ var Rooms = require('../modules/rooms');
 var assert = require("assert")
 describe('Rooms', function(){
   describe('#addRoom()', function(){
-    it('should have room in questionrepo after addRoom is called.', function(){
+    it('should have room in rooms after addRoom is called.', function(){
+      // Set
       var rooms = new Rooms();
 
+      // Assign
+      var res = rooms.addRoom({owner: 'tester', room_id: 'testroom'});
+
       // Assert
-      assert.equal(true, rooms.addRoom({owner: 'tester', room: 'testroom'}));
-      assert.equal(true, 'testroom' in rooms.questionrepos);
+      assert('testroom' in rooms.rooms);
     })
   })
   describe('#hasRoom()', function(){
     it('should have room in questionrepo after addRoom is called.', function(){
+      // Set
       var rooms = new Rooms();
-      rooms.addRoom({owner: 'tester', room: 'testroom'})
+
+      // Assign
+      rooms.addRoom({owner: 'tester', room_id: 'testroom'})
+
       // Assert
-      assert.equal(true, rooms.hasRoom('testroom'));
+      assert(rooms.hasRoom('testroom'));
     })
   })
   describe('#purgeRoom()', function(){
     it('should have room in questionrepo after addRoom is called.', function(){
+      // Set
       var rooms = new Rooms();
-      rooms.addRoom({owner: 'tester', room: 'testroom'})
+
+      // Assign
+      rooms.addRoom({owner: 'tester', room_id: 'testroom'})
+
       // Assert
-      assert.equal(true, 'testroom' in rooms.questionrepos);
+      assert.equal(true, 'testroom' in rooms.rooms);
       rooms.purgeRoom('testroom');
-      assert.equal(false, 'testroom' in rooms.questionrepos);
+      assert.equal(false, 'testroom' in rooms.rooms);
 
 
     })
