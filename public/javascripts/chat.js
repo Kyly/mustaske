@@ -1,3 +1,7 @@
+/**
+ * TODO file header...
+ */
+
 var Chat = function(socket) {
   this.socket = socket;
 };

@@ -1,3 +1,7 @@
+/**
+ * TODO file header...
+ */
+ 
 var socket = io.connect();
 
 function divEscapedContentElement(message) {

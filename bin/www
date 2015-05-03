@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 /**
+ * TODO file header...
+ */
+
+/**
  * Module dependencies.
  */
 
@@ -57,8 +61,8 @@ io.sockets.on('connection', function (socket) {
     controller.createRoom(socket, roomName);
   });
 
-  socket.on('close room', function() {
-    controller.closeRoom(socket);
+  socket.on('close room', function(roomId) {
+    controller.closeRoom(socket, roomId);
   });
 
   socket.on('new question', function(question) {

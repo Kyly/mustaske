@@ -68,7 +68,7 @@ Controller.prototype.joinRoom = function(socket, roomId) {
  /**
   * TODO function headers...
   */
-  Controller.prototype.closeRoom = function(socket) {
+  Controller.prototype.closeRoom = function(socket, roomId) {
     //TODO function body
   }
 
