@@ -1,7 +1,7 @@
 /**
  * TODO file header
  */
- 
+
 var Heap = require('heap');
 
 function Questions(){
@@ -15,7 +15,7 @@ function Questions(){
  * voted list is removed.
  *
  * If room does not exist then exception is thrown.
- *
+ * question is a Question Object
  */
 Questions.prototype.logQuestion = function(question) {
   this.orderedQuestions.unshift(question);
@@ -25,7 +25,7 @@ Questions.prototype.logQuestion = function(question) {
 /**
  * Upvotes a question in the repository
  *
- * data = {room_id: id, question_id: id, voter_id: id}
+ * data = {question_id: id, voter_id: id}
  */
 Questions.prototype.upvoteQuestion = function(data) {
 
@@ -42,7 +42,7 @@ Questions.prototype.upvoteQuestion = function(data) {
 }
 
 /**
- * data = {room_id: id, question_id: id, voter: id}
+ * data = {question_id: id, voter: id}
  */
 Questions.prototype.downvoteQuestion = function(data) {
   // If question does not nothing is done
