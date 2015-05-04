@@ -4,7 +4,7 @@ var Questions = require('./questions');
 var Room = require('./room');
 
 function Rooms() {
-  this.rooms = {}  // Hash containing chat repositories
+  this.rooms = {};  // Hash containing chat repositories
 }
 
 

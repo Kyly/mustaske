@@ -11,7 +11,7 @@ function Question (data) {
 
 Question.prototype.upvote = function(data) {
   if (data.voter_id in this.voters)
-    return false
+    return false;
 
   ++this.score;
   return true;
