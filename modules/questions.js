@@ -1,72 +1,106 @@
 /**
- * TODO file header
+ * Questions model and member funtions.
  */
 
 var Heap = require('heap');
 
 function Questions(){
-  this.questionHash = {};
-  this.orderedQuestions = [];
+  this.questionHash = {};      // All quesitons
+  this.upVotedQuestions = [];  // Refrence to question that have been upvoted
+  this.orderedQuestions = [];  // Most recent --> Oldest questions
 
 }
 
 /**
- * Adds message to end of list. If log if full then the least
- * voted list is removed.
+ * Adds question to orderd and hashed question list.
  *
- * If room does not exist then exception is thrown.
- * question is a Question Object
+ * Input: Question
+ * Return: none
  */
-Questions.prototype.logQuestion = function(question) {
+Questions.prototype.addQuestion = function(question) {
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
+
 }
 
 /**
- * Upvotes a question in the repository
+ * Upvotes a question in the repository. If question does not
+ * exist then nothing is done.
  *
- * data = {question_id: id, voter_id: id}
+ * Input: data = {question_id: id, voter_id: id}
+ * Return: none
  */
-Questions.prototype.upvoteQuestion = function(data) {
-
-  // If question does not exist in max heap add it
-  if (!this.hasQuestion(data.question_id)) {
-    var question = questionHash[data.question_id];
-    question.upvote(data.voter_id);
-  }
-
-  else {
-      var question = questionHash[data.question_id];
-      var upvoted = question.upvote(data.voter_id);
-  }
-}
-
-/**
- * Delgates down voting a question.
- * data = {question_id: id, voter: id}
- */
-Questions.prototype.downvoteQuestion = function(data) {
-  // If question does not nothing is done
+Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
-    var question = questionHash[data.question_id];
-    var upvoted = question.upvote(data.voter_id);
+    var question = this.questionHash[data.question_id];
+
+    if (this.upVotedQuestions.indexOf(question) === -1) {
+        this.upVotedQuestions.push(question);
+    }
+
+    question.upVote(data.voter_id);
   }
 }
 
 /**
- * TODO
+ * Downvotes a question in the repository. If question does not
+ * exist then nothing is done.
+ *
+ * Input: data = {question_id: id, voter_id: id}
+ * Return: none
  */
-Questions.prototype.hasQuestion = function(question) {
-  return question.id in this.questionHash;
+Questions.prototype.downVoteQuestion = function(data) {
+  if (this.hasQuestion(data.question_id)) {
+    var question = this.questionHash[data.question_id];
+    var voteResult = question.downVote(data.voter_id);
+    // Checks if voted down to zero
+    if (voteResult <= 0 && this.upVotedQuestions.indexOf(quesiton) !== -1) {
+      var index = this.upVotedQuestions.indexOf(quesiton);
+
+      // Remove quesiton from upvoted
+      this.upVotedQuestions.splice(index, 1);
+    }
+  }
 }
 
+/**
+ * Checks if function exists in question hash table.
+ *
+ * Input: Question id
+ * Return: True if question exists
+ */
+Questions.prototype.hasQuestion = function(id) {
+  return id in this.questionHash;
+}
+
+/**
+ * Returns a range of top voted question. Will return
+ * all questions by defualt.
+ *
+ * Input: Number of quesitons.
+ * Return: Array of questions.
+ */
 Questions.prototype.getTopVoted = function(n) {
-  return Heap.nlargest(this.orderedQuestions, n, function(a, b) {
+  // Default check
+  n = typeof n !== 'undefined' ?  n : n = this.upVotedQuestions.length;
+
+  return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
     return a.score - b.score;
   });
 }
 
+/**
+ * Returns 0 to n most recent questions. Returns all by default.
+ *
+ * Input: Number of quesitons.
+ * Return: Array of questions.
+ */
 Questions.prototype.getQuestions = function(n) {
+  // Default check
+  if (typeof n === 'undefined') {
+    return this.orderedQuestions;
+  }
+
   return this.orderedQuestions.slice(0,n);
 }
 

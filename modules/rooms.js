@@ -2,7 +2,7 @@
  * Rooms Model
  * TODO file header
  */
- 
+
 var Questions = require('./questions');
 var Room = require('./room');
 
@@ -45,29 +45,29 @@ Rooms.prototype.purgeRoom = function(room_id) {
  *
  * data = {room_id: id, question_id: id, voter_id: id}
  */
-Rooms.prototype.upvoteQuestion = function(data) {
+Rooms.prototype.upVoteQuestion = function(data) {
   // TODO Sanity check: Check if room exist
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.rooms[data.room_id].upvoteQuestion(data);
+  this.rooms[data.room_id].upVoteQuestion(data);
 }
 
 /**
  * data = {room_id: id, question_id: id, voter_id: id}
  */
-Rooms.prototype.downvoteQuestion = function(data) {
+Rooms.prototype.downVoteQuestion = function(data) {
   // TODO Sanity Check: Check if room exist
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
-  this.rooms[data.room_id].downvoteQuestion(data);
+  this.rooms[data.room_id].downVoteQuestion(data);
 }
 
 /**
  * Expects data = {room_id: id, question: Question}
  */
-Rooms.prototype.logQuestion = function (data) {
+Rooms.prototype.addQuestion = function (data) {
   this.rooms[data.room_id].addQuestion(data.question);
 }
 

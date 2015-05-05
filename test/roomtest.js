@@ -43,11 +43,11 @@ describe('Room', function(){
           time           : new Date().getTime()
         });
 
-      var res = room.addQuestion(newQuestion);
+      room.addQuestion(newQuestion);
 
       // Assert
-      assert(room.hasQuestion(newQuestion));
-      assert(!room.hasQuestion(badQuestion));
+      assert(room.hasQuestion(newQuestion.id));
+      assert(!room.hasQuestion(badQuestion.id));
     })
   })
 

@@ -1,7 +1,7 @@
 /**
  * TODO file header
  */
- 
+
 var Questions = require('./questions');
 
 function Room (data) {
@@ -14,11 +14,12 @@ function Room (data) {
 /** Checks to see if the question already exists. Adds the question to the
   * Room's Questions object if it doesn't.
   *
-  *   question = Question object
+  * Input: question_id
+  * Return: True if question exists
   */
 Room.prototype.addQuestion = function(question) {
   if(!this.questions.hasQuestion(question)) {
-    this.questions.logQuestion(question);
+    this.questions.addQuestion(question);
   }
 }
 
