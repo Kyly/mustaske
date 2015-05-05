@@ -3,8 +3,9 @@
  */
 
 var Heap = require('heap');
+var uuid = require('node-uuid');
 
-function Questions(){
+function Questions() {
   this.questionHash = {};      // All quesitons
   this.upVotedQuestions = [];  // Refrence to question that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
@@ -14,21 +15,33 @@ function Questions(){
 /**
  * Adds question to orderd and hashed question list.
  *
- * Input: Question
- * Return: none
+ * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @return newly created fucntion
  */
-Questions.prototype.addQuestion = function(question) {
+Questions.prototype.addQuestion = function(data) {
+
+  var newQuestion = new Question({
+      id             : uuid.v1(),
+      asker          : data.asker_id,
+      question       : question_text,
+      comments       : [],
+      voters         : [data.asker_id],
+      score          : 0,
+      time           : new Date().getTime()
+  });
+
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
 
+  return newQuestion;
 }
 
 /**
  * Upvotes a question in the repository. If question does not
  * exist then nothing is done.
  *
- * Input: data = {question_id: id, voter_id: id}
- * Return: none
+ * @param data = {question_id: id, voter_id: id}
+ * @return none
  */
 Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
@@ -46,8 +59,8 @@ Questions.prototype.upVoteQuestion = function(data) {
  * Downvotes a question in the repository. If question does not
  * exist then nothing is done.
  *
- * Input: data = {question_id: id, voter_id: id}
- * Return: none
+ * @param data = {question_id: id, voter_id: id}
+ * @return none
  */
 Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
@@ -66,8 +79,8 @@ Questions.prototype.downVoteQuestion = function(data) {
 /**
  * Checks if function exists in question hash table.
  *
- * Input: Question id
- * Return: True if question exists
+ * @param Question id
+ * @return True if question exists
  */
 Questions.prototype.hasQuestion = function(id) {
   return id in this.questionHash;
@@ -77,8 +90,8 @@ Questions.prototype.hasQuestion = function(id) {
  * Returns a range of top voted question. Will return
  * all questions by defualt.
  *
- * Input: Number of quesitons.
- * Return: Array of questions.
+ * @param Number of quesitons.
+ * @return Array of questions.
  */
 Questions.prototype.getTopVoted = function(n) {
   // Default check
@@ -92,8 +105,8 @@ Questions.prototype.getTopVoted = function(n) {
 /**
  * Returns 0 to n most recent questions. Returns all by default.
  *
- * Input: Number of quesitons.
- * Return: Array of questions.
+ * @param Number of quesitons.
+ * @return Array of questions.
  */
 Questions.prototype.getQuestions = function(n) {
   // Default check

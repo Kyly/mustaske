@@ -5,14 +5,26 @@
 
 var Questions = require('./questions');
 var Room = require('./room');
+var uuid = require('node-uuid');
 
 function Rooms() {
   this.rooms = {};  // Hash containing chat repositories
 }
 
+/**
+ * Trys to create a new room. Genreates a uuid, creates a room objects,
+ * and stores refrance in rooms hash.
+ *
+ * @param data = { owner_id : Socket id, room_name : String}
+ * @return {room_id: uuid, room_name: String, owner_id: Socket id}
+ *         or {}
+ */
+Rooms.prototype.createRoom = function(data) {
+
+}
 
 /**
- * data = {room_id: id, owner: id, name: string}
+ * @param data = {room_id: id, owner: id, name: string}
  */
 Rooms.prototype.addRoom = function(data) {
 
@@ -28,6 +40,9 @@ Rooms.prototype.addRoom = function(data) {
 
 /**
  * Simple boolean returns true if room is in chat
+ *
+ * @param room_id
+ * @return True if room exists
  */
 Rooms.prototype.hasRoom = function (room_id) {
   return (room_id in this.rooms);
@@ -35,8 +50,11 @@ Rooms.prototype.hasRoom = function (room_id) {
 
 /**
  * Deletes a chat log.
+ *
+ * @param data = {owner_id: String, room_id: String}
+ * @return true if caller is owner and room exists
  */
-Rooms.prototype.purgeRoom = function(room_id) {
+Rooms.prototype.closeRoom = function(room_id) {
   delete this.rooms[room_id];
 }
 
@@ -65,10 +83,13 @@ Rooms.prototype.downVoteQuestion = function(data) {
 }
 
 /**
- * Expects data = {room_id: id, question: Question}
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @return newly created quesiton object
  */
 Rooms.prototype.addQuestion = function (data) {
-  this.rooms[data.room_id].addQuestion(data.question);
+  return this.rooms[data.room_id].addQuestion(data.question);
 }
 
 module.exports = Rooms;

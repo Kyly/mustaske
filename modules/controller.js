@@ -8,7 +8,7 @@
 /**
  * Put all the requires for modules here.
  */
-var Rooms     = require('./rooms');
+var Rooms = require('./rooms');
 
 /**
  * Put all variables that are needed 'globally' by the server here.
@@ -19,7 +19,7 @@ function Controller () {
   this.nickNames    = {};
   this.namesUsed    = [];
   this.nameIndex;
-  this.roomsList    = new Rooms();
+  this.roomsObj     = new Rooms();  // TODO change to room once we are done with demo
 }
 
 /**
@@ -50,16 +50,24 @@ Controller.prototype.disconnect = function(socket) {
 }
 
 /**
- * TODO function headers...
+ * @param socket: IO object
+ * @param roomId: id of room to join
+ * @return {room_name: String, top_questions: Array,
+ *             questions: Array, room_id: id}
+ *          or false if room does not exist
  */
 Controller.prototype.joinRoom = function(socket, roomId) {
   socket.leave(roomId.previousRoom);
+
+  // TODO Check if room exist
   socket.join(roomId.newRoom);
   socket.emit('join room', {roomId: roomId.newRoom});
 }
 
 /**
- * TODO function headers...
+ * @param socket: Socket IO object
+ * @param roomName: name of new room
+ * @return Room name and room id
  */
  Controller.prototype.createRoom = function(socket, roomName) {
    //TODO function body
@@ -67,9 +75,13 @@ Controller.prototype.joinRoom = function(socket, roomId) {
 
  /**
   * TODO function headers...
+  * @param socket: Socket IO object
+  * @param roomId: UUID of room to be closed
+  * @return true if room closes, else false
   */
   Controller.prototype.closeRoom = function(socket, roomId) {
     //TODO function body
+    // TODO check if room exists
   }
 
   /**
@@ -149,7 +161,7 @@ Controller.prototype.joinRoom = function(socket, roomId) {
 Controller.prototype.message = function(socket, message) {
   //console.log(io);
   socket.broadcast.to(message.room).emit('message', {
-    text: this.nickNames[socket.id] + ': ' + message.text
+    text: this.nickNames[socket.id] + ': ' + message.text + ' ' + socket.id
   });
 }
 
@@ -164,7 +176,7 @@ Controller.prototype.rooms = function(socket, io) {
       }
   }
 
-  // console.log(io.sockets.adapter.rooms);
+  console.log(io.sockets.adapter.rooms);
   socket.emit('all rooms', allRooms);
 }
 

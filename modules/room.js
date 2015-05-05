@@ -14,13 +14,11 @@ function Room (data) {
 /** Checks to see if the question already exists. Adds the question to the
   * Room's Questions object if it doesn't.
   *
-  * Input: question_id
-  * Return: True if question exists
+  * @param data = {room_id: id, question_text: String, asker_id: String}
+  * @return newly created question
   */
-Room.prototype.addQuestion = function(question) {
-  if(!this.questions.hasQuestion(question)) {
-    this.questions.addQuestion(question);
-  }
+Room.prototype.addQuestion = function(data) {
+  return this.questions.addQuestion(data);
 }
 
 Room.prototype.hasQuestion = function(question) {
