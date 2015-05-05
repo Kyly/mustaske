@@ -20,8 +20,8 @@ function Questions() {
  * @return newly created fucntion
  */
 Questions.prototype.addQuestion = function(data) {
-  console.log(data);
-  var newQuestion = new Question({
+  // console.log(data);
+  var question = new Question({
       id             : uuid.v1(),
       asker          : data.asker_id,
       question       : data.question_text,
@@ -31,11 +31,11 @@ Questions.prototype.addQuestion = function(data) {
       time           : new Date().getTime()
   });
 
-  console.log(newQuestion);
+  console.log(question);
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
 
-  return newQuestion;
+  return question;
 }
 
 /**
