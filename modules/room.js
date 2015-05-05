@@ -21,8 +21,8 @@ Room.prototype.addQuestion = function(data) {
   return this.questions.addQuestion(data);
 }
 
-Room.prototype.hasQuestion = function(question) {
-  return this.questions.hasQuestion(question);
+Room.prototype.hasQuestion = function(questionId) {
+  return this.questions.hasQuestion(questionId);
 }
 /**TODO
   *   data = {room_id: id, question_id: id, voter_id: id}

@@ -31,7 +31,6 @@ Questions.prototype.addQuestion = function(data) {
       time           : new Date().getTime()
   });
 
-  // console.log(question);
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
 
