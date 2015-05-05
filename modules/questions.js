@@ -42,6 +42,7 @@ Questions.prototype.upvoteQuestion = function(data) {
 }
 
 /**
+ * Delgates down voting a question.
  * data = {question_id: id, voter: id}
  */
 Questions.prototype.downvoteQuestion = function(data) {
