@@ -14,33 +14,6 @@ describe('Questions', function(){
 
       // Set up
       var qs = new Questions();
-      var q = new Question({
-          id             : 'testid',
-          asker          : 'me',
-          questionTitle  : 'some question',
-          question       : 'Some text',
-          comments       : [],
-          voters         : ['me'],
-          score          : 0,
-          time           : new Date().getTime()
-        }
-      );
-
-      // Assign
-      qs.addQuestion(q);
-
-      // Assert
-      assert('testid' in qs.questionHash, 'Question not found in questionHash.');
-      assert(q === qs.orderedQuestions[0], 'Question is in orderd questions.');
-
-    });
-  });
-
-  describe('#addQuestion()', function(){
-    it('should have question logged in orderedQuestions and questionHash.', function(){
-
-      // Set up
-      var qs = new Questions();
       var q = {
           asker_id       : '0',
           question_text  : 'Some text',
@@ -49,9 +22,8 @@ describe('Questions', function(){
       // Assign
       var ques = qs.addQuestion(q);
 
-      console.log(ques);
       // Assert
-      expect(qs.hasQuestion('testid')).to.be.true;
+      expect(qs.hasQuestion(ques.id)).to.be.true;
     });
   });
 
@@ -66,10 +38,11 @@ describe('Questions', function(){
 
       // Assign
       var ques = qs.addQuestion(q);
-      qs.upVoteQuestion({question_id: 'testid', voter_id: 'them'});
+      qs.upVoteQuestion({question_id: ques.id, voter_id: 'them'});
 
+      console.log(ques.score);
       // Assert
-      assert(q.score === 1, 'Qestion score did not get up voted.');
+      expect(ques.score).to.equal(1);
     });
   });
 
