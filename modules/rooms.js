@@ -8,12 +8,12 @@ var Room = require('./room');
 var uuid = require('node-uuid');
 
 function Rooms() {
-  this.rooms = {};  // Hash containing chat repositories
+  this.rooms = {};  // Hash containing room objects
 }
 
 /**
- * Trys to create a new room. Genreates a uuid, creates a room objects,
- * and stores refrance in rooms hash.
+ * Trys to create a new room. Generates a uuid, creates a room objects,
+ * and stores reference in rooms hash.
  *
  * @param data = { owner_id : Socket id, room_name : String}
  * @return {room_id: uuid, room_name: String, owner_id: Socket id}
@@ -66,13 +66,101 @@ Rooms.prototype.hasRoom = function (room_id) {
 }
 
 /**
- * Deletes a chat log.
+ * Deletes a room.
  *
  * @param data = {owner_id: String, room_id: String}
  * @return true if caller is owner and room exists
  */
 Rooms.prototype.closeRoom = function(room_id) {
+  // Check if room exists
+  if (!this.hasRoom(room_id))
+    throw "Room does not exist!";
+
   delete this.rooms[room_id];
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, user_id: id}
+ * @return number of warnings user has
+ */
+Rooms.prototype.warnUser = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].warnUser(data.user_id);
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, user_id: id}
+ * @return true if user succesfully banned
+ */
+Rooms.prototype.banUser = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].banUser(data.user_id);
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, user_id: id}
+ * @return true if user is banned
+ */
+Rooms.prototype.isBanned = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].isBanned(data.user_id);
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @return newly created quesiton object
+ */
+Rooms.prototype.addQuestion = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].addQuestion(data.question);
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, question_id: id}
+ * @return true if succesfully deleted, else false
+ */
+Rooms.prototype.deleteQuestion = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].deleteQuestion(data.question_id);
+}
+
+/**
+ * Delgates to room. @see room.js
+ *
+ * @param data = {room_id: id, num_questions: int}
+ * @return list of room objects
+ */
+Rooms.prototype.getTopVoted = function (data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    throw "Room does not exist!";
+
+  return this.rooms[data.room_id].getTopVoted(data.num_questions);
 }
 
 /**
@@ -81,7 +169,7 @@ Rooms.prototype.closeRoom = function(room_id) {
  * data = {room_id: id, question_id: id, voter_id: id}
  */
 Rooms.prototype.upVoteQuestion = function(data) {
-  // TODO Sanity check: Check if room exist
+  // Check if room exists
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
@@ -92,21 +180,11 @@ Rooms.prototype.upVoteQuestion = function(data) {
  * data = {room_id: id, question_id: id, voter_id: id}
  */
 Rooms.prototype.downVoteQuestion = function(data) {
-  // TODO Sanity Check: Check if room exist
+  // Check if room exists
   if (!this.hasRoom(data.room_id))
     throw "Room does not exist!";
 
   this.rooms[data.room_id].downVoteQuestion(data);
-}
-
-/**
- * Delgates to room. @see room.js
- *
- * @param data = {room_id: id, question_text: String, asker_id: String}
- * @return newly created quesiton object
- */
-Rooms.prototype.addQuestion = function (data) {
-  return this.rooms[data.room_id].addQuestion(data.question);
 }
 
 module.exports = Rooms;
