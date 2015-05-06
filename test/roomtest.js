@@ -4,6 +4,8 @@
 
 var Room = require('../modules/room');
 var Question = require('../modules/question')
+var assert = require('chai').assert;
+var expect = require('chai').expect;
 
 var room = new Room(
   {
@@ -25,7 +27,7 @@ describe('Room', function(){
       var badQuestion = {room_id: 'notSoDope', question_text: 'What is a for-loop?', asker_id: 'badStudent'};
 
       var idToSearch = room.addQuestion(newQuestion).id;
-      console.log(idToSearch);
+
       // Assert
       assert(room.hasQuestion(idToSearch));
       assert(!room.hasQuestion('what'));
