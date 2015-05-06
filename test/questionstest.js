@@ -40,7 +40,6 @@ describe('Questions', function(){
       var ques = qs.addQuestion(q);
       qs.upVoteQuestion({question_id: ques.id, voter_id: 'them'});
 
-      console.log(ques.score);
       // Assert
       expect(ques.score).to.equal(1);
     });
@@ -65,10 +64,11 @@ describe('Questions', function(){
     it('should get the top voted questions.', function(){
       // Set up
       var qs = new Questions();
+      var questions = [];
       for (q in testquestions) {
-        qs.addQuestion(testquestions[q]);
+        questions[q] = qs.addQuestion(testquestions[q]);
         qs.upVoteQuestion({
-          question_id : testquestions[q].id,
+          question_id : questions[q].id,
           voter_id    : 'Sam Joe'
         });
       }
