@@ -1,0 +1,247 @@
+<!DOCtype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<!--bootstrap-->
+		<link type="text/css" rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="bootstrap/-3.3.4/css/bootstrap-theme.min.css">
+
+		<link href="font-awesome-4.2/css/font-awesome.min.css" rel="stylesheet" />
+
+		<script src="jquery/jquery.min.js"></script>
+		<script src="jquery/jquery-1.11.1.min.js"></script>
+		<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+		<script src="bootstrap-3.3.4/js/npm.js"></script>
+
+		 <link href="style.css" rel="stylesheet" />
+		 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
+		 <title>MustAsk: CSE110</title>
+		 <link rel="Shortcut Icon" type="image/jpg" href="mustache.png"/>
+	</head>
+
+	<body>
+
+		<div class="navbar">
+			<div class="container-fluid">
+
+				<ul class="pull-left">
+					<li class="roomName">CSE110</li>
+				</ul>
+
+			</div>
+		</div>
+
+		<div class="rest container-fluid">
+			<div class="row">
+				<div class="topquestions col-md-5 col-sm-5 col-xs-12 scroll">
+					<div class="selection">
+						<div class="dropdown">
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    top 3 questions <i class="fa fa-chevron-down"></i>
+						  </button>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">top 5 questions</a></li>
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">bottom 3 questions</a></li>
+						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">bottom 5 questions</a></li>
+						  </ul>
+						</div><!--end dropdown-->
+					</div><!--end selection-->
+					<div class="totalTopQuestion">
+						<div class="topquestion_section">
+							<p class="topquestion">i need a question</p><br>
+									<div class="row">
+										
+
+										<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>	
+										<p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">20</p>
+
+											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>							
+										<p class="numComments col-md-offset-6 col-sm-offset-4 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">1</p>
+										<a href="#" id="comment_to_active"><img src="comment.png" class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+										<a href="#" id="comment_to_inactive"><img src="comment active.png" class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
+									</div>
+						</div><!--end topquestion_section-->
+						<div class="commentSection">
+							<a href="#" id="more">view more comments</a>
+							<p>i need comments</p>
+							<p> more comments!</p>
+							<input type="text" class="form-control" placeholder="write a comment..."> 
+						</div><!--end commentSection-->
+					</div> <!--end totalTopQuestion-->
+					<!--<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>
+					<p>what</p>-->
+				</div><!--end topquestions -->
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="recentquestions col-md-7 col-sm-7 col-xs-12">
+					<div class="row">
+						<div class="selection col-md-3 col-sm-3 col-xs-12">
+							<div class="dropdown">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							    most recent &nbsp; &nbsp; <i class="fa fa-chevron-down"></i>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">top 5 questions</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">bottom 3 questions</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">bottom 5 questions</a></li>
+							  </ul>
+							</div><!--end dropdown-->
+						</div><!--end selection-->
+						<div class="search col-md-9 col-sm-9 col-xs-12">
+							    <div class="input-group">
+								      <input type="text" class="form-control" placeholder="search all questions">
+								      <span class="input-group-btn">
+								        <button class="btn btn-default" type="button">Go!</button>
+								      </span>
+								</div><!-- /input-group -->
+						</div>
+					</div> <!--end row-->
+
+
+
+					<div class="totalRecentQuestion">
+
+						<div class="recentquestion_section">
+
+								<p class="question">i need a question</p><br>
+
+										<div class="row">
+											
+
+											<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>	
+											<p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">20</p>
+
+											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>							
+											<p class="numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">1</p>
+											<a href="#" id="comment_to_active"><img src="comment.png" class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+											<a href="#" id="comment_to_inactive"><img src="comment active.png" class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
+										</div>
+
+						</div><!--end recentquestion_section-->
+
+
+
+						<div class="commentSection">
+								<a href="#" id="more">view more comments</a>
+								<p>i need comments</p>
+								<p> more comments!</p>
+								<input type="text" class="form-control" placeholder="write a comment...">			
+						</div><!--end commentSection-->
+						<hr>
+
+					</div> <!--end totalRecentQuestion-->
+
+
+					
+					
+				</div> <!--end recent questions-->
+
+
+			</div> <!--end row-->
+		</div> <!--end container fluid-->
+
+
+	<footer>
+		<script>
+			$(document).ready(function(){
+	
+
+				$('.topquestions #thumbs_up_to_active').click(function(){
+					$('.topquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+				});
+
+
+
+				$('.topquestions #thumbs_down_to_active').click(function(){
+					$('.topquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+					
+				});
+
+
+				$('.topquestions .commentSection #more').click(function(){
+
+					
+				});
+
+				$('.topquestions #comment_to_active').click(function(){
+					$(".topquestions .comment").css("display", "none");
+					$(".topquestions .com_active").css("display", "inline");
+
+					$(".topquestions .commentSection").show();
+					
+				});
+				$('.topquestions #comment_to_inactive').click(function(){
+					$(".topquestions .comment").css("display", "inline");
+					$(".topquestions .com_active").css("display", "none");
+
+					$(".topquestions .commentSection").hide();
+					
+				});
+
+
+
+				//REPEAT FOR RECENT QUESTIONS
+
+				$('.recentquestions #thumbs_up_to_active').click(function(){
+					$('.recentquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+				});
+
+				$('.recentquestions #thumbs_down_to_active').click(function(){
+					$('.recentquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+					
+				});
+
+
+				$('.recentquestions .commentSection #more').click(function(){
+
+					
+				});
+
+				$('.recentquestions #comment_to_active').click(function(){
+					$(".recentquestions .comment").css("display", "none");
+					$(".recentquestions .com_active").css("display", "inline");
+
+					$(".recentquestions .commentSection").show();
+					
+				});
+				$('.recentquestions #comment_to_inactive').click(function(){
+					$(".recentquestions .comment").css("display", "inline");
+					$(".recentquestions .com_active").css("display", "none");
+
+					$(".recentquestions .commentSection").hide();
+					
+				});
+
+			});
+			$(document).ready(main);
+	
+		</script>
+
+	</footer>
+	</body>
+
+</html>
