@@ -79,6 +79,7 @@ describe('Question', function(){
 
       // Assert
       expect(normalQUp.score).to.equal(2);
+    console.log(downvotedQUp.score);
       expect(downvotedQUp.score).to.equal(2);
       expect(upvotedQUp.score).to.equal(0);
     })
