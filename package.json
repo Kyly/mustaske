@@ -16,6 +16,7 @@
     "serve-favicon": "~2.2.0",
     "heap": "~0.2.6",
     "bootstrap": "~3.3.4",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "jquery": "~2.1.4"
   }
 }

@@ -1,22 +1,23 @@
-extends layout
-
-block content
-  #room
-  #room-list
-  #messages
-
-  form#send-form
-    input(id='send-message')
-    input(id='send-button', type='button', value='Send')
-
-  #help Chat commands:
-    ul
-      li Change nickname: 
-        code /nick [username]
-      li Join/create room: 
-        code /join [room name]
-
-  script(src='/socket.io/socket.io.js')
-  script(src='/javascripts/jquery-1.7.2.min.js')
-  script(src='/javascripts/chat.js')
-  script(src='/javascripts/chat_ui.js')
+//- extends layout
+//- 
+//- block content
+//-   #room
+//-   #room-list
+//-   #messages
+//- 
+//-   form#send-form
+//-     input(id='send-message')
+//-     input(id='send-button', type='button', value='Send')
+//- 
+//-   #help Chat commands:
+//-     ul
+//-       li Change nickname: 
+//-         code /nick [username]
+//-       li Join/create room: 
+//-         code /join [room name]
+//- 
+//-   script(src='/socket.io/socket.io.js')
+//-   script(src='/javascripts/jquery-1.7.2.min.js')
+//-   script(src='/javascripts/chat.js')
+//-   script(src='/javascripts/chat_ui.js')
+include index.html
