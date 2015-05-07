@@ -33,8 +33,8 @@
 		</div>
 
 		<div class="rest container-fluid">
-			<div class="row">
-				<div class="topquestions col-md-5 col-sm-5 col-xs-12 scroll">
+			<div id="main-content" class="row">
+				<div class="topquestions col-md-5 col-sm-5 col-xs-12 scroll sidebar">
 					<div class="selection">
 						<div class="dropdown">
 						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -48,15 +48,15 @@
 						</div><!--end dropdown-->
 					</div><!--end selection-->
 					<div class="totalTopQuestion">
-						<div class="topquestion_section">
+						<div id="0" class="topquestion_section">
 							<p class="topquestion">i need a question</p><br>
 									<div class="row">
-										
 
-										<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>	
+
+										<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
 										<p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">20</p>
 
-											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>							
+											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
 										<p class="numComments col-md-offset-6 col-sm-offset-4 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">1</p>
 										<a href="#" id="comment_to_active"><img src="comment.png" class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
 										<a href="#" id="comment_to_inactive"><img src="comment active.png" class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
@@ -66,7 +66,7 @@
 							<a href="#" id="more">view more comments</a>
 							<p>i need comments</p>
 							<p> more comments!</p>
-							<input type="text" class="form-control" placeholder="write a comment..."> 
+							<input type="text" class="form-control" placeholder="write a comment...">
 						</div><!--end commentSection-->
 					</div> <!--end totalTopQuestion-->
 					<!--<p>what</p>
@@ -97,7 +97,7 @@
 
 
 
-				<div class="recentquestions col-md-7 col-sm-7 col-xs-12">
+				<div class="recentquestions col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
 					<div class="row">
 						<div class="selection col-md-3 col-sm-3 col-xs-12">
 							<div class="dropdown">
@@ -130,12 +130,12 @@
 								<p class="question">i need a question</p><br>
 
 										<div class="row">
-											
 
-											<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>	
+
+											<a href="#" id="thumbs_down_to_active"><i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
 											<p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">20</p>
 
-											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>							
+											<a href="#" id="thumbs_up_to_active"><i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
 											<p class="numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">1</p>
 											<a href="#" id="comment_to_active"><img src="comment.png" class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
 											<a href="#" id="comment_to_inactive"><img src="comment active.png" class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
@@ -149,15 +149,15 @@
 								<a href="#" id="more">view more comments</a>
 								<p>i need comments</p>
 								<p> more comments!</p>
-								<input type="text" class="form-control" placeholder="write a comment...">			
+								<input type="text" class="form-control" placeholder="write a comment...">
 						</div><!--end commentSection-->
 						<hr>
 
 					</div> <!--end totalRecentQuestion-->
 
 
-					
-					
+
+
 				</div> <!--end recent questions-->
 
 
@@ -168,7 +168,7 @@
 	<footer>
 		<script>
 			$(document).ready(function(){
-	
+
 
 				$('.topquestions #thumbs_up_to_active').click(function(){
 					$('.topquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
@@ -178,13 +178,13 @@
 
 				$('.topquestions #thumbs_down_to_active').click(function(){
 					$('.topquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
-					
+
 				});
 
 
 				$('.topquestions .commentSection #more').click(function(){
 
-					
+
 				});
 
 				$('.topquestions #comment_to_active').click(function(){
@@ -192,14 +192,14 @@
 					$(".topquestions .com_active").css("display", "inline");
 
 					$(".topquestions .commentSection").show();
-					
+
 				});
 				$('.topquestions #comment_to_inactive').click(function(){
 					$(".topquestions .comment").css("display", "inline");
 					$(".topquestions .com_active").css("display", "none");
 
 					$(".topquestions .commentSection").hide();
-					
+
 				});
 
 
@@ -212,13 +212,13 @@
 
 				$('.recentquestions #thumbs_down_to_active').click(function(){
 					$('.recentquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
-					
+
 				});
 
 
 				$('.recentquestions .commentSection #more').click(function(){
 
-					
+
 				});
 
 				$('.recentquestions #comment_to_active').click(function(){
@@ -226,19 +226,19 @@
 					$(".recentquestions .com_active").css("display", "inline");
 
 					$(".recentquestions .commentSection").show();
-					
+
 				});
 				$('.recentquestions #comment_to_inactive').click(function(){
 					$(".recentquestions .comment").css("display", "inline");
 					$(".recentquestions .com_active").css("display", "none");
 
 					$(".recentquestions .commentSection").hide();
-					
+
 				});
 
 			});
 			$(document).ready(main);
-	
+
 		</script>
 
 	</footer>
