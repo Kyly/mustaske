@@ -203,3 +203,20 @@ hr {
 .navbar {
    border-radius: 0;
 }
+
+.vcenter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.login-overlay {
+	font-size: 2em;
+	color: #FFF;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: #20597F;
+  visibility: visible;
+  z-index: 9999;
+}

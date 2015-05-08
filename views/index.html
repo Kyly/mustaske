@@ -12,6 +12,9 @@
 		<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 		<!-- Our styles -->
 		<link href="/stylesheets/style.css" rel="stylesheet" />
+		<!-- Styles for animations -->
+		<link href="/stylesheets/animate.css" rel="stylesheet" />
+
 
 	 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
 	 	<title>MustAsk: CSE110</title>
@@ -19,6 +22,15 @@
 	</head>
 
 	<body>
+		<div class="login-overlay container-fluid">
+			<div class="row vcenter">
+				<div class="text-center">
+					<h2>Login Stuff</h2>
+					<p> Nothing here yet, just click anywhere</p>
+				</div>
+			</div>
+		</div>
+
 		<div class="navbar">
 			<div class="container-fluid">
 				<ul class="pull-left">
@@ -164,6 +176,9 @@
 		<script>
 			$(document).ready(function(){
 
+				$('.login-overlay').click(function(){
+					$(this).addClass('animated slideOutUp');
+				});
 
 				$('.topquestions #thumbs_up_to_active').click(function(){
 					$('.topquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
