@@ -122,12 +122,11 @@ Questions.prototype.getQuestions = function(n) {
  * Delete the question from the question heap, 
  * upVotedQuestion array, and ordered question array.
  * 
- *
  * @param Id of the question
  * @return none
  */
-Questions.prototype.deleteQuestions = function(questionID) {
-	delete this.questionHash[questionID.id];
+Questions.prototype.deleteQuestion = function(questionID) {
+	delete this.questionHash[questionID];
 	this.upVotedQuestions.splice(questionID.id, 1);
 	this.orderedQuestions.splice(questionID.id, 1);
 }
