@@ -25,7 +25,11 @@ Question.prototype.upVote = function(data) {
  * Return: Current score.
  */
 Question.prototype.downVote = function(data) {
-  return 'Not implimented';
+  if (data.voter_id in this.voters)
+  	return false;
+  	
+  --this.score;
+  return true;
 }
 
 
