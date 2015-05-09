@@ -53,7 +53,6 @@ Question.prototype.upVote = function(data) {
  voter has previously downvoted.
 */
 Question.prototype.downVote = function(data) {
-<<<<<<< HEAD
   var voterId = data.voter_id;
 
   //voter has already voted
