@@ -99,22 +99,28 @@ Controller.prototype.joinRoom = function(socket, roomId) {
   * @return true if room closes, else false
   */
   Controller.prototype.closeRoom = function(socket, roomId) {
-    //TODO function body
-    // TODO check if room exists
+    socket.emit('close room', rooms.closeRoom({owner_id: socket.id, room_id: roomId}));
   }
 
   /**
-   * TODO function headers...
+   * This handles closing a specified room
+   *
+   * @param socket : Socket IO object
+   * @param question {room_id : String, question_text : String}
    */
   Controller.prototype.newQuestion = function(socket, question) {
-    //TODO function body
+    var data = {room_id: question.room_id, question_text: question.questionText, asker_id = socket.id}
+    socket.emit('new question', roomsObj(data))
   }
 
   /**
-   * TODO function headers...
+   * This handles upvoting specific questions in specific rooms
+   * @param socket : Socket IO object
+   * @param data = {room_id: String, question_id}
    */
-  Controller.prototype.upvoteQuestion = function(socket, questionId) {
-    //TODO function body
+  Controller.prototype.upvoteQuestion = function(socket, data) {
+    var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
+    socket.emit('upvote question', roomsObj(questionData));
   }
 
   /**
