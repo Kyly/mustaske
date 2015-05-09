@@ -14,7 +14,7 @@ describe('Question', function(){
       // Set up
       var q = new Question(
           {
-            id             : 'testid',
+            id             : '123456',
             asker          : 'me',
             question       : 'Some text',
             comments       : [],
@@ -28,11 +28,10 @@ describe('Question', function(){
 
 
       // Assert
-      assert.equal(q.id, 'testid', 'Question id is correct.');
-      assert.equal(q.asker, 'me', 'Question asker is correct.');
-      assert.equal(q.question, 'Some text', 'Question is correct.');
-      assert.equal(q.voters['me'], 1, 'Question voters is correct');
-      assert.equal(q.score, 1, 'Question score is correct.');
+      expect(q.id).to.equal('123456');
+      expect(q.asker).to.equal('me');
+      expect(q.question).to.equal('Some text');
+      expect(q.score).to.equal(1);
     })
   })
 
@@ -45,9 +44,9 @@ describe('Question', function(){
       // Set up
       var normalQUp = new Question(
           {
-            id             : 'q1',
+            id             : '1',
             asker          : 'p1',
-            question       : 'Some text',
+            question       : 'Some text 1',
             voters         : {'p1' : 1},
             score          : 1
           }
@@ -55,7 +54,7 @@ describe('Question', function(){
 
       var downvotedQUp = new Question(
           {
-            id             : 'q2',
+            id             : '2',
             asker          : 'p1',
             question       : 'Some text 2',
             voters         : {'p1' : 1, 'p2' : -1},
@@ -65,8 +64,8 @@ describe('Question', function(){
 
       var upvotedQUp = new Question(
           {
-            id             : 'q3',
-            asker          : 'p2',
+            id             : '3',
+            asker          : 'p1',
             question       : 'Some text 3',
             voters         : {'p1' : 1, 'p2' : 1},
             score          : 2
@@ -74,16 +73,14 @@ describe('Question', function(){
       )
 
       // Assign
-      normalQUp.upVote({voter_id: 'p2'});
-      downvotedQUp.upVote({voter_id: 'p2'});
-      upvotedQUp.upVote({voter_id: 'p2'});
+      normalQUp.upVote({voter_id : 'p2'});
+      downvotedQUp.upVote({voter_id : 'p2'});
+      upvotedQUp.upVote({voter_id : 'p2'});
 
       // Assert
-
-      expect(normalQUp.score).to.equal(2, 'Normal upvoting increases score correctly.');
-      assert.equal(normalQUp.score, 2, 'Normal upvoting increases score correctly.');
-      assert.equal(downvotedQUp.score, 2, 'Upvoting after downvoting increases score correctly.');
-      assert.equal(upvotedQUp.score, 0, 'Upvoting after upvoting decreases score correctly.');
+      expect(normalQUp.score).to.equal(2);
+      expect(downvotedQUp.score).to.equal(2);
+      expect(upvotedQUp.score).to.equal(0);
     })
   })
 
@@ -96,9 +93,9 @@ describe('Question', function(){
       // Set up
       var normalQDown = new Question(
           {
-            id             : 'q1',
+            id             : '4',
             asker          : 'p1',
-            question       : 'Some text',
+            question       : 'Some text 4',
             voters         : {'p1' : 1},
             score          : 1
           }
@@ -106,9 +103,9 @@ describe('Question', function(){
 
       var upvotedQDown = new Question(
           {
-            id             : 'q2',
+            id             : '5',
             asker          : 'p1',
-            question       : 'Some text 2',
+            question       : 'Some text 5',
             voters         : {'p1' : 1, 'p2' : 1},
             score          : 2
           }
@@ -116,23 +113,23 @@ describe('Question', function(){
 
       var downvotedQDown = new Question(
           {
-            id             : 'q3',
-            asker          : 'p2',
-            question       : 'Some text 3',
+            id             : '6',
+            asker          : 'p1',
+            question       : 'Some text 6',
             voters         : {'p1' : 1, 'p2' : -1},
             score          : 0
           }
       )
 
       // Assign
-      normalQDown.downVote({voter_id: 'p2'});
-      upvotedQDown.downVote({voter_id: 'p2'});
-      downvotedQDown.downVote({voter_id: 'p2'});
+      normalQDown.downVote({voter_id : 'p2'});
+      upvotedQDown.downVote({voter_id : 'p2'});
+      downvotedQDown.downVote({voter_id : 'p2'});
 
       // Assert
-      assert.equal(normalQDown.score, 0, 'Normal downvoting decreases score correctly.');
-      assert.equal(upvotedQDown.score, 0, 'Downvoting after upvoting decreases score correctly.');
-      assert.equal(downvotedQDown.score, 1, 'Downvoting after downvoting increases score correctly.');
+      expect(normalQDown.score).to.equal(0);
+      expect(downvotedQDown.score).to.equal(0);
+      expect(upvotedQDown.score).to.equal(1);
     })
   })
 
