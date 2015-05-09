@@ -16,11 +16,7 @@ describe('Question', function(){
           {
             id             : '123456',
             asker          : 'me',
-            question       : 'Some text',
-            comments       : [],
-            voters         : {'me' : 1},
-            score          : 1,
-            time           : new Date().getTime()
+            question       : 'Some text'
           }
       )
 
@@ -79,7 +75,6 @@ describe('Question', function(){
 
       // Assert
       expect(normalQUp.score).to.equal(2);
-    console.log(downvotedQUp.score);
       expect(downvotedQUp.score).to.equal(2);
       expect(upvotedQUp.score).to.equal(1);
     })

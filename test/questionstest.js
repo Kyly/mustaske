@@ -1,5 +1,5 @@
 /**
- * Test functionality for quesitons module
+ * Test functionality for questions module
  */
 
 var Questions = require('../modules/questions');
@@ -9,6 +9,7 @@ var expect = require('chai').expect;
 
 
 describe('Questions', function(){
+  
   describe('#addQuestion()', function(){
     it('should have question logged in orderedQuestions and questionHash.', function(){
 
@@ -28,7 +29,7 @@ describe('Questions', function(){
   });
 
   describe('#upVoteQuestion()', function(){
-    it('should increment score in qeution q.', function(){
+    it('should increment score in question q.', function(){
       // Set up
       var qs = new Questions();
       var q  = {
@@ -46,7 +47,7 @@ describe('Questions', function(){
   });
 
   describe('#downVoteQuestion()', function(){
-    it('should decrement score in qeution q.', function(){
+    it('should decrement score in question q.', function(){
       // Set up
       var qs = new Questions();
       var q  = {

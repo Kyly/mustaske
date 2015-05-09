@@ -7,10 +7,9 @@ var uuid     = require('node-uuid');
 var Question = require('./question');
 
 function Questions() {
-  this.questionHash = {};      // All quesitons
-  this.upVotedQuestions = [];  // Refrence to question that have been upvoted
+  this.questionHash = {};      // All questions
+  this.upVotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
-
 }
 
 /**
@@ -20,16 +19,10 @@ function Questions() {
  * @return newly created fucntion
  */
 Questions.prototype.addQuestion = function(data) {
-  // console.log(data);
-  var question = new Question({
-      id             : uuid.v1(),
-      asker          : data.asker_id,
-      question       : data.question_text,
-      comments       : [],
-      voters         : [data.asker_id],
-      score          : 0,
-      time           : new Date().getTime()
-  });
+  var newData = {id: uuid.v1(), asker_id: data.asker_id, 
+                 question_text: data.question_text};
+
+  var question = new Question(newData);
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
@@ -71,7 +64,7 @@ Questions.prototype.downVoteQuestion = function(data) {
     if (voteResult <= 0 && this.upVotedQuestions.indexOf(quesiton) !== -1) {
       var index = this.upVotedQuestions.indexOf(quesiton);
 
-      // Remove quesiton from upvoted
+      // Remove question from upvoted
       this.upVotedQuestions.splice(index, 1);
     }
   }
@@ -84,7 +77,7 @@ Questions.prototype.downVoteQuestion = function(data) {
  * @return True if question exists
  */
 Questions.prototype.hasQuestion = function(id) {
-  return id in this.questionHash;
+  return (id in this.questionHash);
 }
 
 /**
