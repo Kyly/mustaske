@@ -1,3 +1,11 @@
+/**
+ * File: delete_question.js
+ * This file test the functionality of the deleteQuestion function
+ *
+ * Author: Robert Kronebusch
+ *
+ */
+
 var Questions = require('../modules/questions');
 
 var assert = require("assert");
@@ -22,6 +30,7 @@ it('should delete question from hash table, up-voted question array, and ordered
 	//Call deleteQuestion function
 	questions.deleteQuestion(info2);
 
+	//Check if question is no longer in questionHash, upVoteQuestions, and orderedQuestions
 	assert(!(info2 in questions.questionHash));
 	assert(!(info2 in questions.upVotedQuestions));
 	assert(!(info2 in questions.orderedQuestions));
@@ -30,8 +39,9 @@ it('should delete question from hash table, up-voted question array, and ordered
 	})
 })
 
+//
 describe('#deleteQuestion()', function() {
-it('should throw exception and return an empty object if the question does not exist', function(){
+it('should return empty test var if the question is not created', function(){
 	//Make new Questions object
 	var questions = new Questions();
 	
