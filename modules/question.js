@@ -3,29 +3,58 @@
  */
 
 function Question (data) {
-  this.id             = data.id;
-  this.asker          = data.asker;
-  // this.questionTitle  = data.questionTitle;
-  this.question       = data.question;
-  this.comments       = [];
-  this.voters         = [this.asker];
-  this.score          = 0;
-  this.time           = new Date().getTime();
-};
-
-Question.prototype.upVote = function(data) {
-  if (data.voter_id in this.voters)
-    return false;
-
-  ++this.score;
-  return true;
+  this.id                 = data.id;
+  this.asker              = data.asker;
+  this.question           = data.question;
+  this.comments           = [];
+  this.voters             = {};
+  this.voters[this.asker] = 1;
+  this.score              = 1;
+  this.time               = new Date().getTime();
 }
 
-/**
- * Return: Current score.
- */
+
+Question.prototype.upVote = function(data) {
+  var voterId = data.voter_id;
+
+  if (voterId in this.voters) {
+    if (this.voters[voterId] === -1) {
+      this.voters[voterId] = 1;
+      this.score += 2;
+      return this.score;
+    } else {
+      this.score -= 1;
+      delete this.voters[voterId];
+      return this.score;
+    }
+  }
+
+  this.voters[voterId] = 1;
+  this.score += 1;
+
+  return this.score;
+}
+
+
 Question.prototype.downVote = function(data) {
-  return 'Not implimented';
+  var voterId = data.voter_id;
+
+  if (voterId in this.voters) {
+    if (this.voters[voterId] === 1) {
+      this.voters[voterId] = -1;
+      this.score -= 2;
+      return this.score;
+    } else {
+      this.score += 1;
+      delete this.voters[voterId];
+      return this.score;
+    }
+  }
+
+  this.voters[voterId] = -1;
+  this.score -= 1;
+
+  return this.score;
 }
 
 
