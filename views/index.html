@@ -23,10 +23,23 @@
 
 	<body>
 		<div class="login-overlay container-fluid">
-			<div class="row vcenter">
-				<div class="text-center">
-					<h2>Login Stuff</h2>
-					<p> Nothing here yet, just click anywhere</p>
+			<div class="text-center vcenter">
+				<div>
+					<h2>Welcome to MustAske!</h2>
+					<p>Please enter the name of a room you want to join or create</p>
+					<form id="login-info">
+						<div class="row form-group">
+							<div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1">
+				    		<input type="room-name" class="form-control" id="" placeholder="Room Name...">
+							</div>
+				  	</div>
+						<div class="row form-group">
+							<div class="btn-group" role="group" aria-label="join-create-btns">
+					  		<button type="button" class="btn btn-default"> Join </button>
+					  		<button type="button" class="btn btn-default"> Make </button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

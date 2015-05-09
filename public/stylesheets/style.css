@@ -207,11 +207,10 @@ hr {
 .vcenter {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-59%);
 }
 
 .login-overlay {
-	font-size: 2em;
 	color: #FFF;
   height: 100%;
   width: 100%;
