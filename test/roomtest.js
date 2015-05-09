@@ -33,5 +33,4 @@ describe('Room', function(){
       assert(!room.hasQuestion('what'));
     })
   })
-
 })

@@ -12,47 +12,44 @@ function Rooms() {
 }
 
 /**
- * Trys to create a new room. Generates a uuid, creates a room objects,
- * and stores reference in rooms hash.
+ * Generates a uuid, creates a room object, and stores
+ * reference in rooms hash.
  *
- * @param data = { owner_id : Socket id, room_name : String}
+ * @param data = {owner_id: Socket id, room_name: String}
  * @return {room_id: uuid, room_name: String, owner_id: Socket id}
- *         or {}
  */
 Rooms.prototype.createRoom = function(data) {
+
   var uniqueID = uuid.v1();
-  var roomData = {room_id: uniqueID, room_name: data.room_name,
-    owner: data.owner_id};
-  //var newRoom = new Room(roomData);
-  this.rooms[uniqueID] = new Room(roomData);
-  return roomData;
+
+  //make sure uniqueID is unique
+  while (this.hasRoom(uniqueID))
+    uniqueID = uuid.v1();
+
+  //create new room and add it to rooms
+  this.rooms[uniqueID] = new Room({id: uniqueID, owner: data.owner_id,
+    name: data.room_name});
+
+  return {room_id: uniqueID, room_name: data.room_name, owner_id: data.owner_id};
 }
 
 /**
- * @param roomId = String
- * @return data = {name : string,room_id : string, questions : array,
- *    top_questions : array}
+ * Called when user joins a room, returns room name, room id, all questions,
+ * and top questions
+ *
+ * @param roomID = String
+ * @return data = {room_name: string, room_id: string, questions: array,
+ *    top_questions: array}
  */
-Rooms.prototype.joinRoom = function(roomId) {
-  var room = this.rooms[roomId];
+Rooms.prototype.joinRoom = function(roomID) {
+  // Check if room exists
+  if (!this.hasRoom(roomID))
+    return {};
+
+  var room = this.rooms[roomID];
   var roomData = {room_name: room.name, room_id: room.id,
     questions: room.getQuestions(), top_questions: room.getTopVoted(5)};
   return roomData;
-}
-
-/**
- * @param data = {room_id: id, owner: id, name: string}
- */
-Rooms.prototype.addRoom = function(data) {
-
-  // Create new chatrepo for room if does not exist
-  if (this.hasRoom(data.room_id))
-    return false;
-
-  // Create new room with question repository
-  this.rooms[data.room_id] = new Room({id: data.room_id, owner: data.owner,
-    name: data.name});
-  return true;
 }
 
 /**
@@ -71,24 +68,29 @@ Rooms.prototype.hasRoom = function (room_id) {
  * @param data = {owner_id: String, room_id: String}
  * @return true if caller is owner and room exists
  */
-Rooms.prototype.closeRoom = function(room_id) {
+Rooms.prototype.closeRoom = function(data) {
   // Check if room exists
-  if (!this.hasRoom(room_id))
-    throw "Room does not exist!";
+  if (!this.hasRoom(data.room_id))
+    return {};
 
-  delete this.rooms[room_id];
+  if (!rooms[data.room_id].isOwner(data.owner_id))
+    return {};
+
+  delete this.rooms[data.room_id];
+
+  return data.room_id;
 }
 
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, user_id: id}
+ * @param data = {room_id: String, user_id: Sring}
  * @return number of warnings user has
  */
 Rooms.prototype.warnUser = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].warnUser(data.user_id);
 }
@@ -96,13 +98,13 @@ Rooms.prototype.warnUser = function (data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, user_id: id}
+ * @param data = {room_id: String, user_id: String}
  * @return true if user succesfully banned
  */
 Rooms.prototype.banUser = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].banUser(data.user_id);
 }
@@ -110,13 +112,13 @@ Rooms.prototype.banUser = function (data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, user_id: id}
+ * @param data = {room_id: String, user_id: String}
  * @return true if user is banned
  */
 Rooms.prototype.isBanned = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].isBanned(data.user_id);
 }
@@ -124,13 +126,13 @@ Rooms.prototype.isBanned = function (data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @param data = {room_id: String, question_text: String, asker_id: String}
  * @return newly created quesiton object
  */
 Rooms.prototype.addQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].addQuestion(data.question);
 }
@@ -138,13 +140,13 @@ Rooms.prototype.addQuestion = function (data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, question_id: id}
+ * @param data = {room_id: String, question_id: String}
  * @return true if succesfully deleted, else false
  */
 Rooms.prototype.deleteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].deleteQuestion(data.question_id);
 }
@@ -152,13 +154,13 @@ Rooms.prototype.deleteQuestion = function (data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: id, num_questions: int}
+ * @param data = {room_id: String, num_questions: int}
  * @return list of room objects
  */
 Rooms.prototype.getTopVoted = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   return this.rooms[data.room_id].getTopVoted(data.num_questions);
 }
@@ -166,25 +168,37 @@ Rooms.prototype.getTopVoted = function (data) {
 /**
  * Call upvoteQuestion on room
  *
- * data = {room_id: id, question_id: id, voter_id: id}
+ * @param data = {room_id: String, question_id: String, voter_id: String}
  */
 Rooms.prototype.upVoteQuestion = function(data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   this.rooms[data.room_id].upVoteQuestion(data);
 }
 
 /**
- * data = {room_id: id, question_id: id, voter_id: id}
+ * @paramd ata = {room_id: String, question_id: String, voter_id: String}
  */
 Rooms.prototype.downVoteQuestion = function(data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    throw "Room does not exist!";
+    return {};
 
   this.rooms[data.room_id].downVoteQuestion(data);
 }
+
+/** Checks to see if given user is owner of given room
+  *
+  * @param data = {user_id: String, room_id: String}
+  * @return true if owner
+  */
+Rooms.prototype.isOwner = function(data) {
+  if (!this.hasRoom(data.room_id))
+    return {};
+
+  return (rooms[data.room_id].owner == user_id);
+ }
 
 module.exports = Rooms;

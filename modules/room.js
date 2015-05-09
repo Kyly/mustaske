@@ -9,8 +9,8 @@ function Room (data) {
   this.name           = data.room_name;
   this.questions      = new Questions();
   this.owner          = data.owner_id;
-  this.bannedUsers = {};  // Hash containing banned users
-  this.warnedUsers = {};  // Hash containing warned users
+  this.bannedUsers    = {};  // Hash containing banned users
+  this.warnedUsers    = {};  // Hash containing warned users
 };
 
 /**
@@ -92,8 +92,8 @@ Room.prototype.getTopVoted = function(n) {
 /**TODO
  * returns all questions
  */
- Room.prototype.getQuestions = function() {
-   return this.questions.getQuestions();
+Room.prototype.getQuestions = function() {
+  return this.questions.getQuestions();
  }
 
 module.exports = Room;
