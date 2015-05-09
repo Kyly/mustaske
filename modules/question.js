@@ -9,7 +9,7 @@ function Question (data) {
   this.comments           = [];
   this.voters             = {};
   this.voters[this.asker] = 1;
-  this.score              = data.score;
+  this.score              = 1;
   this.time               = new Date().getTime();
 }
 
@@ -25,7 +25,6 @@ Question.prototype.upVote = function(data) {
   //voter has already voted
   if (this.voters[voterId] !== undefined) {
 
-    console.log(this.score);
     //voter has downvoted
     if (this.voters[voterId] < 0) {
       this.voters[voterId] = 1;
