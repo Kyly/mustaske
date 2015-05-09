@@ -127,9 +127,9 @@ Questions.prototype.getQuestions = function(n) {
  * @return none
  */
 Questions.prototype.deleteQuestions = function(questionID) {
-	delete this.questionHash[questionID.id]
-	this.upVotedQuestions.splice(questionID.id, 1)
-	this.orderedQuestions.splice(questionID.id, 1)
+	delete this.questionHash[questionID.id];
+	this.upVotedQuestions.splice(questionID.id, 1);
+	this.orderedQuestions.splice(questionID.id, 1);
 }
 
 module.exports = Questions;
