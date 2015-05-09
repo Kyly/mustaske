@@ -46,9 +46,7 @@ describe('Question', function(){
           {
             id             : '1',
             asker          : 'p1',
-            question       : 'Some text 1',
-            voters         : {'p1' : 1},
-            score          : 1
+            question       : 'Some text 1'
           }
       )
 
@@ -56,21 +54,23 @@ describe('Question', function(){
           {
             id             : '2',
             asker          : 'p1',
-            question       : 'Some text 2',
-            voters         : {'p1' : 1, 'p2' : -1},
-            score          : 0
+            question       : 'Some text 2'
           }
       )
+
+      downvotedQUp.voters['p2'] = -1;
+      --(downvotedQUp.score);
 
       var upvotedQUp = new Question(
           {
             id             : '3',
             asker          : 'p1',
-            question       : 'Some text 3',
-            voters         : {'p1' : 1, 'p2' : 1},
-            score          : 2
+            question       : 'Some text 3'
           }
       )
+
+      upvotedQUp.voters['p2'] = 1;
+      ++(upvotedQUp.score);
 
       // Assign
       normalQUp.upVote({voter_id : 'p2'});
@@ -80,7 +80,7 @@ describe('Question', function(){
       // Assert
       expect(normalQUp.score).to.equal(2);
       expect(downvotedQUp.score).to.equal(2);
-      expect(upvotedQUp.score).to.equal(0);
+      expect(upvotedQUp.score).to.equal(1);
     })
   })
 
@@ -95,9 +95,7 @@ describe('Question', function(){
           {
             id             : '4',
             asker          : 'p1',
-            question       : 'Some text 4',
-            voters         : {'p1' : 1},
-            score          : 1
+            question       : 'Some text 4'
           }
       )
 
@@ -105,21 +103,23 @@ describe('Question', function(){
           {
             id             : '5',
             asker          : 'p1',
-            question       : 'Some text 5',
-            voters         : {'p1' : 1, 'p2' : 1},
-            score          : 2
+            question       : 'Some text 5'
           }
       )
+
+      upvotedQDown.voters['p2'] = 1;
+      ++(upvotedQDown.score);
 
       var downvotedQDown = new Question(
           {
             id             : '6',
             asker          : 'p1',
-            question       : 'Some text 6',
-            voters         : {'p1' : 1, 'p2' : -1},
-            score          : 0
+            question       : 'Some text 6'
           }
       )
+
+      downvotedQDown.voters['p2'] = -1;
+      --(downvotedQDown.score);
 
       // Assign
       normalQDown.downVote({voter_id : 'p2'});
@@ -128,8 +128,8 @@ describe('Question', function(){
 
       // Assert
       expect(normalQDown.score).to.equal(0);
-      expect(downvotedQDown.score).to.equal(0);
-      expect(upvotedQDown.score).to.equal(1);
+      expect(upvotedQDown.score).to.equal(0);
+      expect(downvotedQDown.score).to.equal(1);
     })
   })
 
