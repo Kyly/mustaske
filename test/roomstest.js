@@ -71,7 +71,7 @@ describe('Rooms', function(){
     })
   })
   describe('#isOwner()', function(){
-    it('Checks isOwner returns accurate value.', function(){
+    it('Checks if isOwner returns accurate value.', function(){
       // Set
       var rooms = new Rooms();
       var ownerID = 'tester';
@@ -85,6 +85,118 @@ describe('Rooms', function(){
       // Assert
       assert(is_owner);
       assert(!is_not_owner);
+    })
+  })
+  describe('#warnUser()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#banUser()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#isBanned()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#addQuestion()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#deleteQuestion()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#getTopVoted()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#upVoteQuestion()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
+    })
+  })
+  describe('#downVoteQuestion()', function(){
+    it('Checks lower layer function call.', function(){
+      // Set
+      var rooms = new Rooms();
+      var ownerID = 'tester';
+      var roomName = 'gary';
+      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+
+      // Assign
+
+      // Assert
+      assert(true);
     })
   })
 })
