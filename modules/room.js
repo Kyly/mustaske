@@ -1,29 +1,28 @@
 /**
  * TODO file header
  */
- 
+
 var Questions = require('./questions');
 
 function Room (data) {
-  this.id             = data.id;
-  this.name           = data.name;
+  this.id             = data.room_id;
+  this.name           = data.room_name;
   this.questions      = new Questions();
-  this.owner          = data.owner;
+  this.owner          = data.owner_id;
 };
 
 /** Checks to see if the question already exists. Adds the question to the
   * Room's Questions object if it doesn't.
   *
-  *   question = Question object
+  * @param data = {room_id: id, question_text: String, asker_id: String}
+  * @return newly created question
   */
-Room.prototype.addQuestion = function(question) {
-  if(!this.questions.hasQuestion(question)) {
-    this.questions.logQuestion(question);
-  }
+Room.prototype.addQuestion = function(data) {
+  return this.questions.addQuestion(data);
 }
 
-Room.prototype.hasQuestion = function(question) {
-  return this.questions.hasQuestion(question);
+Room.prototype.hasQuestion = function(questionId) {
+  return this.questions.hasQuestion(questionId);
 }
 /**TODO
   *   data = {room_id: id, question_id: id, voter_id: id}
@@ -45,5 +44,12 @@ Room.prototype.downvoteQuestion = function(data) {
 Room.prototype.getTopVoted = function(n) {
   return this.questions.getTopVoted(n);
 }
+
+/**TODO
+ * returns all questions
+ */
+ Room.prototype.getQuestions = function() {
+   return this.questions.getQuestions();
+ }
 
 module.exports = Room;

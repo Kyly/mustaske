@@ -1,7 +1,7 @@
 /**
  * TODO file header
  */
- 
+
 var Rooms = require('../modules/rooms');
 
 var assert = require("assert")
@@ -24,23 +24,23 @@ describe('Rooms', function(){
       var rooms = new Rooms();
 
       // Assign
-      rooms.addRoom({owner: 'tester', room_id: 'testroom'})
+      rooms.addRoom({owner: 'tester', room_id: 'testroom', name: 'gary'})
 
       // Assert
       assert(rooms.hasRoom('testroom'));
     })
   })
-  describe('#purgeRoom()', function(){
+  describe('#closeRoom()', function(){
     it('should have room in questionrepo after addRoom is called.', function(){
       // Set
       var rooms = new Rooms();
 
       // Assign
-      rooms.addRoom({owner: 'tester', room_id: 'testroom'})
+      rooms.addRoom({owner: 'tester', room_id: 'testroom', name: 'gary'})
 
       // Assert
       assert.equal(true, 'testroom' in rooms.rooms);
-      rooms.purgeRoom('testroom');
+      rooms.closeRoom('testroom');
       assert.equal(false, 'testroom' in rooms.rooms);
 
 

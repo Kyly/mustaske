@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 /**
+ * TODO file header...
+ */
+
+/**
  * Module dependencies.
  */
 
@@ -33,7 +37,9 @@ server.on('listening', onListening);
 /**
  * Set up io and io actions. IO actions must match those outlined in the
  * IO document. Functions that are called from an 'on' event, reside in the
- * modules/controller.js file and must be named the same as the IO action.
+ * modules/controller.js file and must be named the same as the IO action,
+ * but in camelCase. Also, the first parameter in all these functions must be
+ * 'socket' which is a reference to the socket object that made the 'emit'.
  */
 
 var io = require('socket.io').listen(server);
@@ -47,12 +53,46 @@ io.sockets.on('connection', function (socket) {
     controller.disconnect(socket);
   });
 
-  socket.on('nameAttempt', function(name) {
-    controller.nameAttempt(socket, name);
+  socket.on('join room', function(roomId) {
+    controller.joinRoom(socket, roomId);
   });
 
-  socket.on('join', function(room) {
-    controller.join(socket, room);
+  socket.on('create room', function(roomName) {
+    controller.createRoom(socket, roomName);
+  });
+
+  socket.on('close room', function(roomId) {
+    controller.closeRoom(socket, roomId);
+  });
+
+  socket.on('new question', function(question) {
+    controller.newQuestion(socket, question);
+  });
+
+  socket.on('upvote question', function(questionId) {
+    controller.upvoteQuestion(socket, questionId);
+  });
+
+  socket.on('downvote question', function(questionId) {
+    controller.downvoteQuestion(socket, questionId);
+  });
+
+  socket.on('dismiss question', function(questionId) {
+    controller.dismissQuestion(socket, questionId);
+  });
+
+  socket.on('top questions', function(question, n) {
+    controller.topQuestions(socket, n);
+  });
+
+  socket.on('all questions', function() {
+    controller.allQuestions(socket);
+  });
+
+//all on events below are used only in demo app
+
+  socket.on('nameAttempt', function(name) {
+    controller.nameAttempt(socket, name);
   });
 
   socket.on('message', function (message) {

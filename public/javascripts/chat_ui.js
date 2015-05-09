@@ -1,3 +1,7 @@
+/**
+ * TODO file header...
+ */
+
 var socket = io.connect();
 
 function divEscapedContentElement(message) {
@@ -40,8 +44,13 @@ $(document).ready(function() {
     $('#messages').append(divSystemContentElement(message));
   });
 
-  socket.on('joinResult', function(result) {
-    $('#room').text(result.room);
+  socket.on('join room', function(result) {
+    $('#room').text(result.room_id);
+    $('#messages').append(divSystemContentElement('Room changed.'));
+  });
+
+  socket.on('create room', function(result) {
+    $('#room').text(result.room_id);
     $('#messages').append(divSystemContentElement('Room changed.'));
   });
 

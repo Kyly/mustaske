@@ -1,3 +1,7 @@
+/**
+ * TODO file header...
+ */
+
 var Chat = function(socket) {
   this.socket = socket;
 };
@@ -10,11 +14,12 @@ Chat.prototype.sendMessage = function(room, text) {
   this.socket.emit('message', message);
 };
 
-Chat.prototype.changeRoom = function(currentRoom, newRoom) {
-  this.socket.emit('join', {
-    newRoom: newRoom,
-    previousRoom: currentRoom
-  });
+Chat.prototype.changeRoom = function(newRoom) {
+  this.socket.emit('join room', newRoom);
+};
+
+Chat.prototype.createRoom = function(newRoom) {
+  this.socket.emit('create room', newRoom);
 };
 
 Chat.prototype.processCommand = function(currentRoom, command) {
@@ -26,7 +31,13 @@ Chat.prototype.processCommand = function(currentRoom, command) {
     case 'join':
       words.shift();
       var newRoom = words.join(' ');
-      this.changeRoom(currentRoom, newRoom);
+      this.changeRoom(newRoom);
+      break;
+
+    case 'create':
+      words.shift();
+      var newRoom = words.join(' ');
+      this.createRoom(newRoom);
       break;
 
     case 'nick':
@@ -38,7 +49,7 @@ Chat.prototype.processCommand = function(currentRoom, command) {
     case 'q':
       words.shift();
       var question = words.join(' ');
-      this.socket.emit('question', question);
+      this.socket.emit('new question', question);
       break;
 
     default:
