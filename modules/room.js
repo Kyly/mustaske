@@ -5,10 +5,10 @@
 var Questions = require('./questions');
 
 function Room (data) {
-  this.id             = data.room_id;
-  this.name           = data.room_name;
-  this.questions      = new Questions();
-  this.owner          = data.owner_id;
+  this.id             = data.room_id; //String
+  this.name           = data.room_name; //String
+  this.questions      = new Questions(); //questions object
+  this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
 };

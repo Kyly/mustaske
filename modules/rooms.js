@@ -16,7 +16,7 @@ function Rooms() {
  * reference in rooms hash.
  *
  * @param data = {owner_id: Socket id, room_name: String}
- * @return {room_id: uuid, room_name: String, owner_id: Socket id}
+ * @return {room_id: String, room_name: String, owner_id: String}
  */
 Rooms.prototype.createRoom = function(data) {
 
@@ -27,10 +27,12 @@ Rooms.prototype.createRoom = function(data) {
     uniqueID = uuid.v1();
 
   //create new room and add it to rooms
-  this.rooms[uniqueID] = new Room({id: uniqueID, owner: data.owner_id,
-    name: data.room_name});
+  this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
+    room_name: data.room_name});
 
-  return {room_id: uniqueID, room_name: data.room_name, owner_id: data.owner_id};
+  room = this.rooms[uniqueID];
+
+  return {room_id: room.id, room_name: room.name, owner_id: room.owner};
 }
 
 /**
@@ -73,13 +75,24 @@ Rooms.prototype.closeRoom = function(data) {
   if (!this.hasRoom(data.room_id))
     return {};
 
-  if (!rooms[data.room_id].isOwner(data.owner_id))
+  if (!this.isOwner({user_id: data.owner_id, room_id: data.room_id}))
     return {};
 
   delete this.rooms[data.room_id];
 
   return data.room_id;
 }
+/** Checks to see if given user is owner of given room
+  *
+  * @param data = {user_id: String, room_id: String}
+  * @return true if owner
+  */
+Rooms.prototype.isOwner = function(data) {
+  if (!this.hasRoom(data.room_id))
+    return {};
+
+  return (this.rooms[data.room_id].owner === data.user_id);
+ }
 
 /**
  * Delgates to room. @see room.js
@@ -188,17 +201,5 @@ Rooms.prototype.downVoteQuestion = function(data) {
 
   this.rooms[data.room_id].downVoteQuestion(data);
 }
-
-/** Checks to see if given user is owner of given room
-  *
-  * @param data = {user_id: String, room_id: String}
-  * @return true if owner
-  */
-Rooms.prototype.isOwner = function(data) {
-  if (!this.hasRoom(data.room_id))
-    return {};
-
-  return (rooms[data.room_id].owner == user_id);
- }
 
 module.exports = Rooms;
