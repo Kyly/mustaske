@@ -109,8 +109,8 @@ Controller.prototype.joinRoom = function(socket, roomId) {
    * @param question {room_id : String, question_text : String}
    */
   Controller.prototype.newQuestion = function(socket, question) {
-    var data = {room_id: question.room_id, question_text: question.questionText, asker_id = socket.id}
-    socket.emit('new question', roomsObj(data))
+    var data = {room_id: question.room_id, question_text: question.questionText, asker_id: socket.id};
+    socket.emit('new question', roomsObj(data));
   }
 
   /**

@@ -118,4 +118,22 @@ Questions.prototype.getQuestions = function(n) {
   return this.orderedQuestions.slice(0,n);
 }
 
+/**
+ * Delete the question from the question heap, 
+ * upVotedQuestion array, and ordered question array.
+ * 
+ * @param Id of the question
+ * @return empty object if question does not exist
+ */
+Questions.prototype.deleteQuestion = function(questionID) {
+	//Return empty object if question does not exist
+	if (typeof this.questionHash[questionID] === undefined || typeof this.upVotedQuestions[questionID] === undefined || typeof this.orderedQuestions[questionID] === undefined)
+		return {};
+		
+	//Remove question from question heap, upvotedQuestion array, and ordered question array
+	delete this.questionHash[questionID];
+	this.upVotedQuestions.splice(questionID, 1);
+	this.orderedQuestions.splice(questionID, 1);
+}
+
 module.exports = Questions;
