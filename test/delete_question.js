@@ -6,7 +6,7 @@ var assert = require("assert");
 describe('#deleteQuestion()', function() {
 it('should delete question from hash table, up-voted question array, and ordered question array', function(){
 
-	//Make new a new Questions object
+	//Make new Questions object
 	var questions = new Questions();
 
 	//Populate questions var with new questions
@@ -32,13 +32,17 @@ it('should delete question from hash table, up-voted question array, and ordered
 
 describe('#deleteQuestion()', function() {
 it('should throw exception and return an empty object if the question does not exist', function(){
-
+	//Make new Questions object
 	var questions = new Questions();
 	
+	//Populate questions var with new questions
 	var questionOne = {room_id: "r1", question_text: "question?", asker_id: "q"};
 	var info = questions.addQuestion(questionOne);
+	
+	//Delete question
 	var test = questions.deleteQuestion(info);
 	
+	//Check if test is empty
 	assert(!test);
 	
 	})
