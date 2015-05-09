@@ -9,19 +9,29 @@ function Question (data) {
   this.comments           = [];
   this.voters             = {};
   this.voters[this.asker] = 1;
-  this.score              = 1;
+  this.score              = data.score;
   this.time               = new Date().getTime();
 }
 
 
+/*
+ Should increase score of question by one if voter hasn't voted,
+ by two if voter has previously downvoted, or decrease by one if
+ voter has previously upvoted.
+*/
 Question.prototype.upVote = function(data) {
   var voterId = data.voter_id;
 
-  if (voterId in this.voters) {
-    if (this.voters[voterId] === -1) {
+  //voted has already voted
+  if (this.voters[voterId] !== undefined) {
+
+    //voter has downvoted
+    if (this.voters[voterId] < 0) {
       this.voters[voterId] = 1;
       this.score += 2;
       return this.score;
+
+      //voter has upvoted
     } else {
       this.score -= 1;
       delete this.voters[voterId];
@@ -29,6 +39,7 @@ Question.prototype.upVote = function(data) {
     }
   }
 
+  //voter hasn't yet voted
   this.voters[voterId] = 1;
   this.score += 1;
 
@@ -36,14 +47,24 @@ Question.prototype.upVote = function(data) {
 }
 
 
+/*
+ Should decrease score of question by one if voter hasn't voted,
+ by two if voter has previously upvoted, or increase by one if
+ voter has previously downvoted.
+*/
 Question.prototype.downVote = function(data) {
   var voterId = data.voter_id;
 
-  if (voterId in this.voters) {
-    if (this.voters[voterId] === 1) {
+  //voter has already voted
+  if (this.voters[voterId] !== undefined) {
+
+    //voter has upvoted
+    if (this.voters[voterId] > 0) {
       this.voters[voterId] = -1;
       this.score -= 2;
       return this.score;
+
+      //voter has downvoted
     } else {
       this.score += 1;
       delete this.voters[voterId];
@@ -51,6 +72,7 @@ Question.prototype.downVote = function(data) {
     }
   }
 
+  //voter hasn't yet voted
   this.voters[voterId] = -1;
   this.score -= 1;
 
