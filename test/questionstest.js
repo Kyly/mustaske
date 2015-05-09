@@ -41,7 +41,7 @@ describe('Questions', function(){
       qs.upVoteQuestion({question_id: ques.id, voter_id: 'them'});
 
       // Assert
-      expect(ques.score).to.equal(1);
+      expect(ques.score).to.equal(2);
     });
   });
 
