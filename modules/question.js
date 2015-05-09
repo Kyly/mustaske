@@ -22,28 +22,29 @@ function Question (data) {
 Question.prototype.upVote = function(data) {
   var voterId = data.voter_id;
 
-  //voted has already voted
+  //voter has already voted
   if (this.voters[voterId] !== undefined) {
 
+    console.log(this.score);
     //voter has downvoted
     if (this.voters[voterId] < 0) {
       this.voters[voterId] = 1;
       this.score += 2;
-      return this.score;
+      return {question_score : this.score, question_id : this.id};
 
       //voter has upvoted
     } else {
-      this.score -= 1;
+      --(this.score);
       delete this.voters[voterId];
-      return this.score;
+      return {question_score : this.score, question_id : this.id};
     }
   }
 
   //voter hasn't yet voted
   this.voters[voterId] = 1;
-  this.score += 1;
+  ++(this.score);
 
-  return this.score;
+  return {question_score : this.score, question_id : this.id};
 }
 
 
@@ -62,22 +63,21 @@ Question.prototype.downVote = function(data) {
     if (this.voters[voterId] > 0) {
       this.voters[voterId] = -1;
       this.score -= 2;
-      return this.score;
+      return {question_score : this.score, question_id : this.id};
 
       //voter has downvoted
     } else {
-      this.score += 1;
+      ++(this.score);
       delete this.voters[voterId];
-      return this.score;
+      return {question_score : this.score, question_id : this.id};
     }
   }
 
   //voter hasn't yet voted
   this.voters[voterId] = -1;
-  this.score -= 1;
+  --(this.score);
 
-  return this.score;
+  return {question_score : this.score, question_id : this.id};
 }
-
 
 module.exports = Question;
