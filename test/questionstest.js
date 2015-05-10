@@ -28,24 +28,62 @@ describe('Questions', function(){
     });
   });
 
+
   describe('#upVoteQuestion()', function(){
-    it('should increment score in question q.', function(){
+    it('Should increase score of question by one if voter hasn\'t voted, ' +
+        'by two if voter has previously downvoted, or decrease by one if ' +
+        'voter has previously upvoted.', function() {
+
       // Set up
       var qs = new Questions();
-      var q  = {
-        asker_id       : '0',
-        question_text  : 'Some text',
-      };
+
+      var normalQUp = new Question(
+          {
+            id             : '1',
+            asker          : 'p1',
+            question       : 'Some text 1'
+          }
+      )
+
+      var downvotedQUp = new Question(
+          {
+            id             : '2',
+            asker          : 'p1',
+            question       : 'Some text 2'
+          }
+      )
+
+      downvotedQUp.voters['p2'] = -1;
+      --(downvotedQUp.score);
+
+      var upvotedQUp = new Question(
+          {
+            id             : '3',
+            asker          : 'p1',
+            question       : 'Some text 3'
+          }
+      )
+
+      upvotedQUp.voters['p2'] = 1;
+      ++(upvotedQUp.score);
 
       // Assign
-      var ques = qs.addQuestion(q);
-      qs.upVoteQuestion({question_id: ques.id, voter_id: 'them'});
+      var q1 = qs.addQuestion(normalQUp);
+      var q2 = qs.addQuestion(downvotedQUp);
+      var q3 = qs.addQuestion(upvotedQUp);
+
+      qs.upVoteQuestion({question_id: q1.id, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q2.id, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q3.id, voter_id: 'p2'});
 
       // Assert
-      expect(ques.score).to.equal(2);
-    });
-  });
+      expect(q1.score).to.equal(2);
+      expect(q2.score).to.equal(2);
+      expect(q3.score).to.equal(1);
+    })
+  })
 
+  //TODO get this like the upVoteQuestion test
   describe('#downVoteQuestion()', function(){
     it('should decrement score in question q.', function(){
       // Set up
@@ -58,8 +96,9 @@ describe('Questions', function(){
       // Assign
 
       // Assert
-    });
-  });
+    })
+  })
+
 
   describe('#getTopVoted()', function(){
     it('should get the top voted questions.', function(){
@@ -83,8 +122,9 @@ describe('Questions', function(){
       expect(topVoted2).to.have.length(2);
       // expect(topVoted2).to.contain(testquestions[2],testquestions[0]);
 
-    });
-  });
+    })
+  })
+
 
   describe('#getQuestions()', function(){
     it('should get some or all of the questions.', function(){
@@ -106,10 +146,10 @@ describe('Questions', function(){
       //   .to
       //   .contain(testquestions[count - 1],testquestions[count]);
 
-    });
-  });
+    })
+  })
 
-});
+})
 
 var testquestions = [
   {
