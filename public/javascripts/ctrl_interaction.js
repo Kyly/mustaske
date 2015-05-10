@@ -104,7 +104,8 @@ var ControllerFns = function () {
    * Warns a user
    * @param warningInfo = { user_id : string, room_id : string }, The
    * ID of the user to warn, and the room ID
-   * @return result = true if the user was put in the ban list
+   * @return result = { user_id : string, was_banned : boolean }, The
+   * user ID of the offending user, and if they were banned
    */
   var warnUserImpl = function (warningInfo) {
     // TODO: Implementation
