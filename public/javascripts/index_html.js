@@ -6,13 +6,17 @@ $(document).ready(function(){
   });
 
   $('.topquestions #thumbs_up_to_active').click(function(){
-    $('.topquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+    $('.topquestions #thumbs_up_to_active i')
+      .removeClass("fa-thumbs-o-up")
+      .addClass('fa-thumbs-up');
   });
 
 
 
   $('.topquestions #thumbs_down_to_active').click(function(){
-    $('.topquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+    $('.topquestions #thumbs_down_to_active i')
+      .removeClass("fa-thumbs-o-down")
+      .addClass('fa-thumbs-down');
 
   });
 
@@ -42,11 +46,15 @@ $(document).ready(function(){
   //REPEAT FOR RECENT QUESTIONS
 
   $('.recentquestions #thumbs_up_to_active').click(function(){
-    $('.recentquestions #thumbs_up_to_active i').removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+    $('.recentquestions #thumbs_up_to_active i')
+      .removeClass("fa-thumbs-o-up")
+      .addClass('fa-thumbs-up');
   });
 
   $('.recentquestions #thumbs_down_to_active').click(function(){
-    $('.recentquestions #thumbs_down_to_active i').removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+    $('.recentquestions #thumbs_down_to_active i')
+      .removeClass("fa-thumbs-o-down")
+      .addClass('fa-thumbs-down');
 
   });
 

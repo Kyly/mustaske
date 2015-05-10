@@ -16,7 +16,7 @@ var DomFns = function () {
    */
   var enterRoomOwnerImpl = function (roomInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Enter the room as an audience member
@@ -25,14 +25,14 @@ var DomFns = function () {
    */
   var enterRoomImpl = function (roomInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Return to the home screen
    */
   var showHomeScreenImpl = function () {
     // TODO: Implementation
-  };
+  }
 
   /**
    * update UI reflecting top questions threshold updated
@@ -40,7 +40,7 @@ var DomFns = function () {
    */
   var updateTopQuestionThresholdImpl = function (questions) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * update UI reflecting a dismissed question
@@ -48,7 +48,7 @@ var DomFns = function () {
    */
   var questionDismissedImpl = function (questionId) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Update UI reflecting a warning being issued
@@ -56,7 +56,7 @@ var DomFns = function () {
    */
   var userWarnedImpl = function (userId) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Update UI reflecting a question being added
@@ -65,7 +65,7 @@ var DomFns = function () {
    */
   var questionAddedImpl = function (questionInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Update UI reflecting the score of a question changing
@@ -74,7 +74,7 @@ var DomFns = function () {
    */
   var questionScoreChangedImpl = function (scoreInfo) {
     // TODO: Implementation
-  };
+  }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
@@ -88,5 +88,5 @@ var DomFns = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl
-    };
+    }
 }();

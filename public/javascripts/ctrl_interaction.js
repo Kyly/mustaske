@@ -17,7 +17,7 @@ var ControllerFns = function () {
    */
   var joinRoomImpl = function(roomId) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Create a new room
@@ -27,7 +27,7 @@ var ControllerFns = function () {
    */
   var createRoomImpl = function(roomName) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Destroys a room
@@ -36,7 +36,7 @@ var ControllerFns = function () {
    */
   var closeRoomImpl = function(roomId) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Ask a new question
@@ -47,7 +47,7 @@ var ControllerFns = function () {
    */
   var newQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Upvote a question
@@ -59,7 +59,7 @@ var ControllerFns = function () {
    */
   var upvoteQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Downvote a question
@@ -71,7 +71,7 @@ var ControllerFns = function () {
    */
   var downvoteQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Dismiss a question
@@ -81,7 +81,7 @@ var ControllerFns = function () {
    */
   var dismissQuestionImpl = function(questionId) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Get the top N questions
@@ -90,7 +90,7 @@ var ControllerFns = function () {
    */
   var getTopQuestionsImpl = function(amount) {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Get all questions
@@ -98,7 +98,7 @@ var ControllerFns = function () {
    */
   var getAllQuestionsImpl = function() {
     // TODO: Implementation
-  };
+  }
 
   /**
    * Warns a user
@@ -109,7 +109,7 @@ var ControllerFns = function () {
    */
   var warnUserImpl = function (warningInfo) {
     // TODO: Implementation
-  };
+  }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
@@ -125,5 +125,5 @@ var ControllerFns = function () {
     getTopQuestions: getTopQuestionsImpl,
     getAllQuestions: getAllQuestionsImpl,
     warnUser: warnUserImpl
-    };
+    }
 }();
