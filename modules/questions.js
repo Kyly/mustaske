@@ -22,13 +22,11 @@ function Questions() {
 Questions.prototype.addQuestion = function(data) {
   var newData = {id: uuid.v1(), asker_id: data.asker_id, 
                                 question_text: data.question_text};
-
   var question = new Question(newData);
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
   this.upVotedQuestions.push(question);
-
   this.moveUpToPlace(question);
 
   return question;
@@ -63,7 +61,6 @@ Questions.prototype.downVoteQuestion = function(data) {
     this.moveDownToPlace(question);
   }
 }
-
 
 
 Questions.prototype.moveUpToPlace = function(question) {
@@ -116,7 +113,6 @@ Questions.prototype.moveDownToPlace = function(question) {
   }
 }
 
-
 /**
  * Checks if function exists in question hash table.
  *
@@ -141,10 +137,12 @@ Questions.prototype.getTopVoted = function(n) {
 
   return this.upVotedQuestions.slice(0,n);
 
-  /*return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
-    return a.score - b.score;
-  });
+  /*
+    return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
+      return a.score - b.score;
+    });
   */
+
 }
 
 /**
@@ -170,17 +168,37 @@ Questions.prototype.getQuestions = function(n) {
  * @return empty object if question does not exist
  */
 Questions.prototype.deleteQuestion = function(questionID) {
-	//Return empty object if question does not exist
-	if (typeof this.questionHash[questionID] === undefined     || 
-      typeof this.upVotedQuestions[questionID] === undefined || 
-      typeof this.orderedQuestions[questionID] === undefined    ) {
-		return {};
-  }
-		
-	//Remove question from question heap, upvotedQuestion array, and ordered question array
-	delete this.questionHash[questionID];
-	this.upVotedQuestions.splice(questionID, 1);
-	this.orderedQuestions.splice(questionID, 1);
+
+  //Get reference to question from the questionHash
+  var question = this.questionHash[questionID];
+  
+  //Return empty object if question does not exist
+  if (!question)
+    return {};
+  
+  //Find index of question in upVotedQuestion array
+  var upVoted = this.upVotedQuestions.indexOf(question)
+  
+  //Check if question is in updated question
+  if (upVoted !== -1)
+    //Remove question from upVotedQuestions array
+    this.upVotedQuestions.splice(upVoted, 1);
+  
+  //Find index of question in orderedQuestion array
+  var orderedQuestion = this.orderedQuestions.indexOf(question)
+  
+  //Check if question exists in orderedQuestion array
+  if (orderedQuestion !== -1)
+    //Remove question from 
+    this.orderedQuestions.splice(orderedQuestion, 1);
+  //Throw error if question is not in orderedQuestion array
+  else
+    throw "Error!!! Question not in ordered question";
+    
+  //Remove question from questionHeap
+  delete this.questionHash[questionID];
+  
+  return {question_id: questionID};
 }
 
 module.exports = Questions;
