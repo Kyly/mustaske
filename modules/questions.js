@@ -1,7 +1,6 @@
 /**
  * Questions model and member funtions.
  */
-
 var Heap     = require('heap');
 var uuid     = require('node-uuid');
 var Question = require('./question');
@@ -17,10 +16,9 @@ function Questions() {
  * Adds question to orderd and hashed question list.
  *
  * @param data = {room_id: id, question_text: String, asker_id: String}
- * @return newly created fucntion
+ * @return {question_id: id, question_text: text}
  */
 Questions.prototype.addQuestion = function(data) {
-  // console.log(data);
   var question = new Question({
       id             : uuid.v1(),
       asker          : data.asker_id,
@@ -83,7 +81,7 @@ Questions.prototype.downVoteQuestion = function(data) {
  * @param Question id
  * @return True if question exists
  */
-Questions.prototype.hasQuestion = function(id) {
+Questions.prototype.hasQuestion = function(questionID) {
   return id in this.questionHash;
 }
 
@@ -119,18 +117,20 @@ Questions.prototype.getQuestions = function(n) {
 }
 
 /**
- * Delete the question from the question heap, 
+ * Delete the question from the question heap,
  * upVotedQuestion array, and ordered question array.
- * 
+ *
  * @param Id of the question
  * @return empty object if question does not exist
  */
 Questions.prototype.deleteQuestion = function(questionID) {
-	//Return empty object if question does not exist
+
+
+  // Return empty object if question does not exist
 	if (typeof this.questionHash[questionID] === undefined || typeof this.upVotedQuestions[questionID] === undefined || typeof this.orderedQuestions[questionID] === undefined)
 		return {};
-		
-	//Remove question from question heap, upvotedQuestion array, and ordered question array
+
+	// Remove question from question heap, upvotedQuestion array, and ordered question array
 	delete this.questionHash[questionID];
 	this.upVotedQuestions.splice(questionID, 1);
 	this.orderedQuestions.splice(questionID, 1);
