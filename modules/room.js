@@ -5,31 +5,28 @@
 var Questions = require('./questions');
 
 function Room (data) {
-  this.id             = data.room_id;
-  this.name           = data.room_name;
-  this.questions      = new Questions();
-  this.owner          = data.owner_id;
+  this.id             = data.room_id; //String
+  this.name           = data.room_name; //String
+  this.questions      = new Questions(); //questions object
+  this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
 };
 
 /**
  * Increments warnings for user in warnedUsers Hash.
- * calls banUser if warnings == 3
+ * calls banUser if user has already been warned
  *
  * @param data = user_id: id
  * @return number of warnings user has
  */
 Room.prototype.warnUser = function(user_id) {
-  if (!user_id in this.warnedUsers)
-    warnedUsers[user_id] = 1;
+  if (!(user_id in this.warnedUsers))
+    this.warnedUsers[user_id] = true;
   else
-    warnedUsers[user_id] += 1;
-
-  if (warnedUsers[user_id] == 3)
     this.banUser(user_id);
 
-  return warnedUsers[user_id];
+  return this.isBanned(user_id);
 }
 
 /**
@@ -42,7 +39,7 @@ Room.prototype.banUser = function(user_id) {
 
   this.bannedUsers[user_id] = true;
 
-  return (isBanned(user_id));
+  return (this.isBanned(user_id));
 }
 
 /**
