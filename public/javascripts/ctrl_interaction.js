@@ -2,7 +2,12 @@
  * Functions to interface with the Controller
  */
 
-var Controller = function () {
+/**
+ * This global, "static" object contains all functions for interacting with
+ * the controller. Additionally, all globals for Controller functions
+ * are encapsulated here.
+ */
+var ControllerFns = function () {
 
   /**
    * Join a room
@@ -12,7 +17,7 @@ var Controller = function () {
    */
   var joinRoomImpl = function(roomId) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Create a new room
@@ -22,7 +27,7 @@ var Controller = function () {
    */
   var createRoomImpl = function(roomName) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Destroys a room
@@ -31,7 +36,7 @@ var Controller = function () {
    */
   var closeRoomImpl = function(roomId) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Ask a new question
@@ -42,31 +47,31 @@ var Controller = function () {
    */
   var newQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Upvote a question
    * @param questionInfo = {room_id : string, question_id : string}, The id of
    * the room that contains the question to upvote, and the id of the question
    * to upvote
-   * @return result = The question {room_id : string, question_score : number}
-   * or {} on failure
+   * @return result = The question {question_id : string,
+   * question_score : number} or {} on failure
    */
   var upvoteQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Downvote a question
    * @param questionInfo = {room_id : string, question_id : string}, The id of
    * the room that contains the question to downvote, and the id of the question
    * to downvote
-   * @return result = The question {room_id : string, question_score : number}
-   * or {} on failure
+   * @return result = The question {question_id : string,
+   * question_score : number} or {} on failure
    */
   var downvoteQuestionImpl = function(questionInfo) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Dismiss a question
@@ -76,7 +81,7 @@ var Controller = function () {
    */
   var dismissQuestionImpl = function(questionId) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Get the top N questions
@@ -85,7 +90,7 @@ var Controller = function () {
    */
   var getTopQuestionsImpl = function(amount) {
     // TODO: Implementation
-  }
+  };
 
   /**
    * Get all questions
@@ -93,7 +98,20 @@ var Controller = function () {
    */
   var getAllQuestionsImpl = function() {
     // TODO: Implementation
-  }
+  };
+
+  /**
+   * Warns a user
+   * @param warningInfo = { user_id : string, room_id : string }, The
+   * ID of the user to warn, and the room ID
+   * @return result = true if the user was put in the ban list
+   */
+  var warnUserImpl = function (warningInfo) {
+    // TODO: Implementation
+  };
+
+  // TODO: Need Poll-related functions, when that functionality firms
+  // up in the backend.
 
   return {
     joinRoom: joinRoomImpl,
@@ -104,6 +122,7 @@ var Controller = function () {
     downvoteQuestion: downvoteQuestionImpl,
     dismissQuestion: dismissQuestionImpl,
     getTopQuestions: getTopQuestionsImpl,
-    getAllQuestions: getAllQuestionsImpl
+    getAllQuestions: getAllQuestionsImpl,
+    warnUser: warnUserImpl
     };
 }();
