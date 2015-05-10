@@ -6,26 +6,30 @@ var Heap     = require('heap');
 var uuid     = require('node-uuid');
 var Question = require('./question');
 
+
 function Questions() {
-  this.questionHash = {};      // All questions
+  this.questionHash     = {};  // All questions
   this.upVotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
 }
 
 /**
- * Adds question to orderd and hashed question list.
+ * Adds question to ordered and hashed question list.
  *
  * @param data = {room_id: id, question_text: String, asker_id: String}
- * @return newly created fucntion
+ * @return newly created function
  */
 Questions.prototype.addQuestion = function(data) {
   var newData = {id: uuid.v1(), asker_id: data.asker_id, 
-                 question_text: data.question_text};
+                                question_text: data.question_text};
 
   var question = new Question(newData);
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
+  this.upVotedQuestions.push(question);
+
+  this.moveUpToPlace(question);
 
   return question;
 }
@@ -40,12 +44,8 @@ Questions.prototype.addQuestion = function(data) {
 Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-
-    if (this.upVotedQuestions.indexOf(question) === -1) {
-        this.upVotedQuestions.push(question);
-    }
-
     question.upVote(data.voter_id);
+    this.moveUpToPlace(question);
   }
 }
 
@@ -59,16 +59,63 @@ Questions.prototype.upVoteQuestion = function(data) {
 Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    var voteResult = question.downVote(data.voter_id);
-    // Checks if voted down to zero
-    if (voteResult <= 0 && this.upVotedQuestions.indexOf(quesiton) !== -1) {
-      var index = this.upVotedQuestions.indexOf(quesiton);
-
-      // Remove question from upvoted
-      this.upVotedQuestions.splice(index, 1);
-    }
+    question.downVote(data.voter_id);
+    this.moveDownToPlace(question);
   }
 }
+
+
+
+Questions.prototype.moveUpToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+
+  if (indexOfThis > 0) {
+    var indexOfOther = indexOfThis - 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis > scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      --indexOfThis;
+
+      if (indexOfThis < 1)
+        break;
+
+      indexOfOther = indexOfThis - 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
+  }
+}
+
+
+Questions.prototype.moveDownToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+  var maxIndex = this.upVotedQuestions.length - 1;
+
+  if (indexOfThis < maxIndex) {
+    var indexOfOther = indexOfThis + 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis < scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      ++indexOfThis;
+
+      if (indexOfThis > (maxIndex - 1))
+        break;
+
+      indexOfOther = indexOfThis + 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
+  }
+}
+
 
 /**
  * Checks if function exists in question hash table.
@@ -82,24 +129,28 @@ Questions.prototype.hasQuestion = function(id) {
 
 /**
  * Returns a range of top voted question. Will return
- * all questions by defualt.
+ * all questions by default.
  *
- * @param Number of quesitons.
+ * @param Number of questions.
  * @return Array of questions.
  */
 Questions.prototype.getTopVoted = function(n) {
+
   // Default check
   n = typeof n !== 'undefined' ?  n : n = this.upVotedQuestions.length;
 
-  return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
+  return this.upVotedQuestions.slice(0,n);
+
+  /*return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
     return a.score - b.score;
   });
+  */
 }
 
 /**
  * Returns 0 to n most recent questions. Returns all by default.
  *
- * @param Number of quesitons.
+ * @param Number of questions.
  * @return Array of questions.
  */
 Questions.prototype.getQuestions = function(n) {
@@ -120,8 +171,11 @@ Questions.prototype.getQuestions = function(n) {
  */
 Questions.prototype.deleteQuestion = function(questionID) {
 	//Return empty object if question does not exist
-	if (typeof this.questionHash[questionID] === undefined || typeof this.upVotedQuestions[questionID] === undefined || typeof this.orderedQuestions[questionID] === undefined)
+	if (typeof this.questionHash[questionID] === undefined     || 
+      typeof this.upVotedQuestions[questionID] === undefined || 
+      typeof this.orderedQuestions[questionID] === undefined    ) {
 		return {};
+  }
 		
 	//Remove question from question heap, upvotedQuestion array, and ordered question array
 	delete this.questionHash[questionID];
