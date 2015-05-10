@@ -193,6 +193,7 @@ hr {
   left: 0;
   z-index: 1000;
   display: block;
+  padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #f5f5f5;
@@ -201,20 +202,4 @@ hr {
 
 .navbar {
    border-radius: 0;
-}
-
-.vcenter {
-  position: relative;
-  top: 50%;
-  transform: translateY(-59%);
-}
-
-.login-overlay {
-	color: #FFF;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background-color: #20597F;
-  visibility: visible;
-  z-index: 9999;
 }
