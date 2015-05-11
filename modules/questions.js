@@ -21,8 +21,8 @@ function Questions() {
  */
 Questions.prototype.addQuestion = function(data) {
   var question = new Question({
-      question_id: uuid.v1(), 
-      asker_id: data.asker_id, 
+      question_id: uuid.v1(),
+      asker_id: data.asker_id,
       question_text: data.question_text}
   );
 
@@ -31,7 +31,7 @@ Questions.prototype.addQuestion = function(data) {
   this.upVotedQuestions.push(question);
   this.moveUpToPlace(question);
 
-  return question;
+  return {question_id: question.id, question_text: question.question};
 }
 
 /**
@@ -73,7 +73,7 @@ Questions.prototype.moveUpToPlace = function(question) {
     var scoreOfThis = question.score;
     var otherQ = this.upVotedQuestions[indexOfOther];
     var scoreOfOther = otherQ.score;
-    
+
     while (scoreOfThis > scoreOfOther) {
       this.upVotedQuestions[indexOfOther] = question;
       this.upVotedQuestions[indexOfThis] = otherQ;
@@ -85,7 +85,7 @@ Questions.prototype.moveUpToPlace = function(question) {
       indexOfOther = indexOfThis - 1;
       otherQ = this.upVotedQuestions[indexOfOther];
       scoreOfOther = otherQ.score;
-    }  
+    }
   }
 }
 
@@ -99,7 +99,7 @@ Questions.prototype.moveDownToPlace = function(question) {
     var scoreOfThis = question.score;
     var otherQ = this.upVotedQuestions[indexOfOther];
     var scoreOfOther = otherQ.score;
-    
+
     while (scoreOfThis < scoreOfOther) {
       this.upVotedQuestions[indexOfOther] = question;
       this.upVotedQuestions[indexOfThis] = otherQ;
@@ -111,7 +111,7 @@ Questions.prototype.moveDownToPlace = function(question) {
       indexOfOther = indexOfThis + 1;
       otherQ = this.upVotedQuestions[indexOfOther];
       scoreOfOther = otherQ.score;
-    }  
+    }
   }
 }
 
@@ -163,9 +163,9 @@ Questions.prototype.getQuestions = function(n) {
 }
 
 /**
- * Delete the question from the question heap, 
+ * Delete the question from the question heap,
  * upVotedQuestion array, and ordered question array.
- * 
+ *
  * @param Id of the question
  * @return empty object if question does not exist
  */
@@ -173,33 +173,33 @@ Questions.prototype.deleteQuestion = function(questionID) {
 
   //Get reference to question from the questionHash
   var question = this.questionHash[questionID];
-  
+
   //Return empty object if question does not exist
   if (!question)
     return {};
-  
+
   //Find index of question in upVotedQuestion array
   var upVoted = this.upVotedQuestions.indexOf(question)
-  
+
   //Check if question is in updated question
   if (upVoted !== -1)
     //Remove question from upVotedQuestions array
     this.upVotedQuestions.splice(upVoted, 1);
-  
+
   //Find index of question in orderedQuestion array
   var orderedQuestion = this.orderedQuestions.indexOf(question)
-  
+
   //Check if question exists in orderedQuestion array
   if (orderedQuestion !== -1)
-    //Remove question from 
+    //Remove question from
     this.orderedQuestions.splice(orderedQuestion, 1);
   //Throw error if question is not in orderedQuestion array
   else
     throw "Error!!! Question not in ordered question";
-    
+
   //Remove question from questionHeap
   delete this.questionHash[questionID];
-  
+
   return {question_id: questionID};
 }
 
