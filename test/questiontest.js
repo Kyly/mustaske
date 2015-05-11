@@ -14,9 +14,9 @@ describe('Question', function(){
       // Set up
       var q = new Question(
           {
-            id             : '123456',
-            asker          : 'me',
-            question       : 'Some text'
+            question_id     : '123456',
+            asker_id        : 'me',
+            question_text   : 'Some text'
           }
       )
 
@@ -40,17 +40,17 @@ describe('Question', function(){
       // Set up
       var normalQUp = new Question(
           {
-            id             : '1',
-            asker          : 'p1',
-            question       : 'Some text 1'
+            question_id     : '1',
+            asker_id        : 'p1',
+            question_text   : 'Some text 1'
           }
       )
 
       var downvotedQUp = new Question(
           {
-            id             : '2',
-            asker          : 'p1',
-            question       : 'Some text 2'
+            question_id     : '2',
+            asker_id        : 'p1',
+            question_text   : 'Some text 2'
           }
       )
 
@@ -59,9 +59,9 @@ describe('Question', function(){
 
       var upvotedQUp = new Question(
           {
-            id             : '3',
-            asker          : 'p1',
-            question       : 'Some text 3'
+            question_id     : '3',
+            asker_id        : 'p1',
+            question_text   : 'Some text 3'
           }
       )
 
@@ -89,17 +89,17 @@ describe('Question', function(){
       // Set up
       var normalQDown = new Question(
           {
-            id             : '4',
-            asker          : 'p1',
-            question       : 'Some text 4'
+            question_id     : '4',
+            asker_id        : 'p1',
+            question_text   : 'Some text 4'
           }
       )
 
       var upvotedQDown = new Question(
           {
-            id             : '5',
-            asker          : 'p1',
-            question       : 'Some text 5'
+            question_id     : '5',
+            asker_id        : 'p1',
+            question_text   : 'Some text 5'
           }
       )
 
@@ -108,9 +108,9 @@ describe('Question', function(){
 
       var downvotedQDown = new Question(
           {
-            id             : '6',
-            asker          : 'p1',
-            question       : 'Some text 6'
+            question_id     : '6',
+            asker_id        : 'p1',
+            question_text   : 'Some text 6'
           }
       )
 

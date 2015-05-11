@@ -20,9 +20,11 @@ function Questions() {
  * @return newly created function
  */
 Questions.prototype.addQuestion = function(data) {
-  var newData = {id: uuid.v1(), asker_id: data.asker_id, 
-                                question_text: data.question_text};
-  var question = new Question(newData);
+  var question = new Question({
+      question_id: uuid.v1(), 
+      asker_id: data.asker_id, 
+      question_text: data.question_text}
+  );
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
@@ -42,7 +44,7 @@ Questions.prototype.addQuestion = function(data) {
 Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    question.upVote(data.voter_id);
+    question.upVote(data);
     this.moveUpToPlace(question);
   }
 }
@@ -57,7 +59,7 @@ Questions.prototype.upVoteQuestion = function(data) {
 Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    question.downVote(data.voter_id);
+    question.downVote(data);
     this.moveDownToPlace(question);
   }
 }
