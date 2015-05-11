@@ -3,9 +3,9 @@
  */
 
 function Question (data) {
-  this.id                 = data.id;
-  this.asker              = data.asker;
-  this.question           = data.question;
+  this.id                 = data.question_id;
+  this.asker              = data.asker_id;
+  this.question           = data.question_text;
   this.comments           = [];
   this.voters             = {};
   this.voters[this.asker] = 1;
@@ -20,27 +20,27 @@ function Question (data) {
  voter has previously upvoted.
 */
 Question.prototype.upVote = function(data) {
-  var voterId = data.voter_id;
+  var voterID = data.voter_id;
 
   //voter has already voted
-  if (this.voters[voterId] !== undefined) {
+  if (this.voters[voterID] !== undefined) {
 
     //voter has downvoted
-    if (this.voters[voterId] < 0) {
-      this.voters[voterId] = 1;
+    if (this.voters[voterID] < 0) {
+      this.voters[voterID] = 1;
       this.score += 2;
-      return {question_score : this.score, question_id : this.id};
+      return {question_score: this.score, question_id: this.id};
 
       //voter has upvoted
     } else {
       --(this.score);
-      delete this.voters[voterId];
-      return {question_score : this.score, question_id : this.id};
+      delete this.voters[voterID];
+      return {question_score: this.score, question_id: this.id};
     }
   }
 
   //voter hasn't yet voted
-  this.voters[voterId] = 1;
+  this.voters[voterID] = 1;
   ++(this.score);
 
   return {question_score : this.score, question_id : this.id};
@@ -53,27 +53,27 @@ Question.prototype.upVote = function(data) {
  voter has previously downvoted.
 */
 Question.prototype.downVote = function(data) {
-  var voterId = data.voter_id;
+  var voterID = data.voter_id;
 
   //voter has already voted
-  if (this.voters[voterId] !== undefined) {
+  if (this.voters[voterID] !== undefined) {
 
     //voter has upvoted
-    if (this.voters[voterId] > 0) {
-      this.voters[voterId] = -1;
+    if (this.voters[voterID] > 0) {
+      this.voters[voterID] = -1;
       this.score -= 2;
       return {question_score : this.score, question_id : this.id};
 
       //voter has downvoted
     } else {
       ++(this.score);
-      delete this.voters[voterId];
+      delete this.voters[voterID];
       return {question_score : this.score, question_id : this.id};
     }
   }
 
   //voter hasn't yet voted
-  this.voters[voterId] = -1;
+  this.voters[voterID] = -1;
   --(this.score);
 
   return {question_score : this.score, question_id : this.id};

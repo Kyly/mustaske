@@ -1,5 +1,5 @@
 /**
- * Test functionality for quesitons module
+ * Test functionality for questions module
  */
 
 var Questions = require('../modules/questions');
@@ -9,15 +9,17 @@ var expect = require('chai').expect;
 
 
 describe('Questions', function(){
+  
   describe('#addQuestion()', function(){
     it('should have question logged in orderedQuestions and questionHash.', function(){
 
       // Set up
       var qs = new Questions();
+
       var q = {
-          asker_id       : '0',
-          question_text  : 'Some text',
-        };
+        asker_id       : '0',
+        question_text  : 'Some text',
+      }
 
       // Assign
       var ques = qs.addQuestion(q);
@@ -27,38 +29,95 @@ describe('Questions', function(){
     });
   });
 
+
   describe('#upVoteQuestion()', function(){
-    it('should increment score in qeution q.', function(){
+    it('Should increase score of question by one if voter hasn\'t voted, ' +
+        'by two if voter has previously downvoted, or decrease by one if ' +
+        'voter has previously upvoted.', function() {
+
       // Set up
       var qs = new Questions();
-      var q  = {
-        asker_id       : '0',
-        question_text  : 'Some text',
-      };
+
+      var normalQUp = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 1'
+      }
+
+      var downvotedQUp = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 2'
+      }
+
+      var upvotedQUp = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 3'
+      }
 
       // Assign
-      var ques = qs.addQuestion(q);
-      qs.upVoteQuestion({question_id: ques.id, voter_id: 'them'});
+      var q1 = qs.addQuestion(normalQUp);
+      var q2 = qs.addQuestion(downvotedQUp);
+      q2.voters['p2'] = -1;
+      --(q2.score);
+      var q3 = qs.addQuestion(upvotedQUp);
+      q3.voters['p2'] = 1;
+      ++(q3.score);
+      
+
+      qs.upVoteQuestion({question_id: q1.id, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q2.id, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q3.id, voter_id: 'p2'});
 
       // Assert
-      expect(ques.score).to.equal(2);
-    });
-  });
+      expect(q1.score).to.equal(2);
+      expect(q2.score).to.equal(2);
+      expect(q3.score).to.equal(1);
+    })
+  })
 
+  //TODO get this like the upVoteQuestion test
   describe('#downVoteQuestion()', function(){
-    it('should decrement score in qeution q.', function(){
+    it('Should decrease score of question by one if voter hasn\'t voted, ' +
+        'by two if voter has previously upvoted, or increase by one if ' +
+        'voter has previously downvoted.', function(){
       // Set up
       var qs = new Questions();
-      var q  = {
-        asker_id       : '0',
-        question_text  : 'Some text',
-      };
+
+      var normalQDown = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 1'
+      }
+
+      var upvotedQDown = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 2'
+      }
+
+      var downvotedQDown = {
+        asker_id          : 'p1',
+        question_text     : 'Some text 3'
+      }
 
       // Assign
+      var q1 = qs.addQuestion(normalQDown);
+      var q2 = qs.addQuestion(upvotedQDown);
+      q2.voters['p2'] = 1;
+      ++(q2.score);
+      var q3 = qs.addQuestion(downvotedQDown);
+      q3.voters['p2'] = -1;
+      --(q3.score);
+      
+
+      qs.downVoteQuestion({question_id: q1.id, voter_id: 'p2'});
+      qs.downVoteQuestion({question_id: q2.id, voter_id: 'p2'});
+      qs.downVoteQuestion({question_id: q3.id, voter_id: 'p2'});
 
       // Assert
-    });
-  });
+      expect(q1.score).to.equal(0);
+      expect(q2.score).to.equal(0);
+      expect(q3.score).to.equal(1);
+    })
+  })
+
 
   describe('#getTopVoted()', function(){
     it('should get the top voted questions.', function(){
@@ -82,8 +141,9 @@ describe('Questions', function(){
       expect(topVoted2).to.have.length(2);
       // expect(topVoted2).to.contain(testquestions[2],testquestions[0]);
 
-    });
-  });
+    })
+  })
+
 
   describe('#getQuestions()', function(){
     it('should get some or all of the questions.', function(){
@@ -105,10 +165,10 @@ describe('Questions', function(){
       //   .to
       //   .contain(testquestions[count - 1],testquestions[count]);
 
-    });
-  });
+    })
+  })
 
-});
+})
 
 var testquestions = [
   {

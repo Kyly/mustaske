@@ -1,36 +1,37 @@
 /**
  * Questions model and member funtions.
  */
+
 var Heap     = require('heap');
 var uuid     = require('node-uuid');
 var Question = require('./question');
 
+
 function Questions() {
-  this.questionHash = {};      // All quesitons
-  this.upVotedQuestions = [];  // Refrence to question that have been upvoted
+  this.questionHash     = {};  // All questions
+  this.upVotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
 
 }
 
 /**
- * Adds question to orderd and hashed question list.
+ * Adds question to ordered and hashed question list.
  *
  * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @return newly created function
  * @return {question_id: id, question_text: text}
  */
 Questions.prototype.addQuestion = function(data) {
   var question = new Question({
-      id             : uuid.v1(),
-      asker          : data.asker_id,
-      question       : data.question_text,
-      comments       : [],
-      voters         : [data.asker_id],
-      score          : 0,
-      time           : new Date().getTime()
-  });
+      question_id: uuid.v1(), 
+      asker_id: data.asker_id, 
+      question_text: data.question_text}
+  );
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
+  this.upVotedQuestions.push(question);
+  this.moveUpToPlace(question);
 
   return question;
 }
@@ -45,12 +46,8 @@ Questions.prototype.addQuestion = function(data) {
 Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-
-    if (this.upVotedQuestions.indexOf(question) === -1) {
-        this.upVotedQuestions.push(question);
-    }
-
-    question.upVote(data.voter_id);
+    question.upVote(data);
+    this.moveUpToPlace(question);
   }
 }
 
@@ -64,14 +61,59 @@ Questions.prototype.upVoteQuestion = function(data) {
 Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    var voteResult = question.downVote(data.voter_id);
-    // Checks if voted down to zero
-    if (voteResult <= 0 && this.upVotedQuestions.indexOf(quesiton) !== -1) {
-      var index = this.upVotedQuestions.indexOf(quesiton);
+    question.downVote(data);
+    this.moveDownToPlace(question);
+  }
+}
 
-      // Remove quesiton from upvoted
-      this.upVotedQuestions.splice(index, 1);
-    }
+
+Questions.prototype.moveUpToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+
+  if (indexOfThis > 0) {
+    var indexOfOther = indexOfThis - 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis > scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      --indexOfThis;
+
+      if (indexOfThis < 1)
+        break;
+
+      indexOfOther = indexOfThis - 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
+  }
+}
+
+
+Questions.prototype.moveDownToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+  var maxIndex = this.upVotedQuestions.length - 1;
+
+  if (indexOfThis < maxIndex) {
+    var indexOfOther = indexOfThis + 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis < scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      ++indexOfThis;
+
+      if (indexOfThis > (maxIndex - 1))
+        break;
+
+      indexOfOther = indexOfThis + 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
   }
 }
 
@@ -81,30 +123,36 @@ Questions.prototype.downVoteQuestion = function(data) {
  * @param Question id
  * @return True if question exists
  */
-Questions.prototype.hasQuestion = function(questionID) {
-  return id in this.questionHash;
+Questions.prototype.hasQuestion = function(id) {
+  return (id in this.questionHash);
 }
 
 /**
  * Returns a range of top voted question. Will return
- * all questions by defualt.
+ * all questions by default.
  *
- * @param Number of quesitons.
+ * @param Number of questions.
  * @return Array of questions.
  */
 Questions.prototype.getTopVoted = function(n) {
+
   // Default check
   n = typeof n !== 'undefined' ?  n : n = this.upVotedQuestions.length;
 
-  return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
-    return a.score - b.score;
-  });
+  return this.upVotedQuestions.slice(0,n);
+
+  /*
+    return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
+      return a.score - b.score;
+    });
+  */
+
 }
 
 /**
  * Returns 0 to n most recent questions. Returns all by default.
  *
- * @param Number of quesitons.
+ * @param Number of questions.
  * @return Array of questions.
  */
 Questions.prototype.getQuestions = function(n) {
@@ -117,23 +165,44 @@ Questions.prototype.getQuestions = function(n) {
 }
 
 /**
- * Delete the question from the question heap,
+ * Delete the question from the question heap, 
  * upVotedQuestion array, and ordered question array.
- *
+ * 
  * @param Id of the question
  * @return empty object if question does not exist
  */
 Questions.prototype.deleteQuestion = function(questionID) {
 
-
-  // Return empty object if question does not exist
-	if (typeof this.questionHash[questionID] === undefined || typeof this.upVotedQuestions[questionID] === undefined || typeof this.orderedQuestions[questionID] === undefined)
-		return {};
-
-	// Remove question from question heap, upvotedQuestion array, and ordered question array
-	delete this.questionHash[questionID];
-	this.upVotedQuestions.splice(questionID, 1);
-	this.orderedQuestions.splice(questionID, 1);
+  //Get reference to question from the questionHash
+  var question = this.questionHash[questionID];
+  
+  //Return empty object if question does not exist
+  if (!question)
+    return {};
+  
+  //Find index of question in upVotedQuestion array
+  var upVoted = this.upVotedQuestions.indexOf(question)
+  
+  //Check if question is in updated question
+  if (upVoted !== -1)
+    //Remove question from upVotedQuestions array
+    this.upVotedQuestions.splice(upVoted, 1);
+  
+  //Find index of question in orderedQuestion array
+  var orderedQuestion = this.orderedQuestions.indexOf(question)
+  
+  //Check if question exists in orderedQuestion array
+  if (orderedQuestion !== -1)
+    //Remove question from 
+    this.orderedQuestions.splice(orderedQuestion, 1);
+  //Throw error if question is not in orderedQuestion array
+  else
+    throw "Error!!! Question not in ordered question";
+    
+  //Remove question from questionHeap
+  delete this.questionHash[questionID];
+  
+  return {question_id: questionID};
 }
 
 module.exports = Questions;
