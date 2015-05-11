@@ -73,20 +73,20 @@ Rooms.prototype.hasRoom = function (room_id) {
 Rooms.prototype.closeRoom = function(data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    return {};
+    return false;
 
   if (!this.isOwner({user_id: data.owner_id, room_id: data.room_id}))
-    return {};
+    return false;
 
   delete this.rooms[data.room_id];
 
-  return data.room_id;
+  return true;
 }
 /** Checks to see if given user is owner of given room
-  *
-  * @param data = {user_id: String, room_id: String}
-  * @return true if owner
-  */
+ *
+ * @param data = {user_id: String, room_id: String}
+ * @return true if owner
+ */
 Rooms.prototype.isOwner = function(data) {
   if (!this.hasRoom(data.room_id))
     return {};

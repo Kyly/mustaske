@@ -17,7 +17,7 @@ function Room (data) {
  * Increments warnings for user in warnedUsers Hash.
  * calls banUser if user has already been warned
  *
- * @param data = user_id: id
+ * @param data = user_id: String
  * @return number of warnings user has
  */
 Room.prototype.warnUser = function(user_id) {
@@ -32,7 +32,7 @@ Room.prototype.warnUser = function(user_id) {
 /**
  * Bans user, adding their user_id to bannedUsers Hash
  *
- * @param data = user_id: id
+ * @param data = user_id: String
  * @return true if user_id succesfully added to bannedUsers Hash
  */
 Room.prototype.banUser = function(user_id) {
@@ -45,7 +45,7 @@ Room.prototype.banUser = function(user_id) {
 /**
  * Checks if user_id is in bannedUsers Hash
  *
- * @param data = user_id: id
+ * @param data = user_id: String
  * @return true if user_id in bannedUsers Hash
  */
 Room.prototype.isBanned = function(user_id) {
@@ -57,37 +57,50 @@ Room.prototype.addQuestion = function(data) {
 }
 
 /** Checks to see if the question already exists. Adds the question to the
-  * Room's Questions object if it doesn't.
-  *
-  * @param data = {room_id: id, question_text: String, asker_id: String}
-  * @return newly created question
-  */
+ * Room's Questions object if it doesn't.
+ *
+ * @param data = {room_id: String, question_text: String, asker_id: String}
+ * @return newly created question
+ */
 Room.prototype.hasQuestion = function(questionId) {
   return this.questions.hasQuestion(questionId);
 }
-/**TODO
-  *   data = {room_id: id, question_id: id, voter_id: id}
-  */
+/**
+ * Sends necessary info down the chain to upvoteQuestion() in questions. Returns
+ * proper data to controller.js.
+ *
+ * @param data = {room_id: String, question_id: String, voter_id: String}
+ * @return {question_id: String, question_score: int}
+ */
 Room.prototype.upvoteQuestion = function(data) {
-  this.questions.upvoteQuestion(data);
+  return this.questions.upvoteQuestion(data);
 }
 
-/**TODO
-  *   data = {room_id: id, question_id: id, voter_id: id}
-  */
+/**
+ * Sends necessary info down the chain to downvoteQuestion() in questions.
+ * Returns proper data to controller.js.
+ * @param data = {room_id: String, question_id: String, voter_id: String}
+ * @return {question_id: String, question_score: int}
+ */
 Room.prototype.downvoteQuestion = function(data) {
-  this.questions.downvoteQuestion(data);
+  return this.questions.downvoteQuestion(data);
 }
 
-/**TODO
-  *   n = int, number of top voted questions to return
-  */
+/**
+ * Sends necessary info down the chain to getTopVoted() in questions.
+ * Returns proper data to controller.js.
+ * @param n = int, number of top voted questions to return
+ * @return array of top n voted questions
+ */
 Room.prototype.getTopVoted = function(n) {
   return this.questions.getTopVoted(n);
 }
 
-/**TODO
- * returns all questions
+/**
+ * Sends necessary info down the chan to getQuestions() in questions.
+ * Returns proper data to controller.js.
+ * @param none
+ * @return array of all the questions in this room
  */
 Room.prototype.getQuestions = function() {
   return this.questions.getQuestions();
