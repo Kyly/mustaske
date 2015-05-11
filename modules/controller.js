@@ -162,6 +162,15 @@ Controller.prototype.joinRoom = function(socket, roomID) {
     socket.broadcast.to(roomID).emit('top questions', returnData);
   }
 
+  /**
+   * TODO
+   */
+  Controller.prototype.warnUser = function(socket, data) {
+    var warnData = {owner_id: socket.id, question_id: data.question_id,
+      room_id: data.room_id};
+    var returnData = this.roomsObj.warnUser(warnData);
+  }
+
 //below is used in the chat demo and shouldn't be used in actual app
 //******************************************************************
 
