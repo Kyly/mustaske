@@ -27,10 +27,8 @@ Rooms.prototype.createRoom = function (data) {
     uniqueID = rid();
 
   //create new room and add it to rooms
-  this.rooms[uniqueID] = new Room({
-    room_id: uniqueID, owner_id: data.owner_id,
-    room_name: data.room_name
-  });
+  this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
+    room_name: data.room_name});
 
   room = this.rooms[uniqueID];
 
@@ -77,21 +75,21 @@ Rooms.prototype.hasRoom = function (room_id) {
 Rooms.prototype.closeRoom = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
-    return {};
+    return false;
 
   if (!this.isOwner({user_id: data.owner_id, room_id: data.room_id}))
-    return {};
+    return false;
 
   delete this.rooms[data.room_id];
 
-  return data.room_id;
+  return true;
 }
 /** Checks to see if given user is owner of given room
  *
  * @param data = {user_id: String, room_id: String}
  * @return true if owner
  */
-Rooms.prototype.isOwner = function (data) {
+Rooms.prototype.isOwner = function(data) {
   if (!this.hasRoom(data.room_id))
     return {};
 

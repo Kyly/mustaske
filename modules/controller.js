@@ -25,20 +25,11 @@ function Controller() {
 /**
  * This is what gets called when a client initially connects to the server
  */
-Controller.prototype.initialConnect = function (socket) {
-  var newRoomId = this.createRoom(socket, 'Lobby').room_id;
-  socket.join(newRoomId);
-  socket.emit('join room', this.roomsObj.joinRoom(newRoomId))
 
-  var name = 'Guest' + this.guestNumber;
-  this.nickNames[socket.id] = name;
-  socket.emit('nameResult', {
-    success: true,
-    name: name
-  });
-
-  this.namesUsed.push(name);
-  this.guestNumber += 1;
+Controller.prototype.initialConnect = function(socket) {
+  var newRoomID = this.roomsObj.createRoom({owner_id: socket.id,
+    room_name: 'Lobby'}).room_id;
+  this.joinRoom(socket, newRoomID)
 }
 
 /**
@@ -61,19 +52,14 @@ Controller.prototype.disconnect = function (socket) {
  *             questions: Array, room_id: id}
  *          or false if room does not exist
  */
-Controller.prototype.joinRoom = function (socket, roomId) {
-  //socket.leave(roomId.previousRoom);
-
-  if (this.roomsObj.hasRoom(roomId)) {
-    socket.join(roomId);
-    //console.log('Join: ' + roomId);
-    socket.emit('join room', this.roomsObj.joinRoom(roomId));
+Controller.prototype.joinRoom = function(socket, roomID) {
+  if(this.roomsObj.hasRoom(roomID)) {
+    var returnData = this.roomsObj.joinRoom(roomID);
+    socket.join(roomID);
+    socket.emit('join room', returnData);
   }
-
-  else {
+  else
     socket.emit('join room', false);
-  }
-
 }
 
 /**
@@ -82,20 +68,14 @@ Controller.prototype.joinRoom = function (socket, roomId) {
  *
  * @param socket: Socket IO object
  * @param roomName: name of new room
- * @return Room name and room id
+ * @return {room_name: String, room_id: String, owner_id: String}
  */
-Controller.prototype.createRoom = function (socket, roomName) {
 
-  //console.log('Create room called!');
+Controller.prototype.createRoom = function(socket, roomName) {
   var createData = {room_name: roomName, owner_id: socket.id};
   var returnData = this.roomsObj.createRoom(createData);
-  //console.log(this.roomsObj);
   socket.join(returnData.room_id);
-  socket.emit('create room', {
-    room_name: returnData.room_name,
-    room_id: returnData.room_id
-  });
-  return {room_name: returnData.room_name, room_id: returnData.room_id};
+  socket.emit('create room', returnData);
 }
 
 /**
@@ -169,6 +149,89 @@ Controller.prototype.topQuestions = function (socket, n) {
 Controller.prototype.allQuestions = function (socket) {
   //TODO function body
 }
+
+
+ /**
+  * This handles the flow of data when a 'close room' emit is received by
+  * the server
+  *
+  * @param socket: Socket IO object
+  * @param roomId: UUID of room to be closed
+  * @return true if room closes, else false
+  */
+  Controller.prototype.closeRoom = function(socket, roomId) {
+    var returnData = rooms.closeRoom({owner_id: socket.id, room_id: roomId})
+    socket.broadcast.to(roomId).emit('close room', returnData);
+  }
+
+  /**
+   * This handles closing a specified room
+   *
+   * @param socket : Socket IO object
+   * @param question {room_id : String, question_text : String}
+   * @return {question_id: String, question_text: String}
+   */
+  Controller.prototype.newQuestion = function(socket, question) {
+    var data = {room_id: question.room_id, question_text: question.questionText,
+       asker_id: socket.id};
+    var returnData = roomsObj.addQuestion(data);
+    socket.emit('new question', returnData);
+  }
+
+  /**
+   * This handles upvoting specific questions in specific rooms
+   * @param socket : Socket IO object
+   * @param data = {room_id: String, question_id: String}
+   * @return TODO
+   */
+  Controller.prototype.upvoteQuestion = function(socket, data) {
+    var questionData = {room_id: data.room_id, question_id: data.question_id,
+       voter_id: socket.id};
+    var returnData = roomsObj.upvoteQuestion(questionData);
+    socket.emit('upvote question', returnData);
+  }
+
+  /**
+   * This handles downvoting specific qustions in specific rooms
+   * @param socket : Socket IO object
+   * @param data : {room_id: String, question_id: String}
+   * @return TODO
+   */
+  Controller.prototype.downvoteQuestion = function(socket, data) {
+    var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
+    socket.emit('downvote question', roomsObj(questionData));
+  }
+
+  /**
+   * This handles dismissing of questions by the owner of a room
+   * @param socket : Socket IO object
+   * @param data : {room_id: String, question_id: String}
+   * @return TODO
+   */
+  Controller.prototype.dismissQuestion = function(socket, data) {
+    var questionData = {room_id: data.room_id, question_id: data.question_id, owner_id: socket.id};
+    socket.emit('dismiss question', roomsObj.dismissQuestion(questionData));
+  }
+
+  /**
+   * This handles returning an array filled with the top n questions based on score
+   * @param socket : Socket IO object
+   * @param n : int
+   * @return TODO
+   */
+  Controller.prototype.topQuestions = function(socket, n) {
+    //TODO function body
+  }
+
+  /**
+   * This handles returning an array filled with all of the questinos in the room
+   * @param socket : Socket IO object
+   * @param roomID : String
+   * @return TODO
+   */
+  Controller.prototype.allQuestions = function(socket, roomID) {
+    //TODO function body
+  }
 
 //below is used in the chat demo and shouldn't be used in actual app
 //******************************************************************
