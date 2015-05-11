@@ -4,13 +4,13 @@
 
 var Questions = require('./questions');
 
-function Room (data) {
-  this.id             = data.room_id; //String
-  this.name           = data.room_name; //String
-  this.questions      = new Questions(); //questions object
-  this.owner          = data.owner_id; //String
-  this.bannedUsers    = {};  // Hash containing banned users
-  this.warnedUsers    = {};  // Hash containing warned users
+function Room(data) {
+  this.id = data.room_id; //String
+  this.name = data.room_name; //String
+  this.questions = new Questions(); //questions object
+  this.owner = data.owner_id; //String
+  this.bannedUsers = {};  // Hash containing banned users
+  this.warnedUsers = {};  // Hash containing warned users
 };
 
 /**
@@ -20,7 +20,7 @@ function Room (data) {
  * @param data = user_id: id
  * @return number of warnings user has
  */
-Room.prototype.warnUser = function(user_id) {
+Room.prototype.warnUser = function (user_id) {
   if (!(user_id in this.warnedUsers))
     this.warnedUsers[user_id] = true;
   else
@@ -35,7 +35,7 @@ Room.prototype.warnUser = function(user_id) {
  * @param data = user_id: id
  * @return true if user_id succesfully added to bannedUsers Hash
  */
-Room.prototype.banUser = function(user_id) {
+Room.prototype.banUser = function (user_id) {
 
   this.bannedUsers[user_id] = true;
 
@@ -48,49 +48,49 @@ Room.prototype.banUser = function(user_id) {
  * @param data = user_id: id
  * @return true if user_id in bannedUsers Hash
  */
-Room.prototype.isBanned = function(user_id) {
+Room.prototype.isBanned = function (user_id) {
   return (user_id in this.bannedUsers);
 }
 
-Room.prototype.addQuestion = function(data) {
+Room.prototype.addQuestion = function (data) {
   return this.questions.addQuestion(data);
 }
 
 /** Checks to see if the question already exists. Adds the question to the
-  * Room's Questions object if it doesn't.
-  *
-  * @param data = {room_id: id, question_text: String, asker_id: String}
-  * @return newly created question
-  */
-Room.prototype.hasQuestion = function(questionId) {
+ * Room's Questions object if it doesn't.
+ *
+ * @param data = {room_id: id, question_text: String, asker_id: String}
+ * @return newly created question
+ */
+Room.prototype.hasQuestion = function (questionId) {
   return this.questions.hasQuestion(questionId);
 }
 /**TODO
-  *   data = {room_id: id, question_id: id, voter_id: id}
-  */
-Room.prototype.upvoteQuestion = function(data) {
+ *   data = {room_id: id, question_id: id, voter_id: id}
+ */
+Room.prototype.upvoteQuestion = function (data) {
   this.questions.upvoteQuestion(data);
 }
 
 /**TODO
-  *   data = {room_id: id, question_id: id, voter_id: id}
-  */
-Room.prototype.downvoteQuestion = function(data) {
+ *   data = {room_id: id, question_id: id, voter_id: id}
+ */
+Room.prototype.downvoteQuestion = function (data) {
   this.questions.downvoteQuestion(data);
 }
 
 /**TODO
-  *   n = int, number of top voted questions to return
-  */
-Room.prototype.getTopVoted = function(n) {
+ *   n = int, number of top voted questions to return
+ */
+Room.prototype.getTopVoted = function (n) {
   return this.questions.getTopVoted(n);
 }
 
 /**TODO
  * returns all questions
  */
-Room.prototype.getQuestions = function() {
+Room.prototype.getQuestions = function () {
   return this.questions.getQuestions();
- }
+}
 
 module.exports = Room;
