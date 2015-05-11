@@ -9,7 +9,7 @@ var expect = require('chai').expect;
 
 
 describe('Questions', function(){
-  
+
   describe('#addQuestion()', function(){
     it('should have question logged in orderedQuestions and questionHash.', function(){
 
@@ -23,9 +23,10 @@ describe('Questions', function(){
 
       // Assign
       var ques = qs.addQuestion(q);
+      console.log(ques);
 
       // Assert
-      expect(qs.hasQuestion(ques.id)).to.be.true;
+      expect(qs.hasQuestion(ques.question_id)).to.be.true;
     });
   });
 
@@ -54,23 +55,23 @@ describe('Questions', function(){
       }
 
       // Assign
-      var q1 = qs.addQuestion(normalQUp);
-      var q2 = qs.addQuestion(downvotedQUp);
-      q2.voters['p2'] = -1;
-      --(q2.score);
-      var q3 = qs.addQuestion(upvotedQUp);
-      q3.voters['p2'] = 1;
-      ++(q3.score);
-      
+      var q1 = qs.addQuestion(normalQUp).question_id;
+      var q2 = qs.addQuestion(downvotedQUp).question_id;
+      qs.questionHash[q2].voters['p2'] = -1;
+      --(qs.questionHash[q2].score);
+      var q3 = qs.addQuestion(upvotedQUp).question_id;
+      qs.questionHash[q3].voters['p2'] = 1;
+      ++(qs.questionHash[q3].score);
 
-      qs.upVoteQuestion({question_id: q1.id, voter_id: 'p2'});
-      qs.upVoteQuestion({question_id: q2.id, voter_id: 'p2'});
-      qs.upVoteQuestion({question_id: q3.id, voter_id: 'p2'});
+
+      qs.upVoteQuestion({question_id: q1, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q2, voter_id: 'p2'});
+      qs.upVoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
-      expect(q1.score).to.equal(2);
-      expect(q2.score).to.equal(2);
-      expect(q3.score).to.equal(1);
+      expect(qs.questionHash[q1].score).to.equal(2);
+      expect(qs.questionHash[q2].score).to.equal(2);
+      expect(qs.questionHash[q3].score).to.equal(1);
     })
   })
 
@@ -98,23 +99,23 @@ describe('Questions', function(){
       }
 
       // Assign
-      var q1 = qs.addQuestion(normalQDown);
-      var q2 = qs.addQuestion(upvotedQDown);
-      q2.voters['p2'] = 1;
-      ++(q2.score);
-      var q3 = qs.addQuestion(downvotedQDown);
-      q3.voters['p2'] = -1;
-      --(q3.score);
-      
+      var q1 = qs.addQuestion(normalQDown).question_id;
+      var q2 = qs.addQuestion(upvotedQDown).question_id;
+      qs.questionHash[q2].voters['p2'] = 1;
+      ++(qs.questionHash[q2].score);
+      var q3 = qs.addQuestion(downvotedQDown).question_id;
+      qs.questionHash[q3].voters['p2'] = -1;
+      --(qs.questionHash[q3].score);
 
-      qs.downVoteQuestion({question_id: q1.id, voter_id: 'p2'});
-      qs.downVoteQuestion({question_id: q2.id, voter_id: 'p2'});
-      qs.downVoteQuestion({question_id: q3.id, voter_id: 'p2'});
+
+      var q1Score = qs.downVoteQuestion({question_id: q1, voter_id: 'p2'});
+      var q2Score = qs.downVoteQuestion({question_id: q2, voter_id: 'p2'});
+      var q3Score = qs.downVoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
-      expect(q1.score).to.equal(0);
-      expect(q2.score).to.equal(0);
-      expect(q3.score).to.equal(1);
+      expect(q1Score.question_score).to.equal(0);
+      expect(q2Score.question_score).to.equal(0);
+      expect(q3Score.question_score).to.equal(1);
     })
   })
 

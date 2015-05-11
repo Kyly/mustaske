@@ -17,7 +17,7 @@ function Questions() {
  * Adds question to ordered and hashed question list.
  *
  * @param data = {room_id: id, question_text: String, asker_id: String}
- * @return newly created function
+ * @return {question_id: String, question_text: String}
  */
 Questions.prototype.addQuestion = function(data) {
   var question = new Question({
@@ -29,7 +29,7 @@ Questions.prototype.addQuestion = function(data) {
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
   this.upVotedQuestions.push(question);
-  this.moveUpToPlace(question);
+  //this.moveUpToPlace(question);
 
   return {question_id: question.id, question_text: question.question};
 }
@@ -44,9 +44,10 @@ Questions.prototype.addQuestion = function(data) {
 Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    question.upVote(data);
-    //this.moveUpToPlace(question);
+    return question.upVote(data);
   }
+  else
+    return false;
 }
 
 /**
@@ -59,9 +60,10 @@ Questions.prototype.upVoteQuestion = function(data) {
 Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    question.downVote(data);
-    //this.moveDownToPlace(question);
+    return question.downVote(data);
   }
+  else
+    return false;
 }
 
 /**
@@ -89,7 +91,7 @@ Questions.prototype.getTopVoted = function(n) {
   return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
     return a.score - b.score;
   });
-  
+
   //return this.upVotedQuestions.slice(0,n);
 }
 
@@ -122,7 +124,7 @@ Questions.prototype.deleteQuestion = function(questionID) {
 
   //Return empty object if question does not exist
   if (!question)
-    return {};
+    return false;
 
   //Find index of question in upVotedQuestion array
   var upVoted = this.upVotedQuestions.indexOf(question)
@@ -149,6 +151,17 @@ Questions.prototype.deleteQuestion = function(questionID) {
   return {question_id: questionID};
 }
 
+/**
+ * Looks up the user associated with the questionable question and returns it.
+ *
+ * @param questionID: String
+ * @return asker_id: String
+ */
+ Questions.prototype.warnUser = function(questionID) {
+   return this.questionHash[questionID].asker;
+ }
+
+ 
 /*Questions.prototype.moveUpToPlace = function(question) {
   var indexOfThis = this.upVotedQuestions.indexOf(question);
 
@@ -157,7 +170,7 @@ Questions.prototype.deleteQuestion = function(questionID) {
     var scoreOfThis = question.score;
     var otherQ = this.upVotedQuestions[indexOfOther];
     var scoreOfOther = otherQ.score;
-    
+
     while (scoreOfThis > scoreOfOther) {
       this.upVotedQuestions[indexOfOther] = question;
       this.upVotedQuestions[indexOfThis] = otherQ;
@@ -169,7 +182,7 @@ Questions.prototype.deleteQuestion = function(questionID) {
       indexOfOther = indexOfThis - 1;
       otherQ = this.upVotedQuestions[indexOfOther];
       scoreOfOther = otherQ.score;
-    }  
+    }
   }
 }
 
@@ -183,7 +196,7 @@ Questions.prototype.moveDownToPlace = function(question) {
     var scoreOfThis = question.score;
     var otherQ = this.upVotedQuestions[indexOfOther];
     var scoreOfOther = otherQ.score;
-    
+
     while (scoreOfThis < scoreOfOther) {
       this.upVotedQuestions[indexOfOther] = question;
       this.upVotedQuestions[indexOfThis] = otherQ;
@@ -195,7 +208,7 @@ Questions.prototype.moveDownToPlace = function(question) {
       indexOfOther = indexOfThis + 1;
       otherQ = this.upVotedQuestions[indexOfOther];
       scoreOfOther = otherQ.score;
-    }  
+    }
   }
 }*/
 

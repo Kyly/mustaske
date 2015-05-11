@@ -24,12 +24,10 @@ function Controller () {
 
 /**
  * This is what gets called when a client initially connects to the server
+ * @param socket = Socket IO object
  */
 Controller.prototype.initialConnect = function(socket) {
-  var newRoomID = this.roomsObj.createRoom({owner_id: socket.id,
-    room_name: 'Lobby'}).room_id;
-
-  this.joinRoom(socket, newRoomID)
+  //here to hanle the intitial connection to the server
 }
 
 /**
@@ -101,7 +99,7 @@ Controller.prototype.joinRoom = function(socket, roomID) {
     var data = {room_id: question.room_id, question_text: question.questionText,
        asker_id: socket.id};
     var returnData = roomsObj.addQuestion(data);
-    socket.emit('new question', returnData);
+    socket.broadcast.to(question.room_id).emit('new question', returnData);
   }
 
   /**
@@ -114,7 +112,7 @@ Controller.prototype.joinRoom = function(socket, roomID) {
     var questionData = {room_id: data.room_id, question_id: data.question_id,
        voter_id: socket.id};
     var returnData = roomsObj.upvoteQuestion(questionData);
-    socket.emit('upvote question', returnData);
+    socket.broadcast.to(data.room_id).emit('upvote question', returnData);
   }
 
   /**
@@ -125,7 +123,8 @@ Controller.prototype.joinRoom = function(socket, roomID) {
    */
   Controller.prototype.downvoteQuestion = function(socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
-    socket.emit('downvote question', roomsObj(questionData));
+    var returnData = roomsObj(questionData);
+    socket.broadcast.to(data.room_id).emit('downvote question', returnData);
   }
 
   /**
@@ -136,27 +135,40 @@ Controller.prototype.joinRoom = function(socket, roomID) {
    */
   Controller.prototype.dismissQuestion = function(socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, owner_id: socket.id};
-    socket.emit('dismiss question', roomsObj.dismissQuestion(questionData));
+    var returnData = roomsObj.deleteQuestion(questionData);
+    socket.broadcast.to(data.room_id).emit('dismiss question', returnData);
   }
 
   /**
    * This handles returning an array filled with the top n questions based on score
    * @param socket : Socket IO object
-   * @param n : int
-   * @return TODO
+   * @param {room_id: String, num_questions : int}
+   * @return array of the top (num_questions) questions
    */
-  Controller.prototype.topQuestions = function(socket, n) {
-    //TODO function body
+  Controller.prototype.topQuestions = function(socket, data) {
+    var returnData = this.roomsObj.getTopVoted(data);
+    socket.broadcast.to(data.room_id).emit('top questions', returnData);
   }
 
   /**
-   * This handles returning an array filled with all of the questinos in the room
+   * This handles returning an array filled with all of the questions in the
+   * room
    * @param socket : Socket IO object
    * @param roomID : String
-   * @return TODO
+   * @return array of all the questions in the room
    */
   Controller.prototype.allQuestions = function(socket, roomID) {
-    //TODO function body
+    var returnData = this.roomsObj.getTopVoted({room_id: roomID});
+    socket.broadcast.to(roomID).emit('top questions', returnData);
+  }
+
+  /**
+   * TODO
+   */
+  Controller.prototype.warnUser = function(socket, data) {
+    var warnData = {owner_id: socket.id, question_id: data.question_id,
+      room_id: data.room_id};
+    var returnData = this.roomsObj.warnUser(warnData);
   }
 
 //below is used in the chat demo and shouldn't be used in actual app
