@@ -47,7 +47,7 @@ Questions.prototype.upVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
     question.upVote(data);
-    this.moveUpToPlace(question);
+    //this.moveUpToPlace(question);
   }
 }
 
@@ -62,58 +62,7 @@ Questions.prototype.downVoteQuestion = function(data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
     question.downVote(data);
-    this.moveDownToPlace(question);
-  }
-}
-
-
-Questions.prototype.moveUpToPlace = function(question) {
-  var indexOfThis = this.upVotedQuestions.indexOf(question);
-
-  if (indexOfThis > 0) {
-    var indexOfOther = indexOfThis - 1;
-    var scoreOfThis = question.score;
-    var otherQ = this.upVotedQuestions[indexOfOther];
-    var scoreOfOther = otherQ.score;
-    
-    while (scoreOfThis > scoreOfOther) {
-      this.upVotedQuestions[indexOfOther] = question;
-      this.upVotedQuestions[indexOfThis] = otherQ;
-      --indexOfThis;
-
-      if (indexOfThis < 1)
-        break;
-
-      indexOfOther = indexOfThis - 1;
-      otherQ = this.upVotedQuestions[indexOfOther];
-      scoreOfOther = otherQ.score;
-    }  
-  }
-}
-
-
-Questions.prototype.moveDownToPlace = function(question) {
-  var indexOfThis = this.upVotedQuestions.indexOf(question);
-  var maxIndex = this.upVotedQuestions.length - 1;
-
-  if (indexOfThis < maxIndex) {
-    var indexOfOther = indexOfThis + 1;
-    var scoreOfThis = question.score;
-    var otherQ = this.upVotedQuestions[indexOfOther];
-    var scoreOfOther = otherQ.score;
-    
-    while (scoreOfThis < scoreOfOther) {
-      this.upVotedQuestions[indexOfOther] = question;
-      this.upVotedQuestions[indexOfThis] = otherQ;
-      ++indexOfThis;
-
-      if (indexOfThis > (maxIndex - 1))
-        break;
-
-      indexOfOther = indexOfThis + 1;
-      otherQ = this.upVotedQuestions[indexOfOther];
-      scoreOfOther = otherQ.score;
-    }  
+    //this.moveDownToPlace(question);
   }
 }
 
@@ -139,14 +88,11 @@ Questions.prototype.getTopVoted = function(n) {
   // Default check
   n = typeof n !== 'undefined' ?  n : n = this.upVotedQuestions.length;
 
-  return this.upVotedQuestions.slice(0,n);
-
-  /*
-    return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
-      return a.score - b.score;
-    });
-  */
-
+  return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
+    return a.score - b.score;
+  });
+  
+  //return this.upVotedQuestions.slice(0,n);
 }
 
 /**
@@ -204,5 +150,56 @@ Questions.prototype.deleteQuestion = function(questionID) {
   
   return {question_id: questionID};
 }
+
+
+/*Questions.prototype.moveUpToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+
+  if (indexOfThis > 0) {
+    var indexOfOther = indexOfThis - 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis > scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      --indexOfThis;
+
+      if (indexOfThis < 1)
+        break;
+
+      indexOfOther = indexOfThis - 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
+  }
+}
+
+
+Questions.prototype.moveDownToPlace = function(question) {
+  var indexOfThis = this.upVotedQuestions.indexOf(question);
+  var maxIndex = this.upVotedQuestions.length - 1;
+
+  if (indexOfThis < maxIndex) {
+    var indexOfOther = indexOfThis + 1;
+    var scoreOfThis = question.score;
+    var otherQ = this.upVotedQuestions[indexOfOther];
+    var scoreOfOther = otherQ.score;
+    
+    while (scoreOfThis < scoreOfOther) {
+      this.upVotedQuestions[indexOfOther] = question;
+      this.upVotedQuestions[indexOfThis] = otherQ;
+      ++indexOfThis;
+
+      if (indexOfThis > (maxIndex - 1))
+        break;
+
+      indexOfOther = indexOfThis + 1;
+      otherQ = this.upVotedQuestions[indexOfOther];
+      scoreOfOther = otherQ.score;
+    }  
+  }
+}*/
 
 module.exports = Questions;
