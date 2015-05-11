@@ -47,7 +47,7 @@ var io = require('socket.io').listen(server);
 io.set('log level', 1);
 
 io.sockets.on('connection', function (socket) {
-  controller.initialConnect(socket);
+  // controller.initialConnect(socket);
 
   socket.on('disconnect', function() {
     controller.disconnect(socket);
@@ -70,11 +70,11 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('upvote question', function(questionId) {
-    controller.upvoteQuestion(socket, questionId);
+    controller.upVoteQuestion(socket, questionId);
   });
 
   socket.on('downvote question', function(questionId) {
-    controller.downvoteQuestion(socket, questionId);
+    controller.downVoteQuestion(socket, questionId);
   });
 
   socket.on('dismiss question', function(questionId) {

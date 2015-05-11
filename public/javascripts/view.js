@@ -7,24 +7,23 @@
  * the DOM. Additionally, all globals for DOM functions
  * are encapsulated here.
  */
-var DomFns = function () {
+
+var ViewActions = function () {
 
   /**
    * Enter the room as an owner
-   * @param roomInfo = {room_id : string, room_name : string,
-   * owner_id : string}, Properties of the room
+   * @param roomName = String name of room
    */
-  var enterRoomOwnerImpl = function (roomInfo) {
-    // TODO: Implementation
+  var enterRoomOwnerImpl = function (roomName) {
+    socket.emit('create room', roomName);
   }
 
   /**
    * Enter the room as an audience member
-   * @param roomInfo = {room_name : string, room_id : string,
-   * questions : array, top_questions : array}, Properties of the room
+   * @param roomName = String name of room
    */
-  var enterRoomImpl = function (roomInfo) {
-    // TODO: Implementation
+  var enterRoomImpl = function (roomName) {
+    socket.emit('join room', roomName)
   }
 
   /**

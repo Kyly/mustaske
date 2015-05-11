@@ -7,7 +7,7 @@
  * the controller. Additionally, all globals for Controller functions
  * are encapsulated here.
  */
-var ControllerFns = function () {
+var ViewUI = function () {
 
   /**
    * Join a room
@@ -15,19 +15,30 @@ var ControllerFns = function () {
    * @return result = {room_name : string, room_id : string, questions : array,
    * top_questions : array} or {} on failure
    */
-  var joinRoomImpl = function(roomId) {
-    // TODO: Implementation
-  }
+  var joinRoomImpl = function(data) {
 
-  /**
-   * Create a new room
-   * @param roomName = string, A descriptive name of the room to create
-   * @return result = {room_id : string, room_name : string, owner_id : string}
-   * or {} on failure
-   */
-  var createRoomImpl = function(roomName) {
-    // TODO: Implementation
-  }
+    switch (data.option) {
+      case 'make':
+            //console.log('Creating new room.');
+            ViewActions.enterRoomOwner(data.room_name);
+            break;
+      case 'join':
+            //console.log('Joining room.');
+            ViewActions.enterRoom(data.room_name);
+            break;
+    }
+
+  };
+
+  ///**
+  // * Create a new room
+  // * @param roomName = string, A descriptive name of the room to create
+  // * @return result = {room_id : string, room_name : string, owner_id : string}
+  // * or {} on failure
+  // */
+  //var createRoomImpl = function(roomName) {
+  //  // TODO: Implementation
+  //}
 
   /**
    * Destroys a room
@@ -116,7 +127,7 @@ var ControllerFns = function () {
 
   return {
     joinRoom: joinRoomImpl,
-    createRoom: createRoomImpl,
+    //createRoom: createRoomImpl,
     closeRoom: closeRoomImpl,
     newQuestion: newQuestionImpl,
     upvoteQuestion: upvoteQuestionImpl,
