@@ -28,19 +28,8 @@ function Controller () {
 Controller.prototype.initialConnect = function(socket) {
   var newRoomID = this.roomsObj.createRoom({owner_id: socket.id,
     room_name: 'Lobby'}).room_id;
-  //socket.join(newRoomId);
-  //socket.emit('join room', this.roomsObj.joinRoom(newRoomId))
+
   this.joinRoom(socket, newRoomID)
-
-  /*var name = 'Guest' + this.guestNumber;
-  this.nickNames[socket.id] = name;
-  socket.emit('nameResult', {
-    success: true,
-    name: name
-  });
-
-  this.namesUsed.push(name);
-  this.guestNumber += 1;*/
 }
 
 /**
