@@ -1,5 +1,9 @@
 /**
- * TODO file header
+ * Question Object
+ * Holds all data about a single question. Also contains functions that
+ * manipulate that data.
+ *
+ * @param {question_id: String, question_text: String, asker_id: String}
  */
 
 function Question(data) {
@@ -14,12 +18,15 @@ function Question(data) {
 }
 
 
-/*
- Should increase score of question by one if voter hasn't voted,
- by two if voter has previously downvoted, or decrease by one if
- voter has previously upvoted.
- */
-Question.prototype.upVote = function (data) {
+/**
+ * Should increase score of question by one if voter hasn't voted,
+ * by two if voter has previously downvoted, or decrease by one if
+ * voter has previously upvoted.
+ *
+ * @param {question_id: String, voter_id: String}
+ * @return {question_score: String, question_id: String}
+*/
+Question.prototype.upVote = function(data) {
   var voterID = data.voter_id;
 
   //voter has already voted
@@ -47,12 +54,14 @@ Question.prototype.upVote = function (data) {
 }
 
 
-/*
- Should decrease score of question by one if voter hasn't voted,
- by two if voter has previously upvoted, or increase by one if
- voter has previously downvoted.
- */
-Question.prototype.downVote = function (data) {
+/**
+ * Should decrease score of question by one if voter hasn't voted,
+ * by two if voter has previously upvoted, or increase by one if
+ * voter has previously downvoted.
+ *
+ * @param {voter_id: String, question_id: String}
+*/
+Question.prototype.downVote = function(data) {
   var voterID = data.voter_id;
 
   //voter has already voted

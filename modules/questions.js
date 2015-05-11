@@ -17,7 +17,7 @@ function Questions() {
  * Adds question to ordered and hashed question list.
  *
  * @param data = {room_id: id, question_text: String, asker_id: String}
- * @return {question_id: id, question_text: text}
+ * @return {question_id: String, question_text: String}
  */
 Questions.prototype.addQuestion = function (data) {
   var question = new Question({
@@ -29,7 +29,7 @@ Questions.prototype.addQuestion = function (data) {
   this.orderedQuestions.unshift(question);
   this.questionHash[question.id] = question;
   this.upVotedQuestions.push(question);
-  this.moveUpToPlace(question);
+  //this.moveUpToPlace(question);
 
   return {question_id: question.id, question_text: question.question};
 }
@@ -151,6 +151,17 @@ Questions.prototype.deleteQuestion = function (questionID) {
   return {question_id: questionID};
 }
 
+/**
+ * Looks up the user associated with the questionable question and returns it.
+ *
+ * @param questionID: String
+ * @return asker_id: String
+ */
+ Questions.prototype.warnUser = function(questionID) {
+   return this.questionHash[questionID].asker;
+ }
+
+ 
 /*Questions.prototype.moveUpToPlace = function(question) {
   var indexOfThis = this.upVotedQuestions.indexOf(question);
 

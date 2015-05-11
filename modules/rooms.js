@@ -99,15 +99,15 @@ Rooms.prototype.isOwner = function(data) {
 /**
  * Delgates to room. @see room.js
  *
- * @param data = {room_id: String, user_id: Sring}
- * @return number of warnings user has
+ * @param data = {room_id: String, owner_id: String, question_id: String}
+ * @return {user_banned: Bool, question_id: String}
  */
 Rooms.prototype.warnUser = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].warnUser(data.user_id);
+  return this.rooms[data.room_id].warnUser(data);
 }
 
 /**
@@ -149,7 +149,7 @@ Rooms.prototype.addQuestion = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].addQuestion(data.question);
+  return this.rooms[data.room_id].addQuestion(data);
 }
 
 /**

@@ -14,22 +14,25 @@ describe('Room', function(){
     it('User should be added to warnedUsers hash after first warning,' +
       'and to bannedUsers hash after second warning.', function(){
       // Set
-      var room = new Room({room_id: '110', owner_id: 'gary', room_name: 'lecture'});
+      var room = new Room({room_id: '110', owner_id: 'gary',
+      room_name: 'lecture'});
       var studentID = 'kyly';
-
+      var qID = room.addQuestion({asker_id: studentID, question_text:
+      'what is a for loop?'}).question_id;
+      var warnParam = {owner_id: 'gary', question_id: qID};
       // Assert
 
       //no warnings
       assert(!(studentID in room.warnedUsers));
       assert(!(studentID in room.bannedUsers));
 
-      room.warnUser(studentID);
+      room.warnUser(warnParam);
 
       //1 warning
       assert(studentID in room.warnedUsers);
       assert(!(studentID in room.bannedUsers));
 
-      room.warnUser(studentID);
+      room.warnUser(warnParam);
 
       //2 warnings
       assert(studentID in room.bannedUsers);
@@ -72,10 +75,10 @@ describe('Room', function(){
         room_name: roomName});
 
       // Assign
-      var newQuestion = {room_id: 'theDopePlace', question_text: 'What is a moustache?', asker_id: 'awesomeStudent'};
-      var badQuestion = {room_id: 'notSoDope', question_text: 'What is a for-loop?', asker_id: 'badStudent'};
+      var newQuestion = {room_id: 'theDopePlace',
+      question_text: 'What is a moustache?', asker_id: 'awesomeStudent'};
 
-      var idToSearch = room.addQuestion(newQuestion).id;
+      var idToSearch = room.addQuestion(newQuestion).question_id;
 
       // Assert
       assert(room.hasQuestion(idToSearch));
