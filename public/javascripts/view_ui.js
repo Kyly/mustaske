@@ -17,28 +17,18 @@ var ViewUI = function () {
    */
   var joinRoomImpl = function (data) {
 
-    switch (data.option) {
-      case 'make':
-        //console.log('Creating new room.');
-        ViewActions.enterRoomOwner(data.room_name);
-        break;
-      case 'join':
-        //console.log('Joining room.');
-        ViewActions.enterRoom(data.room_name);
-        break;
-    }
 
   };
 
-  ///**
-  // * Create a new room
-  // * @param roomName = string, A descriptive name of the room to create
-  // * @return result = {room_id : string, room_name : string, owner_id : string}
-  // * or {} on failure
-  // */
-  //var createRoomImpl = function(roomName) {
-  //  // TODO: Implementation
-  //}
+  /**
+   * Create a new room
+   * @param roomName = string, A descriptive name of the room to create
+   * @return result = {room_id : string, room_name : string, owner_id : string}
+   * or {} on failure
+   */
+  var createRoomImpl = function(roomName) {
+    // TODO: Implementation
+  }
 
   /**
    * Destroys a room
