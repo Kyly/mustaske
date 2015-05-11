@@ -15,17 +15,17 @@ var ViewUI = function () {
    * @return result = {room_name : string, room_id : string, questions : array,
    * top_questions : array} or {} on failure
    */
-  var joinRoomImpl = function(data) {
+  var joinRoomImpl = function (data) {
 
     switch (data.option) {
       case 'make':
-            //console.log('Creating new room.');
-            ViewActions.enterRoomOwner(data.room_name);
-            break;
+        //console.log('Creating new room.');
+        ViewActions.enterRoomOwner(data.room_name);
+        break;
       case 'join':
-            //console.log('Joining room.');
-            ViewActions.enterRoom(data.room_name);
-            break;
+        //console.log('Joining room.');
+        ViewActions.enterRoom(data.room_name);
+        break;
     }
 
   };
@@ -45,7 +45,7 @@ var ViewUI = function () {
    * @param roomId = string, The id of the room to close
    * @return result = true on success, false on failure
    */
-  var closeRoomImpl = function(roomId) {
+  var closeRoomImpl = function (roomId) {
     // TODO: Implementation
   }
 
@@ -56,7 +56,7 @@ var ViewUI = function () {
    * @return result = The asked question {question_id : string,
    * question_text : string} or {} on failure
    */
-  var newQuestionImpl = function(questionInfo) {
+  var newQuestionImpl = function (questionInfo) {
     // TODO: Implementation
   }
 
@@ -68,7 +68,7 @@ var ViewUI = function () {
    * @return result = The question {question_id : string,
    * question_score : number} or {} on failure
    */
-  var upvoteQuestionImpl = function(questionInfo) {
+  var upvoteQuestionImpl = function (questionInfo) {
     // TODO: Implementation
   }
 
@@ -80,7 +80,7 @@ var ViewUI = function () {
    * @return result = The question {question_id : string,
    * question_score : number} or {} on failure
    */
-  var downvoteQuestionImpl = function(questionInfo) {
+  var downvoteQuestionImpl = function (questionInfo) {
     // TODO: Implementation
   }
 
@@ -90,7 +90,7 @@ var ViewUI = function () {
    * @return result = {question_id : string} the dismissed question id or
    * {} on failure
    */
-  var dismissQuestionImpl = function(questionId) {
+  var dismissQuestionImpl = function (questionId) {
     // TODO: Implementation
   }
 
@@ -99,7 +99,7 @@ var ViewUI = function () {
    * @param amount = number, The number of questions to get
    * @return result = An array of Question objects
    */
-  var getTopQuestionsImpl = function(amount) {
+  var getTopQuestionsImpl = function (amount) {
     // TODO: Implementation
   }
 
@@ -107,7 +107,7 @@ var ViewUI = function () {
    * Get all questions
    * @return result = An array of all Question objects
    */
-  var getAllQuestionsImpl = function() {
+  var getAllQuestionsImpl = function () {
     // TODO: Implementation
   }
 
@@ -136,5 +136,5 @@ var ViewUI = function () {
     getTopQuestions: getTopQuestionsImpl,
     getAllQuestions: getAllQuestionsImpl,
     warnUser: warnUserImpl
-    }
+  }
 }();

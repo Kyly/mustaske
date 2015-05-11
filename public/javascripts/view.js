@@ -87,5 +87,5 @@ var ViewActions = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl
-    }
+  }
 }();
