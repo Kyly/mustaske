@@ -106,4 +106,19 @@ Room.prototype.getQuestions = function() {
   return this.questions.getQuestions();
  }
 
+ /**
+  * Checks if the person who issued the 'dismiss question' emit is the owner
+  * of the room. If they are, then the questions object is told to delete the
+  * question.
+  * @param {question_id: String, room_id: String, owner_id: String}
+  * @param {question_id: String} if successful, else false
+  */
+Room.prototype.deleteQuestion = function(data) {
+  if (data.owner_id === this.owner) {
+    return this.questions.deleteQuestion(data);
+  }
+  else
+    return false;
+}
+
 module.exports = Room;
