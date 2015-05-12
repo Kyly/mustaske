@@ -142,6 +142,26 @@ var ViewActions = function () {
     });
   }
 
+  /**
+   * Returns a string containing the HTML of a topquestion_section div.
+   * See line 193 of /views/index.html for a template
+   * @param TODO: params list
+   * @returns result = string, the recentquestion_section div
+   */
+  var recentQuestionsDiv() {
+
+  }
+
+  /**
+   * Returns a string containing the HTML of a recentquestion_section div.
+   * See line 94 of /views/index.html for a template
+   * @param TODO: params list
+   * @returns result = string, the topquestion_section div
+   */
+  var topQuestionsDiv() {
+
+  }
+
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
 
