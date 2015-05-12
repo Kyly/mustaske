@@ -90,7 +90,7 @@ $(document).ready(function () {
 
     var data = {
       question_text: questionText,
-      room_id: $('.room-name').attr('name-uuid')
+      room_id: $('.room-name').attr('room-id')
     };
     socket.emit('new question', data);
 
