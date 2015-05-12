@@ -234,3 +234,28 @@ hr {
 .askQuestion .form-control{
 	width:80%;
 }
+
+.askQuestion img {
+	height:2.5em;
+}
+
+@media only screen and (max-width:750px){
+	.topquestions {
+		height:100%;
+		position:relative;
+  		z-index: 10;	
+
+	}
+
+	.recentquestions {
+		z-index:10;
+		margin-bottom:10%;
+		clear:both;
+		position:relative;
+	}
+
+	.rest {
+		top:0px;
+		overflow: scroll;
+	}
+}
