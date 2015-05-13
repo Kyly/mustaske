@@ -104,7 +104,7 @@ var ViewActions = function () {
    * @return string
    */
   var createQuestion = function (questionInfo) {
-    var newQuestion = '<div class=\"totalRecentQuestion\" question_id=\"' + questionInfo.question_id + '\">' +
+    var newQuestion = '<div class="animated rubberBand\">' +'<div class=\"totalRecentQuestion\" question_id=\"' + questionInfo.question_id + '\">' +
         '<div class=\"recentquestion_section\">' +
             '<p class=\"question\">'+questionInfo.question_text+'</p><br>' +
             '<div class=\"row\">' +
@@ -125,7 +125,8 @@ var ViewActions = function () {
             '<input class=\"form-control\" placeholder=\"write a comment...\" type=\"text\">' +
         '</div>' +
         '<hr>' +
-    '</div>';
+    '</div>'
+    + '</div>';
 
     return newQuestion;
   }
