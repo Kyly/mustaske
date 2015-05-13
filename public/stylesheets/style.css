@@ -225,19 +225,19 @@ hr {
 }
 
 .askQuestion {
-	position:absolute;
+	position:fixed;
 	z-index: 2000;
 	bottom:20px;
 	display:inline;
 }
 
-.askQuestion .form-control{
+/*.askQuestion .form-control{
 	width:80%;
 }
 
 .askQuestion img {
 	height:2.5em;
-}
+}*/
 
 @media only screen and (max-width:750px){
 	.topquestions {
