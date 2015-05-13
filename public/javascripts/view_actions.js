@@ -148,7 +148,7 @@ var ViewActions = function () {
    * @param TODO: params list
    * @returns result = string, the recentquestion_section div
    */
-  /*var recentQuestionsDiv() {
+  var recentQuestionsDiv = function() {
 
   }*/
 
@@ -158,7 +158,7 @@ var ViewActions = function () {
    * @param TODO: params list
    * @returns result = string, the topquestion_section div
    */
-/*  var topQuestionsDiv() {
+  var topQuestionsDiv = function() {
 
 }*/
 
