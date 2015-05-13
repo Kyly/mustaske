@@ -1,7 +1,7 @@
 html,body { height:98%; }
 body, html {
 	  margin: 0;
-  overflow: hidden;
+  /*overflow: hidden;*/
   height:100%;
 }
 
@@ -55,6 +55,8 @@ p, a, li, select, input {
 }
 
 .recentquestions{
+	overflow-x: hidden;
+  	overflow-y: auto;
 	padding: 4% 4% 4% 4%;
 }
 
@@ -227,15 +229,15 @@ hr {
 .askquestion {
 	position:fixed;
 	z-index: 2000;
-	bottom:5px;
+	bottom:0px;
 	right:0.08em;
 	background-color:#ffffff;
 	padding-top:1em;
 	padding-bottom:1em;
-	padding-right:0px;
-	padding-left:0px;
+	/*padding-right:0px;
+	padding-left:0px;*/
 	margin-left:5px;
-	margin-right:5px;
+	margin-right:-1.2px;
 }
 
 /*.askQuestion .form-control{
