@@ -1,0 +1,319 @@
+<!DOCtype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script src="/javascripts/jquery.min.js"></script>
+    <!--bootstrap-->
+    <link type="text/css" rel="stylesheet"
+          href="/lib/bootstrap/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet"
+          href="/lib/bootstrap/css/bootstrap-theme.min.css">
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- font-awesome -->
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Our styles -->
+    <link href="/stylesheets/style.css" rel="stylesheet"/>
+    <!-- Styles for animations -->
+    <link href="/stylesheets/animate.css" rel="stylesheet"/>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
+          rel='stylesheet' type='text/css'>
+    <title>MustAsk: CSE110</title>
+    <link rel="Shortcut Icon" type="image/jpg" href="/images/mustache.png"/>
+</head>
+
+<body>
+<div class="login-overlay container-fluid">
+    <div class="text-center vcenter">
+        <div>
+            <h2>Welcome to MustAske!</h2>
+
+            <p>Please enter the name of a room you want to join or create</p>
+
+            <form id="login-info">
+                <div class="row form-group">
+                    <div id="room-name-field"
+                         class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1 has-feedback">
+                        <input type="room-name" class="form-control"
+                               placeholder="Room Name...">
+                        <span class="glyphicon glyphicon-remove form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div id="join-create-room" class="btn-group" role="group"
+                         aria-label="Join/Create Room">
+                        <button type="button" class="btn btn-default"> Join
+                        </button>
+                        <button type="button" class="btn btn-default"> Make
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="navbar">
+    <div class="container-fluid">
+        <ul class="pull-left">
+            <li class="room-name">CSE110</li>
+        </ul>
+    </div>
+</div>
+
+<div class="rest container-fluid">
+    <div id="main-content" class="row">
+        <div class="topquestions col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+            <div class="selection">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle"
+                            type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-expanded="true">
+                        top 3 questions <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu"
+                        aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">top 5 questions</a>
+                        </li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">bottom 3
+                            questions</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">bottom 5
+                            questions</a></li>
+                    </ul>
+                </div>
+                <!--end dropdown-->
+            </div>
+            <!--end selection-->
+            <div class="totalTopQuestion">
+                <div id="0" class="topquestion_section">
+                    <p class="topquestion">i need a question</p><br>
+
+                    <div class="row">
+
+
+                        <a href="#" id="thumbs_down_to_active"><i
+                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            20</p>
+
+                        <a href="#" id="thumbs_up_to_active"><i
+                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numComments col-md-offset-6 col-sm-offset-4 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            1</p>
+                        <a href="#" id="comment_to_active"><img
+                                src="/images/comment.png"
+                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+                        <a href="#" id="comment_to_inactive"><img
+                                src="/images/comment_active.png"
+                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
+                    </div>
+                </div>
+                <!--end topquestion_section-->
+                <div class="commentSection">
+                    <a href="#" id="more">view more comments</a>
+
+                    <p>i need comments</p>
+
+                    <p> more comments!</p>
+                    <input type="text" class="form-control"
+                           placeholder="write a comment...">
+                </div>
+                <!--end commentSection-->
+            </div>
+            <!--end totalTopQuestion-->
+            <!--<p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>
+            <p>what</p>-->
+        </div>
+        <!--end topquestions -->
+
+
+        <div class="recentquestions col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
+            <div class="row">
+                <div class="selection col-md-3 col-sm-3 col-xs-12">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle"
+                                type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-expanded="true">
+                            most recent &nbsp; &nbsp; <i
+                                class="fa fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu"
+                            aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">top
+                                5 questions</a></li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">bottom
+                                3 questions</a></li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">bottom
+                                5 questions</a></li>
+                        </ul>
+                    </div>
+                    <!--end dropdown-->
+                </div>
+                <!--end selection-->
+                <div class="search col-md-9 col-sm-9 col-xs-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="search all questions">
+								      <span class="input-group-btn">
+								        <button class="btn btn-default"
+                                                type="button">Go!
+                                        </button>
+								      </span>
+                    </div>
+                    <!-- /input-group -->
+                </div><!--end search-->
+            </div>
+            <!--end row-->
+
+          <div id="recent-questions">
+            <div class="totalRecentQuestion">
+
+                <div class="recentquestion_section">
+
+                    <p class="question">i need a question</p><br>
+
+                    <div class="row">
+
+
+                        <a href="#" id="thumbs_down_to_active"><i
+                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            20</p>
+
+                        <a href="#" id="thumbs_up_to_active"><i
+                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            1</p>
+                        <a href="#" id="comment_to_active"><img
+                                src="/images/comment.png"
+                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+                        <a href="#" id="comment_to_inactive"><img
+                                src="/images/comment_active.png"
+                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
+                    </div>
+
+                </div>
+                <!--end recentquestion_section-->
+
+
+                <div class="commentSection">
+                    <a href="#" id="more">view more comments</a>
+
+                    <p>i need comments</p>
+
+                    <p> more comments!</p>
+                    <input type="text" class="form-control"
+                           placeholder="write a comment...">
+                </div>
+                <!--end commentSection-->
+                <hr>
+
+            </div>
+            <!--end totalRecentQuestion-->
+
+
+
+            <div class="totalRecentQuestion">
+
+                <div class="recentquestion_section">
+
+                    <p class="question">i need a question</p><br>
+
+                    <div class="row">
+
+
+                        <a href="#" id="thumbs_down_to_active"><i
+                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            20</p>
+
+                        <a href="#" id="thumbs_up_to_active"><i
+                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            1</p>
+                        <a href="#" id="comment_to_active"><img
+                                src="/images/comment.png"
+                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+                        <a href="#" id="comment_to_inactive"><img
+                                src="/images/comment_active.png"
+                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
+                    </div>
+
+                </div>
+                <!--end recentquestion_section-->
+
+
+                <div class="commentSection">
+                    <a href="#" id="more">view more comments</a>
+
+                    <p>i need comments</p>
+
+                    <p> more comments!</p>
+                    <input type="text" class="form-control"
+                           placeholder="write a comment...">
+                </div>
+                <!--end commentSection-->
+                <hr>
+
+            </div>
+            <!--end totalRecentQuestion-->
+          </div>
+
+            <div class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12">
+                    <div id="add-question" class="input-group">
+                        <input id="add-question-text" type="text" class="form-control" placeholder="ask a question!">
+                                      <span class="input-group-btn">
+                                        <button id="add-question-btn" class="btn btn-default" type="button"><i class="fa fa-paper-plane"></i>
+                                        </button>
+                                      </span>
+                    </div>
+                    <!-- /input-group -->
+            </div><!--end askquestion-->
+
+        </div>
+        <!--end recent questions-->
+
+
+    </div>
+    <!--end row-->
+</div>
+<!--end container fluid-->
+
+
+<footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/view_actions.js"></script>
+
+</footer>
+</body>
+
+</html>
