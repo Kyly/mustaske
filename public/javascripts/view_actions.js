@@ -104,7 +104,7 @@ var ViewActions = function () {
    * @return string
    */
   var createQuestion = function (questionInfo) {
-    var newQuestion = '<div class=\"totalRecentQuestion\">' +
+    var newQuestion = '<div class=\"totalRecentQuestion\" question_id=\"' + questionInfo.question_id + '\">' +
         '<div class=\"recentquestion_section\">' +
             '<p class=\"question\">'+questionInfo.question_text+'</p><br>' +
             '<div class=\"row\">' +
