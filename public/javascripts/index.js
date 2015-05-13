@@ -83,4 +83,17 @@ $(document).ready(function () {
 
   });
 
+  $('#add-question-btn').click(function () {
+    var textBox = $('#add-question-text');
+    var questionText = textBox.val();
+
+    var data = {
+      question_text: questionText,
+      room_id: $('.room-name').attr('name-uuid')
+    };
+
+    socket.emit('new question', data);
+
+  });
+
 });

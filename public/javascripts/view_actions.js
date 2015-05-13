@@ -30,6 +30,7 @@ var ViewActions = function () {
       roomName.attr('name-uuid', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id:' + roomInfo.room_id);
+      console.log('Stored ID: ' + $('.room-name').attr('name-uuid'));
     }
   }
 
@@ -52,7 +53,6 @@ var ViewActions = function () {
       roomName.attr('name-uuid', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id:' + roomInfo.room_id);
-
       // TODO Add questions and top questions
     }
   }
@@ -94,7 +94,7 @@ var ViewActions = function () {
    * The ID of the question and the text content of the question
    */
   var questionAddedImpl = function (questionInfo) {
-    // TODO: Implementation
+
   }
 
   /**
@@ -129,11 +129,11 @@ var ViewActions = function () {
 
         switch (data.option) {
         case 'make':
-          //console.log('Creating new room.');
+          console.log('Creating new room.');
           socket.emit('create room', data.room_name);
           break;
         case 'join':
-          //console.log('Joining room.');
+          console.log('Joining room.');
           socket.emit('join room', data.room_name);
           break;
         }
@@ -148,9 +148,9 @@ var ViewActions = function () {
    * @param TODO: params list
    * @returns result = string, the recentquestion_section div
    */
-  var recentQuestionsDiv() {
+  /*var recentQuestionsDiv() {
 
-  }
+  }*/
 
   /**
    * Returns a string containing the HTML of a recentquestion_section div.
@@ -158,9 +158,9 @@ var ViewActions = function () {
    * @param TODO: params list
    * @returns result = string, the topquestion_section div
    */
-  var topQuestionsDiv() {
+/*  var topQuestionsDiv() {
 
-  }
+}*/
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
