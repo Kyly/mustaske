@@ -224,11 +224,10 @@ hr {
 	 padding-left: 0;
 }
 
-.askQuestion {
+.askquestion {
 	position:fixed;
 	z-index: 2000;
 	bottom:20px;
-	display:inline;
 }
 
 /*.askQuestion .form-control{
