@@ -94,9 +94,41 @@ var ViewActions = function () {
    */
   var questionAddedImpl = function (questionInfo) {
     console.log(questionInfo);
-    console.log('blah');
+    var newQuestion = createQuestion(questionInfo);
+    $('#recent-questions').prepend(newQuestion);
   }
 
+  /**
+   * Builds a question html element for use with questionAddedImpl.
+   * @param questionInfo = {question_id : string, question_text : string}
+   * @return string
+   */
+  var createQuestion = function (questionInfo) {
+    var newQuestion = '<div class=\"totalRecentQuestion\">' +
+        '<div class=\"recentquestion_section\">' +
+            '<p class=\"question\">'+questionInfo.question_text+'</p><br>' +
+            '<div class=\"row\">' +
+                '<a href=\"#\" id=\"thumbs_down_to_active\"><i class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>' +
+                '<p class=\"numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1\">' +
+                    '1</p>' +
+                '<a href=\"#\" id=\"thumbs_up_to_active\"><i class=\"fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>' +
+                '<p class=\"numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1\">' +
+                    '1</p>' +
+                '<a href=\"#\" id=\"comment_to_active\"><img src=\"/images/comment.png\" class=\"col-md-1 col-sm-2 col-xs-2 col-lg-1 comment \"></a>' +
+                '<a href=\"#\" id=\"comment_to_inactive\"><img src=\"/images/comment_active.png\" class=\"col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active\"></a>' +
+            '</div>' +
+        '</div>' +
+        '<!--end recentquestion_section-->' +
+        '<div class=\"commentSection\">' +
+            '<a href=\"#\" id=\"more\">view more comments</a>' +
+            '<p>i need comments</p>' +
+            '<input class=\"form-control\" placeholder=\"write a comment...\" type=\"text\">' +
+        '</div>' +
+        '<hr>' +
+    '</div>';
+
+    return newQuestion;
+  }
   /**
    * Update UI reflecting the score of a question changing
    * @param scoreInfo = {question_id : string, question_score : number},
