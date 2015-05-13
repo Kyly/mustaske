@@ -14,19 +14,18 @@ var Rooms = require('./rooms');
  * Put all variables that are needed 'globally' by the server here.
  * More than likely, this will just be the Rooms() instance.
  */
-function Controller() {
-  this.guestNumber = 1;
-  this.nickNames = {};
-  this.namesUsed = [];
+function Controller () {
+  this.guestNumber  = 1;
+  this.nickNames    = {};
+  this.namesUsed    = [];
   this.nameIndex;
-  this.roomsObj = new Rooms();  // TODO change to rooms once we are done with demo
+  this.roomsObj     = new Rooms();  // TODO change to rooms once we are done with demo
 }
 
 /**
  * This is what gets called when a client initially connects to the server
  * @param socket = Socket IO object
  */
-
 Controller.prototype.initialConnect = function(socket) {
   //here to hanle the intitial connection to the server
 }
@@ -35,7 +34,7 @@ Controller.prototype.initialConnect = function(socket) {
  * This gets called when a client disconnects from the server by way of
  * either closing the page in their browser or some unforseen connection problem
  */
-Controller.prototype.disconnect = function (socket) {
+Controller.prototype.disconnect = function(socket) {
   nameIndex = this.namesUsed.indexOf(this.nickNames[socket.id]);
   delete this.namesUsed[nameIndex];
   delete this.nickNames[socket.id];
@@ -58,7 +57,7 @@ Controller.prototype.joinRoom = function(socket, roomID) {
     socket.emit('join room', returnData);
   }
   else
-    socket.emit('join room', false);
+    socket.emit('join room', {});
 }
 
 /**
@@ -69,57 +68,12 @@ Controller.prototype.joinRoom = function(socket, roomID) {
  * @param roomName: name of new room
  * @return {room_name: String, room_id: String, owner_id: String}
  */
-
-Controller.prototype.createRoom = function(socket, roomName) {
-  var createData = {room_name: roomName, owner_id: socket.id};
-  var returnData = this.roomsObj.createRoom(createData);
-  socket.join(returnData.room_id);
-  socket.emit('create room', returnData);
-}
-
-/**
- * This handles the flow of data when a 'close room' emit is received by
- * the server
- *
- * @param socket: Socket IO object
- * @param roomId: UUID of room to be closed
- * @return true if room closes, else false
- */
-Controller.prototype.closeRoom = function (socket, roomId) {
-  socket.emit('close room', rooms.closeRoom({
-    owner_id: socket.id,
-    room_id: roomId
-  }));
-}
-
-/**
- * This handles closing a specified room
- *
- * @param socket : Socket IO object
- * @param question {room_id : String, question_text : String}
- */
-Controller.prototype.newQuestion = function (socket, question) {
-  var data = {
-    room_id: question.room_id,
-    question_text: question.questionText,
-    asker_id: socket.id
-  };
-  socket.emit('new question', roomsObj(data));
-}
-
-/**
- * This handles upvoting specific questions in specific rooms
- * @param socket : Socket IO object
- * @param data = {room_id: String, question_id}
- */
-Controller.prototype.upvoteQuestion = function (socket, data) {
-  var questionData = {
-    room_id: data.room_id,
-    question_id: data.question_id,
-    voter_id: socket.id
-  };
-  socket.emit('upvote question', roomsObj(questionData));
-}
+ Controller.prototype.createRoom = function(socket, roomName) {
+   var createData = {room_name: roomName, owner_id: socket.id};
+   var returnData = this.roomsObj.createRoom(createData);
+   socket.join(returnData.room_id);
+   socket.emit('create room', returnData);
+ }
 
  /**
   * This handles the flow of data when a 'close room' emit is received by
@@ -144,7 +98,7 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
   Controller.prototype.newQuestion = function(socket, question) {
     var data = {room_id: question.room_id, question_text: question.questionText,
        asker_id: socket.id};
-    var returnData = roomsObj.addQuestion(data);
+    var returnData = this.roomsObj.addQuestion(data);
     socket.broadcast.to(question.room_id).emit('new question', returnData);
   }
 
@@ -157,7 +111,7 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
   Controller.prototype.upvoteQuestion = function(socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id,
        voter_id: socket.id};
-    var returnData = roomsObj.upvoteQuestion(questionData);
+    var returnData = this.roomsObj.upvoteQuestion(questionData);
     socket.broadcast.to(data.room_id).emit('upvote question', returnData);
   }
 
@@ -169,7 +123,7 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
    */
   Controller.prototype.downvoteQuestion = function(socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
-    var returnData = roomsObj(questionData);
+    var returnData = this.roomsObj(questionData);
     socket.broadcast.to(data.room_id).emit('downvote question', returnData);
   }
 
@@ -181,7 +135,7 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
    */
   Controller.prototype.dismissQuestion = function(socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, owner_id: socket.id};
-    var returnData = roomsObj.deleteQuestion(questionData);
+    var returnData = this.roomsObj.deleteQuestion(questionData);
     socket.broadcast.to(data.room_id).emit('dismiss question', returnData);
   }
 
@@ -215,6 +169,62 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
     var warnData = {owner_id: socket.id, question_id: data.question_id,
       room_id: data.room_id};
     var returnData = this.roomsObj.warnUser(warnData);
+    socket.broadcast.to(roomID).emit('warn user', returnData);
   }
+
+//below is used in the chat demo and shouldn't be used in actual app
+//******************************************************************
+
+  /**
+   * TODO function headers...
+   */
+  Controller.prototype.nameAttempt = function(socket, name) {
+    if (name.indexOf('Guest') == 0) {
+      socket.emit('nameResult', {
+        success: false,
+        message: 'Names cannot begin with "Guest".'
+      });
+    } else {
+      if (this.namesUsed.indexOf(name) == -1) {
+        this.namesUsed.push(name);
+        this.nickNames[socket.id] = name;
+        socket.emit('nameResult', {
+          success: true,
+          name: name
+        });
+      } else {
+        socket.emit('nameResult', {
+          success: false,
+          message: 'That name is already in use.'
+        });
+      }
+    }
+  }
+
+/**
+ * TODO function headers...
+ */
+Controller.prototype.message = function(socket, message) {
+  //console.log(io);
+  socket.broadcast.to(message.room).emit('message', {
+    text: this.nickNames[socket.id] + ': ' + message.text + ' ' + socket.id
+  });
+}
+
+/**
+ * TODO function headers...
+ */
+Controller.prototype.rooms = function(socket, io) {
+  var allRooms = []
+  for(var room in io.sockets.adapter.rooms){
+      if(room !== socket.id) {
+        allRooms.push(room);
+      }
+  }
+
+  //console.log(io.sockets.adapter.rooms);
+  socket.emit('all rooms', allRooms);
+}
+
 
 module.exports = Controller;
