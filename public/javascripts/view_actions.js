@@ -26,8 +26,8 @@ var ViewActions = function () {
       $('#room-name-field').removeClass('has-error');
       var roomName = $('.room-name');
 
-      roomName.text('Owner: ' + roomInfo.room_name);
-      roomName.attr('name-uuid', roomInfo.room_id);
+      roomName.text('Owner View for ' + roomInfo.room_name + ': ' + roomInfo.room_id);
+      roomName.attr('room-id', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
     }
@@ -48,8 +48,8 @@ var ViewActions = function () {
       $('#room-name-field').removeClass('has-error');
       var roomName = $('.room-name');
 
-      roomName.text(roomInfo.room_name);
-      roomName.attr('name-uuid', roomInfo.room_id);
+      roomName.text(roomInfo.room_name + ': ' + roomInfo.room_id);
+      roomName.attr('room-id', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
       // TODO Add questions and top questions
@@ -94,23 +94,23 @@ var ViewActions = function () {
    */
   var questionAddedImpl = function (questionInfo) {
     console.log(questionInfo);
-    var newQuestion = createQuestion(questionInfo);
+    var newQuestion = createQuestion(questionInfo, 1);
     $('#recent-questions').prepend(newQuestion);
   }
 
   /**
    * Builds a question html element for use with questionAddedImpl.
    * @param questionInfo = {question_id : string, question_text : string}
-   * @return string
+   * @return string TODO fix 80 character per line limit
    */
-  var createQuestion = function (questionInfo) {
-    var newQuestion = '<div class="animated rubberBand\">' +'<div class=\"totalRecentQuestion\" question_id=\"' + questionInfo.question_id + '\">' +
+  var createQuestion = function (questionInfo, score) {
+    var newQuestion = '<div class=\"animated pulse\">' +'<div class=\"totalRecentQuestion\" question_id=\"' + questionInfo.question_id + '\" score=\"'+score+'\">' +
         '<div class=\"recentquestion_section\">' +
             '<p class=\"question\">'+questionInfo.question_text+'</p><br>' +
             '<div class=\"row\">' +
                 '<a href=\"#\" id=\"thumbs_down_to_active\"><i class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>' +
                 '<p class=\"numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1\">' +
-                    '1</p>' +
+                    score+'</p>' +
                 '<a href=\"#\" id=\"thumbs_up_to_active\"><i class=\"fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>' +
                 '<p class=\"numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1\">' +
                     '1</p>' +
