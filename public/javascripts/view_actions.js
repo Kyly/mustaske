@@ -29,8 +29,7 @@ var ViewActions = function () {
       roomName.text('Owner: ' + roomInfo.room_name);
       roomName.attr('name-uuid', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
-      console.log('Room Id:' + roomInfo.room_id);
-      console.log('Stored ID: ' + $('.room-name').attr('name-uuid'));
+      console.log('Room Id: ' + roomInfo.room_id);
     }
   }
 
@@ -52,7 +51,7 @@ var ViewActions = function () {
       roomName.text(roomInfo.room_name);
       roomName.attr('name-uuid', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
-      console.log('Room Id:' + roomInfo.room_id);
+      console.log('Room Id: ' + roomInfo.room_id);
       // TODO Add questions and top questions
     }
   }
@@ -94,7 +93,8 @@ var ViewActions = function () {
    * The ID of the question and the text content of the question
    */
   var questionAddedImpl = function (questionInfo) {
-
+    console.log(questionInfo);
+    console.log('blah');
   }
 
   /**

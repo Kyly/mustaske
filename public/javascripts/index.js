@@ -6,6 +6,7 @@ $(document).ready(function () {
 
   socket.on('create room', ViewActions.enterRoomOwner);
   socket.on('join room', ViewActions.enterRoom);
+  socket.on('new question', ViewActions.questionAdded);
 
 
   // TODO: All stuff below here will be replaced by new functions in
@@ -91,7 +92,6 @@ $(document).ready(function () {
       question_text: questionText,
       room_id: $('.room-name').attr('name-uuid')
     };
-
     socket.emit('new question', data);
 
   });
