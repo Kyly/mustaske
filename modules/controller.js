@@ -121,35 +121,6 @@ Controller.prototype.upvoteQuestion = function (socket, data) {
   socket.emit('upvote question', roomsObj(questionData));
 }
 
-/**
- * TODO function headers...
- */
-Controller.prototype.downvoteQuestion = function (socket, questionId) {
-  //TODO function body
-}
-
-/**
- * TODO function headers...
- */
-Controller.prototype.dismissQuestion = function (socket, questionId) {
-  //TODO function body
-}
-
-/**
- * TODO function headers...
- */
-Controller.prototype.topQuestions = function (socket, n) {
-  //TODO function body
-}
-
-/**
- * TODO function headers...
- */
-Controller.prototype.allQuestions = function (socket) {
-  //TODO function body
-}
-
-
  /**
   * This handles the flow of data when a 'close room' emit is received by
   * the server
@@ -245,60 +216,5 @@ Controller.prototype.allQuestions = function (socket) {
       room_id: data.room_id};
     var returnData = this.roomsObj.warnUser(warnData);
   }
-
-//below is used in the chat demo and shouldn't be used in actual app
-//******************************************************************
-
-/**
- * TODO function headers...
- */
-Controller.prototype.nameAttempt = function (socket, name) {
-  if (name.indexOf('Guest') == 0) {
-    socket.emit('nameResult', {
-      success: false,
-      message: 'Names cannot begin with "Guest".'
-    });
-  } else {
-    if (this.namesUsed.indexOf(name) == -1) {
-      this.namesUsed.push(name);
-      this.nickNames[socket.id] = name;
-      socket.emit('nameResult', {
-        success: true,
-        name: name
-      });
-    } else {
-      socket.emit('nameResult', {
-        success: false,
-        message: 'That name is already in use.'
-      });
-    }
-  }
-}
-
-/**
- * TODO function headers...
- */
-Controller.prototype.message = function (socket, message) {
-  //console.log(io);
-  socket.broadcast.to(message.room).emit('message', {
-    text: this.nickNames[socket.id] + ': ' + message.text + ' ' + socket.id
-  });
-}
-
-/**
- * TODO function headers...
- */
-Controller.prototype.rooms = function (socket, io) {
-  var allRooms = []
-  for (var room in io.sockets.adapter.rooms) {
-    if (room !== socket.id) {
-      allRooms.push(room);
-    }
-  }
-
-  //console.log(io.sockets.adapter.rooms);
-  socket.emit('all rooms', allRooms);
-}
-
 
 module.exports = Controller;
