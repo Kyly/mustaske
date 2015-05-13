@@ -79,7 +79,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
   */
   Controller.prototype.closeRoom = function(io, socket, roomId) {
     var returnData = rooms.closeRoom({owner_id: socket.id, room_id: roomId})
-    socket.broadcast.to(roomId).emit('close room', returnData);
+    io.sockets.in(roomId).emit('close room', returnData);
   }
 
   /**
@@ -96,7 +96,6 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
       asker_id: socket.id
       };
     var returnData = this.rooms.addQuestion(data);
-  //socket.broadcast.to(question.room_id).emit('new question', returnData);
     io.sockets.in(question.room_id).emit('new question', returnData);
   }
 
@@ -110,7 +109,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     var questionData = {room_id: data.room_id, question_id: data.question_id,
        voter_id: socket.id};
     var returnData = this.rooms.upvoteQuestion(questionData);
-    socket.broadcast.to(data.room_id).emit('upvote question', returnData);
+    io.sockets.in(data.room_id).emit('upvote question', returnData);
   }
 
   /**
@@ -122,7 +121,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
   Controller.prototype.downvoteQuestion = function(io, socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
     var returnData = this.rooms(questionData);
-    socket.broadcast.to(data.room_id).emit('downvote question', returnData);
+    io.sockets.in(data.room_id).emit('downvote question', returnData);
   }
 
   /**
@@ -134,7 +133,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
   Controller.prototype.dismissQuestion = function(io, socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, owner_id: socket.id};
     var returnData = this.rooms.deleteQuestion(questionData);
-    socket.broadcast.to(data.room_id).emit('dismiss question', returnData);
+    io.sockets.in(data.room_id).emit('dismiss question', returnData);
   }
 
   /**
@@ -145,7 +144,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    */
   Controller.prototype.topQuestions = function(io, socket, data) {
     var returnData = this.rooms.getTopVoted(data);
-    socket.broadcast.to(data.room_id).emit('top questions', returnData);
+    io.sockets.in(data.room_id).emit('top questions', returnData);
   }
 
   /**
@@ -157,7 +156,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    */
   Controller.prototype.allQuestions = function(io, socket, roomID) {
     var returnData = this.rooms.getTopVoted({room_id: roomID});
-    socket.broadcast.to(roomID).emit('top questions', returnData);
+    io.sockets.in(roomID).emit('top questions', returnData);
   }
 
   /**
@@ -167,7 +166,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     var warnData = {owner_id: socket.id, question_id: data.question_id,
       room_id: data.room_id};
     var returnData = this.rooms.warnUser(warnData);
-    socket.broadcast.to(roomID).emit('warn user', returnData);
+    io.sockets.in(roomID).emit('warn user', returnData);
   }
 
 
