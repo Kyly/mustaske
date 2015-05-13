@@ -84,7 +84,9 @@ $(document).ready(function () {
 
   });
 
-  $('#add-question-btn').click(function () {
+  $('#add-question').submit(function (event) {
+
+    console.log(event);
     var textBox = $('#add-question-text');
     var questionText = textBox.val();
 
@@ -93,7 +95,8 @@ $(document).ready(function () {
       room_id: $('.room-name').attr('room-id')
     };
     socket.emit('new question', data);
-
+    textBox.val('');
+    event.preventDefault();
   });
 
 });

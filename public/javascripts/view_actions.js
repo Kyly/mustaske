@@ -26,7 +26,7 @@ var ViewActions = function () {
       $('#room-name-field').removeClass('has-error');
       var roomName = $('.room-name');
 
-      roomName.text('Owner View for ' + roomInfo.room_name + ': ' + roomInfo.room_id);
+      roomName.html('<small>Owner View for </small>' + roomInfo.room_name + ': <small>' + roomInfo.room_id + '</small>');
       roomName.attr('room-id', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
