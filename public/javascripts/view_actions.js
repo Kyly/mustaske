@@ -61,6 +61,7 @@ var ViewActions = function () {
    */
   var showHomeScreenImpl = function () {
     // TODO
+    $(".login-overlay").removeClass('animated slideOutUp').addClass('animated slideInDown');
   }
 
   /**
