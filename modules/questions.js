@@ -3,14 +3,26 @@
  */
 
 var Heap     = require('heap');
-var uuid     = require('node-uuid');
 var Question = require('./question');
-
+var uuid     = require('node-uuid');
+var marked   = require('marked');
 
 function Questions() {
   this.questionHash     = {};  // All questions
   this.upVotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
+
+  // Set up for markdown filter
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false
+  });
 }
 
 /**
@@ -19,11 +31,12 @@ function Questions() {
  * @param data = {room_id: id, question_text: String, asker_id: String}
  * @return {question_id: String, question_text: String}
  */
-Questions.prototype.addQuestion = function(data) {
+Questions.prototype.addQuestion = function (data) {
   var question = new Question({
       question_id: uuid.v1(),
       asker_id: data.asker_id,
-      question_text: data.question_text}
+      question_text: marked(data.question_text)
+    }
   );
 
   this.orderedQuestions.unshift(question);
@@ -41,7 +54,7 @@ Questions.prototype.addQuestion = function(data) {
  * @param data = {question_id: id, voter_id: id}
  * @return none
  */
-Questions.prototype.upVoteQuestion = function(data) {
+Questions.prototype.upVoteQuestion = function (data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
     return question.upVote(data);
@@ -57,7 +70,7 @@ Questions.prototype.upVoteQuestion = function(data) {
  * @param data = {question_id: id, voter_id: id}
  * @return none
  */
-Questions.prototype.downVoteQuestion = function(data) {
+Questions.prototype.downVoteQuestion = function (data) {
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
     return question.downVote(data);
@@ -70,7 +83,7 @@ Questions.prototype.downVoteQuestion = function(data) {
  * Checks if function exists in question hash table.
  *
  * @param Question id
- * @return True if question exists
+ * @return boolean if question exists
  */
 Questions.prototype.hasQuestion = function(id) {
   return (id in this.questionHash);
@@ -83,12 +96,12 @@ Questions.prototype.hasQuestion = function(id) {
  * @param Number of questions.
  * @return Array of questions.
  */
-Questions.prototype.getTopVoted = function(n) {
+Questions.prototype.getTopVoted = function (n) {
 
   // Default check
-  n = typeof n !== 'undefined' ?  n : n = this.upVotedQuestions.length;
+  n = typeof n !== 'undefined' ? n : this.upVotedQuestions.length;
 
-  return Heap.nlargest(this.upVotedQuestions, n, function(a, b) {
+  return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });
 
@@ -101,13 +114,13 @@ Questions.prototype.getTopVoted = function(n) {
  * @param Number of questions.
  * @return Array of questions.
  */
-Questions.prototype.getQuestions = function(n) {
+Questions.prototype.getQuestions = function (n) {
   // Default check
   if (typeof n === 'undefined') {
     return this.orderedQuestions;
   }
 
-  return this.orderedQuestions.slice(0,n);
+  return this.orderedQuestions.slice(0, n);
 }
 
 /**
@@ -117,7 +130,7 @@ Questions.prototype.getQuestions = function(n) {
  * @param Id of the question
  * @return empty object if question does not exist
  */
-Questions.prototype.deleteQuestion = function(questionID) {
+Questions.prototype.deleteQuestion = function (questionID) {
 
   //Get reference to question from the questionHash
   var question = this.questionHash[questionID];
