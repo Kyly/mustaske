@@ -22,9 +22,6 @@
     "font-awesome": "~4.3.0",
     "jquery": "~2.1.4",
     "readable-id": "0.0.2",
-    "assemble-swig": "~0.1.0",
-    "marked": "~0.3.3",
-    "pygmentize-bundled": "~2.3.0",
-    "highlight": "~0.2.3"
+    "marked": "~0.3.3"
   }
 }
