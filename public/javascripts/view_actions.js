@@ -193,7 +193,8 @@ var ViewActions = function () {
    */
   var topQuestionsDiv = function() {
 
-}
+  }
+
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.

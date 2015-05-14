@@ -10,6 +10,7 @@
  */
 var Rooms = require('./rooms');
 
+
 /**
  * Put all variables that are needed 'globally' by the server here.
  * More than likely, this will just be the Rooms() instance.

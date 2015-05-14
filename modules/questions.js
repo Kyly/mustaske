@@ -3,14 +3,26 @@
  */
 
 var Heap     = require('heap');
-var uuid     = require('node-uuid');
 var Question = require('./question');
-
+var uuid     = require('node-uuid');
+var marked   = require('marked');
 
 function Questions() {
   this.questionHash     = {};  // All questions
   this.upVotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
+
+  // Set up for markdown filter
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false
+  });
 }
 
 /**
@@ -23,7 +35,8 @@ Questions.prototype.addQuestion = function (data) {
   var question = new Question({
       question_id: uuid.v1(),
       asker_id: data.asker_id,
-      question_text: data.question_text}
+      question_text: marked(data.question_text)
+    }
   );
 
   this.orderedQuestions.unshift(question);
