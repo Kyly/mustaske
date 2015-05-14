@@ -83,7 +83,7 @@ Questions.prototype.downVoteQuestion = function (data) {
  * Checks if function exists in question hash table.
  *
  * @param Question id
- * @return True if question exists
+ * @return boolean if question exists
  */
 Questions.prototype.hasQuestion = function(id) {
   return (id in this.questionHash);
