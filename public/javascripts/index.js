@@ -12,7 +12,6 @@ $(document).ready(function () {
   socket.on('downvote question', ViewActions.questionScoreChanged);
   socket.on('dismiss question', ViewActions.questionDismissed);
   socket.on('warn user', ViewActions.userWarned);
-  socket.on(
 
 
   // TODO: All stuff below here will be replaced by new functions in
