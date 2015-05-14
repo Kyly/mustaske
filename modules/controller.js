@@ -52,7 +52,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     socket.emit('join room', returnData);
   }
   else
-    socket.emit('join room', {});
+    socket.emit('join room', false);
 }
 
 /**
