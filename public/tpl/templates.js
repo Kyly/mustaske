@@ -9,7 +9,7 @@
  */
 var question_html =
   "<div class=\"animated pulse\"><div class=\"{{classes}}\" question_id=\"{{question_id}}\" score=\"{{score}}\"><div class=\"rec\">" +
-  '<p class=\\"question\\">{{question_text}}</p><br>' +
+  '<p class=\\"question\\">{{{question_text}}}</p><br>' +
   '<div class=\"row\">' +
   '<a href=\"#\" id=\"thumbs_down_to_active\"><i class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>' +
   '<p class=\"numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1\">{{score}}</p>' +
