@@ -73,7 +73,7 @@ p, a, li, select, input {
 
 .selection {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1.5em;
 }
 
 .recent-questions-section .selection {
@@ -106,15 +106,9 @@ p, a, li, select, input {
 }
 
 .top-question {
+    margin-bottom: 1.5em;
     background-color: #ffffff;
-    padding-top: 6%;
-    padding-right: 6%;
-    padding-left: 6%;
-    padding-bottom: 6%;
     position: relative;
-}
-
-.top-question {
     font-size: 16px;
     font-weight: 600;
 }
@@ -150,7 +144,6 @@ p, a, li, select, input {
 
 .top-questions-container .comment-section {
     padding: 5%;
-    margin-top:4%;
 }
 
 .recent-questions-container .comment-section {
@@ -182,6 +175,10 @@ p, a, li, select, input {
 .question {
     font-size: 0.97em;
     margin-bottom: 0px;
+}
+
+.top-questions-container .question-content {
+    padding: 6%;
 }
 
 .search {
