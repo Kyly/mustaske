@@ -111,6 +111,9 @@ var ViewActions = function () {
    */
   var questionScoreChangedImpl = function (scoreInfo) {
     // TODO: Implementation
+    $("#" + scoreInfo.question_id).find(".numVotes").text(function() {
+        return scoreInfo.question_score;
+        });
   }
 
   /**
