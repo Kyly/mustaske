@@ -66,7 +66,47 @@
 
 <div class="rest container-fluid">
     <div id="main-content" class="row">
-        <div class="topquestions col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+        <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+            <div id="top-question-container" class="top-question-container">
+                <div id="0" class="top-question">
+                    <div class="question-content">
+                        <p>What is a for loop?</p><br>
+                    </div>
+                    <div class="row question-controls">
+                        <a href="#" id="thumbs-down-to-active"><i
+                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            23</p>
+                        <a href="#" id="thumbs_up_to_active"><i
+                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
+
+                        <p class="num-comments col-md-offset-6 col-sm-offset-4 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                            3</p>
+                        <a href="#" id="comment-to-active"><img
+                                src="/images/comment.png"
+                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+                        <a href="#" id="comment-to-inactive"><img
+                                src="/images/comment_active.png"
+                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com-active"></a>
+                    </div>
+                    <!--end topquestion_section-->
+                    <div class="comment-section">
+                        <a href="#" id="more">view more comments</a>
+
+                        <p>Go back and take CSE 12 with Gary!</p>
+
+                        <p> ^^^ I agree...Gary is the best!</p>
+
+                        <p>If it wasn't for Gary, I wouldn't even know what a
+                            variable is...</p>
+                        <input type="text" class="form-control"
+                               placeholder="write a comment...">
+                    </div>
+                    <!--end commentSection-->
+                </div>
+            </div>
+            <!--end selection-->
             <div class="selection">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle"
@@ -89,48 +129,7 @@
                 </div>
                 <!--end dropdown-->
             </div>
-            <!--end selection-->
-            <div class="totalTopQuestion">
-                <div id="0" class="topquestion_section">
-                    <p class="topquestion">What is a for loop?</p><br>
-
-                    <div class="row">
-
-
-                        <a href="#" id="thumbs_down_to_active"><i
-                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
-
-                        <p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                            23</p>
-
-                        <a href="#" id="thumbs_up_to_active"><i
-                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
-
-                        <p class="numComments col-md-offset-6 col-sm-offset-4 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                            3</p>
-                        <a href="#" id="comment_to_active"><img
-                                src="/images/comment.png"
-                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
-                        <a href="#" id="comment_to_inactive"><img
-                                src="/images/comment_active.png"
-                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
-                    </div>
-                </div>
-                <!--end topquestion_section-->
-                <div class="commentSection">
-                    <a href="#" id="more">view more comments</a>
-
-                    <p>Go back and take CSE 12 with Gary!</p>
-
-                    <p> ^^^ I agree...Gary is the best!</p>
-
-                    <p>If it wasn't for Gary, I wouldn't even know what a variable is...</p>
-                    <input type="text" class="form-control"
-                           placeholder="write a comment...">
-                </div>
-                <!--end commentSection-->
-            </div>
-            <!--end totalTopQuestion-->
+            <!--end top-question-section -->
             <!--<p>what</p>
             <p>what</p>
             <p>what</p>
@@ -150,7 +149,7 @@
         <!--end topquestions -->
 
 
-        <div class="recentquestions col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
+        <div class="recent-questions-section col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
             <div class="row">
                 <div class="selection col-md-3 col-sm-3 col-xs-12">
                     <div class="dropdown">
@@ -187,67 +186,29 @@
 								      </span>
                     </div>
                     <!-- /input-group -->
-                </div><!--end search-->
+                </div>
+                <!--end search-->
             </div>
             <!--end row-->
-
-          <div id="recent-questions">
-
-          <!--  <div class="totalRecentQuestion">
-
-                <div class="recentquestion_section">
-
-                    <p class="question">i need a question</p><br>
-
-                    <div class="row">
-
-
-                        <a href="#" id="thumbs_down_to_active"><i
-                                class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
-
-                        <p class="numVotes col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                            20</p>
-
-                        <a href="#" id="thumbs_up_to_active"><i
-                                class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1"></i></a>
-
-                        <p class="numComments col-md-offset-7 col-sm-offset-6 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                            1</p>
-                        <a href="#" id="comment_to_active"><img
-                                src="/images/comment.png"
-                                class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
-                        <a href="#" id="comment_to_inactive"><img
-                                src="/images/comment_active.png"
-                                class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com_active"></a>
-                    </div>
-
-                </div>
-                -end recentquestion_section-
-
-                <div class="commentSection">
-                    <a href="#" id="more">view more comments</a>
-
-                    <p>i need comments</p>
-
-                    <p> more comments!</p>
-                    <input type="text" class="form-control"
-                           placeholder="write a comment...">
-                </div>
-                -end commentSection-
-                <hr>
+            <!--end recent-questions-container-->
+            <div id="recent-questions-container">
 
             </div>
-            -end totalRecentQuestion-->
-          </div>
+            <!--end recent-questions-container-->
 
-            <form id="add-question" class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12" role="form">
-                    <div class="input-group form-group">
-                        <input id="add-question-text" type="text" class="form-control" placeholder="ask a question!">
+            <form id="add-question"
+                  class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
+                  role="form">
+                <div class="input-group form-group">
+                    <input id="add-question-text" type="text"
+                           class="form-control" placeholder="ask a question!">
                           <span class="input-group-btn">
-                            <button id="add-question-btn" class="btn btn-default" type="submit"><i class="fa fa-paper-plane"></i>
+                            <button id="add-question-btn"
+                                    class="btn btn-default" type="submit"><i
+                                    class="fa fa-paper-plane"></i>
                             </button>
                           </span>
-                    </div>
+                </div>
                 <div class="special-formatting-text" aria-hidden="true">
                     <b>**bold**</b>
                     <i>_italics_</i>
@@ -255,8 +216,9 @@
                     <code class="preformatted">```preformatted```</code>
                     <span class="quote"> &gt;quote</span>
                 </div>
-                    <!-- /input-group -->
-            </form><!--end askquestion-->
+                <!-- /input-group -->
+            </form>
+            <!--end askquestion-->
 
         </div>
         <!--end recent questions-->

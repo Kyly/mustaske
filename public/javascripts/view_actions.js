@@ -98,10 +98,10 @@ var ViewActions = function () {
       question_id   : questionInfo.question_id,
       question_text : questionInfo.question_text,
       score         : 0,
-      classes       : 'totalRecentQuestion'
+      classes       : 'recent-question'
     };
 
-    $('#recent-questions').prepend(questionTpl(newQuestionInfo));
+    recentQuestionsDiv(newQuestionInfo);
   }
 
   /**
@@ -149,25 +149,41 @@ var ViewActions = function () {
     });
   }
 
-  ///** TODO Due to template this function may no longer be needed
-  // * Returns a string containing the HTML of a topquestion_section div.
-  // * See line 193 of /views/index.html for a template
-  // * @param @param questionInfo = {question_id : string, question_text : string,
-  // * score : int}
-  // * @returns result = string, the recentquestion_section div
-  // */
-  //var recentQuestionsDiv = function(questionInfo) {
-  //  return questionTpl(questionInfo);
-  //}
+  /** TODO Due to template this function may no longer be needed
+  * Returns a string containing the HTML of a topquestion_section div.
+  * See line 193 of /views/index.html for a template
+  * @param @param questionInfo = {question_id : string, question_text : string,
+  * score : int}
+  * @returns result = string, the recentquestion_section div
+  */
+  var recentQuestionsDiv = function(questionInfo) {
+    var newQuestionInfo = {
+      question_id   : questionInfo.question_id,
+      question_text : questionInfo.question_text,
+      score         : questionInfo.score,
+      classes       : 'recent-question'
+    };
+
+    $('#recent-questions-container').prepend(questionTpl(newQuestionInfo));
+
+    // TODO Most likely need to append comments here
+  }
 
   /**
-   * Returns a string containing the HTML of a recentquestion_section div.
+   * Returns a string containing the HTML of a to totalTopQuestion div.
    * See line 94 of /views/index.html for a template
-   * @param TODO: params list
+   * @param TODO: params list`
    * @returns result = string, the topquestion_section div
    */
   var topQuestionsDiv = function() {
+    var newQuestionInfo = {
+      question_id   : questionInfo.question_id,
+      question_text : questionInfo.question_text,
+      score         : questionInfo.score,
+      classes       : 'top-question'
+    };
 
+    $('#top-questions-container').prepend(questionTpl(newQuestionInfo));
   }
 
 
