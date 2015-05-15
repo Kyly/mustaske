@@ -107,16 +107,21 @@ p, a, li, select, input {
 
 .top-question {
     background-color: #ffffff;
-    padding-top: 5%;
-    padding-right: 5%;
-    padding-left: 5%;
-    padding-bottom: 4%;
+    padding-top: 6%;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-bottom: 6%;
     position: relative;
 }
 
 .top-question {
     font-size: 16px;
     font-weight: 600;
+}
+
+.top-question .comment-section p{
+    font-weight:300;
+    font-size:15px;
 }
 
 .fa-thumbs-o-up, .fa-thumbs-o-down, .fa-thumbs-up {
@@ -145,6 +150,7 @@ p, a, li, select, input {
 
 .top-questions-container .comment-section {
     padding: 5%;
+    margin-top:4%;
 }
 
 .recent-questions-container .comment-section {
@@ -251,6 +257,10 @@ hr {
 
 #add-question .input-group {
     margin-bottom: .1em;
+}
+
+.num-votes, .num-comments {
+    font-weight:400;
 }
 
 /*.askQuestion .form-control{
