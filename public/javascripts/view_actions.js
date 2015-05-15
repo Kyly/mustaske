@@ -101,7 +101,9 @@ var ViewActions = function () {
       classes       : 'recent-question'
     };
 
-    recentQuestionsDiv(newQuestionInfo);
+    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+    $('.recent-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+    $('.recent-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
   }
 
   /**
@@ -111,6 +113,31 @@ var ViewActions = function () {
    */
   var questionScoreChangedImpl = function (scoreInfo) {
     // TODO: Implementation
+  }
+
+  var topQuestionsUpdated (topQuestionsInfo) {
+
+    var topQuestionAdded (topQuestionInfo) {
+      // TODO: Function to add top question, called by topQuestionsUpdated
+      // if we need to add a new top question to the list
+
+      var newQuestionInfo = { // TODO: fields may not be right
+        question_id   : topQuestionInfo.question_id,
+        question_text : topQuestionInfo.question_text,
+        score         : 0,
+        classes       : 'top-question'
+      };
+
+      $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+      $('.top-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+      $('.top-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
+    }
+
+    // TODO: Remove questions no longer in the top X
+
+    // TODO: Add new questions that joined the top X
+
+    // TODO: Re-order questions to match new ordering
   }
 
   /**
@@ -169,40 +196,7 @@ var ViewActions = function () {
       }
     }
 
-
-    // TODO: These two should be mutually exclusive
-    /**
-     * Callback for the upvote button
-     */
-    var thumbsUpOnClickFn = function () {
-      //$('.topquestions #thumbs_up_to_active i')
-      console.log($(this).children());
-      $(this).children()
-        .removeClass("fa-thumbs-o-up")
-        .addClass('fa-thumbs-up');
-
-
-    }
-
-    /**
-     * Callback for the downvote button
-     * @param qClass = string, the question class
-     */
-    var thumbsDownOnClickFn = function (qClass) {
-      //$('.topquestions #thumbs_down_to_active i')
-      console.log($(this).children());
-      $(this).children()
-        .removeClass("fa-thumbs-o-down")
-        .addClass('fa-thumbs-down');
-    }
-
     $('#join-create-room .btn').click(joinMakeOnClickFn);
-
-    // TODO: need to be added when a new question div is added
-    $('.topquestions #thumbs_up_to_active').click(thumbsUpOnClickFn);
-    $('.topquestions #thumbs_down_to_active').click(thumbsDownOnClickFn);
-    $('.recentquestions #thumbs_up_to_active').click(thumbsUpOnClickFn);
-    $('.recentquestions #thumbs_down_to_active').click(thumbsDownOnClickFn);
 
     $('#add-question').submit(addQuestionOnClickFn);
 
@@ -252,44 +246,39 @@ var ViewActions = function () {
 
   }
 
-  /** TODO Due to template this function may no longer be needed
-  * Returns a string containing the HTML of a topquestion_section div.
-  * See line 193 of /views/index.html for a template
-  * @param @param questionInfo = {question_id : string, question_text : string,
-  * score : int}
-  * @returns result = string, the recentquestion_section div
-  */
-  var recentQuestionsDiv = function(questionInfo) {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'recent-question'
-    };
+    // TODO: These two should be mutually exclusive
+    /**
+     * Callback for the upvote button
+     */
+    var thumbsUpOnClickFn = function () {
+      $(this).children()
+        .removeClass("fa-thumbs-o-up")
+        .addClass('fa-thumbs-up');
 
-    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+      var upvoteInfo { // TODO: Implement
+        room_id : '',
+        question_id : ''
+        };
 
-    // TODO Most likely need to append comments here
+      socket.emit('upvote question', upvoteInfo);
+    }
 
-  }
+    /**
+     * Callback for the downvote button
+     * @param qClass = string, the question class
+     */
+    var thumbsDownOnClickFn = function (qClass) {
+      $(this).children()
+        .removeClass("fa-thumbs-o-down")
+        .addClass('fa-thumbs-down');
 
-  /**
-   * Returns a string containing the HTML of a to totalTopQuestion div.
-   * See line 94 of /views/index.html for a template
-   * @param TODO: params list`
-   * @returns result = string, the topquestion_section div
-   */
-  var topQuestionsDiv = function() {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'top-question'
-    };
+      var downvoteInfo { // TODO: Implement
+        room_id : '',
+        question_id : ''
+        };
 
-    $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
-  }
-
+      socket.emit('downvote question', downvoteInfo);
+    }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
