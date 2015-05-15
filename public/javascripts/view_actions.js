@@ -164,7 +164,7 @@ var ViewActions = function () {
       classes       : 'recent-question'
     };
 
-    $('#recent-questions-container').prepend(questionTpl(newQuestionInfo));
+    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
 
     // TODO Most likely need to append comments here
   }
@@ -183,7 +183,7 @@ var ViewActions = function () {
       classes       : 'top-question'
     };
 
-    $('#top-questions-container').prepend(questionTpl(newQuestionInfo));
+    $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
   }
 
 
