@@ -149,16 +149,16 @@ var ViewActions = function () {
     });
   }
 
-  /**
-   * Returns a string containing the HTML of a topquestion_section div.
-   * See line 193 of /views/index.html for a template
-   * @param @param questionInfo = {question_id : string, question_text : string,
-   * score : int}
-   * @returns result = string, the recentquestion_section div
-   */
-  var recentQuestionsDiv = function(questionInfo) {
-    return questionTpl(questionInfo);
-  }
+  ///** TODO Due to template this function may no longer be needed
+  // * Returns a string containing the HTML of a topquestion_section div.
+  // * See line 193 of /views/index.html for a template
+  // * @param @param questionInfo = {question_id : string, question_text : string,
+  // * score : int}
+  // * @returns result = string, the recentquestion_section div
+  // */
+  //var recentQuestionsDiv = function(questionInfo) {
+  //  return questionTpl(questionInfo);
+  //}
 
   /**
    * Returns a string containing the HTML of a recentquestion_section div.
