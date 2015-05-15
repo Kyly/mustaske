@@ -7,6 +7,7 @@ $(document).ready(function () {
   socket.on('create room', ViewActions.enterRoomOwner);
   socket.on('join room', ViewActions.enterRoom);
   socket.on('new question', ViewActions.questionAdded);
+  socket.on('upvote question', ViewActions.questionScoreChange);
 
 
   // TODO: All stuff below here will be replaced by new functions in
