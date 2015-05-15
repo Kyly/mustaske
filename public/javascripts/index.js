@@ -13,75 +13,75 @@ $(document).ready(function () {
   // TODO: All stuff below here will be replaced by new functions in
   // ViewActions
 
-  $('.topquestions #thumbs_up_to_active').click(function () {
-    $('.topquestions #thumbs_up_to_active i')
+  $('.top-question #thumbs-up-to-active').click(function () {
+    $('.top-question #thumbs-up-to-active i')
       .removeClass("fa-thumbs-o-up")
       .addClass('fa-thumbs-up');
   });
 
 
-  $('.topquestions #thumbs_down_to_active').click(function () {
-    $('.topquestions #thumbs_down_to_active i')
+  $('.top-question #thumbs-down-to-active').click(function () {
+    $('.top-question #thumbs-down-to-active i')
       .removeClass("fa-thumbs-o-down")
       .addClass('fa-thumbs-down');
 
   });
 
 
-  $('.topquestions .commentSection #more').click(function () {
+  $('.top-question .comment-section #more').click(function () {
 
 
   });
 
-  $('.topquestions #comment_to_active').click(function () {
-    $(".topquestions .comment").css("display", "none");
-    $(".topquestions .com_active").css("display", "inline");
+  $('.top-question #comment-to-active').click(function () {
+    $(".top-question .comment").css("display", "none");
+    $(".top-question .com-active").css("display", "inline");
 
-    $(".topquestions .commentSection").show();
+    $(".top-question .comment-section").show();
 
   });
-  $('.topquestions #comment_to_inactive').click(function () {
-    $(".topquestions .comment").css("display", "inline");
-    $(".topquestions .com_active").css("display", "none");
+  $('.top-question #comment-to-inactive').click(function () {
+    $(".top-question .comment").css("display", "inline");
+    $(".top-question .com-active").css("display", "none");
 
-    $(".topquestions .commentSection").hide();
+    $(".top-question .comment-section").hide();
 
   });
 
 
   //REPEAT FOR RECENT QUESTIONS
 
-  $('.recentquestions #thumbs_up_to_active').click(function () {
-    $('.recentquestions #thumbs_up_to_active i')
+  $('.recent-question #thumbs-up-to-active').click(function () {
+    $('.recent-question #thumbs-up-to-active i')
       .removeClass("fa-thumbs-o-up")
       .addClass('fa-thumbs-up');
   });
 
-  $('.recentquestions #thumbs_down_to_active').click(function () {
-    $('.recentquestions #thumbs_down_to_active i')
+  $('.recent-question #thumbs-down-to-active').click(function () {
+    $('.recent-question #thumbs-down-to-active i')
       .removeClass("fa-thumbs-o-down")
       .addClass('fa-thumbs-down');
 
   });
 
 
-  $('.recentquestions .commentSection #more').click(function () {
+  $('.recent-question .comment-section #more').click(function () {
 
 
   });
 
-  $('.recentquestions #comment_to_active').click(function () {
-    $(".recentquestions .comment").css("display", "none");
-    $(".recentquestions .com_active").css("display", "inline");
+  $('.recent-question #comment-to-active').click(function () {
+    $(".recent-question .comment").css("display", "none");
+    $(".recent-question .com-active").css("display", "inline");
 
-    $(".recentquestions .commentSection").show();
+    $(".recent-question .comment-section").show();
 
   });
-  $('.recentquestions #comment_to_inactive').click(function () {
-    $(".recentquestions .comment").css("display", "inline");
-    $(".recentquestions .com_active").css("display", "none");
+  $('.recent-question #comment-to-inactive').click(function () {
+    $(".recent-question .comment").css("display", "inline");
+    $(".recent-question .com-active").css("display", "none");
 
-    $(".recentquestions .commentSection").hide();
+    $(".recent-question .comment-section").hide();
 
   });
 
