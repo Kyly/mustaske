@@ -67,7 +67,29 @@
 <div class="rest container-fluid">
     <div id="main-content" class="row">
         <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
-            <div id="top-question-container" class="top-question-container">
+        <!--end selection-->
+        <div class="selection">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle"
+                        type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-expanded="true">
+                    top 3 questions <i class="fa fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu"
+                    aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1"
+                                               href="#">top 5 questions</a>
+                    </li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1"
+                                               href="#">bottom 3
+                        questions</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1"
+                                               href="#">bottom 5
+                        questions</a></li>
+                </ul>
+            </div>
+            <!--end dropdown-->
+            <div id="top-questions-container" class="top-questions-container">
                 <div id="0" class="top-question">
                     <div class="question-content">
                         <p>What is a for loop?</p><br>
@@ -106,28 +128,7 @@
                     <!--end commentSection-->
                 </div>
             </div>
-            <!--end selection-->
-            <div class="selection">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle"
-                            type="button" id="dropdownMenu1"
-                            data-toggle="dropdown" aria-expanded="true">
-                        top 3 questions <i class="fa fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" role="menu"
-                        aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                   href="#">top 5 questions</a>
-                        </li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                   href="#">bottom 3
-                            questions</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                   href="#">bottom 5
-                            questions</a></li>
-                    </ul>
-                </div>
-                <!--end dropdown-->
+
             </div>
             <!--end top-question-section -->
             <!--<p>what</p>

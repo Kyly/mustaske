@@ -97,7 +97,7 @@ p, a, li, select, input {
     width: 100%;
 }
 
-.top-questions-section {
+.top-questions-container {
     margin-bottom: 5%;
 }
 
@@ -143,11 +143,11 @@ p, a, li, select, input {
     /*margin-right:0.5em;*/
 }
 
-.top-questions-section .comment-section {
+.top-questions-container .comment-section {
     padding: 5%;
 }
 
-.recent-questions-section .comment-section {
+.recent-questions-container .comment-section {
     padding: 2.5%;
 }
 
@@ -162,11 +162,11 @@ p, a, li, select, input {
     font-size: 13px;
 }
 
-.top-questions-section .comment-section a, .top-questions-section .comment-section p {
+.top-questions-container .comment-section a, .top-questions-container .comment-section p {
     margin: 4% 2%;
 }
 
-.recent-questions-section .comment-section a, .recent-questions-section .comment-section p {
+.recent-questions-container .comment-section a, .recent-questions-container .comment-section p {
     margin: 2% 1%;
 }
 
