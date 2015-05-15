@@ -115,7 +115,7 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
-  var topQuestionsUpdated (topQuestionsInfo) {
+  var topQuestionsUpdatedImpl (topQuestionsInfo) {
 
     var topQuestionAdded (topQuestionInfo) {
       // TODO: Function to add top question, called by topQuestionsUpdated
@@ -292,6 +292,7 @@ var ViewActions = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl,
+    topQuestionsUpdated: topQuestionsUpdatedImpl,
     setupUI: setupUIImpl
   }
 }();
