@@ -145,12 +145,34 @@ var ViewActions = function () {
    * should be ready for the user
    */
   var setupUIImpl = function () {
-    $('#join-create-room .btn').click(function () {
-      var textBox = $('#room-name-field input');
+    /**
+     * Callback for add question button
+     * @param event = Object, JQuery event object
+     */
+    var addQuestionOnClickFn = function (event) {
 
+      console.log(event);
+      var textBox = $('#add-question-text');
+      var questionText = textBox.val();
+
+      var data = {
+        question_text: questionText,
+        room_id: $('.room-name').attr('room-id')
+      };
+      socket.emit('new question', data);
+      textBox.val('');
+      event.preventDefault();
+    }
+
+    /**
+     * Callback for the home screen join and make buttons
+     */
+    var joinMakeOnClickFn = function () {
+
+      var textBox = $('#room-name-field input');
       var roomName = textBox.val();
 
-      if (roomName === '') {
+      if (roomName === '') { // TODO: Validation
         $('#room-name-field').addClass('has-error');
       }
 
@@ -172,9 +194,92 @@ var ViewActions = function () {
           break;
         }
       }
+    }
+
+
+    // TODO: These two should be mutually exclusive
+    /**
+     * Callback for the upvote button
+     */
+    var thumbsUpOnClickFn = function () {
+      //$('.topquestions #thumbs_up_to_active i')
+      console.log($(this).children());
+      $(this).children()
+        .removeClass("fa-thumbs-o-up")
+        .addClass('fa-thumbs-up');
+
+
+    }
+
+    /**
+     * Callback for the downvote button
+     * @param qClass = string, the question class
+     */
+    var thumbsDownOnClickFn = function (qClass) {
+      //$('.topquestions #thumbs_down_to_active i')
+      console.log($(this).children());
+      $(this).children()
+        .removeClass("fa-thumbs-o-down")
+        .addClass('fa-thumbs-down');
+    }
+
+    $('#join-create-room .btn').click(joinMakeOnClickFn);
+
+    // TODO: need to be added when a new question div is added
+    $('.topquestions #thumbs_up_to_active').click(thumbsUpOnClickFn);
+    $('.topquestions #thumbs_down_to_active').click(thumbsDownOnClickFn);
+    $('.recentquestions #thumbs_up_to_active').click(thumbsUpOnClickFn);
+    $('.recentquestions #thumbs_down_to_active').click(thumbsDownOnClickFn);
+
+    $('#add-question').submit(addQuestionOnClickFn);
+
+    // TODO: Do we need this? Comment sections OBE?
+    /*
+    $('.topquestions .commentSection #more').click(function () {});
+
+    $('.topquestions #comment_to_active').click(function () {
+      $(".topquestions .comment").css("display", "none");
+      $(".topquestions .com_active").css("display", "inline");
+
+      $(".topquestions .commentSection").show();
 
     });
+    $('.topquestions #comment_to_inactive').click(function () {
+      $(".topquestions .comment").css("display", "inline");
+      $(".topquestions .com_active").css("display", "none");
+
+      $(".topquestions .commentSection").hide();
+
+    });
+
+
+    //REPEAT FOR RECENT QUESTIONS
+
+    $('.recentquestions .commentSection #more').click(function () {
+
+
+    });
+
+    $('.recentquestions #comment_to_active').click(function () {
+      $(".recentquestions .comment").css("display", "none");
+      $(".recentquestions .com_active").css("display", "inline");
+
+      $(".recentquestions .commentSection").show();
+
+    });
+    $('.recentquestions #comment_to_inactive').click(function () {
+      $(".recentquestions .comment").css("display", "inline");
+      $(".recentquestions .com_active").css("display", "none");
+
+      $(".recentquestions .commentSection").hide();
+
+    });
+
+    */
+
   }
+
+
 
   /**
    * Returns a string containing the HTML of a topquestion_section div.
