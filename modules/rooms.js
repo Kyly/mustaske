@@ -5,7 +5,7 @@
 
 var Questions = require('./questions');
 var Room = require('./room');
-var uuid = require('node-uuid');
+var rid = require('readable-id');
 
 function Rooms() {
   this.rooms = {};  // Hash containing room objects
@@ -18,13 +18,13 @@ function Rooms() {
  * @param data = {owner_id: Socket id, room_name: String}
  * @return {room_id: String, room_name: String, owner_id: String}
  */
-Rooms.prototype.createRoom = function(data) {
+Rooms.prototype.createRoom = function (data) {
 
-  var uniqueID = uuid.v1();
+  var uniqueID = rid();
 
   //make sure uniqueID is unique
   while (this.hasRoom(uniqueID))
-    uniqueID = uuid.v1();
+    uniqueID = rid();
 
   //create new room and add it to rooms
   this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
@@ -43,14 +43,16 @@ Rooms.prototype.createRoom = function(data) {
  * @return data = {room_name: string, room_id: string, questions: array,
  *    top_questions: array}
  */
-Rooms.prototype.joinRoom = function(roomID) {
+Rooms.prototype.joinRoom = function (roomID) {
   // Check if room exists
   if (!this.hasRoom(roomID))
     return false;
 
   var room = this.rooms[roomID];
-  var roomData = {room_name: room.name, room_id: room.id,
-    questions: room.getQuestions(), top_questions: room.getTopVoted(5)};
+  var roomData = {
+    room_name: room.name, room_id: room.id,
+    questions: room.getQuestions(), top_questions: room.getTopVoted(5)
+  };
   return roomData;
 }
 
@@ -70,7 +72,7 @@ Rooms.prototype.hasRoom = function (room_id) {
  * @param data = {owner_id: String, room_id: String}
  * @return true if caller is owner and room exists
  */
-Rooms.prototype.closeRoom = function(data) {
+Rooms.prototype.closeRoom = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
@@ -92,7 +94,7 @@ Rooms.prototype.isOwner = function(data) {
     return false;
 
   return (this.rooms[data.room_id].owner === data.user_id);
- }
+}
 
 /**
  * Delgates to room. @see room.js
@@ -183,7 +185,7 @@ Rooms.prototype.getTopVoted = function (data) {
  *
  * @param data = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.upVoteQuestion = function(data) {
+Rooms.prototype.upVoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
@@ -194,7 +196,7 @@ Rooms.prototype.upVoteQuestion = function(data) {
 /**
  * @paramd ata = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.downVoteQuestion = function(data) {
+Rooms.prototype.downVoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
