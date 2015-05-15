@@ -7,9 +7,9 @@
  */
 
 function Question(data) {
-  this.id = data.question_id;
+  this.question_id = data.question_id;
   this.asker = data.asker_id;
-  this.question = data.question_text;
+  this.question_text = data.question_text;
   this.comments = [];
   this.voters = {};
   this.voters[this.asker] = 1;
@@ -36,13 +36,13 @@ Question.prototype.upVote = function(data) {
     if (this.voters[voterID] < 0) {
       this.voters[voterID] = 1;
       this.score += 2;
-      return {question_score: this.score, question_id: this.id};
+      return {question_score: this.score, question_id: this.question_id};
 
       //voter has upvoted
     } else {
       --(this.score);
       delete this.voters[voterID];
-      return {question_score: this.score, question_id: this.id};
+      return {question_score: this.score, question_id: this.question_id};
     }
   }
 
@@ -50,7 +50,7 @@ Question.prototype.upVote = function(data) {
   this.voters[voterID] = 1;
   ++(this.score);
 
-  return {question_score: this.score, question_id: this.id};
+  return {question_score: this.score, question_id: this.question_id};
 }
 
 
@@ -71,13 +71,13 @@ Question.prototype.downVote = function(data) {
     if (this.voters[voterID] > 0) {
       this.voters[voterID] = -1;
       this.score -= 2;
-      return {question_score: this.score, question_id: this.id};
+      return {question_score: this.score, question_id: this.question_id};
 
       //voter has downvoted
     } else {
       ++(this.score);
       delete this.voters[voterID];
-      return {question_score: this.score, question_id: this.id};
+      return {question_score: this.score, question_id: this.question_id};
     }
   }
 
@@ -85,7 +85,7 @@ Question.prototype.downVote = function(data) {
   this.voters[voterID] = -1;
   --(this.score);
 
-  return {question_score: this.score, question_id: this.id};
+  return {question_score: this.score, question_id: this.question_id};
 }
 
 module.exports = Question;

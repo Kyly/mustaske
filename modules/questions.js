@@ -40,11 +40,11 @@ Questions.prototype.addQuestion = function (data) {
   );
 
   this.orderedQuestions.unshift(question);
-  this.questionHash[question.id] = question;
+  this.questionHash[question.question_id] = question;
   this.upVotedQuestions.push(question);
   //this.moveUpToPlace(question);
 
-  return {question_id: question.id, question_text: question.question};
+  return {question_id: question.question_id, question_text: question.question_text};
 }
 
 /**
