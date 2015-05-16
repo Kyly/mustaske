@@ -38,20 +38,20 @@ Poll.prototype.vote = function(data) {
   var prevVote = 0;
 
   //Check whether the person has voted before; if so, decrement the original vote
-  if(data.voter_id in voters){
-  	prevVote = voters[data.voter_id];
-  	results[prevVote] -= 1;
+  if(data.voter_id in this.voters){
+  	prevVote = this.voters[data.voter_id];
+  	this.results[prevVote] -= 1;
   }
 
   //Update the voter's current vote
-  voters[data.voter_id] = data.option;
+  this.voters[data.voter_id] = data.option;
 
   //Update the results
-  if(!(data.option in results)){
-  	results[data.option] = 1;
+  if(!(data.option in this.results)){
+  	this.results[data.option] = 1;
   }
   else {
-  	results[data.option] += 1;
+  	this.results[data.option] += 1;
   }
 
   return {poll_id: this.pollID, prev_vote: prevVote, cur_vote: data.option};
