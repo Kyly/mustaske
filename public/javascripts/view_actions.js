@@ -60,7 +60,6 @@ var ViewActions = function () {
         'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
         , addAllQuestions(roomInfo)
       );
-
     }
   }
 
@@ -195,17 +194,41 @@ var ViewActions = function () {
      */
     var addQuestionOnClickFn = function (event) {
 
+      var RE_ENABLE_DELAY = 30000;
+
       console.log(event);
       var textBox = $('#add-question-text');
+      var textBoxDiv = $('#add-question');
       var questionText = textBox.val();
 
-      var data = {
-        question_text: questionText,
-        room_id: $('.room-name').attr('room-id')
-      };
-      socket.emit('new question', data);
-      textBox.val('');
+      if (questionText)
+      {
+        var data = {
+          question_text: questionText,
+          room_id: $('.room-name').attr('room-id')
+        };
+        socket.emit('new question', data);
+        textBox.val('');
+
+        textBox.prop('disabled', true);
+        console.log('disabled');
+        window.setTimeout(function () {
+          textBox.prop('disabled', false)
+          }, RE_ENABLE_DELAY);
+      }
+      else
+      {
+        textBoxDiv
+          .addClass('animated shake');
+        textBoxDiv
+          .one('webkitAnimationEnd mozAnimationEnd ' +
+               'MSAnimationEnd oanimationend animationend', function () {
+                 textBoxDiv.removeClass('animated shake');
+               });
+      }
       event.preventDefault();
+
+
     }
 
     /**
