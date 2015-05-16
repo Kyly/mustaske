@@ -124,8 +124,8 @@ var ViewActions = function () {
    * Update UI reflecting a warning being issued
    * @param userId = string, the ID of the offending user
    */
-  var userWarnedImpl = function (userId) {
-    // TODO: Implementation
+  var userWarnedImpl = function (userID) {
+    $('.navbar').append('<div class="alert alert-success alert-fixed-top"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>WARNGING!!!</strong> Must you ask that question?</div>')
   }
 
   /**

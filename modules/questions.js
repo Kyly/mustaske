@@ -37,12 +37,10 @@ Questions.prototype.addQuestion = function (data) {
       asker_id: data.asker_id,
       question_text: marked(data.question_text)
     }
-  );
+  )
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.question_id] = question;
-  this.upVotedQuestions.push(question);
-  //this.moveUpToPlace(question);
 
   return {question_id: question.question_id, question_text: question.question_text};
 }
@@ -55,12 +53,16 @@ Questions.prototype.addQuestion = function (data) {
  * @return none
  */
 Questions.prototype.upVoteQuestion = function (data) {
+  var retval = false;
+
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    return question.upVote(data);
+    var prevScore = question.score;
+    retval = question.upVote(data);
+    this.placeOrRemoveUpvoted(question,prevScore);
   }
-  else
-    return false;
+  
+  return retval;
 }
 
 /**
@@ -71,12 +73,16 @@ Questions.prototype.upVoteQuestion = function (data) {
  * @return none
  */
 Questions.prototype.downVoteQuestion = function (data) {
+  var retval = false;
+
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    return question.downVote(data);
+    var prevScore = question.score;
+    retval = question.downVote(data);
+    this.placeOrRemoveUpvoted(question,prevScore);
   }
-  else
-    return false;
+  
+  return retval;
 }
 
 /**
@@ -104,8 +110,6 @@ Questions.prototype.getTopVoted = function (n) {
   return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });
-
-  //return this.upVotedQuestions.slice(0,n);
 }
 
 /**
@@ -170,59 +174,29 @@ Questions.prototype.deleteQuestion = function (questionID) {
  * @param questionID: String
  * @return asker_id: String
  */
- Questions.prototype.warnUser = function(questionID) {
-   return this.questionHash[questionID].asker;
- }
+Questions.prototype.warnUser = function(questionID) {
+  return this.questionHash[questionID].asker;
+}
 
- 
-/*Questions.prototype.moveUpToPlace = function(question) {
-  var indexOfThis = this.upVotedQuestions.indexOf(question);
+/**
+ * Adds or removes a question to/from upvotedQuestions if necessary.
+ *
+ * @param question: question object, prevScore: int
+ * @return none
+ */
+Questions.prototype.placeOrRemoveUpvoted = function(question,prevScore) {
+  //add to upvotedQuestions if question became eligible
+  if(prevScore < 2 && question.score >= 2) {
+    this.upVotedQuestions.push(question);
+  } 
 
-  if (indexOfThis > 0) {
-    var indexOfOther = indexOfThis - 1;
-    var scoreOfThis = question.score;
-    var otherQ = this.upVotedQuestions[indexOfOther];
-    var scoreOfOther = otherQ.score;
-
-    while (scoreOfThis > scoreOfOther) {
-      this.upVotedQuestions[indexOfOther] = question;
-      this.upVotedQuestions[indexOfThis] = otherQ;
-      --indexOfThis;
-
-      if (indexOfThis < 1)
-        break;
-
-      indexOfOther = indexOfThis - 1;
-      otherQ = this.upVotedQuestions[indexOfOther];
-      scoreOfOther = otherQ.score;
+  //remove from upvotedQuestions if question no longer eligible
+  if(prevScore >= 2 && question.score < 2) {
+    var index = this.upVotedQuestions.indexOf(question);
+    if (index > -1) {
+      this.upVotedQuestions.splice(index, 1);
     }
   }
 }
-
-
-Questions.prototype.moveDownToPlace = function(question) {
-  var indexOfThis = this.upVotedQuestions.indexOf(question);
-  var maxIndex = this.upVotedQuestions.length - 1;
-
-  if (indexOfThis < maxIndex) {
-    var indexOfOther = indexOfThis + 1;
-    var scoreOfThis = question.score;
-    var otherQ = this.upVotedQuestions[indexOfOther];
-    var scoreOfOther = otherQ.score;
-
-    while (scoreOfThis < scoreOfOther) {
-      this.upVotedQuestions[indexOfOther] = question;
-      this.upVotedQuestions[indexOfThis] = otherQ;
-      ++indexOfThis;
-
-      if (indexOfThis > (maxIndex - 1))
-        break;
-
-      indexOfOther = indexOfThis + 1;
-      otherQ = this.upVotedQuestions[indexOfOther];
-      scoreOfOther = otherQ.score;
-    }
-  }
-}*/
 
 module.exports = Questions;
