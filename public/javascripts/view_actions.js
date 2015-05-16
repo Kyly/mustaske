@@ -306,7 +306,7 @@ var ViewActions = function () {
       question_id : ''
     };
 
-    socket.emit('upvote question', upvoteInfo);
+    //socket.emit('upvote question', upvoteInfo);
   }
 
   /**
@@ -327,7 +327,7 @@ var ViewActions = function () {
       question_id : ''
     };
 
-    socket.emit('downvote question', downvoteInfo);
+    //socket.emit('downvote question', downvoteInfo);
   }
 
   /**
