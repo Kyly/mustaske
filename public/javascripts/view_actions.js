@@ -55,11 +55,7 @@ var ViewActions = function () {
       overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
 
-      // Wait for overlay to finish to animate in TODO May be a little over the top
-      overlay.addClass(
-        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-        , addAllQuestions(roomInfo)
-      );
+      addAllQuestions(roomInfo)
 
     }
   }
@@ -138,16 +134,11 @@ var ViewActions = function () {
    * The ID of the question and the text content of the question
    */
   var questionAddedImpl = function (questionInfo) {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : 0,
-      classes       : 'recent-question'
-    };
 
-    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
-    $('.recent-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
-    $('.recent-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
+    questionInfo.class = 'recent-question';
+    questionInfo.opt   = 'prepend';
+
+    questionDiv(questionInfo);
   }
 
   /**
@@ -159,50 +150,45 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
-  var topQuestionsUpdatedImpl = function (topQuestionsInfo) {
 
-    var topQuestionAdded = function (topQuestionInfo) {
-      // TODO: Function to add top question, called by topQuestionsUpdated
-      // if we need to add a new top question to the list
 
-      var newQuestionInfo = { // TODO: fields may not be right
-        question_id   : topQuestionInfo.question_id,
-        question_text : topQuestionInfo.question_text,
-        score         : 0,
-        classes       : 'top-question'
-      };
+  var topQuestionAdded = function (topQuestionInfo) {
+    // TODO: Function to add top question, called by topQuestionsUpdated
+    // if we need to add a new top question to the list
 
-      $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
-      $('.top-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
-      $('.top-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
-    }
+    topQuestionInfo.class = 'top-question';
+    topQuestionInfo.opt   = 'append';
+
+    questionDiv(newQuestionInfo);
+  }
 
     // TODO: Remove questions no longer in the top X
 
     // TODO: Add new questions that joined the top X
 
     // TODO: Re-order questions to match new ordering
-  }
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
   var setupUIImpl = function () {
+
+    var mainContent = $('#main-content');
+
     /**
      * Callback for add question button
      * @param event = Object, JQuery event object
      */
     var addQuestionOnClickFn = function (event) {
 
-      console.log(event);
       var textBox = $('#add-question-text');
       var questionText = textBox.val();
-
       var data = {
         question_text: questionText,
         room_id: $('.room-name').attr('room-id')
       };
+
       socket.emit('new question', data);
       textBox.val('');
       event.preventDefault();
@@ -212,6 +198,7 @@ var ViewActions = function () {
      * Callback for the home screen join and make buttons
      */
     var joinMakeOnClickFn = function () {
+
 
       var textBox = $('#room-name-field input');
       var roomName = textBox.val();
@@ -243,6 +230,9 @@ var ViewActions = function () {
     $('#join-create-room .btn').click(joinMakeOnClickFn);
 
     $('#add-question').submit(addQuestionOnClickFn);
+
+    mainContent.on('click', '.thumbs-up-to-active', thumbsUpOnClickFn);
+    mainContent.on('click', '.thumbs-down-to-active', thumbsDownOnClickFn);
 
   }
 
@@ -302,9 +292,14 @@ var ViewActions = function () {
    * Callback for the upvote button
    */
   var thumbsUpOnClickFn = function () {
-    $(this).children()
-      .removeClass("fa-thumbs-o-up")
-      .addClass('fa-thumbs-up');
+
+    var element = $(this).children();
+    console.log(element);
+    if (element.hasClass('fa-thumbs-o-up')) {
+      element.removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+    } else {
+      element.removeClass("fa-thumbs-up").addClass('fa-thumbs-o-up');
+    }
 
     var upvoteInfo = { // TODO: Implement
       room_id : '',
@@ -316,12 +311,16 @@ var ViewActions = function () {
 
   /**
    * Callback for the downvote button
-   * @param qClass = string, the question class
    */
-  var thumbsDownOnClickFn = function (qClass) {
-    $(this).children()
-      .removeClass("fa-thumbs-o-down")
-      .addClass('fa-thumbs-down');
+  var thumbsDownOnClickFn = function () {
+
+    var element = $(this).children();
+    console.log(element);
+    if (element.hasClass('fa-thumbs-o-down')) {
+      element.removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+    } else {
+      element.removeClass("fa-thumbs-down").addClass('fa-thumbs-o-down');
+    }
 
     var downvoteInfo = { // TODO: Implement
       room_id : '',
@@ -365,7 +364,6 @@ var ViewActions = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl,
-    topQuestionsUpdated: topQuestionsUpdatedImpl,
     setupUI: setupUIImpl
   }
 }();
