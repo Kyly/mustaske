@@ -337,7 +337,7 @@ var ViewActions = function () {
    * @param html
    */
   var attachQuestion = function (questionInfo, container, html) {
-
+    console.log(questionInfo);
     switch(questionInfo.opt) {
     case 'prepend':
       $(container).prepend(html);
@@ -351,6 +351,7 @@ var ViewActions = function () {
       .addClass('animated pulse');
 
   }
+
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
