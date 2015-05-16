@@ -3,21 +3,25 @@
 <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <script src="/javascripts/jquery.min.js"></script>
-    <!--bootstrap-->
+    <!-- bootstrap -->
     <link type="text/css" rel="stylesheet"
           href="/lib/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet"
           href="/lib/bootstrap/css/bootstrap-theme.min.css">
-    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <!-- font-awesome -->
     <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Our styles -->
     <link href="/stylesheets/style.css" rel="stylesheet"/>
     <!-- Styles for animations -->
     <link href="/stylesheets/animate.css" rel="stylesheet"/>
-
-
+    <!-- jasny CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
           rel='stylesheet' type='text/css'>
     <title>MustAsk: CSE110</title>
@@ -55,189 +59,258 @@
         </div>
     </div>
 </div>
-
-<div class="navbar">
-    <div class="container-fluid">
-        <ul class="pull-left">
-            <li class="room-name">CSE110</li>
-        </ul>
-    </div>
-</div>
-
-<div class="rest container-fluid">
-    <div id="main-content" class="row">
-        <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
-        <!--end selection-->
-        <div class="selection">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle"
-                        type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-expanded="true">
-                    top 3 questions <i class="fa fa-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu" role="menu"
-                    aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1"
-                                               href="#">top 5 questions</a>
-                    </li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1"
-                                               href="#">bottom 3
-                        questions</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1"
-                                               href="#">bottom 5
-                        questions</a></li>
-                </ul>
-            </div><!--end dropdown-->
-            </div><!--end selection-->
-
-            <div id="top-questions-container" class="top-questions-container">
-                <div id="0" class="top-question">
-                    <!--end topquestion_section-->
-                    <div class="question-content">
-                        <p>What is a for loop?</p><br>
-
-                        <div class="row question-controls">
-                            <a href="#" id="thumbs-down-to-active"><i
-                                    class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1"></i></a>
-                            <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                                23</p>
-                            <a href="#" id="thumbs_up_to_active"><i
-                                    class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1"></i></a>
-                            <p class="num-comments col-md-offset-6 col-sm-offset-3 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                                3</p>
-                            <a href="#" id="comment-to-active"><img
-                                    src="/images/comment.png"
-                                    class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
-                            <a href="#" id="comment-to-inactive"><img
-                                    src="/images/comment_active.png"
-                                    class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com-active"></a>
-                        </div>
-                    </div>
-
-                    <div class="comment-section">
-                        <a href="#" id="more">view more comments</a>
-
-                        <p>Go back and take CSE 12 with Gary!</p>
-
-                        <p> ^^^ I agree...Gary is the best!</p>
-
-                        <p>If it wasn't for Gary, I wouldn't even know what a
-                            variable is...</p>
-                        <input type="text" class="form-control"
-                               placeholder="write a comment...">
-                    </div>
-                    <!--end commentSection-->
-                </div>
-            </div><!--end top-questions-container-->
-
-
-            <!--end top-question-section -->
-            <!--<p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>
-            <p>what</p>-->
-        </div>
-        <!--end topquestions -->
-
-
-        <div class="recent-questions-section col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
-            <div class="row">
-                <div class="selection col-md-3 col-sm-3 col-xs-12">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle"
-                                type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
-                            most recent &nbsp; &nbsp; <i
-                                class="fa fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu"
-                            aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">top
-                                5 questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">bottom
-                                3 questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">bottom
-                                5 questions</a></li>
-                        </ul>
-                    </div>
-                    <!--end dropdown-->
-                </div>
-                <!--end selection-->
-                <div class="search col-md-9 col-sm-9 col-xs-12">
+<!-- Offcanvas menu -->
+<div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu" style="z-index: 1">
+    <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
+    <ul class="nav navmenu-nav">
+        <li><span class="room-rid">Slide in</span></li>
+        <li><span class="room-user-status">Push</span></li>
+    </ul>
+    <ul class="nav navmenu-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Top Questions<b class="caret"></b></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li>
                     <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="search all questions">
-								      <span class="input-group-btn">
-								        <button class="btn btn-default"
-                                                type="button">Go!
-                                        </button>
-								      </span>
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]" disabled="disabled">
+                              <span class="glyphicon glyphicon-minus"></span>
+                          </button>
+                      </span>
+                                    <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="10">
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                              <span class="glyphicon glyphicon-plus"></span>
+                          </button>
+                      </span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav navmenu-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent Questions<b class="caret"></b></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li><a href="#"></a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Offcanvas menu end -->
+<div class="canvas">
+    <!-- Control for offcanvas -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header mobile-toggle">
+                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <span class="navbar-brand room-name">CSE110</span>
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!--<div class="navbar navbar-fixed-top hidden-sm hidden-md">-->
+        <!--<button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+        <!--</button>-->
+        <!--<div class="container-fluid">-->
+            <!--<ul class="pull-left">-->
+                <!--<li class="room-name">CSE110</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="rest container-fluid">
+        <div id="main-content" class="row">
+            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+            <!--end selection-->
+            <div class="selection">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle"
+                            type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-expanded="true">
+                        top 3 questions <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu"
+                        aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">top 5 questions</a>
+                        </li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">bottom 3
+                            questions</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                   href="#">bottom 5
+                            questions</a></li>
+                    </ul>
+                </div><!--end dropdown-->
+                </div><!--end selection-->
+
+                <div id="top-questions-container" class="top-questions-container">
+                    <div id="0" class="top-question">
+                        <!--end topquestion_section-->
+                        <div class="question-content">
+                            <p>What is a for loop?</p><br>
+
+                            <div class="row question-controls">
+                                <a href="#" id="thumbs-down-to-active"><i
+                                        class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1"></i></a>
+                                <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                                    23</p>
+                                <a href="#" id="thumbs_up_to_active"><i
+                                        class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1"></i></a>
+                                <p class="num-comments col-md-offset-6 col-sm-offset-3 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                                    3</p>
+                                <a href="#" id="comment-to-active"><img
+                                        src="/images/comment.png"
+                                        class="col-md-1 col-sm-2 col-xs-2 col-lg-1 comment "></a>
+                                <a href="#" id="comment-to-inactive"><img
+                                        src="/images/comment_active.png"
+                                        class="col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com-active"></a>
+                            </div>
+                        </div>
+
+                        <div class="comment-section">
+                            <a href="#" id="more">view more comments</a>
+
+                            <p>Go back and take CSE 12 with Gary!</p>
+
+                            <p> ^^^ I agree...Gary is the best!</p>
+
+                            <p>If it wasn't for Gary, I wouldn't even know what a
+                                variable is...</p>
+                            <input type="text" class="form-control"
+                                   placeholder="write a comment...">
+                        </div>
+                        <!--end commentSection-->
+                    </div>
+                </div><!--end top-questions-container-->
+
+
+                <!--end top-question-section -->
+                <!--<p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>
+                <p>what</p>-->
+            </div>
+            <!--end topquestions -->
+
+
+            <div class="recent-questions-section col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
+                <div class="row">
+                    <div class="selection col-md-3 col-sm-3 col-xs-12">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle"
+                                    type="button" id="dropdownMenu1"
+                                    data-toggle="dropdown" aria-expanded="true">
+                                most recent &nbsp; &nbsp; <i
+                                    class="fa fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu"
+                                aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem"
+                                                           tabindex="-1" href="#">top
+                                    5 questions</a></li>
+                                <li role="presentation"><a role="menuitem"
+                                                           tabindex="-1" href="#">bottom
+                                    3 questions</a></li>
+                                <li role="presentation"><a role="menuitem"
+                                                           tabindex="-1" href="#">bottom
+                                    5 questions</a></li>
+                            </ul>
+                        </div>
+                        <!--end dropdown-->
+                    </div>
+                    <!--end selection-->
+                    <div class="search col-md-9 col-sm-9 col-xs-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   placeholder="search all questions">
+                                          <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    type="button">Go!
+                                            </button>
+                                          </span>
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                    <!--end search-->
+                </div>
+                <!--end row-->
+                <!--end recent-questions-container-->
+                <div id="recent-questions-container">
+
+                </div>
+                <!--end recent-questions-container-->
+
+                <form id="add-question"
+                      class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
+                      role="form">
+                    <div class="input-group form-group">
+                        <input id="add-question-text" type="text"
+                               class="form-control" placeholder="ask a question!">
+                              <span class="input-group-btn">
+                                <button id="add-question-btn"
+                                        class="btn btn-default" type="submit"><i
+                                        class="fa fa-paper-plane"></i>
+                                </button>
+                              </span>
+                    </div>
+                    <div class="special-formatting-text" aria-hidden="true">
+                        <b>**bold**</b>
+                        <i>_italics_</i>
+                        <code>`code`</code>
+                        <code class="preformatted">```preformatted```</code>
+                        <span class="quote"> &gt;quote</span>
                     </div>
                     <!-- /input-group -->
-                </div>
-                <!--end search-->
-            </div>
-            <!--end row-->
-            <!--end recent-questions-container-->
-            <div id="recent-questions-container">
+                </form>
+                <!--end askquestion-->
 
             </div>
-            <!--end recent-questions-container-->
+            <!--end recent questions-->
 
-            <form id="add-question"
-                  class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
-                  role="form">
-                <div class="input-group form-group">
-                    <input id="add-question-text" type="text"
-                           class="form-control" placeholder="ask a question!">
-                          <span class="input-group-btn">
-                            <button id="add-question-btn"
-                                    class="btn btn-default" type="submit"><i
-                                    class="fa fa-paper-plane"></i>
-                            </button>
-                          </span>
-                </div>
-                <div class="special-formatting-text" aria-hidden="true">
-                    <b>**bold**</b>
-                    <i>_italics_</i>
-                    <code>`code`</code>
-                    <code class="preformatted">```preformatted```</code>
-                    <span class="quote"> &gt;quote</span>
-                </div>
-                <!-- /input-group -->
-            </form>
-            <!--end askquestion-->
 
         </div>
-        <!--end recent questions-->
-
-
+        <!--end row-->
     </div>
-    <!--end row-->
-</div>
 <!--end rest & container fluid-->
+</div>
 
 
 <footer>
+    <!-- jasny -->
+    <script src="/javascripts/jquery.min.js"></script>
+    <!--bootstrap-->
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/index.js"></script>
     <script src="/javascripts/view_actions.js"></script>
     <script src="/javascripts/handlebars.js"></script>
     <script src="/tpl/templates.js"></script>
+    <script src="/javascripts/plus_minus_form.js"></script>
 </footer>
 </body>
 
