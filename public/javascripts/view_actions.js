@@ -45,17 +45,52 @@ var ViewActions = function () {
     }
 
     else {
+      var overlay = $('.login-overlay');
+
       $('#room-name-field').removeClass('has-error');
       var roomName = $('.room-name');
 
       roomName.text(roomInfo.room_name + ': ' + roomInfo.room_id);
       roomName.attr('room-id', roomInfo.room_id);
-      $('.login-overlay').addClass('animated slideOutUp');
+      overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
-      // TODO Add questions and top questions
+
+      // Wait for overlay to finish to animate in TODO May be a little over the top
+      overlay.once(
+        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+        , addAllQuestions(roomInfo)
+      );
+
     }
   }
 
+  /**
+   * Add all question to user screen. For when room is first joined.
+   *
+   * @param roomInfo = {room_name : string, room_id : string,
+   * questions : array, top_questions : array}
+   */
+  var addAllQuestions = function(roomInfo) {
+
+    var topQuestions = roomInfo.top_questions;
+    var questions    = roomInfo.questions;
+
+    if (questions.length !== 0) {
+      $.each(questions, function(index, question) {
+        question.class = 'recent-question';
+        question.opt   = 'append';
+        questionDiv(question);
+      });
+    }
+
+    if (topQuestions.length !== 0) {
+      $.each(topQuestions, function(index, question) {
+        question.class = 'top-question';
+        question.opt   = 'append';
+        questionDiv(question);
+      });
+    }
+  }
   /**
    * Return to the home screen
    */
@@ -101,15 +136,11 @@ var ViewActions = function () {
    * The ID of the question and the text content of the question
    */
   var questionAddedImpl = function (questionInfo) {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : 0,
-      classes       : 'recent-question'
-    };
 
-    $('#recent-questions-container').prepend(
-      recentQuestionsDiv(newQuestionInfo));
+    questionInfo.opt   = 'prepend';
+    questionInfo.class = 'recent-question';
+
+    questionDiv(questionInfo);
   }
 
   /**
@@ -157,22 +188,36 @@ var ViewActions = function () {
     });
   }
 
-  /** TODO Due to template this function may no longer be needed
-  * Returns a string containing the HTML of a topquestion_section div.
-  * See line 193 of /views/index.html for a template
-  * @param @param questionInfo = {question_id : string, question_text : string,
-  * score : int}
-  * @returns result = string, the recentquestion_section div
-  */
-  var recentQuestionsDiv = function(questionInfo) {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'recent-question'
-    };
+  /**
+   * Makes calls to either recent questions or top questions div functions.
+   * @param questionInfo
+   */
+  var questionDiv = function(questionInfo) {
 
-    return topQuestionTpl(newQuestionInfo);
+    switch (questionInfo.class) {
+      case 'recent-question':
+        recentQuestionsDiv(questionInfo);
+        break;
+      case 'top-question':
+        topQuestionsDiv(questionInfo);
+        break;
+    }
+
+  }
+  /** TODO Due to template this function may no longer be needed
+   * Returns a string containing the HTML of a topquestion_section div.
+   * See line 193 of /views/index.html for a template
+   * @param questionInfo = {question_id : string, question_text : string,
+   * score : int}
+   * @param option {opt: String, type: String}
+   * @returns result = string, the recentquestion_section div
+   */
+  var recentQuestionsDiv = function(questionInfo) {
+
+    var container = '#recent-questions-container';
+    var html      = recentQuestionTpl(questionInfo);
+
+    attachQuestion(questionInfo, container, html);
 
     // TODO Most likely need to append comments here
   }
@@ -183,17 +228,39 @@ var ViewActions = function () {
    * @param TODO: params list`
    * @returns result = string, the topquestion_section div
    */
-  var topQuestionsDiv = function() {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'top-question'
-    };
+  var topQuestionsDiv = function(questionInfo) {
 
-    $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+    var container = '#top-questions-container';
+    var html      = topQuestionTpl(questionInfo);
+
+    attachQuestion(questionInfo, container, html);
+
+    // TODO Most likely need to append comments here
+
   }
 
+
+  /**
+   * Either appends or prepend question html to a given container.
+   * @param questionInfo
+   * @param container
+   * @param html
+   */
+  var attachQuestion = function (questionInfo, container, html) {
+
+    switch(questionInfo.opt) {
+      case 'prepend':
+        $(container).prepend(html);
+        break;
+      case 'append':
+        $(container).append(html);
+        break;
+    }
+
+    $(container + ' [question_id='+ questionInfo.question_id +']')
+      .addClass('animated pulse');
+
+  }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.

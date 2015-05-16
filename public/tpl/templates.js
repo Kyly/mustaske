@@ -10,7 +10,7 @@
  * @type {string}
  */
 var recentQuestionHtml =
-  + "<div class=\"animated pulse\"><div class=\"{{classes}}\" question_id=\"{{question_id}}\" score=\"{{score}}\"><div class=\"rec\">"
+  + "<div class=\"animated pulse\"><div class=\"{{class}}\" question_id=\"{{question_id}}\" score=\"{{score}}\"><div class=\"rec\">"
   + '<p class=\"question\">{{{question_text}}}</p><br>'
   + '<div class=\"row\">'
   + '<a href=\"#\" id=\"thumbs-down-to-active\"><i class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>'
@@ -33,7 +33,7 @@ var recentQuestionHtml =
   + '</div>';
 
 var topQuestionHtml =
-    '<div question_id=\"{{question_id}}\" class=\"{{classes}}\" score=\"{{score}}\">'
+    '<div question_id=\"{{question_id}}\" class=\"{{class}}\" score=\"{{score}}\">'
   + '   <!--end topquestion_section-->'
   + '   <div class="question-content">'
   + '       <p>{{{question_text}}}</p><br>'
