@@ -8,7 +8,7 @@
 var Poll = require('./poll')
 var uuid     = require('node-uuid');
 
-function Polls {
+function Polls() {
 	this.polls = {};  // Hash containing poll objects
 }
 
@@ -37,10 +37,11 @@ Polls.prototype.createPoll = function(data) {
  * Sets a poll active (or not) according to the poll_id
  *
  * @param {poll_id: String, toggle: Boolean}
+ * @return {poll_id: String}
  */
 Polls.prototype.setActive = function (data) {
   // Check if poll exists
-  if (!(poll_id in this.polls))
+  if (!(data.poll_id in this.polls))
     return false;
 
   return this.polls[data.poll_id].setActive(data);
@@ -49,12 +50,12 @@ Polls.prototype.setActive = function (data) {
 /**
  * Vote on a poll
  *
- * @param {voter_id: String, option: String}
- * @return {poll_id: String, prev_vote: String, cur_vote: String}
+ * @param {poll_id: String, voter_id: String, option: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String}
  */
 Polls.prototype.vote = function (data) {
   // Check if poll exists
-  if (!(poll_id in this.polls))
+  if (!(data.poll_id in this.polls))
     return false;
 
   return this.polls[data.poll_id].vote(data);
@@ -64,11 +65,11 @@ Polls.prototype.vote = function (data) {
  * Return the results hashtable
  *
  * @param none
- * @return {results: HashTable}
+ * @return {poll_id: String, results: HashTable}
  */
 Polls.prototype.getResults = function (data) {
   // Check if poll exists
-  if (!(poll_id in this.polls))
+  if (!(data.poll_id in this.polls))
     return false;
 
   return this.polls[data.poll_id].getResults(data);

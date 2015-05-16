@@ -27,10 +27,12 @@ describe('Poll', function(){
     it('should toggle the active variable in poll.', function(){
       // Set
       var poll = new Poll({num_options: 7, poll_id: 'CSE110'});
+      var activeInfo;
 
       // Assert
       assert(poll.active === false);
-      poll.setActive({toggle: true});
+      activeInfo = poll.setActive({toggle: true});
+      assert(activeInfo.poll_id === 'CSE110');
       assert(poll.active === true);
       poll.setActive({toggle: false});
       assert(poll.active === false);
@@ -55,6 +57,7 @@ describe('Poll', function(){
 
       //check return values are correct
       voteResults = poll.vote({voter_id: 'Voter', option: 'B'});
+      assert(voteResults.poll_id === 'CSE110');
       assert(voteResults.prev_vote === 'A');
       assert(voteResults.cur_vote === 'B');
       //check voters and results correclty updated
@@ -75,6 +78,7 @@ describe('Poll', function(){
       var voteResults = poll.getResults();
 
       // Assert
+      assert(voteResults.poll_id === 'CSE110');
       assert(voteResults.results['A'] === 2);
       assert(voteResults.results['B'] === 1);
 

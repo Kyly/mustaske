@@ -32,7 +32,7 @@ Poll.prototype.setActive = function(data) {
  * Update the results according to the user's vote
  *
  * @param {voter_id: String, option: String}
- * @return {poll_id: String, prev_vote: String, cur_vote: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String}
  */
 Poll.prototype.vote = function(data) {
   var prevVote = 0;
@@ -54,17 +54,22 @@ Poll.prototype.vote = function(data) {
   	this.results[data.option] += 1;
   }
 
-  return {poll_id: this.pollID, prev_vote: prevVote, cur_vote: data.option};
+  return {
+    poll_id:   this.pollID,
+    voter_id:  data.voter_id,
+    prev_vote: prevVote,
+    cur_vote:  data.option
+  };
 }
 
 /**
  * Return the results hashtable
  *
  * @param none
- * @return {results: HashTable}
+ * @return {poll_id: String, results: HashTable}
  */
 Poll.prototype.getResults = function() {
-  return {results: this.results};
+  return {poll_id: this.pollID, results: this.results};
 }
 
 module.exports = Poll;
