@@ -1,6 +1,6 @@
 /**
  * File: pollstest.js
- * Tests all functions in poll.js
+ * Tests all functions in polls.js
  *
  * Author: Daniel Lee & Nick Gibson
  *
