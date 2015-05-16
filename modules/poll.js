@@ -4,7 +4,7 @@
  *
  * Author: Daniel Lee & Nick Gibson
  *
- * @param {num_of_options: int}
+ * @param {num_options: int, poll_id: String}
  */
 
 function Poll(data) {
@@ -13,17 +13,17 @@ function Poll(data) {
   this.voters = {};
   this.totalVotes = 0;
   this.pollID = data.poll_id
-  this.numOptions = data.num_of_options;
+  this.numOptions = data.num_options;
 }
 
 /**
  * Set active according to the passed in value
  *
- * @param Boolean
+ * @param Data = {toggle: Boolean}
  * @return {poll_id: String}
  */
-Poll.prototype.setActive = function(toggle) {
-  this.active = toggle;
+Poll.prototype.setActive = function(data) {
+  this.active = data.toggle;
 
   return {poll_id : this.pollID};
 }
@@ -47,7 +47,7 @@ Poll.prototype.vote = function(data) {
   voters[data.voter_id] = data.option;
 
   //Update the results
-  if(!(data.option in results){
+  if(!(data.option in results)){
   	results[data.option] = 1;
   }
   else {
@@ -64,7 +64,7 @@ Poll.prototype.vote = function(data) {
  * @return {results: HashTable}
  */
 Poll.prototype.getResults = function() {
-  return this.results;
+  return {results: this.results};
 }
 
-model.exports = Poll;
+module.exports = Poll;
