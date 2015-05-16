@@ -56,7 +56,7 @@ var ViewActions = function () {
       console.log('Room Id: ' + roomInfo.room_id);
 
       // Wait for overlay to finish to animate in TODO May be a little over the top
-      overlay.once(
+      overlay.addClass(
         'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
         , addAllQuestions(roomInfo)
       );
