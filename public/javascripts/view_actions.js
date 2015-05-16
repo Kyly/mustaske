@@ -55,11 +55,7 @@ var ViewActions = function () {
       overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
 
-      // Wait for overlay to finish to animate in TODO May be a little over the top
-      overlay.once(
-        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-        , addAllQuestions(roomInfo)
-      );
+      addAllQuestions(roomInfo)
 
     }
   }
@@ -114,12 +110,14 @@ var ViewActions = function () {
    */
   var questionDismissedImpl = function (questionID) {
     var animationType = 'hinge';
-    $("div[question_id='"+questionID.question_id+"']").addClass("animated " +
-    animationType);
-    $("div[question_id='"+questionID.question_id+"']").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-    function(){
-      $("div[question_id='"+questionID.question_id+"']").remove();
-    });
+    $("div[question_id='"+questionID.question_id+"']")
+      .addClass("animated " +
+                animationType);
+    $("div[question_id='"+questionID.question_id+"']")
+      .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+           function () {
+             $("div[question_id='"+questionID.question_id+"']").remove();
+           });
   }
 
   /**
@@ -137,8 +135,8 @@ var ViewActions = function () {
    */
   var questionAddedImpl = function (questionInfo) {
 
-    questionInfo.opt   = 'prepend';
     questionInfo.class = 'recent-question';
+    questionInfo.opt   = 'prepend';
 
     questionDiv(questionInfo);
   }
@@ -152,17 +150,60 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
+
+
+  var topQuestionAdded = function (topQuestionInfo) {
+    // TODO: Function to add top question, called by topQuestionsUpdated
+    // if we need to add a new top question to the list
+
+    topQuestionInfo.class = 'top-question';
+    topQuestionInfo.opt   = 'append';
+
+    questionDiv(newQuestionInfo);
+  }
+
+    // TODO: Remove questions no longer in the top X
+
+    // TODO: Add new questions that joined the top X
+
+    // TODO: Re-order questions to match new ordering
+
   /**
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
   var setupUIImpl = function () {
-    $('#join-create-room .btn').click(function () {
-      var textBox = $('#room-name-field input');
 
+    var mainContent = $('#main-content');
+
+    /**
+     * Callback for add question button
+     * @param event = Object, JQuery event object
+     */
+    var addQuestionOnClickFn = function (event) {
+
+      var textBox = $('#add-question-text');
+      var questionText = textBox.val();
+      var data = {
+        question_text: questionText,
+        room_id: $('.room-name').attr('room-id')
+      };
+
+      socket.emit('new question', data);
+      textBox.val('');
+      event.preventDefault();
+    }
+
+    /**
+     * Callback for the home screen join and make buttons
+     */
+    var joinMakeOnClickFn = function () {
+
+
+      var textBox = $('#room-name-field input');
       var roomName = textBox.val();
 
-      if (roomName === '') {
+      if (roomName === '') { // TODO: Validation
         $('#room-name-field').addClass('has-error');
       }
 
@@ -184,8 +225,15 @@ var ViewActions = function () {
           break;
         }
       }
+    }
 
-    });
+    $('#join-create-room .btn').click(joinMakeOnClickFn);
+
+    $('#add-question').submit(addQuestionOnClickFn);
+
+    mainContent.on('click', '.thumbs-up-to-active', thumbsUpOnClickFn);
+    mainContent.on('click', '.thumbs-down-to-active', thumbsDownOnClickFn);
+
   }
 
   /**
@@ -195,12 +243,12 @@ var ViewActions = function () {
   var questionDiv = function(questionInfo) {
 
     switch (questionInfo.class) {
-      case 'recent-question':
-        recentQuestionsDiv(questionInfo);
-        break;
-      case 'top-question':
-        topQuestionsDiv(questionInfo);
-        break;
+    case 'recent-question':
+      recentQuestionsDiv(questionInfo);
+      break;
+    case 'top-question':
+      topQuestionsDiv(questionInfo);
+      break;
     }
 
   }
@@ -239,6 +287,48 @@ var ViewActions = function () {
 
   }
 
+  // TODO: These two should be mutually exclusive
+  /**
+   * Callback for the upvote button
+   */
+  var thumbsUpOnClickFn = function () {
+
+    var element = $(this).children();
+    console.log(element);
+    if (element.hasClass('fa-thumbs-o-up')) {
+      element.removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
+    } else {
+      element.removeClass("fa-thumbs-up").addClass('fa-thumbs-o-up');
+    }
+
+    var upvoteInfo = { // TODO: Implement
+      room_id : '',
+      question_id : ''
+    };
+
+    //socket.emit('upvote question', upvoteInfo);
+  }
+
+  /**
+   * Callback for the downvote button
+   */
+  var thumbsDownOnClickFn = function () {
+
+    var element = $(this).children();
+    console.log(element);
+    if (element.hasClass('fa-thumbs-o-down')) {
+      element.removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+    } else {
+      element.removeClass("fa-thumbs-down").addClass('fa-thumbs-o-down');
+    }
+
+    var downvoteInfo = { // TODO: Implement
+      room_id : '',
+      question_id : ''
+    };
+
+    //socket.emit('downvote question', downvoteInfo);
+  }
 
   /**
    * Either appends or prepend question html to a given container.
@@ -249,12 +339,12 @@ var ViewActions = function () {
   var attachQuestion = function (questionInfo, container, html) {
     console.log(questionInfo);
     switch(questionInfo.opt) {
-      case 'prepend':
-        $(container).prepend(html);
-        break;
-      case 'append':
-        $(container).append(html);
-        break;
+    case 'prepend':
+      $(container).prepend(html);
+      break;
+    case 'append':
+      $(container).append(html);
+      break;
     }
 
     $(container + ' [question_id='+ questionInfo.question_id +']')
