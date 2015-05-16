@@ -2,6 +2,8 @@
  * Poll Object
  * Holds all data about a single poll.
  *
+ * Author: Daniel Lee & Nick Gibson
+ *
  * @param {num_of_options: int}
  */
 
