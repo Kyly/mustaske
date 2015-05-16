@@ -23,7 +23,6 @@ describe('Questions', function(){
 
       // Assign
       var ques = qs.addQuestion(q);
-      console.log(ques);
 
       // Assert
       expect(qs.hasQuestion(ques.question_id)).to.be.true;
@@ -63,7 +62,6 @@ describe('Questions', function(){
       qs.questionHash[q3].voters['p2'] = 1;
       ++(qs.questionHash[q3].score);
 
-
       qs.upVoteQuestion({question_id: q1, voter_id: 'p2'});
       qs.upVoteQuestion({question_id: q2, voter_id: 'p2'});
       qs.upVoteQuestion({question_id: q3, voter_id: 'p2'});
@@ -75,7 +73,7 @@ describe('Questions', function(){
     })
   })
 
-  //TODO get this like the upVoteQuestion test
+
   describe('#downVoteQuestion()', function(){
     it('Should decrease score of question by one if voter hasn\'t voted, ' +
         'by two if voter has previously upvoted, or increase by one if ' +
@@ -107,7 +105,6 @@ describe('Questions', function(){
       qs.questionHash[q3].voters['p2'] = -1;
       --(qs.questionHash[q3].score);
 
-
       var q1Score = qs.downVoteQuestion({question_id: q1, voter_id: 'p2'});
       var q2Score = qs.downVoteQuestion({question_id: q2, voter_id: 'p2'});
       var q3Score = qs.downVoteQuestion({question_id: q3, voter_id: 'p2'});
@@ -124,13 +121,16 @@ describe('Questions', function(){
     it('should get the top voted questions.', function(){
       // Set up
       var qs = new Questions();
+
       var questions = [];
-      for (q in testquestions) {
-        questions[q] = qs.addQuestion(testquestions[q]);
+
+      for (var i in testquestions) {
+        questions[i] = qs.addQuestion(testquestions[i]);
+
         qs.upVoteQuestion({
-          question_id : questions[q].id,
+          question_id : questions[i].question_id,
           voter_id    : 'Sam Joe'
-        });
+        })
       }
 
       // Assign
