@@ -101,7 +101,9 @@ var ViewActions = function () {
       classes       : 'recent-question'
     };
 
-    recentQuestionsDiv(newQuestionInfo);
+    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+    $('.recent-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+    $('.recent-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
   }
 
   /**
@@ -113,17 +115,64 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
+  var topQuestionsUpdatedImpl (topQuestionsInfo) {
+
+    var topQuestionAdded (topQuestionInfo) {
+      // TODO: Function to add top question, called by topQuestionsUpdated
+      // if we need to add a new top question to the list
+
+      var newQuestionInfo = { // TODO: fields may not be right
+        question_id   : topQuestionInfo.question_id,
+        question_text : topQuestionInfo.question_text,
+        score         : 0,
+        classes       : 'top-question'
+      };
+
+      $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+      $('.top-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+      $('.top-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
+    }
+
+    // TODO: Remove questions no longer in the top X
+
+    // TODO: Add new questions that joined the top X
+
+    // TODO: Re-order questions to match new ordering
+  }
+
   /**
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
   var setupUIImpl = function () {
-    $('#join-create-room .btn').click(function () {
-      var textBox = $('#room-name-field input');
+    /**
+     * Callback for add question button
+     * @param event = Object, JQuery event object
+     */
+    var addQuestionOnClickFn = function (event) {
 
+      console.log(event);
+      var textBox = $('#add-question-text');
+      var questionText = textBox.val();
+
+      var data = {
+        question_text: questionText,
+        room_id: $('.room-name').attr('room-id')
+      };
+      socket.emit('new question', data);
+      textBox.val('');
+      event.preventDefault();
+    }
+
+    /**
+     * Callback for the home screen join and make buttons
+     */
+    var joinMakeOnClickFn = function () {
+
+      var textBox = $('#room-name-field input');
       var roomName = textBox.val();
 
-      if (roomName === '') {
+      if (roomName === '') { // TODO: Validation
         $('#room-name-field').addClass('has-error');
       }
 
@@ -145,47 +194,91 @@ var ViewActions = function () {
           break;
         }
       }
+    }
+
+    $('#join-create-room .btn').click(joinMakeOnClickFn);
+
+    $('#add-question').submit(addQuestionOnClickFn);
+
+    // TODO: Do we need this? Comment sections OBE?
+    /*
+    $('.topquestions .commentSection #more').click(function () {});
+
+    $('.topquestions #comment_to_active').click(function () {
+      $(".topquestions .comment").css("display", "none");
+      $(".topquestions .com_active").css("display", "inline");
+
+      $(".topquestions .commentSection").show();
 
     });
+    $('.topquestions #comment_to_inactive').click(function () {
+      $(".topquestions .comment").css("display", "inline");
+      $(".topquestions .com_active").css("display", "none");
+
+      $(".topquestions .commentSection").hide();
+
+    });
+
+
+    //REPEAT FOR RECENT QUESTIONS
+
+    $('.recentquestions .commentSection #more').click(function () {
+
+
+    });
+
+    $('.recentquestions #comment_to_active').click(function () {
+      $(".recentquestions .comment").css("display", "none");
+      $(".recentquestions .com_active").css("display", "inline");
+
+      $(".recentquestions .commentSection").show();
+
+    });
+    $('.recentquestions #comment_to_inactive').click(function () {
+      $(".recentquestions .comment").css("display", "inline");
+      $(".recentquestions .com_active").css("display", "none");
+
+      $(".recentquestions .commentSection").hide();
+
+    });
+
+    */
+
   }
 
-  /** TODO Due to template this function may no longer be needed
-  * Returns a string containing the HTML of a topquestion_section div.
-  * See line 193 of /views/index.html for a template
-  * @param @param questionInfo = {question_id : string, question_text : string,
-  * score : int}
-  * @returns result = string, the recentquestion_section div
-  */
-  var recentQuestionsDiv = function(questionInfo) {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'recent-question'
-    };
+    // TODO: These two should be mutually exclusive
+    /**
+     * Callback for the upvote button
+     */
+    var thumbsUpOnClickFn = function () {
+      $(this).children()
+        .removeClass("fa-thumbs-o-up")
+        .addClass('fa-thumbs-up');
 
-    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+      var upvoteInfo { // TODO: Implement
+        room_id : '',
+        question_id : ''
+        };
 
-    // TODO Most likely need to append comments here
-  }
+      socket.emit('upvote question', upvoteInfo);
+    }
 
-  /**
-   * Returns a string containing the HTML of a to totalTopQuestion div.
-   * See line 94 of /views/index.html for a template
-   * @param TODO: params list`
-   * @returns result = string, the topquestion_section div
-   */
-  var topQuestionsDiv = function() {
-    var newQuestionInfo = {
-      question_id   : questionInfo.question_id,
-      question_text : questionInfo.question_text,
-      score         : questionInfo.score,
-      classes       : 'top-question'
-    };
+    /**
+     * Callback for the downvote button
+     * @param qClass = string, the question class
+     */
+    var thumbsDownOnClickFn = function (qClass) {
+      $(this).children()
+        .removeClass("fa-thumbs-o-down")
+        .addClass('fa-thumbs-down');
 
-    $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
-  }
+      var downvoteInfo { // TODO: Implement
+        room_id : '',
+        question_id : ''
+        };
 
+      socket.emit('downvote question', downvoteInfo);
+    }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
@@ -199,6 +292,7 @@ var ViewActions = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl,
+    topQuestionsUpdated: topQuestionsUpdatedImpl,
     setupUI: setupUIImpl
   }
 }();
