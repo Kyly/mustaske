@@ -96,7 +96,8 @@ var ViewActions = function () {
    */
   var showHomeScreenImpl = function () {
     // TODO
-    $(".login-overlay").removeClass('animated slideOutUp').addClass('animated slideInDown');
+    $(".login-overlay").removeClass('animated slideOutUp')
+      .addClass('animated slideInDown');
   }
 
   /**
@@ -111,8 +112,14 @@ var ViewActions = function () {
    * update UI reflecting a dismissed question
    * @param questionId = string, The ID of the dismissed question
    */
-  var questionDismissedImpl = function (questionId) {
-    // TODO: Implementation
+  var questionDismissedImpl = function (questionID) {
+    var animationType = 'hinge';
+    $("div[question_id='"+questionID.question_id+"']").addClass("animated " +
+    animationType);
+    $("div[question_id='"+questionID.question_id+"']").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+    function(){
+      $("div[question_id='"+questionID.question_id+"']").remove();
+    });
   }
 
   /**

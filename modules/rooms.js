@@ -163,7 +163,7 @@ Rooms.prototype.deleteQuestion = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].deleteQuestion(data.question_id);
+  return this.rooms[data.room_id].deleteQuestion(data);
 }
 
 /**
@@ -176,7 +176,6 @@ Rooms.prototype.getTopVoted = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
-
   return this.rooms[data.room_id].getTopVoted(data.num_questions);
 }
 

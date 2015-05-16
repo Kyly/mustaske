@@ -129,7 +129,7 @@ Room.prototype.getQuestions = function() {
   */
 Room.prototype.deleteQuestion = function(data) {
   if (data.owner_id === this.owner) {
-    return this.questions.deleteQuestion(data);
+    return this.questions.deleteQuestion(data.question_id);
   }
   else
     return false;
