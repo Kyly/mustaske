@@ -114,12 +114,14 @@ var ViewActions = function () {
    */
   var questionDismissedImpl = function (questionID) {
     var animationType = 'hinge';
-    $("div[question_id='"+questionID.question_id+"']").addClass("animated " +
-    animationType);
-    $("div[question_id='"+questionID.question_id+"']").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-    function(){
-      $("div[question_id='"+questionID.question_id+"']").remove();
-    });
+    $("div[question_id='"+questionID.question_id+"']")
+      .addClass("animated " +
+                animationType);
+    $("div[question_id='"+questionID.question_id+"']")
+      .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+           function () {
+             $("div[question_id='"+questionID.question_id+"']").remove();
+           });
   }
 
   /**
@@ -136,11 +138,16 @@ var ViewActions = function () {
    * The ID of the question and the text content of the question
    */
   var questionAddedImpl = function (questionInfo) {
+    var newQuestionInfo = {
+      question_id   : questionInfo.question_id,
+      question_text : questionInfo.question_text,
+      score         : 0,
+      classes       : 'recent-question'
+    };
 
-    questionInfo.opt   = 'prepend';
-    questionInfo.class = 'recent-question';
-
-    questionDiv(questionInfo);
+    $('#recent-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+    $('.recent-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+    $('.recent-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
   }
 
   /**
@@ -152,17 +159,64 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
+  var topQuestionsUpdatedImpl = function (topQuestionsInfo) {
+
+    var topQuestionAdded = function (topQuestionInfo) {
+      // TODO: Function to add top question, called by topQuestionsUpdated
+      // if we need to add a new top question to the list
+
+      var newQuestionInfo = { // TODO: fields may not be right
+        question_id   : topQuestionInfo.question_id,
+        question_text : topQuestionInfo.question_text,
+        score         : 0,
+        classes       : 'top-question'
+      };
+
+      $('#top-questions-container').prepend(topQuestionTpl(newQuestionInfo));
+      $('.top-question #thumbs-up-to-active').click(thumbsUpOnClickFn);
+      $('.top-question #thumbs-down-to-active').click(thumbsDownOnClickFn);
+    }
+
+    // TODO: Remove questions no longer in the top X
+
+    // TODO: Add new questions that joined the top X
+
+    // TODO: Re-order questions to match new ordering
+  }
+
   /**
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
   var setupUIImpl = function () {
-    $('#join-create-room .btn').click(function () {
-      var textBox = $('#room-name-field input');
+    /**
+     * Callback for add question button
+     * @param event = Object, JQuery event object
+     */
+    var addQuestionOnClickFn = function (event) {
 
+      console.log(event);
+      var textBox = $('#add-question-text');
+      var questionText = textBox.val();
+
+      var data = {
+        question_text: questionText,
+        room_id: $('.room-name').attr('room-id')
+      };
+      socket.emit('new question', data);
+      textBox.val('');
+      event.preventDefault();
+    }
+
+    /**
+     * Callback for the home screen join and make buttons
+     */
+    var joinMakeOnClickFn = function () {
+
+      var textBox = $('#room-name-field input');
       var roomName = textBox.val();
 
-      if (roomName === '') {
+      if (roomName === '') { // TODO: Validation
         $('#room-name-field').addClass('has-error');
       }
 
@@ -184,8 +238,12 @@ var ViewActions = function () {
           break;
         }
       }
+    }
 
-    });
+    $('#join-create-room .btn').click(joinMakeOnClickFn);
+
+    $('#add-question').submit(addQuestionOnClickFn);
+
   }
 
   /**
@@ -195,12 +253,12 @@ var ViewActions = function () {
   var questionDiv = function(questionInfo) {
 
     switch (questionInfo.class) {
-      case 'recent-question':
-        recentQuestionsDiv(questionInfo);
-        break;
-      case 'top-question':
-        topQuestionsDiv(questionInfo);
-        break;
+    case 'recent-question':
+      recentQuestionsDiv(questionInfo);
+      break;
+    case 'top-question':
+      topQuestionsDiv(questionInfo);
+      break;
     }
 
   }
@@ -239,6 +297,39 @@ var ViewActions = function () {
 
   }
 
+  // TODO: These two should be mutually exclusive
+  /**
+   * Callback for the upvote button
+   */
+  var thumbsUpOnClickFn = function () {
+    $(this).children()
+      .removeClass("fa-thumbs-o-up")
+      .addClass('fa-thumbs-up');
+
+    var upvoteInfo = { // TODO: Implement
+      room_id : '',
+      question_id : ''
+    };
+
+    socket.emit('upvote question', upvoteInfo);
+  }
+
+  /**
+   * Callback for the downvote button
+   * @param qClass = string, the question class
+   */
+  var thumbsDownOnClickFn = function (qClass) {
+    $(this).children()
+      .removeClass("fa-thumbs-o-down")
+      .addClass('fa-thumbs-down');
+
+    var downvoteInfo = { // TODO: Implement
+      room_id : '',
+      question_id : ''
+    };
+
+    socket.emit('downvote question', downvoteInfo);
+  }
 
   /**
    * Either appends or prepend question html to a given container.
@@ -249,12 +340,12 @@ var ViewActions = function () {
   var attachQuestion = function (questionInfo, container, html) {
 
     switch(questionInfo.opt) {
-      case 'prepend':
-        $(container).prepend(html);
-        break;
-      case 'append':
-        $(container).append(html);
-        break;
+    case 'prepend':
+      $(container).prepend(html);
+      break;
+    case 'append':
+      $(container).append(html);
+      break;
     }
 
     $(container + ' [question_id='+ questionInfo.question_id +']')
@@ -274,6 +365,7 @@ var ViewActions = function () {
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
     questionScoreChanged: questionScoreChangedImpl,
+    topQuestionsUpdated: topQuestionsUpdatedImpl,
     setupUI: setupUIImpl
   }
 }();

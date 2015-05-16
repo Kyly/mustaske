@@ -43,7 +43,7 @@ var topQuestionHtml =
   + '                   class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1"></i></a>'
   + '           <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">'
   + '               23</p>'
-  + '           <a href="#" id="thumbs_up_to_active"><i'
+  + '           <a href="#" id="thumbs-up-to-active"><i'
   + '                   class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1"></i></a>'
   + '           <p class="num-comments col-md-offset-6 col-sm-offset-3 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1">'
   + '               3</p>'
