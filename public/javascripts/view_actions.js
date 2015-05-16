@@ -115,9 +115,9 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
-  var topQuestionsUpdatedImpl (topQuestionsInfo) {
+  var topQuestionsUpdatedImpl = function (topQuestionsInfo) {
 
-    var topQuestionAdded (topQuestionInfo) {
+    var topQuestionAdded = function (topQuestionInfo) {
       // TODO: Function to add top question, called by topQuestionsUpdated
       // if we need to add a new top question to the list
 
@@ -255,7 +255,7 @@ var ViewActions = function () {
         .removeClass("fa-thumbs-o-up")
         .addClass('fa-thumbs-up');
 
-      var upvoteInfo { // TODO: Implement
+      var upvoteInfo = { // TODO: Implement
         room_id : '',
         question_id : ''
         };
@@ -272,7 +272,7 @@ var ViewActions = function () {
         .removeClass("fa-thumbs-o-down")
         .addClass('fa-thumbs-down');
 
-      var downvoteInfo { // TODO: Implement
+      var downvoteInfo = { // TODO: Implement
         room_id : '',
         question_id : ''
         };
