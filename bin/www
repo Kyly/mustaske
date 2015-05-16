@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('downvote question', function(questionId) {
-    controller.downVoteQuestion(io, socket, questionId);
+    controller.downvoteQuestion(io, socket, questionId);
   });
 
   socket.on('dismiss question', function(questionId) {
