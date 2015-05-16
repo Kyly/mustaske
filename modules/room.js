@@ -42,7 +42,7 @@ Room.prototype.warnUser = function(data) {
  * @param data = user_id: String
  * @return true if user_id succesfully added to bannedUsers Hash
  */
-Room.prototype.banUser = function(user_id) {
+Room.prototype.banUser = function (user_id) {
 
   this.bannedUsers[user_id] = true;
 
@@ -55,7 +55,7 @@ Room.prototype.banUser = function(user_id) {
  * @param data = user_id: String
  * @return true if user_id in bannedUsers Hash
  */
-Room.prototype.isBanned = function(user_id) {
+Room.prototype.isBanned = function (user_id) {
   return (user_id in this.bannedUsers);
 }
 
@@ -129,7 +129,7 @@ Room.prototype.getQuestions = function() {
   */
 Room.prototype.deleteQuestion = function(data) {
   if (data.owner_id === this.owner) {
-    return this.questions.deleteQuestion(data);
+    return this.questions.deleteQuestion(data.question_id);
   }
   else
     return false;
