@@ -66,6 +66,9 @@ var ViewActions = function () {
 
   /**
    * Add all question to user screen. For when room is first joined.
+   *
+   * @param roomInfo = {room_name : string, room_id : string,
+   * questions : array, top_questions : array}
    */
   var addAllQuestions = function(roomInfo) {
 
@@ -221,7 +224,7 @@ var ViewActions = function () {
   var topQuestionsDiv = function(questionInfo) {
 
     var container = '#top-questions-container';
-    var html      = topQuestionTpl(newQuestionInfo);
+    var html      = topQuestionTpl(questionInfo);
 
     attachQuestion(questionInfo, container, html);
 
