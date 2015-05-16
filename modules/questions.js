@@ -193,7 +193,9 @@ Questions.prototype.placeOrRemoveUpvoted = function(question,prevScore) {
   //remove from upvotedQuestions if question no longer eligible
   if(prevScore >= 2 && question.score < 2) {
     var index = this.upVotedQuestions.indexOf(question);
-    this.upvotedQuestions.splice(index, 1);
+    if (index > -1) {
+      this.upVotedQuestions.splice(index, 1);
+    }
   }
 }
 
