@@ -10,6 +10,9 @@
 
 var ViewActions = function () {
 
+  var topQuestionsContainer = $('#top-questions-container');
+  var topQuestionMax        = 1;
+
   /**
    * Enter the room as an owner
    * @param roomInfo = {room_id : string, room_name : string,
@@ -87,6 +90,7 @@ var ViewActions = function () {
       });
     }
   }
+
   /**
    * Return to the home screen
    */
@@ -150,22 +154,32 @@ var ViewActions = function () {
   }
 
 
+  var topQuestionsUpdatedImpl = function(questionInfo) {
+
+  }
 
   var topQuestionAdded = function (topQuestionInfo) {
     // TODO: Function to add top question, called by topQuestionsUpdated
     // if we need to add a new top question to the list
 
     topQuestionInfo.class = 'top-question';
-    topQuestionInfo.opt   = 'append';
+    var html              = topQuestionTpl(topQuestionInfo);
 
-    questionDiv(newQuestionInfo);
+    topQuestionsContainer.mixItUp('append', $.parseHTML(html));
   }
 
-    // TODO: Remove questions no longer in the top X
+  /**
+   * Call back for MixItUp top questions container. Removes excess question.
+   *
+   * @param state State Object from MixItUp
+   * @see https://mixitup.kunkalabs.com/docs/#state-object
+   */
+  var checkMaxQuesitons = function(state) {
+    var count = state.totalShow;
 
-    // TODO: Add new questions that joined the top X
-
-    // TODO: Re-order questions to match new ordering
+    for (; count > topQuestionMax; --count)
+      $('.top-question:last').remove();
+  }
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -174,6 +188,7 @@ var ViewActions = function () {
   var setupUIImpl = function () {
 
     var mainContent = $('#main-content');
+
 
     /**
      * Callback for add question button
@@ -226,6 +241,20 @@ var ViewActions = function () {
       }
     }
 
+    /**
+     * Set up sorted container for top questions.
+     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
+     */
+    topQuestionsContainer.mixItUp({
+      layout: {
+        display: 'block'
+      },
+      callbacks: {
+        onMixEnd: checkMaxQuesitons
+      }
+    });
+
+
     $('#join-create-room .btn').click(joinMakeOnClickFn);
 
     $('#add-question').submit(addQuestionOnClickFn);
@@ -251,12 +280,12 @@ var ViewActions = function () {
     }
 
   }
-  /** TODO Due to template this function may no longer be needed
+
+  /**
    * Returns a string containing the HTML of a topquestion_section div.
    * See line 193 of /views/index.html for a template
    * @param questionInfo = {question_id : string, question_text : string,
    * score : int}
-   * @param option {opt: String, type: String}
    * @returns result = string, the recentquestion_section div
    */
   var recentQuestionsDiv = function(questionInfo) {
@@ -272,13 +301,14 @@ var ViewActions = function () {
   /**
    * Returns a string containing the HTML of a to totalTopQuestion div.
    * See line 94 of /views/index.html for a template
-   * @param TODO: params list`
+   * @param TODO: params list
    * @returns result = string, the topquestion_section div
    */
   var topQuestionsDiv = function(questionInfo) {
 
-    var container = '#top-questions-container';
+    var container = topQuestionsContainer;
     var html      = topQuestionTpl(questionInfo);
+
 
     attachQuestion(questionInfo, container, html);
 

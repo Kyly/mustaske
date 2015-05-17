@@ -126,6 +126,9 @@ p, a, li, select, input {
 .recent-questions-container {
     margin-bottom: 3%;
 }
+#top-questions-container .top-question {
+    display: none;
+}
 
 .top-question {
     margin-bottom: 1.5em;
