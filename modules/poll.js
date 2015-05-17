@@ -41,7 +41,13 @@ Poll.prototype.vote = function(data) {
   if(data.voter_id in this.voters){
   	prevVote = this.voters[data.voter_id];
   	this.results[prevVote] -= 1;
+
+    //Decrement the totalVotes first
+    this.totalVotes -= 1;
   }
+
+  //Increment totalVotes
+  this.totalVotes += 1;
 
   //Update the voter's current vote
   this.voters[data.voter_id] = data.option;
