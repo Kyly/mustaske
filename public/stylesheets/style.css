@@ -252,7 +252,7 @@ hr {
 
 .askquestion {
     position: fixed;
-    z-index: 2000;
+    z-index: 10;
     bottom: 0px;
     right: 0.08em;
     background-color: #ffffff;
