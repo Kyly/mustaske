@@ -11,7 +11,8 @@
 var ViewActions = function () {
 
   var topQuestionsContainer = $('#top-questions-container');
-  var topQuestionMax        = 1;
+  var topQuestionMax        = 5;
+  var BASE_SCORE            = 1;
 
   /**
    * Enter the room as an owner
@@ -113,14 +114,14 @@ var ViewActions = function () {
    * @param questionId = string, The ID of the dismissed question
    */
   var questionDismissedImpl = function (questionID) {
-    var question = $("div[question_id='"+questionID.question_id+"']");
+    var question = $("div[question_id='"+questionID+"']");
     var animationType = 'hinge';
     question.addClass("animated " + animationType);
     question.one(
       'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-      , function () {
-             $("div[question_id='"+questionID.question_id+"']").remove();
-           });
+      , function () { question.remove() }
+    );
+
   }
 
   /**
@@ -153,19 +154,66 @@ var ViewActions = function () {
     // TODO: Implementation
   }
 
+  /**
+   * Will update question score throughout page
+   * @param questionInfo = {question_id : string, question_text : string,
+   * score : int}
+   */
+  var updateScoreImpl = function(questionInfo) {
 
-  var topQuestionsUpdatedImpl = function(questionInfo) {
+    var count    = topQuestionsContainer.mixItUp('getState').totalShow;
+    var question = $('[question_id="'+questionInfo.question_id+'"]');
+    var score    = questionInfo.score;
 
+    question.attr('data-score', score);
+    $('.num-votes', question).text(score);
+
+    // Check if question is up voted
+    if (score > BASE_SCORE) {
+
+      if (inTopQuestions(question))
+        // Re-sort top questions
+        topQuestionsContainer.mixItUp('sort', 'score:desc');
+
+      // Else add it to top questions
+      else if (count <= topQuestionMax)
+        topQuestionAdded(questionInfo)
+
+    }
+
+    // Remove question from top question has score less than BASE_SCORE
+    else if (inTopQuestions(question)) {
+      var animationType       = 'hinge';
+      var questionInTop = topQuestionsContainer.find(question);
+
+      questionInTop.addClass("animated " + animationType);
+      questionInTop.one(
+        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+        , function () { questionInTop.remove() }
+      );
+    }
+    // TODO updateTopQuestions
+  }
+
+  /**
+   * Returns true if question is in top questions.
+   *
+   * @param question jQuery Object
+   */
+  var inTopQuestions = function (question) {
+    return question.parent('#top-questions-container').length > 0;
   }
 
   var topQuestionAdded = function (topQuestionInfo) {
     // TODO: Function to add top question, called by topQuestionsUpdated
     // if we need to add a new top question to the list
 
-    topQuestionInfo.class = 'top-question';
-    var html              = topQuestionTpl(topQuestionInfo);
+    var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
+    topQuestion.removeClass('recent-question animated pulse');
+    topQuestion.addClass('top-question mix');
 
-    topQuestionsContainer.mixItUp('append', $.parseHTML(html));
+    topQuestionsContainer.mixItUp('append', topQuestion);
+    topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
   /**
@@ -389,6 +437,7 @@ var ViewActions = function () {
     enterRoom: enterRoomImpl,
     showHomeScreen: showHomeScreenImpl,
     updateTopQuestionThreshold: updateTopQuestionThresholdImpl,
+    updateScore: updateScoreImpl,
     questionDismissed: questionDismissedImpl,
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,

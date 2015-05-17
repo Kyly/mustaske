@@ -10,7 +10,7 @@
  * @type {string}
  */
 var recentQuestionHtml =
-  + '<div class=\"{{class}}\" question_id=\"{{question_id}}\" score=\"{{score}}\"><div class=\"rec\">'
+  + '<div class=\"{{class}}\" question_id=\"{{question_id}}\" data-score=\"{{score}}\"><div class=\"rec\">'
   + '<p class=\"question\">{{{question_text}}}</p><br>'
   + '<div class=\"row\">'
   + '<a href=\"#\" class=\"thumbs-down-to-active\"><i class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-1 col-xs-1 col-lg-1\"></i></a>'
@@ -33,7 +33,7 @@ var recentQuestionHtml =
   + '</div>';
 
 var topQuestionHtml =
-    '<div question_id=\"{{question_id}}\" class=\"{{class}}\" score=\"{{score}}\">'
+    '<div question_id=\"{{question_id}}\" class=\"{{class}}\" data-score=\"{{score}}\">'
   + '   <!--end topquestion_section-->'
   + '   <div class=\"question-content\">'
   + '       <p>{{{question_text}}}</p><br>'
@@ -42,7 +42,7 @@ var topQuestionHtml =
   + '           <a href=\"#\" class=\"thumbs-down-to-active\"><i'
   + '                   class=\"fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1\"></i></a>'
   + '           <p class=\"num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1\">'
-  + '               23</p>'
+  + '               {{score}}</p>'
   + '           <a href=\"#\" class=\"thumbs-up-to-active\"><i'
   + '                   class=\"fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1\"></i></a>'
   + '           <p class=\"num-comments col-md-offset-6 col-sm-offset-3 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1\">'

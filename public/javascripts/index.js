@@ -13,7 +13,5 @@ $(document).ready(function () {
   socket.on('dismiss question', ViewActions.questionDismissed);
   socket.on('warn user', ViewActions.userWarned);
   socket.on('top questions', ViewActions.updateTopQuestionThreshold);
-  // TODO: Need real emit name
-  socket.on('top questions updated', ViewActions.topQuestionsUpdated);
 
 });
