@@ -2,11 +2,11 @@
  * TODO file header...
  */
 
-var Chat = function(socket) {
+var Chat = function (socket) {
   this.socket = socket;
 };
 
-Chat.prototype.sendMessage = function(room, text) {
+Chat.prototype.sendMessage = function (room, text) {
   var message = {
     room: room,
     text: text
@@ -14,20 +14,20 @@ Chat.prototype.sendMessage = function(room, text) {
   this.socket.emit('message', message);
 };
 
-Chat.prototype.changeRoom = function(newRoom) {
+Chat.prototype.changeRoom = function (newRoom) {
   this.socket.emit('join room', newRoom);
 };
 
-Chat.prototype.createRoom = function(newRoom) {
+Chat.prototype.createRoom = function (newRoom) {
   this.socket.emit('create room', newRoom);
 };
 
-Chat.prototype.processCommand = function(currentRoom, command) {
+Chat.prototype.processCommand = function (currentRoom, command) {
   var words = command.split(' ')
     , command = words[0].substring(1, words[0].length).toLowerCase()
     , message = false;
 
-  switch(command) {
+  switch (command) {
     case 'join':
       words.shift();
       var newRoom = words.join(' ');
