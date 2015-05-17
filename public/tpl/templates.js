@@ -72,6 +72,5 @@ var topQuestionHtml =
   + '</div>';
 
 //TODO var question_comment_format =
-
 var recentQuestionTpl = Handlebars.compile(topQuestionHtml);
 var topQuestionTpl    = Handlebars.compile(topQuestionHtml);

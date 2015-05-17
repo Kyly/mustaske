@@ -109,13 +109,12 @@ var ViewActions = function () {
    * @param questionId = string, The ID of the dismissed question
    */
   var questionDismissedImpl = function (questionID) {
+    var question = $("div[question_id='"+questionID.question_id+"']");
     var animationType = 'hinge';
-    $("div[question_id='"+questionID.question_id+"']")
-      .addClass("animated " +
-                animationType);
-    $("div[question_id='"+questionID.question_id+"']")
-      .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-           function () {
+    question.addClass("animated " + animationType);
+    question.one(
+      'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+      , function () {
              $("div[question_id='"+questionID.question_id+"']").remove();
            });
   }
@@ -125,7 +124,7 @@ var ViewActions = function () {
    * @param userId = string, the ID of the offending user
    */
   var userWarnedImpl = function (userID) {
-    $('.navbar').append('<div class="alert alert-success alert-fixed-top"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>WARNGING!!!</strong> Must you ask that question?</div>')
+    $('.navbar').append('<div class="alert alert-success alert-fixed-top"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>WARNGING!!!</strong> Must you ask that question?</div>');
   }
 
   /**
@@ -315,7 +314,6 @@ var ViewActions = function () {
   var thumbsDownOnClickFn = function () {
 
     var element = $(this).children();
-    console.log(element);
     if (element.hasClass('fa-thumbs-o-down')) {
       element.removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
     } else {
@@ -337,7 +335,7 @@ var ViewActions = function () {
    * @param html
    */
   var attachQuestion = function (questionInfo, container, html) {
-    console.log(questionInfo);
+
     switch(questionInfo.opt) {
     case 'prepend':
       $(container).prepend(html);
