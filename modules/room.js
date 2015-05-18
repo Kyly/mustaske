@@ -87,7 +87,7 @@ Room.prototype.hasQuestion = function(questionId) {
  * @return {question_id: String, question_score: int}
  */
 Room.prototype.upvoteQuestion = function(data) {
-  return this.questions.upvoteQuestion(data);
+  return this.questions.upVoteQuestion(data);
 }
 
 /**
@@ -97,7 +97,7 @@ Room.prototype.upvoteQuestion = function(data) {
  * @return {question_id: String, question_score: int}
  */
 Room.prototype.downvoteQuestion = function(data) {
-  return this.questions.downvoteQuestion(data);
+  return this.questions.downVoteQuestion(data);
 }
 
 /**
