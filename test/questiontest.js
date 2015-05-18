@@ -24,9 +24,9 @@ describe('Question', function(){
 
 
       // Assert
-      expect(q.id).to.equal('123456');
+      expect(q.question_id).to.equal('123456');
       expect(q.asker).to.equal('me');
-      expect(q.question).to.equal('Some text');
+      expect(q.question_text).to.equal('Some text');
       expect(q.score).to.equal(1);
     })
   })
