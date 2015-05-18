@@ -189,7 +189,7 @@ Rooms.prototype.upVoteQuestion = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].upVoteQuestion(data);
+  return this.rooms[data.room_id].upvoteQuestion(data);
 }
 
 /**
@@ -200,7 +200,7 @@ Rooms.prototype.downVoteQuestion = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].downVoteQuestion(data);
+  return this.rooms[data.room_id].downvoteQuestion(data);
 }
 
 module.exports = Rooms;

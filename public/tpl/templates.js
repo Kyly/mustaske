@@ -33,7 +33,7 @@ var recentQuestionHtml =
   + '</div>';
 
 var topQuestionHtml =
-    '<div question_id=\"{{question_id}}\" class=\"{{class}}\" data-score=\"{{score}}\">'
+    '<div question_id=\"{{question_id}}\" class=\"q {{class}}\" data-score=\"{{score}}\">'
   + '   <!--end topquestion_section-->'
   + '   <div class=\"question-content\">'
   + '       <p>{{{question_text}}}</p><br>'

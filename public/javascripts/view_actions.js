@@ -10,9 +10,14 @@
 
 var ViewActions = function () {
 
+  /**
+   * Sets up the initial state of the page. When this function returns, the page
+   * should be ready for the user
+   */
+  var setupUIImpl;
   var topQuestionsContainer = $('#top-questions-container');
-  var topQuestionMax        = 5;
-  var BASE_SCORE            = 1;
+  var MAX_TOP_QUESTIONS     = 5;
+  var BASE_SCORE            = 0;
 
   /**
    * Enter the room as an owner
@@ -22,7 +27,7 @@ var ViewActions = function () {
   var enterRoomOwnerImpl = function (roomInfo) {
 
     if (!roomInfo) {
-      $('#login-info .room-name-field').addClass('.has-error');
+      $('#login-info .room-name-field').addClass('has-error');
     }
 
 
@@ -31,7 +36,7 @@ var ViewActions = function () {
       var roomName = $('.room-name');
 
       roomName.html('<small>Owner View for </small>' + roomInfo.room_name + ': <small>' + roomInfo.room_id + '</small>');
-      roomName.attr('room-id', roomInfo.room_id);
+      roomName.attr('data-room-id', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
     }
@@ -55,7 +60,7 @@ var ViewActions = function () {
       var roomName = $('.room-name');
 
       roomName.text(roomInfo.room_name + ': ' + roomInfo.room_id);
-      roomName.attr('room-id', roomInfo.room_id);
+      roomName.attr('data-room-id', roomInfo.room_id);
       overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
 
@@ -147,23 +152,16 @@ var ViewActions = function () {
 
   /**
    * Update UI reflecting the score of a question changing
-   * @param scoreInfo = {question_id : string, question_score : number},
-   * The ID of the question being updated, and its new score
-   */
-  var questionScoreChangedImpl = function (scoreInfo) {
-    // TODO: Implementation
-  }
-
-  /**
-   * Will update question score throughout page
    * @param questionInfo = {question_id : string, question_text : string,
    * score : int}
    */
   var updateScoreImpl = function(questionInfo) {
 
+    console.log(questionInfo);
+
     var count    = topQuestionsContainer.mixItUp('getState').totalShow;
     var question = $('[question_id="'+questionInfo.question_id+'"]');
-    var score    = questionInfo.score;
+    var score    = questionInfo.question_score;
 
     question.attr('data-score', score);
     $('.num-votes', question).text(score);
@@ -171,13 +169,15 @@ var ViewActions = function () {
     // Check if question is up voted
     if (score > BASE_SCORE) {
 
-      if (inTopQuestions(question))
-        // Re-sort top questions
-        topQuestionsContainer.mixItUp('sort', 'score:desc');
+      if (!inTopQuestions(question))
+        topQuestionAdded(questionInfo);
 
-      // Else add it to top questions
-      else if (count <= topQuestionMax)
-        topQuestionAdded(questionInfo)
+      //  // Re-sort top questions
+      //  topQuestionsContainer.mixItUp('sort', 'score:desc');
+      //
+      //// Else add it to top questions
+      //else if (count <= MAX_TOP_QUESTIONS)
+      //  topQuestionAdded(questionInfo)
 
     }
 
@@ -192,6 +192,8 @@ var ViewActions = function () {
         , function () { questionInTop.remove() }
       );
     }
+
+    topQuestionsContainer.mixItUp('sort', 'score:desc');
     // TODO updateTopQuestions
   }
 
@@ -225,17 +227,13 @@ var ViewActions = function () {
   var checkMaxQuesitons = function(state) {
     var count = state.totalShow;
 
-    for (; count > topQuestionMax; --count)
+    for (; count > MAX_TOP_QUESTIONS; --count)
       $('.top-question:last').remove();
   }
 
-  /**
-   * Sets up the initial state of the page. When this function returns, the page
-   * should be ready for the user
-   */
-  var setupUIImpl = function () {
+  setupUIImpl = function () {
 
-    var mainContent = $('#main-content');
+    var body = $('body');
 
 
     /**
@@ -248,8 +246,10 @@ var ViewActions = function () {
       var questionText = textBox.val();
       var data = {
         question_text: questionText,
-        room_id: $('.room-name').attr('room-id')
+        room_id: $('.room-name').attr('data-room-id')
       };
+
+      console.log(data);
 
       socket.emit('new question', data);
       textBox.val('');
@@ -277,14 +277,14 @@ var ViewActions = function () {
         };
 
         switch (data.option) {
-        case 'make':
-          console.log('Creating new room.');
-          socket.emit('create room', data.room_name);
-          break;
-        case 'join':
-          console.log('Joining room.');
-          socket.emit('join room', data.room_name);
-          break;
+          case 'make':
+            console.log('Creating new room.');
+            socket.emit('create room', data.room_name);
+            break;
+          case 'join':
+            console.log('Joining room.');
+            socket.emit('join room', data.room_name);
+            break;
         }
       }
     }
@@ -307,10 +307,10 @@ var ViewActions = function () {
 
     $('#add-question').submit(addQuestionOnClickFn);
 
-    mainContent.on('click', '.thumbs-up-to-active', thumbsUpOnClickFn);
-    mainContent.on('click', '.thumbs-down-to-active', thumbsDownOnClickFn);
+    body.on('click', 'a.thumbs-up-to-active', thumbsUpOnClickFn);
+    body.on('click', 'a.thumbs-down-to-active', thumbsDownOnClickFn);
 
-  }
+  };
 
   /**
    * Makes calls to either recent questions or top questions div functions.
@@ -350,18 +350,13 @@ var ViewActions = function () {
    * Returns a string containing the HTML of a to totalTopQuestion div.
    * See line 94 of /views/index.html for a template
    * @param TODO: params list
-   * @returns result = string, the topquestion_section div
    */
   var topQuestionsDiv = function(questionInfo) {
-
+    // Add mix class for sorting
+    questionInfo.class += ' mix';
     var container = topQuestionsContainer;
     var html      = topQuestionTpl(questionInfo);
-
-
     attachQuestion(questionInfo, container, html);
-
-    // TODO Most likely need to append comments here
-
   }
 
   // TODO: These two should be mutually exclusive
@@ -370,20 +365,28 @@ var ViewActions = function () {
    */
   var thumbsUpOnClickFn = function () {
 
-    var element = $(this).children();
-    console.log(element);
-    if (element.hasClass('fa-thumbs-o-up')) {
-      element.removeClass("fa-thumbs-o-up").addClass('fa-thumbs-up');
-    } else {
-      element.removeClass("fa-thumbs-up").addClass('fa-thumbs-o-up');
-    }
+    var thumbsDown = $('a.thumbs-down-to-active i', $(this).parent());
+    if (thumbsDown.hasClass('clicked'))
+      return;
 
+    var button     = $('i', this);
+    var roomID     = $('.room-name').attr('data-room-id');
+    var questionID = $(this).closest('.q').attr('question_id');
     var upvoteInfo = { // TODO: Implement
-      room_id : '',
-      question_id : ''
+      room_id     : roomID,
+      question_id : questionID
     };
 
-    //socket.emit('upvote question', upvoteInfo);
+    if (button.hasClass('fa-thumbs-o-up')) {
+      button.removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up clicked');
+    } else {
+      button.removeClass('fa-thumbs-up clicked').addClass('fa-thumbs-o-up');
+    }
+
+    console.log(upvoteInfo);
+
+    socket.emit('upvote question', upvoteInfo);
+
   }
 
   /**
@@ -391,19 +394,30 @@ var ViewActions = function () {
    */
   var thumbsDownOnClickFn = function () {
 
-    var element = $(this).children();
-    if (element.hasClass('fa-thumbs-o-down')) {
-      element.removeClass("fa-thumbs-o-down").addClass('fa-thumbs-down');
+    var button     = $('i', this);
+    var roomID     = $('.room-name').attr('data-room-id');
+    var questionID = $(this).closest('.q').attr('question_id');
+    var thumbsUp   = $('a.thumbs-up-to-active i', $(this).parent());
+
+    if (thumbsUp.hasClass('clicked'))
+      return;
+
+
+    if (button.hasClass('fa-thumbs-o-down')) {
+      button.removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down clicked');
     } else {
-      element.removeClass("fa-thumbs-down").addClass('fa-thumbs-o-down');
+      button.removeClass('fa-thumbs-down clicked').addClass('fa-thumbs-o-down');
     }
 
     var downvoteInfo = { // TODO: Implement
-      room_id : '',
-      question_id : ''
+      room_id     : roomID,
+      question_id : questionID
     };
 
-    //socket.emit('downvote question', downvoteInfo);
+    console.log('From downvote');
+    console.log(downvoteInfo);
+
+    socket.emit('downvote question', downvoteInfo);
   }
 
   /**
@@ -441,7 +455,6 @@ var ViewActions = function () {
     questionDismissed: questionDismissedImpl,
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
-    questionScoreChanged: questionScoreChangedImpl,
     setupUI: setupUIImpl
   }
 }();
