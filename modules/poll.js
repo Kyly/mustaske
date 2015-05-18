@@ -32,7 +32,7 @@ Poll.prototype.setActive = function(data) {
  * Update the results according to the user's vote
  *
  * @param {voter_id: String, option: String}
- * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
  */
 Poll.prototype.vote = function(data) {
   var prevVote = 0;
@@ -64,7 +64,8 @@ Poll.prototype.vote = function(data) {
     poll_id:   this.pollID,
     voter_id:  data.voter_id,
     prev_vote: prevVote,
-    cur_vote:  data.option
+    cur_vote:  data.option,
+    num_votes: this.totalVotes
   };
 }
 

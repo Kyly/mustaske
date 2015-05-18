@@ -50,6 +50,7 @@ describe('Poll', function(){
 
       //check return values are correct
       assert(poll.totalVotes === 1);
+      assert(voteResults.num_votes === 1);
       assert(voteResults.poll_id === 'CSE110');
       assert(voteResults.prev_vote === 0);
       assert(voteResults.cur_vote === 'A');
@@ -59,6 +60,7 @@ describe('Poll', function(){
 
       //check return values are correct
       assert(poll.totalVotes === 1);
+      assert(voteResults.num_votes === 1);
       voteResults = poll.vote({voter_id: 'Voter', option: 'B'});
       assert(voteResults.poll_id === 'CSE110');
       assert(voteResults.prev_vote === 'A');
@@ -68,8 +70,9 @@ describe('Poll', function(){
       assert(poll.results['A'] === 0);
       assert(poll.results['B'] === 1);
 
-      poll.vote({voter_id: 'foo', option: 'C'})
+      voteResults = poll.vote({voter_id: 'foo', option: 'C'})
       assert(poll.totalVotes === 2);
+      assert(voteResults.num_votes === 2);
     })
   })
   describe('#getResults()', function(){
