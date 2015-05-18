@@ -348,7 +348,7 @@ var ViewActions = function () {
     var html      = topQuestionTpl(questionInfo);
     attachQuestion(questionInfo, container, html);
   }
-  
+
   /**
    * Callback for the upvote button
    */
