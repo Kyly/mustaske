@@ -67,9 +67,9 @@ describe('Questions', function(){
       qs.upVoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
-      expect(qs.questionHash[q1].score).to.equal(2);
-      expect(qs.questionHash[q2].score).to.equal(2);
-      expect(qs.questionHash[q3].score).to.equal(1);
+      expect(qs.questionHash[q1].score).to.equal(1);
+      expect(qs.questionHash[q2].score).to.equal(1);
+      expect(qs.questionHash[q3].score).to.equal(0);
     })
   })
 
@@ -110,9 +110,9 @@ describe('Questions', function(){
       var q3Score = qs.downVoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
-      expect(q1Score.question_score).to.equal(0);
-      expect(q2Score.question_score).to.equal(0);
-      expect(q3Score.question_score).to.equal(1);
+      expect(q1Score.question_score).to.equal(-1);
+      expect(q2Score.question_score).to.equal(-1;
+      expect(q3Score.question_score).to.equal(0);
     })
   })
 

@@ -12,11 +12,9 @@ function Question(data) {
   this.question_text = data.question_text;
   this.comments = [];
   this.voters = {};
-  this.voters[this.asker] = 1;
-  this.score = 1;
+  this.score = 0;
   this.time = new Date().getTime();
 }
-
 
 /**
  * Should increase score of question by one if voter hasn't voted,
@@ -29,26 +27,18 @@ function Question(data) {
 Question.prototype.upVote = function(data) {
   var voterID = data.voter_id;
 
-  //voter has already voted
-  if (this.voters[voterID] !== undefined) {
-
-    //voter has downvoted
-    if (this.voters[voterID] < 0) {
+  if (this.voters[voterID] !== undefined) {	//voter has already voted
+    if (this.voters[voterID] < 0) { 		//voter has downvoted
       this.voters[voterID] = 1;
       this.score += 2;
-      return {question_score: this.score, question_id: this.question_id};
-
-      //voter has upvoted
-    } else {
+    } else {                        		//voter has upvoted
       --(this.score);
       delete this.voters[voterID];
-      return {question_score: this.score, question_id: this.question_id};
     }
+  } else {                          		//voter hasn't yet voted
+	this.voters[voterID] = 1;
+	++(this.score);
   }
-
-  //voter hasn't yet voted
-  this.voters[voterID] = 1;
-  ++(this.score);
 
   return {question_score: this.score, question_id: this.question_id};
 }
@@ -64,26 +54,18 @@ Question.prototype.upVote = function(data) {
 Question.prototype.downVote = function(data) {
   var voterID = data.voter_id;
 
-  //voter has already voted
-  if (this.voters[voterID] !== undefined) {
-
-    //voter has upvoted
-    if (this.voters[voterID] > 0) {
+  if (this.voters[voterID] !== undefined) {	//voter has already voted
+    if (this.voters[voterID] > 0) { 		//voter has upvoted
       this.voters[voterID] = -1;
       this.score -= 2;
-      return {question_score: this.score, question_id: this.question_id};
-
-      //voter has downvoted
-    } else {
+    } else {                        		//voter has downvoted
       ++(this.score);
       delete this.voters[voterID];
-      return {question_score: this.score, question_id: this.question_id};
     }
+  } else {                          		//voter hasn't yet voted
+	this.voters[voterID] = -1;
+	--(this.score);
   }
-
-  //voter hasn't yet voted
-  this.voters[voterID] = -1;
-  --(this.score);
 
   return {question_score: this.score, question_id: this.question_id};
 }
