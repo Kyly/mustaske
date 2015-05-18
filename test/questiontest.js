@@ -27,7 +27,7 @@ describe('Question', function(){
       expect(q.question_id).to.equal('123456');
       expect(q.asker).to.equal('me');
       expect(q.question_text).to.equal('Some text');
-      expect(q.score).to.equal(1);
+      expect(q.score).to.equal(0);
     })
   })
 

@@ -111,7 +111,7 @@ describe('Questions', function(){
 
       // Assert
       expect(q1Score.question_score).to.equal(-1);
-      expect(q2Score.question_score).to.equal(-1;
+      expect(q2Score.question_score).to.equal(-1);
       expect(q3Score.question_score).to.equal(0);
     })
   })
