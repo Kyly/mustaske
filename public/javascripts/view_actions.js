@@ -159,7 +159,6 @@ var ViewActions = function () {
 
     console.log(questionInfo);
 
-    var count    = topQuestionsContainer.mixItUp('getState').totalShow;
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
 
@@ -171,13 +170,6 @@ var ViewActions = function () {
 
       if (!inTopQuestions(question))
         topQuestionAdded(questionInfo);
-
-      //  // Re-sort top questions
-      //  topQuestionsContainer.mixItUp('sort', 'score:desc');
-      //
-      //// Else add it to top questions
-      //else if (count <= MAX_TOP_QUESTIONS)
-      //  topQuestionAdded(questionInfo)
 
     }
 
@@ -193,8 +185,8 @@ var ViewActions = function () {
       );
     }
 
+    // TODO May be a better way to do this
     topQuestionsContainer.mixItUp('sort', 'score:desc');
-    // TODO updateTopQuestions
   }
 
   /**
@@ -248,8 +240,6 @@ var ViewActions = function () {
         question_text: questionText,
         room_id: $('.room-name').attr('data-room-id')
       };
-
-      console.log(data);
 
       socket.emit('new question', data);
       textBox.val('');
@@ -359,7 +349,6 @@ var ViewActions = function () {
     attachQuestion(questionInfo, container, html);
   }
 
-  // TODO: These two should be mutually exclusive
   /**
    * Callback for the upvote button
    */
