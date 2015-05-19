@@ -37,12 +37,16 @@ Questions.prototype.addQuestion = function (data) {
       asker_id: data.asker_id,
       question_text: marked(data.question_text)
     }
-  )
+  );
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.question_id] = question;
 
-  return {question_id: question.question_id, question_text: question.question_text};
+  return {
+    question_id    : question.question_id,
+    question_text  : question.question_text,
+    question_score : question.score
+  };
 }
 
 /**
@@ -110,8 +114,13 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upVotedQuestions.length;
-
-  console.log(this.upVotedQuestions);
+  //console.log('top questions');
+  //console.log(this.upVotedQuestions);
+  //console.log('n question sorted');
+  //console.log(Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
+  //  return a.score - b.score;
+  //})
+  //);
 
   return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
     return a.score - b.score;
@@ -204,7 +213,6 @@ Questions.prototype.placeOrRemoveUpvoted = function(question,prevScore) {
     }
   }
 
-  console.log(this.upVotedQuestions);
 }
 
 module.exports = Questions;

@@ -14,7 +14,6 @@ var ViewActions = function () {
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
-  var setupUIImpl;
   var topQuestionsContainer = $('#top-questions-container');
   var MAX_TOP_QUESTIONS     = 5;
   var BASE_SCORE            = 0;
@@ -95,6 +94,19 @@ var ViewActions = function () {
         questionDiv(question);
       });
     }
+
+    /**
+     * Set up sorted container for top questions.
+     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
+     */
+    topQuestionsContainer.mixItUp({
+      layout: {
+        display: 'block'
+      },
+      callbacks: {
+        onMixEnd: checkMaxQuesitons
+      }
+    });
   }
 
   /**
@@ -119,7 +131,7 @@ var ViewActions = function () {
    * @param questionId = string, The ID of the dismissed question
    */
   var questionDismissedImpl = function (questionID) {
-    var question = $("div[question_id='"+questionID+"']");
+    var question = $('div[question_id="'+questionID+'"]');
     var animationType = 'hinge';
     question.addClass("animated " + animationType);
     question.one(
@@ -223,7 +235,7 @@ var ViewActions = function () {
       $('.top-question:last').remove();
   }
 
-  setupUIImpl = function () {
+  var setupUIImpl = function () {
 
     var body = $('body');
 
@@ -279,18 +291,7 @@ var ViewActions = function () {
       }
     }
 
-    /**
-     * Set up sorted container for top questions.
-     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
-     */
-    topQuestionsContainer.mixItUp({
-      layout: {
-        display: 'block'
-      },
-      callbacks: {
-        onMixEnd: checkMaxQuesitons
-      }
-    });
+
 
 
     $('#join-create-room .btn').click(joinMakeOnClickFn);
@@ -323,7 +324,7 @@ var ViewActions = function () {
    * Returns a string containing the HTML of a topquestion_section div.
    * See line 193 of /views/index.html for a template
    * @param questionInfo = {question_id : string, question_text : string,
-   * score : int}
+   * question_score : int}
    * @returns result = string, the recentquestion_section div
    */
   var recentQuestionsDiv = function(questionInfo) {
@@ -332,7 +333,6 @@ var ViewActions = function () {
     var html      = recentQuestionTpl(questionInfo);
 
     attachQuestion(questionInfo, container, html);
-
     // TODO Most likely need to append comments here
   }
 
@@ -342,11 +342,18 @@ var ViewActions = function () {
    * @param TODO: params list
    */
   var topQuestionsDiv = function(questionInfo) {
+    console.log('topQuestionsDiv was called');
     // Add mix class for sorting
     questionInfo.class += ' mix';
-    var container = topQuestionsContainer;
-    var html      = topQuestionTpl(questionInfo);
+    var container       = $('#top-questions-container');
+    var html  = topQuestionTpl(questionInfo);
     attachQuestion(questionInfo, container, html);
+    //var jqhtml = container
+    //  .append(html)
+    //  .find('[question_id="'+ questionInfo.question_id +'"]');
+
+
+    //topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
   /**
@@ -371,8 +378,6 @@ var ViewActions = function () {
     } else {
       button.removeClass('fa-thumbs-up clicked').addClass('fa-thumbs-o-up');
     }
-
-    console.log(upvoteInfo);
 
     socket.emit('upvote question', upvoteInfo);
 
@@ -403,9 +408,6 @@ var ViewActions = function () {
       question_id : questionID
     };
 
-    console.log('From downvote');
-    console.log(downvoteInfo);
-
     socket.emit('downvote question', downvoteInfo);
   }
 
@@ -426,8 +428,9 @@ var ViewActions = function () {
       break;
     }
 
-    $(container + ' [question_id='+ questionInfo.question_id +']')
-      .addClass('animated pulse');
+    if (questionInfo.class === 'recent-question')
+      $(container + ' [question_id='+ questionInfo.question_id +']')
+        .addClass('animated pulse');
 
   }
 

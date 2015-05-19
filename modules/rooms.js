@@ -51,8 +51,13 @@ Rooms.prototype.joinRoom = function (roomID) {
   var room = this.rooms[roomID];
   var roomData = {
     room_name: room.name, room_id: room.id,
-    questions: room.getQuestions(), top_questions: room.getTopVoted(5)
+    questions: room.getQuestions(),
+    top_questions: room.getTopVoted(5)
   };
+
+  console.log('join rooms');
+  console.log(room.getTopVoted(5));
+
   return roomData;
 }
 
