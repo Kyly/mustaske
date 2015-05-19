@@ -77,6 +77,8 @@ var ViewActions = function () {
 
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
+    console.log(topQuestions);
+    console.log(questions);
 
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
