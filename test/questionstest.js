@@ -30,7 +30,7 @@ describe('Questions', function(){
   });
 
 
-  describe('#upVoteQuestion()', function(){
+  describe('#upvoteQuestion()', function(){
     it('Should increase score of question by one if voter hasn\'t voted, ' +
         'by two if voter has previously downvoted, or decrease by one if ' +
         'voter has previously upvoted.', function() {
@@ -62,9 +62,9 @@ describe('Questions', function(){
       qs.questionHash[q3].voters['p2'] = 1;
       ++(qs.questionHash[q3].score);
 
-      qs.upVoteQuestion({question_id: q1, voter_id: 'p2'});
-      qs.upVoteQuestion({question_id: q2, voter_id: 'p2'});
-      qs.upVoteQuestion({question_id: q3, voter_id: 'p2'});
+      qs.upvoteQuestion({question_id: q1, voter_id: 'p2'});
+      qs.upvoteQuestion({question_id: q2, voter_id: 'p2'});
+      qs.upvoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
       expect(qs.questionHash[q1].score).to.equal(1);
@@ -74,7 +74,7 @@ describe('Questions', function(){
   })
 
 
-  describe('#downVoteQuestion()', function(){
+  describe('#downvoteQuestion()', function(){
     it('Should decrease score of question by one if voter hasn\'t voted, ' +
         'by two if voter has previously upvoted, or increase by one if ' +
         'voter has previously downvoted.', function(){
@@ -105,9 +105,9 @@ describe('Questions', function(){
       qs.questionHash[q3].voters['p2'] = -1;
       --(qs.questionHash[q3].score);
 
-      var q1Score = qs.downVoteQuestion({question_id: q1, voter_id: 'p2'});
-      var q2Score = qs.downVoteQuestion({question_id: q2, voter_id: 'p2'});
-      var q3Score = qs.downVoteQuestion({question_id: q3, voter_id: 'p2'});
+      var q1Score = qs.downvoteQuestion({question_id: q1, voter_id: 'p2'});
+      var q2Score = qs.downvoteQuestion({question_id: q2, voter_id: 'p2'});
+      var q3Score = qs.downvoteQuestion({question_id: q3, voter_id: 'p2'});
 
       // Assert
       expect(q1Score.question_score).to.equal(-1);
@@ -127,7 +127,7 @@ describe('Questions', function(){
       for (var i in testquestions) {
         questions[i] = qs.addQuestion(testquestions[i]);
 
-        qs.upVoteQuestion({
+        qs.upvoteQuestion({
           question_id : questions[i].question_id,
           voter_id    : 'Sam Joe'
         })
