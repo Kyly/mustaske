@@ -63,7 +63,7 @@ Questions.prototype.upvoteQuestion = function (data) {
     var question = this.questionHash[data.question_id];
     //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
-      retval = question.upVote(data);
+      retval = question.upvote(data);
       this.placeOrRemoveupvoted(question,prevScore);
     //}
   }
@@ -85,7 +85,7 @@ Questions.prototype.downvoteQuestion = function (data) {
     var question = this.questionHash[data.question_id];
     //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
-      retval = question.downVote(data);
+      retval = question.downvote(data);
       this.placeOrRemoveupvoted(question,prevScore);
     //}
     //  retval = question.downvote(data);
