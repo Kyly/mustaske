@@ -61,11 +61,11 @@ Questions.prototype.upVoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.upVote(data);
       this.placeOrRemoveUpvoted(question,prevScore);
-    }
+    //}
   }
   
   return retval;
@@ -83,11 +83,11 @@ Questions.prototype.downVoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.downVote(data);
       this.placeOrRemoveUpvoted(question,prevScore);
-    }
+    //}
   }
   
   return retval;
@@ -114,13 +114,6 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upVotedQuestions.length;
-  //console.log('top questions');
-  //console.log(this.upVotedQuestions);
-  //console.log('n question sorted');
-  //console.log(Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
-  //  return a.score - b.score;
-  //})
-  //);
 
   return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
     return a.score - b.score;

@@ -49,7 +49,6 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
   if(this.rooms.hasRoom(roomID)) {
     var returnData = this.rooms.joinRoom(roomID);
     socket.join(roomID);
-    console.log(returnData);
     socket.emit('join room', returnData);
   }
   else

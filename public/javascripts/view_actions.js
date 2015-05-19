@@ -33,7 +33,6 @@ var ViewActions = function () {
     else {
       $('#room-name-field').removeClass('has-error');
       var roomName = $('.room-name');
-
       roomName.html('<small>Owner View for </small>' + roomInfo.room_name + ': <small>' + roomInfo.room_id + '</small>');
       roomName.attr('data-room-id', roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
@@ -95,18 +94,7 @@ var ViewActions = function () {
       });
     }
 
-    /**
-     * Set up sorted container for top questions.
-     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
-     */
-    topQuestionsContainer.mixItUp({
-      layout: {
-        display: 'block'
-      },
-      callbacks: {
-        onMixEnd: checkMaxQuesitons
-      }
-    });
+    topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
   /**
@@ -132,12 +120,14 @@ var ViewActions = function () {
    */
   var questionDismissedImpl = function (questionID) {
     var question = $('div[question_id="'+questionID+'"]');
-    var animationType = 'hinge';
-    question.addClass("animated " + animationType);
-    question.one(
-      'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-      , function () { question.remove() }
-    );
+    question.remove();
+
+    //var animationType = 'hinge';
+    //question.addClass("animated " + animationType);
+    //question.one(
+    //  'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+    //  , function () { question.remove() }
+    //);
 
   }
 
@@ -169,12 +159,12 @@ var ViewActions = function () {
    */
   var updateScoreImpl = function(questionInfo) {
 
-    console.log(questionInfo);
+    console.log('Update score');
 
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
-
     question.attr('data-score', score);
+
     $('.num-votes', question).text(score);
 
     // Check if question is up voted
@@ -187,14 +177,16 @@ var ViewActions = function () {
 
     // Remove question from top question has score less than BASE_SCORE
     else if (inTopQuestions(question)) {
-      var animationType       = 'hinge';
+      console.log('Trying to remove question.');
+      //var animationType       = 'hinge';
       var questionInTop = topQuestionsContainer.find(question);
+      questionInTop.remove();
 
-      questionInTop.addClass("animated " + animationType);
-      questionInTop.one(
-        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-        , function () { questionInTop.remove() }
-      );
+      //questionInTop.addClass("animated " + animationType);
+      //questionInTop.one(
+      //  'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+      //  , function () { questionInTop.remove() }
+      //);
     }
 
     // TODO May be a better way to do this
@@ -218,7 +210,7 @@ var ViewActions = function () {
     topQuestion.removeClass('recent-question animated pulse');
     topQuestion.addClass('top-question mix');
 
-    topQuestionsContainer.mixItUp('append', topQuestion);
+    topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
     topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
@@ -229,10 +221,10 @@ var ViewActions = function () {
    * @see https://mixitup.kunkalabs.com/docs/#state-object
    */
   var checkMaxQuesitons = function(state) {
-    var count = state.totalShow;
-
-    for (; count > MAX_TOP_QUESTIONS; --count)
-      $('.top-question:last').remove();
+    //var count = state.totalShow;
+    //
+    //for (; count > MAX_TOP_QUESTIONS; --count)
+    //  $('.top-question:last').remove();
   }
 
   var setupUIImpl = function () {
@@ -289,9 +281,20 @@ var ViewActions = function () {
             break;
         }
       }
+
+      /**
+       * Set up sorted container for top questions.
+       * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
+       */
+      topQuestionsContainer.mixItUp({
+        layout: {
+          display: 'block'
+        },
+        callbacks: {
+          onMixEnd: checkMaxQuesitons
+        }
+      });
     }
-
-
 
 
     $('#join-create-room .btn').click(joinMakeOnClickFn);
@@ -333,7 +336,6 @@ var ViewActions = function () {
     var html      = recentQuestionTpl(questionInfo);
 
     attachQuestion(questionInfo, container, html);
-    // TODO Most likely need to append comments here
   }
 
   /**
@@ -348,12 +350,7 @@ var ViewActions = function () {
     var container       = $('#top-questions-container');
     var html  = topQuestionTpl(questionInfo);
     attachQuestion(questionInfo, container, html);
-    //var jqhtml = container
-    //  .append(html)
-    //  .find('[question_id="'+ questionInfo.question_id +'"]');
 
-
-    //topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
   /**
@@ -368,7 +365,7 @@ var ViewActions = function () {
     var button     = $('i', this);
     var roomID     = $('.room-name').attr('data-room-id');
     var questionID = $(this).closest('.q').attr('question_id');
-    var upvoteInfo = { // TODO: Implement
+    var upvoteInfo = {
       room_id     : roomID,
       question_id : questionID
     };
@@ -428,9 +425,14 @@ var ViewActions = function () {
       break;
     }
 
+    var question = $(' [question_id='+ questionInfo.question_id +']');
+
     if (questionInfo.class === 'recent-question')
-      $(container + ' [question_id='+ questionInfo.question_id +']')
-        .addClass('animated pulse');
+      $(question, container).addClass('animated pulse');
+
+    if (questionInfo.class.indexOf('top-question') > 0) {
+      topQuestionsContainer.mixItUp('append', question, {sort:'score:desc'});
+    }
 
   }
 

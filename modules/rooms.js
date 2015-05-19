@@ -55,9 +55,6 @@ Rooms.prototype.joinRoom = function (roomID) {
     top_questions: room.getTopVoted(5)
   };
 
-  console.log('join rooms');
-  console.log(room.getTopVoted(5));
-
   return roomData;
 }
 
