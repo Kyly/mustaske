@@ -24,11 +24,11 @@ function Question(data) {
  * @param {question_id: String, voter_id: String}
  * @return {question_score: String, question_id: String}
 */
-Question.prototype.upvote = function(data) {
+Question.prototype.upVote = function(data) {
   var voterID = data.voter_id;
 
   if (this.voters[voterID] !== undefined) {	//voter has already voted
-    if (this.voters[voterID] < 0) { 		//voter has downvoted
+    if (this.voters[voterID] < 0) { 		    //voter has downvoted
       this.voters[voterID] = 1;
       this.score += 2;
     } else {                        		//voter has upvoted
@@ -36,8 +36,8 @@ Question.prototype.upvote = function(data) {
       delete this.voters[voterID];
     }
   } else {                          		//voter hasn't yet voted
-	this.voters[voterID] = 1;
-	++(this.score);
+    this.voters[voterID] = 1;
+    ++(this.score);
   }
 
   return {question_score: this.score, question_id: this.question_id};
@@ -63,8 +63,8 @@ Question.prototype.downvote = function(data) {
       delete this.voters[voterID];
     }
   } else {                          		//voter hasn't yet voted
-	this.voters[voterID] = -1;
-	--(this.score);
+    this.voters[voterID] = -1;
+    --(this.score);
   }
 
   return {question_score: this.score, question_id: this.question_id};

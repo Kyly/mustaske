@@ -37,12 +37,16 @@ Questions.prototype.addQuestion = function (data) {
       asker_id: data.asker_id,
       question_text: marked(data.question_text)
     }
-  )
+  );
 
   this.orderedQuestions.unshift(question);
   this.questionHash[question.question_id] = question;
 
-  return {question_id: question.question_id, question_text: question.question_text};
+  return {
+    question_id    : question.question_id,
+    question_text  : question.question_text,
+    question_score : question.score
+  };
 }
 
 /**
@@ -57,11 +61,11 @@ Questions.prototype.upvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
-      retval = question.upvote(data);
+      retval = question.upVote(data);
       this.placeOrRemoveupvoted(question,prevScore);
-    }
+    //}
   }
 
   return retval;
@@ -79,13 +83,14 @@ Questions.prototype.downvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
-      retval = question.downvote(data);
+      retval = question.downVote(data);
       this.placeOrRemoveupvoted(question,prevScore);
+    //}
+    //  retval = question.downvote(data);
+    //  this.placeOrRemoveupvoted(question,prevScore);
     }
-  }
-
   return retval;
 }
 
@@ -110,9 +115,7 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upvotedQuestions.length;
-
-  console.log(this.upvotedQuestions);
-
+  
   return Heap.nlargest(this.upvotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });
@@ -203,8 +206,6 @@ Questions.prototype.placeOrRemoveupvoted = function(question,prevScore) {
       this.upvotedQuestions.splice(index, 1);
     }
   }
-
-  console.log(this.upvotedQuestions);
 }
 
 module.exports = Questions;
