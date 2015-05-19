@@ -9,7 +9,7 @@ var marked   = require('marked');
 
 function Questions() {
   this.questionHash     = {};  // All questions
-  this.upVotedQuestions = [];  // Reference to questions that have been upvoted
+  this.upvotedQuestions = [];  // Reference to questions that have been upvoted
   this.orderedQuestions = [];  // Most recent --> Oldest questions
 
   // Set up for markdown filter
@@ -50,13 +50,13 @@ Questions.prototype.addQuestion = function (data) {
 }
 
 /**
- * Upvotes a question in the repository. If question does not
+ * upvotes a question in the repository. If question does not
  * exist then nothing is done.
  *
  * @param data = {question_id: id, voter_id: id}
  * @return none
  */
-Questions.prototype.upVoteQuestion = function (data) {
+Questions.prototype.upvoteQuestion = function (data) {
   var retval = false;
 
   if (this.hasQuestion(data.question_id)) {
@@ -64,21 +64,21 @@ Questions.prototype.upVoteQuestion = function (data) {
     //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.upVote(data);
-      this.placeOrRemoveUpvoted(question,prevScore);
+      this.placeOrRemoveupvoted(question,prevScore);
     //}
   }
-  
+
   return retval;
 }
 
 /**
- * Downvotes a question in the repository. If question does not
+ * downvotes a question in the repository. If question does not
  * exist then nothing is done.
  *
  * @param data = {question_id: id, voter_id: id}
  * @return none
  */
-Questions.prototype.downVoteQuestion = function (data) {
+Questions.prototype.downvoteQuestion = function (data) {
   var retval = false;
 
   if (this.hasQuestion(data.question_id)) {
@@ -86,10 +86,11 @@ Questions.prototype.downVoteQuestion = function (data) {
     //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.downVote(data);
-      this.placeOrRemoveUpvoted(question,prevScore);
+      this.placeOrRemoveupvoted(question,prevScore);
     //}
-  }
-  
+    //  retval = question.downvote(data);
+    //  this.placeOrRemoveupvoted(question,prevScore);
+    }
   return retval;
 }
 
@@ -113,9 +114,9 @@ Questions.prototype.hasQuestion = function(id) {
 Questions.prototype.getTopVoted = function (n) {
 
   // Default check
-  n = typeof n !== 'undefined' ? n : this.upVotedQuestions.length;
-
-  return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
+  n = typeof n !== 'undefined' ? n : this.upvotedQuestions.length;
+  
+  return Heap.nlargest(this.upvotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });
 }
@@ -137,7 +138,7 @@ Questions.prototype.getQuestions = function (n) {
 
 /**
  * Delete the question from the question heap,
- * upVotedQuestion array, and ordered question array.
+ * upvotedQuestion array, and ordered question array.
  *
  * @param Id of the question
  * @return empty object if question does not exist
@@ -151,13 +152,13 @@ Questions.prototype.deleteQuestion = function (questionID) {
   if (!question)
     return false;
 
-  //Find index of question in upVotedQuestion array
-  var upVoted = this.upVotedQuestions.indexOf(question)
+  //Find index of question in upvotedQuestion array
+  var upvoted = this.upvotedQuestions.indexOf(question)
 
   //Check if question is in updated question
-  if (upVoted !== -1)
-    //Remove question from upVotedQuestions array
-    this.upVotedQuestions.splice(upVoted, 1);
+  if (upvoted !== -1)
+    //Remove question from upvotedQuestions array
+    this.upvotedQuestions.splice(upvoted, 1);
 
   //Find index of question in orderedQuestion array
   var orderedQuestion = this.orderedQuestions.indexOf(question)
@@ -192,20 +193,19 @@ Questions.prototype.warnUser = function(questionID) {
  * @param question: question object, prevScore: int
  * @return none
  */
-Questions.prototype.placeOrRemoveUpvoted = function(question,prevScore) {
+Questions.prototype.placeOrRemoveupvoted = function(question,prevScore) {
   //add to upvotedQuestions if question became eligible
   if(prevScore < 1 && question.score >= 1) {
-    this.upVotedQuestions.push(question);
-  } 
+    this.upvotedQuestions.push(question);
+  }
 
   //remove from upvotedQuestions if question no longer eligible
   if(prevScore >= 1 && question.score < 1) {
-    var index = this.upVotedQuestions.indexOf(question);
+    var index = this.upvotedQuestions.indexOf(question);
     if (index > -1) {
-      this.upVotedQuestions.splice(index, 1);
+      this.upvotedQuestions.splice(index, 1);
     }
   }
-
 }
 
 module.exports = Questions;

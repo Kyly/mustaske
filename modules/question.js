@@ -25,15 +25,13 @@ function Question(data) {
  * @return {question_score: String, question_id: String}
 */
 Question.prototype.upVote = function(data) {
-
   var voterID = data.voter_id;
 
   if (this.voters[voterID] !== undefined) {	//voter has already voted
     if (this.voters[voterID] < 0) { 		    //voter has downvoted
       this.voters[voterID] = 1;
       this.score += 2;
-
-    } else {                        		    //voter has upvoted
+    } else {                        		//voter has upvoted
       --(this.score);
       delete this.voters[voterID];
     }
@@ -53,7 +51,7 @@ Question.prototype.upVote = function(data) {
  *
  * @param {voter_id: String, question_id: String}
 */
-Question.prototype.downVote = function(data) {
+Question.prototype.downvote = function(data) {
   var voterID = data.voter_id;
 
   if (this.voters[voterID] !== undefined) {	//voter has already voted

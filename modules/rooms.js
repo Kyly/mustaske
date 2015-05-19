@@ -186,7 +186,7 @@ Rooms.prototype.getTopVoted = function (data) {
  *
  * @param data = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.upVoteQuestion = function (data) {
+Rooms.prototype.upvoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
@@ -197,7 +197,7 @@ Rooms.prototype.upVoteQuestion = function (data) {
 /**
  * @paramd ata = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.downVoteQuestion = function (data) {
+Rooms.prototype.downvoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
