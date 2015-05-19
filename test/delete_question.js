@@ -30,9 +30,9 @@ it('should delete question from hash table, up-voted question array, and ordered
 	//Call deleteQuestion function
 	questions.deleteQuestion(info2);
 
-	//Check if question is no longer in questionHash, upVoteQuestions, and orderedQuestions
+	//Check if question is no longer in questionHash, upvoteQuestions, and orderedQuestions
 	assert(!(info2 in questions.questionHash));
-	assert(!(info2 in questions.upVotedQuestions));
+	assert(!(info2 in questions.upvotedQuestions));
 	assert(!(info2 in questions.orderedQuestions));
 
 
