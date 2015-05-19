@@ -107,7 +107,19 @@ Room.prototype.downvoteQuestion = function(data) {
  * @return array of top n voted questions
  */
 Room.prototype.getTopVoted = function(n) {
-  return this.questions.getTopVoted(n);
+  //return this.questions.getTopVoted(n);
+  var tempArray = this.questions.getTopVoted(n);
+  var returnData = [];
+  for (var i in tempArray) {
+    var insertData = {
+      question_id: tempArray[i].question_id,
+      question_text: tempArray[i].question_text,
+      question_score: tempArray[i].score,
+      time: tempArray[i].time
+    };
+    returnData.push(insertData);
+  }
+  return returnData;
 }
 
 /**
@@ -117,7 +129,18 @@ Room.prototype.getTopVoted = function(n) {
  * @return array of all the questions in this room
  */
 Room.prototype.getQuestions = function() {
-  return this.questions.getQuestions();
+  var tempArray = this.questions.getQuestions();
+  var returnData = [];
+  for (var i in tempArray) {
+    var insertData = {
+      question_id: tempArray[i].question_id,
+      question_text: tempArray[i].question_text,
+      question_score: tempArray[i].score,
+      time: tempArray[i].time
+    };
+    returnData.push(insertData);
+  }
+  return returnData;
  }
 
  /**
