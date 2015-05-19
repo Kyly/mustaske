@@ -24,15 +24,15 @@ describe('Question', function(){
 
 
       // Assert
-      expect(q.id).to.equal('123456');
+      expect(q.question_id).to.equal('123456');
       expect(q.asker).to.equal('me');
-      expect(q.question).to.equal('Some text');
-      expect(q.score).to.equal(1);
+      expect(q.question_text).to.equal('Some text');
+      expect(q.score).to.equal(0);
     })
   })
 
 
-  describe('#upVote()', function(){
+  describe('#upvote()', function(){
     it('Should increase score of question by one if voter hasn\'t voted, ' +
         'by two if voter has previously downvoted, or decrease by one if ' +
         'voter has previously upvoted.', function() {
@@ -69,19 +69,19 @@ describe('Question', function(){
       ++(upvotedQUp.score);
 
       // Assign
-      normalQUp.upVote({voter_id : 'p2'});
-      downvotedQUp.upVote({voter_id : 'p2'});
-      upvotedQUp.upVote({voter_id : 'p2'});
+      normalQUp.upvote({voter_id : 'p2'});
+      downvotedQUp.upvote({voter_id : 'p2'});
+      upvotedQUp.upvote({voter_id : 'p2'});
 
       // Assert
-      expect(normalQUp.score).to.equal(2);
-      expect(downvotedQUp.score).to.equal(2);
-      expect(upvotedQUp.score).to.equal(1);
+      expect(normalQUp.score).to.equal(1);
+      expect(downvotedQUp.score).to.equal(1);
+      expect(upvotedQUp.score).to.equal(0);
     })
   })
 
 
-  describe('#downVote()', function(){
+  describe('#downvote()', function(){
     it('Should decrease score of question by one if voter hasn\'t voted, ' +
         'by two if voter has previously upvoted, or increase by one if ' +
         'voter has previously downvoted.', function() {
@@ -118,14 +118,14 @@ describe('Question', function(){
       --(downvotedQDown.score);
 
       // Assign
-      normalQDown.downVote({voter_id : 'p2'});
-      upvotedQDown.downVote({voter_id : 'p2'});
-      downvotedQDown.downVote({voter_id : 'p2'});
+      normalQDown.downvote({voter_id : 'p2'});
+      upvotedQDown.downvote({voter_id : 'p2'});
+      downvotedQDown.downvote({voter_id : 'p2'});
 
       // Assert
-      expect(normalQDown.score).to.equal(0);
-      expect(upvotedQDown.score).to.equal(0);
-      expect(downvotedQDown.score).to.equal(1);
+      expect(normalQDown.score).to.equal(-1);
+      expect(upvotedQDown.score).to.equal(-1);
+      expect(downvotedQDown.score).to.equal(0);
     })
   })
 

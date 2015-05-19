@@ -47,64 +47,50 @@ var io = require('socket.io').listen(server);
 io.set('log level', 1);
 
 io.sockets.on('connection', function (socket) {
-  controller.initialConnect(socket);
+  // controller.initialConnect(socket);
 
   socket.on('disconnect', function() {
     controller.disconnect(socket);
   });
 
   socket.on('join room', function(roomId) {
-    controller.joinRoom(socket, roomId);
+    controller.joinRoom(io, socket, roomId);
   });
 
   socket.on('create room', function(roomName) {
-    controller.createRoom(socket, roomName);
+    controller.createRoom(io, socket, roomName);
   });
 
   socket.on('close room', function(roomId) {
-    controller.closeRoom(socket, roomId);
+    controller.closeRoom(io, socket, roomId);
   });
 
   socket.on('new question', function(question) {
-    controller.newQuestion(socket, question);
+    controller.newQuestion(io, socket, question);
   });
 
   socket.on('upvote question', function(questionId) {
-    controller.upvoteQuestion(socket, questionId);
+    controller.upvoteQuestion(io, socket, questionId);
   });
 
   socket.on('downvote question', function(questionId) {
-    controller.downvoteQuestion(socket, questionId);
+    controller.downvoteQuestion(io, socket, questionId);
   });
 
   socket.on('dismiss question', function(questionId) {
-    controller.dismissQuestion(socket, questionId);
+    controller.dismissQuestion(io, socket, questionId);
   });
 
   socket.on('top questions', function(question, n) {
-    controller.topQuestions(socket, n);
+    controller.topQuestions(io, socket, n);
   });
 
   socket.on('all questions', function() {
     controller.allQuestions(socket);
   });
 
-//all on events below are used only in demo app
-
-  socket.on('nameAttempt', function(name) {
-    controller.nameAttempt(socket, name);
-  });
-
-  socket.on('message', function (message) {
-    controller.message(socket, message);
-  });
-
-  socket.on('rooms', function() {
-    controller.rooms(socket, io);
-  });
-
-  socket.on('askQuestion', function (question) {
-    controller.askQuestion(socket, question);
+  socket.on('warn user', function(questionInfo) {
+    controller.warnUser(io, socket, questionInfo);
   });
 
 });

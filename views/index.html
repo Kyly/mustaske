@@ -1,0 +1,238 @@
+<!DOCtype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <!-- bootstrap -->
+    <link type="text/css" rel="stylesheet"
+          href="/lib/bootstrap/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet"
+          href="/lib/bootstrap/css/bootstrap-theme.min.css">
+    <!-- font-awesome -->
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Our styles -->
+    <link href="/stylesheets/style.css" rel="stylesheet"/>
+    <!-- Styles for animations -->
+    <link href="/stylesheets/animate.css" rel="stylesheet"/>
+    <!-- jasny CSS -->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
+          rel='stylesheet' type='text/css'>
+    <title>MustAsk: CSE110</title>
+    <link rel="Shortcut Icon" type="image/jpg" href="/images/mustache.png"/>
+</head>
+<body>
+<div class="login-overlay container-fluid">
+    <div class="text-center vcenter">
+        <div>
+            <h2>Welcome to MustAske!</h2>
+            <p>Please enter the name of a room you want to join or create</p>
+            <form id="login-info">
+                <div class="row form-group">
+                    <div id="room-name-field"
+                         class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1 has-feedback">
+                        <input type="room-name" class="form-control"
+                               placeholder="Room Name...">
+                        <span class="glyphicon glyphicon-remove form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div id="join-create-room" class="btn-group" role="group"
+                         aria-label="Join/Create Room">
+                        <button type="button" class="btn btn-default"> Join
+                        </button>
+                        <button type="button" class="btn btn-default"> Make
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
+     style="z-index: 1"> <!-- Offcanvas menu -->
+    <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
+    <ul class="nav navmenu-nav">
+        <li><span class="room-rid">Slide in</span></li>
+        <li><span class="room-user-status">Push</span></li>
+    </ul>
+    <ul class="nav navmenu-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Top
+                Questions<b class="caret"></b></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li>
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                          <button type="button"
+                                  class="btn btn-default btn-number"
+                                  data-type="minus" data-field="quant[1]"
+                                  disabled="disabled">
+                              <span class="glyphicon glyphicon-minus"></span>
+                          </button>
+                      </span>
+                        <input type="text" name="quant[1]"
+                               class="form-control input-number" value="1"
+                               min="1" max="10">
+                      <span class="input-group-btn">
+                          <button type="button"
+                                  class="btn btn-default btn-number"
+                                  data-type="plus" data-field="quant[1]">
+                              <span class="glyphicon glyphicon-plus"></span>
+                          </button>
+                      </span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav navmenu-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent
+                Questions<b class="caret"></b></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li><a href="#"></a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><!-- end Offcanvas menu -->
+<div class="canvas"><!-- Control for offcanvas -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header mobile-toggle">
+                <button type="button" class="navbar-toggle"
+                        data-toggle="offcanvas" data-recalc="false"
+                        data-target=".navmenu" data-canvas=".canvas">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <span class="navbar-brand room-name">CSE110</span>
+            </div>
+        </div><!-- end nav -->
+    </nav>
+    <div class="rest container-fluid">
+        <div id="main-content" class="row">
+            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+                <!--end selection-->
+                <div class="selection">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle"
+                                type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-expanded="true">
+                            top 3 questions <i class="fa fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu"
+                            aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1"
+                                                       href="#">top 5
+                                questions</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1"
+                                                       href="#">bottom 3
+                                questions</a></li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1"
+                                                       href="#">bottom 5
+                                questions</a></li>
+                        </ul>
+                    </div><!--end dropdown-->
+                </div><!--end selection-->
+                <div id="top-questions-container"
+                     class="top-questions-container">
+                </div>
+            </div><!--end top-questions-container-->
+        </div><!--end top-questions-section -->
+        <div class="recent-questions-section col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
+            <div class="row">
+                <div class="selection col-md-3 col-sm-3 col-xs-12">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle"
+                                type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-expanded="true">
+                            most recent &nbsp; &nbsp; <i
+                                class="fa fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu"
+                            aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">top
+                                5 questions</a></li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">bottom
+                                3 questions</a></li>
+                            <li role="presentation"><a role="menuitem"
+                                                       tabindex="-1" href="#">bottom
+                                5 questions</a></li>
+                        </ul>
+                    </div><!--end dropdown-->
+                </div><!--end selection-->
+                <div class="search col-md-9 col-sm-9 col-xs-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="search all questions">
+                                          <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    type="button">Go!
+                                            </button>
+                                          </span>
+                    </div><!-- /input-group -->
+                </div><!--end search-->
+            </div><!--end row-->
+            <div id="recent-questions-container"><!--end recent-questions-container-->
+            </div><!--end recent-questions-container-->
+            <form id="add-question"
+                  class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
+                  role="form">
+                <div class="input-group form-group">
+                    <input id="add-question-text" type="text"
+                           class="form-control" placeholder="ask a question!">
+                              <span class="input-group-btn">
+                                <button id="add-question-btn"
+                                        class="btn btn-default" type="submit"><i
+                                        class="fa fa-paper-plane"></i>
+                                </button>
+                              </span>
+                </div>
+                <div class="special-formatting-text" aria-hidden="true">
+                    <b>**bold**</b>
+                    <i>_italics_</i>
+                    <code>`code`</code>
+                    <code class="preformatted">```preformatted```</code>
+                    <span class="quote"> &gt;quote</span>
+                </div><!-- /input-group -->
+            </form><!--end askquestion-->
+        </div><!--end recent questions-->
+    </div><!--end row-->
+</div><!--end rest & container fluid-->
+</div> <!-- end body -->
+<footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+    <script src="/lib/jquery.mixitup.js"></script>
+    <script src="/lib/bootbox.min.js"></script>
+    <script src="/lib/handlebars.js"></script>
+    <script src="/javascripts/view_actions.js"></script>
+    <script src="/javascripts/index.js"></script>
+    <script src="/tpl/templates.js"></script>
+    <script src="/javascripts/plus_minus_form.js"></script>
+</footer>
+</body>
+
+</html>
