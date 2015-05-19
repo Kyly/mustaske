@@ -57,9 +57,11 @@ Questions.prototype.upVoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    var prevScore = question.score;
-    retval = question.upVote(data);
-    this.placeOrRemoveUpvoted(question,prevScore);
+    if(data.voter_id !== question.asker) {
+      var prevScore = question.score;
+      retval = question.upVote(data);
+      this.placeOrRemoveUpvoted(question,prevScore);
+    }
   }
   
   return retval;
@@ -77,9 +79,11 @@ Questions.prototype.downVoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    var prevScore = question.score;
-    retval = question.downVote(data);
-    this.placeOrRemoveUpvoted(question,prevScore);
+    if(data.voter_id !== question.asker) {
+      var prevScore = question.score;
+      retval = question.downVote(data);
+      this.placeOrRemoveUpvoted(question,prevScore);
+    }
   }
   
   return retval;
@@ -106,6 +110,8 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upVotedQuestions.length;
+
+  console.log(this.upVotedQuestions);
 
   return Heap.nlargest(this.upVotedQuestions, n, function (a, b) {
     return a.score - b.score;
@@ -186,17 +192,19 @@ Questions.prototype.warnUser = function(questionID) {
  */
 Questions.prototype.placeOrRemoveUpvoted = function(question,prevScore) {
   //add to upvotedQuestions if question became eligible
-  if(prevScore < 2 && question.score >= 2) {
+  if(prevScore < 1 && question.score >= 1) {
     this.upVotedQuestions.push(question);
   } 
 
   //remove from upvotedQuestions if question no longer eligible
-  if(prevScore >= 2 && question.score < 2) {
+  if(prevScore >= 1 && question.score < 1) {
     var index = this.upVotedQuestions.indexOf(question);
     if (index > -1) {
       this.upVotedQuestions.splice(index, 1);
     }
   }
+
+  console.log(this.upVotedQuestions);
 }
 
 module.exports = Questions;

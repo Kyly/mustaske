@@ -27,7 +27,7 @@ describe('Question', function(){
       expect(q.question_id).to.equal('123456');
       expect(q.asker).to.equal('me');
       expect(q.question_text).to.equal('Some text');
-      expect(q.score).to.equal(1);
+      expect(q.score).to.equal(0);
     })
   })
 
@@ -74,9 +74,9 @@ describe('Question', function(){
       upvotedQUp.upVote({voter_id : 'p2'});
 
       // Assert
-      expect(normalQUp.score).to.equal(2);
-      expect(downvotedQUp.score).to.equal(2);
-      expect(upvotedQUp.score).to.equal(1);
+      expect(normalQUp.score).to.equal(1);
+      expect(downvotedQUp.score).to.equal(1);
+      expect(upvotedQUp.score).to.equal(0);
     })
   })
 
@@ -123,9 +123,9 @@ describe('Question', function(){
       downvotedQDown.downVote({voter_id : 'p2'});
 
       // Assert
-      expect(normalQDown.score).to.equal(0);
-      expect(upvotedQDown.score).to.equal(0);
-      expect(downvotedQDown.score).to.equal(1);
+      expect(normalQDown.score).to.equal(-1);
+      expect(upvotedQDown.score).to.equal(-1);
+      expect(downvotedQDown.score).to.equal(0);
     })
   })
 
