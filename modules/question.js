@@ -6,17 +6,15 @@
  * @param {question_id: String, question_text: String, asker_id: String}
  */
 
-function Question (data) {
-  this.id                 = data.question_id;
-  this.asker              = data.asker_id;
-  this.question           = data.question_text;
-  this.comments           = [];
-  this.voters             = {};
-  this.voters[this.asker] = 1;
-  this.score              = 1;
-  this.time               = new Date().getTime();
+function Question(data) {
+  this.question_id = data.question_id;
+  this.asker = data.asker_id;
+  this.question_text = data.question_text;
+  this.comments = [];
+  this.voters = {};
+  this.score = 0;
+  this.time = new Date().getTime();
 }
-
 
 /**
  * Should increase score of question by one if voter hasn't voted,
@@ -26,31 +24,22 @@ function Question (data) {
  * @param {question_id: String, voter_id: String}
  * @return {question_score: String, question_id: String}
 */
-Question.prototype.upVote = function(data) {
+Question.prototype.upvote = function(data) {
   var voterID = data.voter_id;
-
-  //voter has already voted
-  if (this.voters[voterID] !== undefined) {
-
-    //voter has downvoted
-    if (this.voters[voterID] < 0) {
+  if (this.voters[voterID] !== undefined) {	//voter has already voted
+    if (this.voters[voterID] < 0) { 		    //voter has downvoted
       this.voters[voterID] = 1;
       this.score += 2;
-      return {question_score: this.score, question_id: this.id};
-
-      //voter has upvoted
-    } else {
+    } else {                        		//voter has upvoted
       --(this.score);
       delete this.voters[voterID];
-      return {question_score: this.score, question_id: this.id};
     }
+  } else {                          		//voter hasn't yet voted
+    this.voters[voterID] = 1;
+    ++(this.score);
   }
 
-  //voter hasn't yet voted
-  this.voters[voterID] = 1;
-  ++(this.score);
-
-  return {question_score : this.score, question_id : this.id};
+  return {question_score: this.score, question_id: this.question_id};
 }
 
 
@@ -61,31 +50,23 @@ Question.prototype.upVote = function(data) {
  *
  * @param {voter_id: String, question_id: String}
 */
-Question.prototype.downVote = function(data) {
+Question.prototype.downvote = function(data) {
   var voterID = data.voter_id;
 
-  //voter has already voted
-  if (this.voters[voterID] !== undefined) {
-
-    //voter has upvoted
-    if (this.voters[voterID] > 0) {
+  if (this.voters[voterID] !== undefined) {	//voter has already voted
+    if (this.voters[voterID] > 0) { 		//voter has upvoted
       this.voters[voterID] = -1;
       this.score -= 2;
-      return {question_score : this.score, question_id : this.id};
-
-      //voter has downvoted
-    } else {
+    } else {                        		//voter has downvoted
       ++(this.score);
       delete this.voters[voterID];
-      return {question_score : this.score, question_id : this.id};
     }
+  } else {                          		//voter hasn't yet voted
+    this.voters[voterID] = -1;
+    --(this.score);
   }
 
-  //voter hasn't yet voted
-  this.voters[voterID] = -1;
-  --(this.score);
-
-  return {question_score : this.score, question_id : this.id};
+  return {question_score: this.score, question_id: this.question_id};
 }
 
 module.exports = Question;
