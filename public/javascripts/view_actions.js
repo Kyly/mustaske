@@ -161,8 +161,6 @@ var ViewActions = function () {
    */
   var updateScoreImpl = function(questionInfo) {
 
-    console.log('Update score');
-
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
     question.attr('data-score', score);
@@ -171,27 +169,18 @@ var ViewActions = function () {
 
     // Check if question is up voted
     if (score > BASE_SCORE) {
-
       if (!inTopQuestions(question))
         topQuestionAdded(questionInfo);
-
+      else
+      $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer).removeClass('category-2').addClass('category-1');
     }
-
-    // Remove question from top question has score less than BASE_SCORE
+    // Hide question from top question has score less than BASE_SCORE
     else if (inTopQuestions(question)) {
-      console.log('Trying to remove question.');
-      //var animationType       = 'hinge';
-      var questionInTop = topQuestionsContainer.find(question);
-      questionInTop.remove();
-
-      //questionInTop.addClass("animated " + animationType);
-      //questionInTop.one(
-      //  'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
-      //  , function () { questionInTop.remove() }
-      //);
+      $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer).removeClass('category-1').addClass('category-2');
     }
 
-    // TODO May be a better way to do this
+    //invoke mixItUp to sort the div
+    topQuestionsContainer.mixItUp('filter', '.category-1');
     topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
@@ -211,7 +200,9 @@ var ViewActions = function () {
     var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
     topQuestion.removeClass('recent-question animated pulse');
     topQuestion.addClass('top-question mix');
+    topQuestion.addClass('category-1');
 
+    //invoke mixItUp to sort the div
     topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
     topQuestionsContainer.mixItUp('sort', 'score:desc');
   }

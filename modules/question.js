@@ -26,7 +26,6 @@ function Question(data) {
 */
 Question.prototype.upvote = function(data) {
   var voterID = data.voter_id;
-console.log(voterID + '  well this is ' + this.voters[voterID]);
   if (this.voters[voterID] !== undefined) {	//voter has already voted
     if (this.voters[voterID] < 0) { 		    //voter has downvoted
       this.voters[voterID] = 1;
