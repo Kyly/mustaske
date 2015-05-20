@@ -360,22 +360,25 @@ var ViewActions = function () {
    */
   var thumbsUpOnClickFn = function () {
 
-    var thumbsDown = $('a.thumbs-down-to-active i', $(this).parent());
-    if (thumbsDown.hasClass('clicked'))
-      return;
-
-    var button     = $('i', this);
+    //if (thumbsDown.hasClass('clicked'))
+      //return;
     var roomID     = $('.room-name').attr('data-room-id');
     var questionID = $(this).closest('.q').attr('question_id');
+    var question   = $("[question_id='"+questionID+"']");
+    var thumbsUp   = $('a.thumbs-up-to-active i', question);
+    var thumbsDown = $('a.thumbs-down-to-active i', question);
     var upvoteInfo = {
       room_id     : roomID,
       question_id : questionID
     };
 
-    if (button.hasClass('fa-thumbs-o-up')) {
-      button.removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up clicked');
+    if (thumbsUp.hasClass('fa-thumbs-o-up')) {
+      thumbsUp.removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up clicked');
+      if (thumbsDown.hasClass('clicked')) {
+        thumbsDown.removeClass('fa-thumbs-down clicked').addClass('fa-thumbs-o-down');
+      }
     } else {
-      button.removeClass('fa-thumbs-up clicked').addClass('fa-thumbs-o-up');
+      thumbsUp.removeClass('fa-thumbs-up clicked').addClass('fa-thumbs-o-up');
     }
 
     socket.emit('upvote question', upvoteInfo);
@@ -387,19 +390,22 @@ var ViewActions = function () {
    */
   var thumbsDownOnClickFn = function () {
 
-    var button     = $('i', this);
     var roomID     = $('.room-name').attr('data-room-id');
     var questionID = $(this).closest('.q').attr('question_id');
-    var thumbsUp   = $('a.thumbs-up-to-active i', $(this).parent());
+    var question   = $("[question_id='"+questionID+"']");
+    var thumbsDown = $('a.thumbs-down-to-active i', question);
+    var thumbsUp   = $('a.thumbs-up-to-active i', question);
 
-    if (thumbsUp.hasClass('clicked'))
-      return;
+    //if (thumbsUp.hasClass('clicked'))
+      //return;
 
-
-    if (button.hasClass('fa-thumbs-o-down')) {
-      button.removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down clicked');
+    if (thumbsDown.hasClass('fa-thumbs-o-down')) {
+      thumbsDown.removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down clicked');
+      if (thumbsUp.hasClass('clicked')) {
+        thumbsUp.removeClass('fa-thumbs-up clicked').addClass('fa-thumbs-o-up');
+      }
     } else {
-      button.removeClass('fa-thumbs-down clicked').addClass('fa-thumbs-o-down');
+      thumbsDown.removeClass('fa-thumbs-down clicked').addClass('fa-thumbs-o-down');
     }
 
     var downvoteInfo = { // TODO: Implement
