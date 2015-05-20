@@ -61,11 +61,11 @@ Questions.prototype.upvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.upvote(data);
       this.placeOrRemoveupvoted(question,prevScore);
-    }
+    //}
   }
 
   return retval;
@@ -83,13 +83,14 @@ Questions.prototype.downvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    if(data.voter_id !== question.asker) {
+    //if(data.voter_id !== question.asker) {
       var prevScore = question.score;
       retval = question.downvote(data);
       this.placeOrRemoveupvoted(question,prevScore);
+    //}
+    //  retval = question.downvote(data);
+    //  this.placeOrRemoveupvoted(question,prevScore);
     }
-  }
-
   return retval;
 }
 
@@ -205,7 +206,6 @@ Questions.prototype.placeOrRemoveupvoted = function(question,prevScore) {
       this.upvotedQuestions.splice(index, 1);
     }
   }
-
 }
 
 module.exports = Questions;

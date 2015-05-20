@@ -26,9 +26,9 @@ function Question(data) {
 */
 Question.prototype.upvote = function(data) {
   var voterID = data.voter_id;
-
+console.log(voterID + '  well this is ' + this.voters[voterID]);
   if (this.voters[voterID] !== undefined) {	//voter has already voted
-    if (this.voters[voterID] < 0) { 		//voter has downvoted
+    if (this.voters[voterID] < 0) { 		    //voter has downvoted
       this.voters[voterID] = 1;
       this.score += 2;
     } else {                        		//voter has upvoted
@@ -36,8 +36,8 @@ Question.prototype.upvote = function(data) {
       delete this.voters[voterID];
     }
   } else {                          		//voter hasn't yet voted
-	this.voters[voterID] = 1;
-	++(this.score);
+    this.voters[voterID] = 1;
+    ++(this.score);
   }
 
   return {question_score: this.score, question_id: this.question_id};
@@ -63,8 +63,8 @@ Question.prototype.downvote = function(data) {
       delete this.voters[voterID];
     }
   } else {                          		//voter hasn't yet voted
-	this.voters[voterID] = -1;
-	--(this.score);
+    this.voters[voterID] = -1;
+    --(this.score);
   }
 
   return {question_score: this.score, question_id: this.question_id};
