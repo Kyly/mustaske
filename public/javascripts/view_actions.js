@@ -231,8 +231,15 @@ var ViewActions = function () {
      * Action search callback
      */
     var searchRecentQuestions = function (event) {
-      var term = $(this).val();
+      var term = $('#search-question-text').val();
       var recentQuestion = $('.recent-question');
+
+      if (term === '') {
+        recentQuestion.show();
+        event.preventDefault();
+        return;
+      }
+
       recentQuestion.hide();
       recentQuestion.each(function(){
         if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
