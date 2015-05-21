@@ -57,9 +57,6 @@
         </div>
     </div>
 </div> <!--end login overlay-->
-    
-    
-    
 <div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
@@ -113,9 +110,7 @@
         </li>
     </ul>
 </div><!-- end Offcanvas menu -->
-    
-    
-    <div class="canvas"><!-- Control for offcanvas -->
+<div class="canvas"><!-- Control for offcanvas -->
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header mobile-toggle">
@@ -186,7 +181,7 @@
                         </ul>
                     </div><!--end dropdown-->
                 </div><!--end selection-->
-                <div class="search col-md-9 col-sm-9 col-xs-12">
+                <form id="search-questions" class="search col-md-9 col-sm-9 col-xs-12">
                     <div class="input-group">
                         <input type="text" class="form-control"
                                placeholder="search all questions">
@@ -196,7 +191,7 @@
                                             </button>
                                           </span>
                     </div><!-- /input-group -->
-                </div><!--end search-->
+                </form><!--end search-->
             </div><!--end row-->
             <div id="recent-questions-container"><!--end recent-questions-container-->
             </div><!--end recent-questions-container-->
@@ -205,7 +200,8 @@
                   role="form">
                 <div class="input-group form-group">
                     <input id="add-question-text" type="text"
-                           class="form-control" placeholder="ask a question!">
+                           class="form-control" placeholder="ask a question!"
+                           maxlength="300">
                               <span class="input-group-btn">
                                 <button id="add-question-btn"
                                         class="btn btn-default" type="submit"><i

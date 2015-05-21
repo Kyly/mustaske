@@ -14,9 +14,10 @@ var ViewActions = function () {
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
-  var topQuestionsContainer = $('#top-questions-container');
-  var MAX_TOP_QUESTIONS     = 5;
-  var BASE_SCORE            = 0;
+  var topQuestionsContainer    = $('#top-questions-container');
+  var recentQuestionsContainer = $('#recent-questions-container');
+  var MAX_TOP_QUESTIONS        = 5;
+  var BASE_SCORE               = 0;
 
   /**
    * Enter the room as an owner
@@ -220,10 +221,27 @@ var ViewActions = function () {
     //  $('.top-question:last').remove();
   }
 
+
+
   var setupUIImpl = function () {
 
     var body = $('body');
 
+    /**
+     * Action search callback
+     */
+    var searchRecentQuestions = function (event) {
+      var term = $(this).val();
+      var recentQuestion = $('.recent-question');
+      recentQuestion.hide();
+      recentQuestion.each(function(){
+        if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
+          $(this).show();
+        }
+      });
+      event.preventDefault();
+
+    }
 
     /**
      * Callback for add question button
@@ -291,7 +309,7 @@ var ViewActions = function () {
 
 
     $('#join-create-room .btn').click(joinMakeOnClickFn);
-
+    $('#search-questions').submit(searchRecentQuestions);
     $('#add-question').submit(addQuestionOnClickFn);
 
     body.on('click', 'a.thumbs-up-to-active', thumbsUpOnClickFn);

@@ -130,6 +130,10 @@ p, a, li, select, input {
     display: none;
 }
 
+.question-content {
+    word-wrap: break-word;
+}
+
 .top-question {
     margin-bottom: 1.5em;
     background-color: #ffffff;
