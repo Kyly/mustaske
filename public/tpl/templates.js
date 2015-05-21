@@ -71,6 +71,42 @@ var topQuestionHtml =
   + '   <!--end commentSection-->'
   + '</div>';
 
+
+
+
+var topQuestionHtmlOwner =
+    '<div question_id=\"{{question_id}}\" class=\"q {{class}}\" data-score=\"{{question_score}}\">'
+  + '   <!--end topquestion_section-->'
+  + '   <div class=\"question-content\">'
+  + '       <p>{{{question_text}}}</p><br>'
+  + ''
+  + '       <div class=\"row question-controls\">'
+  + '           <p class=\"num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1\">'
+  + '               {{question_score}}</p>'
+  + '           <a href=\"#\" class=\"warn-user\"><img'
+  + '                   src=\"/images/people.png\"'
+  + '                   class=\"col-md-offset-6 col-sm-offset-3 col-xs-offset-7 col-md-1 col-sm-1 col-xs-2 warn-user-pic\"></a>'
+  + '           <a href=\"#\" class=\"dismiss-question\"><img'
+  + '                   src=\"/images/trash.png\"'
+  + '                   class=\"col-md-1 col-sm-2 col-xs-2 col-lg-1 dismiss-question-pic \"></a>'
+  + '       </div>'
+  + '   </div>'
+  + ''
+  + '   <div class="comment-section">'
+  + '       <a href="#" class="more">view more comments</a>'
+  + ''
+  + '       <p>Go back and take CSE 12 with Gary!</p>'
+  + ''
+  + '       <p> ^^^ I agree...Gary is the best!</p>'
+  + ''
+  + '       <p>If it wasn\'t for Gary, I wouldn\'t even know what a'
+  + '           variable is...</p>'
+  + '       <input type="text" class="form-control"'
+  + '              placeholder="write a comment...">'
+  + '   </div>'
+  + '   <!--end commentSection-->'
+  + '</div>';
+
 //TODO var question_comment_format =
 var recentQuestionTpl = Handlebars.compile(topQuestionHtml);
 var topQuestionTpl    = Handlebars.compile(topQuestionHtml);

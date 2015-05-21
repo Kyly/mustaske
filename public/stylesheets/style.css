@@ -130,6 +130,10 @@ p, a, li, select, input {
     display: none;
 }
 
+.question-content {
+    word-wrap: break-word;
+}
+
 .top-question {
     margin-bottom: 1.5em;
     background-color: #ffffff;
@@ -283,6 +287,21 @@ hr {
 
 .num-votes, .num-comments {
     font-weight: 400;
+}
+
+
+.owner .num-votes {
+    background-color: #D1D1D1;
+    padding:5px;
+}
+
+.owner .warn-user-pic, .owner .dismiss-question-pic{
+
+    padding-left: 0px;
+
+    height: 1.7em;
+    width: 2.8em;
+ 
 }
 
 /*.askQuestion .form-control{

@@ -56,7 +56,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> <!--end login overlay-->
 <div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
@@ -132,7 +132,7 @@
                         <button class="btn btn-default dropdown-toggle"
                                 type="button" id="dropdownMenu1"
                                 data-toggle="dropdown" aria-expanded="true">
-                            top 3 questions <i class="fa fa-chevron-down"></i>
+                            top 4 questions <i class="fa fa-chevron-down"></i>
                         </button>
                         <ul class="dropdown-menu" role="menu"
                             aria-labelledby="dropdownMenu1">
@@ -181,17 +181,18 @@
                         </ul>
                     </div><!--end dropdown-->
                 </div><!--end selection-->
-                <div class="search col-md-9 col-sm-9 col-xs-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control"
+                <form id="search-questions" class="search col-md-9 col-sm-9 col-xs-12">
+                    <div class="input-group form-group">
+                        <input id="search-question-text" type="text"
+                               class="form-control"
                                placeholder="search all questions">
                                           <span class="input-group-btn">
                                             <button class="btn btn-default"
-                                                    type="button">Go!
+                                                    type="submit">Go!
                                             </button>
                                           </span>
                     </div><!-- /input-group -->
-                </div><!--end search-->
+                </form><!--end search-->
             </div><!--end row-->
             <div id="recent-questions-container"><!--end recent-questions-container-->
             </div><!--end recent-questions-container-->
@@ -200,7 +201,8 @@
                   role="form">
                 <div class="input-group form-group">
                     <input id="add-question-text" type="text"
-                           class="form-control" placeholder="ask a question!">
+                           class="form-control" placeholder="ask a question!"
+                           maxlength="300">
                               <span class="input-group-btn">
                                 <button id="add-question-btn"
                                         class="btn btn-default" type="submit"><i
@@ -218,8 +220,11 @@
             </form><!--end askquestion-->
         </div><!--end recent questions-->
     </div><!--end row-->
-</div><!--end rest & container fluid-->
-</div> <!-- end body -->
+</div><!--end canvas & container fluid-->
+    
+
+    
+    
 <footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/lib/jquery.min.js"></script>
