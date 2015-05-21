@@ -73,6 +73,11 @@
 </tr>
 <tr>
 	<td>click</td>
+	<td>//div[@id='recent-questions-container']/div[2]/div/div/a[2]/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
 	<td>id=add-question-btn</td>
 	<td></td>
 </tr>
