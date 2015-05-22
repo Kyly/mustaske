@@ -171,7 +171,7 @@ describe('Rooms', function(){
       assert(true);
     })
   })
-  describe('#upVoteQuestion()', function(){
+  describe('#upvoteQuestion()', function(){
     it('Checks lower layer function call.', function(){
       // Set
       var rooms = new Rooms();
@@ -185,7 +185,7 @@ describe('Rooms', function(){
       assert(true);
     })
   })
-  describe('#downVoteQuestion()', function(){
+  describe('#downvoteQuestion()', function(){
     it('Checks lower layer function call.', function(){
       // Set
       var rooms = new Rooms();

@@ -121,7 +121,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    */
   Controller.prototype.downvoteQuestion = function(io, socket, data) {
     var questionData = {room_id: data.room_id, question_id: data.question_id, voter_id: socket.id};
-    var returnData = this.rooms(questionData);
+    var returnData = this.rooms.downvoteQuestion(questionData);
     io.sockets.in(data.room_id).emit('downvote question', returnData);
   }
 
@@ -167,7 +167,7 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     var warnData = {owner_id: socket.id, question_id: data.question_id,
       room_id: data.room_id};
     var returnData = this.rooms.warnUser(warnData);
-    io.sockets.in(roomID).emit('warn user', returnData);
+    io.sockets.in(data.room_id).emit('warn user', returnData);
   }
 
 

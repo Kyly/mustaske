@@ -70,7 +70,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('upvote question', function(questionId) {
-    controller.upVoteQuestion(io, socket, questionId);
+    controller.upvoteQuestion(io, socket, questionId);
   });
 
   socket.on('downvote question', function(questionId) {
@@ -87,6 +87,10 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('all questions', function() {
     controller.allQuestions(socket);
+  });
+
+  socket.on('warn user', function(questionInfo) {
+    controller.warnUser(io, socket, questionInfo);
   });
 
 });

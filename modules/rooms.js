@@ -5,7 +5,7 @@
 
 var Questions = require('./questions');
 var Room = require('./room');
-var rid = require('readable-id');
+var hri = require('human-readable-ids').hri;
 
 function Rooms() {
   this.rooms = {};  // Hash containing room objects
@@ -20,11 +20,11 @@ function Rooms() {
  */
 Rooms.prototype.createRoom = function (data) {
 
-  var uniqueID = rid();
+  var uniqueID = hri.random();
 
   //make sure uniqueID is unique
   while (this.hasRoom(uniqueID))
-    uniqueID = rid();
+    uniqueID = hri.random();
 
   //create new room and add it to rooms
   this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
@@ -51,8 +51,10 @@ Rooms.prototype.joinRoom = function (roomID) {
   var room = this.rooms[roomID];
   var roomData = {
     room_name: room.name, room_id: room.id,
-    questions: room.getQuestions(), top_questions: room.getTopVoted(5)
+    questions: room.getQuestions(),
+    top_questions: room.getTopVoted(5)
   };
+
   return roomData;
 }
 
@@ -184,23 +186,23 @@ Rooms.prototype.getTopVoted = function (data) {
  *
  * @param data = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.upVoteQuestion = function (data) {
+Rooms.prototype.upvoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].upVoteQuestion(data);
+  return this.rooms[data.room_id].upvoteQuestion(data);
 }
 
 /**
  * @paramd ata = {room_id: String, question_id: String, voter_id: String}
  */
-Rooms.prototype.downVoteQuestion = function (data) {
+Rooms.prototype.downvoteQuestion = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].downVoteQuestion(data);
+  return this.rooms[data.room_id].downvoteQuestion(data);
 }
 
 module.exports = Rooms;
