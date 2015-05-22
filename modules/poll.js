@@ -8,11 +8,11 @@
  */
 
 function Poll(data) {
-  this.active = false;
-  this.results = {};
-  this.voters = {};
+  this.active     = false;
+  this.results    = {};
+  this.voters     = {};
   this.totalVotes = 0;
-  this.pollID = data.poll_id
+  this.pollID     = data.poll_id
   this.numOptions = data.num_options;
 }
 

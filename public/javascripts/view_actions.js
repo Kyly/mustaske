@@ -260,7 +260,7 @@ var ViewActions = function () {
       var questionText = textBox.val();
       var data = {
         question_text: questionText,
-        room_id: $('.room-name').attr('data-room-id')
+        room_id: $('.room-name').data('room-id')
       };
 
       socket.emit('new question', data);
@@ -457,7 +457,24 @@ var ViewActions = function () {
     if (questionInfo.class.indexOf('top-question') > 0) {
       topQuestionsContainer.mixItUp('append', question, {sort:'score:desc'});
     }
-
+  }
+  /**
+   * Sends out user vote for the poll.
+   * TODO: find out which vote button user clicked
+   */
+  var votePollImpl = function () {
+    data = {
+      room_id: $('.room-name').data('room-id'),
+      option: 'fubar'
+    };
+    socket.emit('vote poll', data);
+  }
+  /**
+   * Updates the poll results graph
+   * TODO: update the graph
+   */
+  var updatePollScoreImpl = function () {
+    console.log('it worked!');
   }
 
 
@@ -473,6 +490,8 @@ var ViewActions = function () {
     questionDismissed: questionDismissedImpl,
     userWarned: userWarnedImpl,
     questionAdded: questionAddedImpl,
-    setupUI: setupUIImpl
+    setupUI: setupUIImpl,
+    votePoll: votePollImpl,
+    updatePollScore: updatePollScoreImpl
   }
 }();

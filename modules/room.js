@@ -3,11 +3,13 @@
  */
 
 var Questions = require('./questions');
+var Poll = require('./poll')
 
 function Room (data) {
   this.id             = data.room_id; //String
   this.name           = data.room_name; //String
   this.questions      = new Questions(); //questions object
+  this.poll           = new Poll({num_options: 0, poll_id: 'foo'});
   this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
@@ -156,6 +158,17 @@ Room.prototype.deleteQuestion = function(data) {
   }
   else
     return false;
+}
+
+/**
+ * Sends necessary info down the chain to vote() in poll. Returns
+ * proper data to controller.js.
+ *
+ * @param {voter_id: String, option: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ */
+Room.prototype.vote = function(data) {
+  return this.poll.vote({voter_id: data.voter_id, option: data.option})
 }
 
 module.exports = Room;

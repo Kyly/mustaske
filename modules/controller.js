@@ -170,5 +170,18 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     io.sockets.in(data.room_id).emit('warn user', returnData);
   }
 
+  /**
+   * This handles voting on option in the poll
+   * @param socket : Socket IO object
+   * @param data = {room_id: String, option: String, voter_id: String}
+   */
+  Controller.prototype.votePoll = function(io, socket, data) {
+    var voteData = {room_id: data.room_id, option: data.option, voter_id: socket.id};
+    var returnData = this.rooms.vote({room_id: data.room_id, option: data.option, voter_id: socket.id});
+
+    if (returnData.prev_vote !== returnData.cur_vote)
+      io.sockets.in(data.room_id).emit('vote poll', returnData);
+  }
+
 
 module.exports = Controller;

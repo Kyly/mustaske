@@ -99,7 +99,7 @@ Rooms.prototype.isOwner = function(data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, owner_id: String, question_id: String}
  * @return {user_banned: Bool, question_id: String}
@@ -113,7 +113,7 @@ Rooms.prototype.warnUser = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, user_id: String}
  * @return true if user succesfully banned
@@ -127,7 +127,7 @@ Rooms.prototype.banUser = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, user_id: String}
  * @return true if user is banned
@@ -141,7 +141,7 @@ Rooms.prototype.isBanned = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, question_text: String, asker_id: String}
  * @return newly created quesiton object
@@ -155,7 +155,7 @@ Rooms.prototype.addQuestion = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, question_id: String, owner_id: String}
  * @return true if succesfully deleted, else false
@@ -169,7 +169,7 @@ Rooms.prototype.deleteQuestion = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, num_questions: int}
  * @return list of room objects
@@ -204,5 +204,20 @@ Rooms.prototype.downvoteQuestion = function (data) {
 
   return this.rooms[data.room_id].downvoteQuestion(data);
 }
+
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param {room_id: String, voter_id: String, option: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ */
+Rooms.prototype.vote = function(data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    return false;
+
+  return this.rooms[data.room_id].vote({voter_id: data.voter_id, option: data.option})
+}
+
 
 module.exports = Rooms;

@@ -13,5 +13,5 @@ $(document).ready(function () {
   socket.on('dismiss question', ViewActions.questionDismissed);
   socket.on('warn user', ViewActions.userWarned);
   socket.on('top questions', ViewActions.updateTopQuestionThreshold);
-
+  socket.on('vote poll', ViewActions.updatePollScore);
 });
