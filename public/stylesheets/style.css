@@ -246,13 +246,13 @@ hr {
     outline: none;
 }
 
-#show-graph-btn.owner {
-    visibility: visible;
-}
+/*#show-graph-btn.owner {*/
+    /*visibility: visible;*/
+/*}*/
 
-#show-graph-btn {
-    visibility: hidden;
-}
+/*#show-graph-btn {*/
+    /*visibility: hidden;*/
+/*}*/
 
 .nav span.fa {
     font-size: 1.3em;

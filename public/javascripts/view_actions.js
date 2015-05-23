@@ -7,7 +7,6 @@
  * the DOM. Additionally, all globals for DOM functions
  * are encapsulated here.
  */
-
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
@@ -34,7 +33,7 @@ var ViewActions = function () {
         display: 'block'
       },
       callbacks: {
-        onMixEnd: checkMaxQuesitons
+        onMixEnd: checkMaxQuestions
       }
     });
   };
@@ -65,7 +64,7 @@ var ViewActions = function () {
       roomData.data('owner', true);
       $('.drop-down-room-id').text(roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
-      $('#show-graph-btn').addClass('owner');
+      $('#show-graph-btn').removeClass('hidden').addClass('show');
       console.log('Room Id: ' + roomInfo.room_id);
     }
   }
@@ -80,7 +79,6 @@ var ViewActions = function () {
     if (!roomInfo) {
       $('#room-name-field').addClass('has-error');
     }
-
     else {
       var overlay = $('.login-overlay');
       $('#room-name-field').removeClass('has-error');
@@ -103,8 +101,6 @@ var ViewActions = function () {
 
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
-    console.log(topQuestions);
-    console.log(questions);
 
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
@@ -129,7 +125,8 @@ var ViewActions = function () {
    */
   var showHomeScreenImpl = function () {
     // TODO
-    $(".login-overlay").removeClass('animated slideOutUp')
+    $(".login-overlay")
+      .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
   }
 
@@ -204,7 +201,6 @@ var ViewActions = function () {
 
   /**
    * Returns true if question is in top questions.
-   *
    * @param question jQuery Object
    */
   var inTopQuestions = function (question) {
@@ -227,7 +223,7 @@ var ViewActions = function () {
    * @param state State Object from MixItUp
    * @see https://mixitup.kunkalabs.com/docs/#state-object
    */
-  var checkMaxQuesitons = function(state) {
+  var checkMaxQuestions = function(state) {
     //var count = state.totalShow;
     //
     //for (; count > MAX_TOP_QUESTIONS; --count)
