@@ -5,7 +5,7 @@
 
 var Questions = require('./questions');
 var Room = require('./room');
-var rid = require('readable-id');
+var hri = require('human-readable-ids').hri;
 
 function Rooms() {
   this.rooms = {};  // Hash containing room objects
@@ -20,11 +20,11 @@ function Rooms() {
  */
 Rooms.prototype.createRoom = function (data) {
 
-  var uniqueID = rid();
+  var uniqueID = hri.random();
 
   //make sure uniqueID is unique
   while (this.hasRoom(uniqueID))
-    uniqueID = rid();
+    uniqueID = hri.random();
 
   //create new room and add it to rooms
   this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
