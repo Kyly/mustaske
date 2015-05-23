@@ -236,6 +236,46 @@ hr {
     border-radius: 0;
 }
 
+.navbar a {
+    color: #ffffff;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav>li>a:focus,
+.nav>li>a:hover {
+    background-color: #226a95;
+    outline: none;
+}
+
+/*#show-graph-btn.owner {*/
+    /*visibility: visible;*/
+/*}*/
+
+/*#show-graph-btn {*/
+    /*visibility: hidden;*/
+/*}*/
+
+.nav span.fa {
+    font-size: 1.3em;
+}
+
+nav .room-controls .dropdown-menu {
+    color: #bebebe;
+}
+
+.dropdown-menu>li>span {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #414141;
+    white-space: nowrap;
+}
+
+.room-id-label {
+
+}
+
 .vcenter {
     position: relative;
     top: 50%;
@@ -303,6 +343,17 @@ hr {
     width: 2.8em;
  
 }
+
+/*.modal-dialog,*/
+/*.modal-content {*/
+    /* 80% of window height */
+    /*height: 80% !important;*/
+/*}*/
+
+/*.modal-body {*/
+    /* 100% = dialog height, 120px = header + footer */
+    /*max-height: calc(100% - 120px);*/
+/*}*/
 
 /*.askQuestion .form-control{
 	width:80%;
