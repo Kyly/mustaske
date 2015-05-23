@@ -4,16 +4,14 @@
  *
  * Author: Daniel Lee & Nick Gibson
  *
- * @param {num_options: int, poll_id: String}
+ * @param none
  */
 
-function Poll(data) {
+function Poll() {
   this.active     = false;
   this.results    = {};
   this.voters     = {};
   this.totalVotes = 0;
-  this.pollID     = data.poll_id
-  this.numOptions = data.num_options;
 }
 
 /**
@@ -73,10 +71,10 @@ Poll.prototype.vote = function(data) {
  * Return the results hashtable
  *
  * @param none
- * @return {poll_id: String, results: HashTable}
+ * @return Hash
  */
 Poll.prototype.getResults = function() {
-  return {poll_id: this.pollID, results: this.results};
+  return this.results;
 }
 
 module.exports = Poll;
