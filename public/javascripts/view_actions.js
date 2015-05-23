@@ -10,16 +10,44 @@
 
 var ViewActions = function () {
 
+  var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
+      BASE_SCORE, roomData, graph;
+
   /**
    * Sets up the initial state of the page. When this function returns, the page
    * should be ready for the user
    */
-  var topQuestionsContainer    = $('#top-questions-container');
-  var recentQuestionsContainer = $('#recent-questions-container');
-  var MAX_TOP_QUESTIONS        = 5;
-  var BASE_SCORE               = 0;
-  var roomData                 = $('.room-name');
-  var graph;
+  var setupUIImpl = function () {
+
+    topQuestionsContainer    = $('#top-questions-container');
+    recentQuestionsContainer = $('#recent-questions-container');
+    MAX_TOP_QUESTIONS        = 5;
+    BASE_SCORE               = 0;
+    roomData                 = $('.room-name');
+
+    /**
+     * Set up sorted container for top questions.
+     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
+     */
+    topQuestionsContainer.mixItUp({
+      layout: {
+        display: 'block'
+      },
+      callbacks: {
+        onMixEnd: checkMaxQuesitons
+      }
+    });
+  };
+
+  /**
+   * Actions for building graph in modal.
+   * @see http://getbootstrap.com/javascript/#modals
+   */
+  var initializeGraphImpl = function (event) {
+    var modal = $(this);
+    var canvas = modal.find('#pull-graph').get(0).getContext("2d");
+    graph = new Graph(canvas);
+  }
 
   /**
    * Enter the room as an owner
@@ -206,105 +234,71 @@ var ViewActions = function () {
     //  $('.top-question:last').remove();
   }
 
-  var setupUIImpl = function () {
+  /**
+   * Search callback
+   */
+  var searchRecentQuestionsImpl = function (event) {
+    var term = $('#search-question-text').val();
+    var recentQuestion = $('.recent-question');
 
-    var body = $('body');
-
-    /**
-     * Search callback
-     */
-    var searchRecentQuestions = function (event) {
-      var term = $('#search-question-text').val();
-      var recentQuestion = $('.recent-question');
-
-      if (term === '') {
-        recentQuestion.show();
-        event.preventDefault();
-        return;
-      }
-
-      recentQuestion.hide();
-      recentQuestion.each(function(){
-        if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
-          $(this).show();
-        }
-      });
+    if (term === '') {
+      recentQuestion.show();
       event.preventDefault();
-
+      return;
     }
 
-    /**
-     * Callback for add question button
-     */
-    var addQuestionOnClickFn = function (event) {
-      var textBox = $('#add-question-text');
-      var questionText = textBox.val();
+    recentQuestion.hide();
+    recentQuestion.each(function(){
+      if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
+        $(this).show();
+      }
+    });
+    event.preventDefault();
+
+  }
+
+  /**
+   * Callback for add question button
+   */
+  var addQuestionOnClickImpl = function (event) {
+    var textBox = $('#add-question-text');
+    var questionText = textBox.val();
+    var data = {
+      question_text: questionText,
+      room_id: $('.room-name').data('room-id')
+    };
+    socket.emit('new question', data);
+    textBox.val('');
+    event.preventDefault();
+  }
+
+  /**
+   * Callback for the home screen join and make buttons
+   */
+  var joinMakeOnClickImpl = function () {
+    var textBox = $('#room-name-field input');
+    var roomName = textBox.val();
+    if (roomName === '') { // TODO: Validation
+      $('#room-name-field').addClass('has-error');
+    }
+    else {
       var data = {
-        question_text: questionText,
-        room_id: $('.room-name').data('room-id')
+        option: $(this).text().toLowerCase().trim(),
+        room_name: textBox.val()
       };
-      socket.emit('new question', data);
-      textBox.val('');
-      event.preventDefault();
-    }
 
-    /**
-     * Callback for the home screen join and make buttons
-     */
-    var joinMakeOnClickFn = function () {
-      var textBox = $('#room-name-field input');
-      var roomName = textBox.val();
-      if (roomName === '') { // TODO: Validation
-        $('#room-name-field').addClass('has-error');
-      }
-      else {
-        var data = {
-          option: $(this).text().toLowerCase().trim(),
-          room_name: textBox.val()
-        };
-
-        switch (data.option) {
-          case 'make':
-            console.log('Creating new room.');
-            socket.emit('create room', data.room_name);
-            break;
-          case 'join':
-            console.log('Joining room.');
-            socket.emit('join room', data.room_name);
-            break;
-        }
+      switch (data.option) {
+        case 'make':
+          console.log('Creating new room.');
+          socket.emit('create room', data.room_name);
+          break;
+        case 'join':
+          console.log('Joining room.');
+          socket.emit('join room', data.room_name);
+          break;
       }
     }
-
-    /**
-     * Set up sorted container for top questions.
-     * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
-     */
-    topQuestionsContainer.mixItUp({
-      layout: {
-        display: 'block'
-      },
-      callbacks: {
-        onMixEnd: checkMaxQuesitons
-      }
-    });
-
-    $('#join-create-room .btn').click(joinMakeOnClickFn);
-    $('#search-questions').submit(searchRecentQuestions);
-    $('#add-question').submit(addQuestionOnClickFn);
-    body.on('click', 'a.thumbs-up-to-active', thumbsUpOnClickFn);
-    body.on('click', 'a.thumbs-down-to-active', thumbsDownOnClickFn);
-
-    /**
-     * Actions for building graph in modal.
-     * @see http://getbootstrap.com/javascript/#modals
-     */
-    $('#graph-modal').one('shown.bs.modal', function (event) {
-      var modal  = $(this);
-      var canvas = modal.find('#pull-graph').get(0).getContext("2d");
-      graph = new Graph(canvas);
-    });
-  };
+  }
 
   /**
    * Update a field of the graph. Pass it the index of the sum of votes
@@ -361,7 +355,7 @@ var ViewActions = function () {
   /**
    * Callback for the upvote button
    */
-  var thumbsUpOnClickFn = function () {
+  var thumbsUpOnClickImpl = function () {
     var roomID     = roomData.data('room-id');
     var questionID = $(this).closest('.q').attr('question_id');
     var question   = $("[question_id='"+questionID+"']");
@@ -388,7 +382,7 @@ var ViewActions = function () {
   /**
    * Callback for the downvote button
    */
-  var thumbsDownOnClickFn = function () {
+  var thumbsDownOnClickImpl = function () {
 
     var roomID     = roomData.data('room-id');
     var questionID = $(this).closest('.q').attr('question_id');
@@ -448,15 +442,21 @@ var ViewActions = function () {
 
 
   return {
-    updateGraph: updateGraphImpl,
-    enterRoomOwner: enterRoomOwnerImpl,
-    enterRoom: enterRoomImpl,
-    showHomeScreen: showHomeScreenImpl,
-    updateTopQuestionThreshold: updateTopQuestionThresholdImpl,
-    updateScore: updateScoreImpl,
-    questionDismissed: questionDismissedImpl,
-    userWarned: userWarnedImpl,
-    questionAdded: questionAddedImpl,
-    setupUI: setupUIImpl
+    initializeGraph            : initializeGraphImpl,
+    thumbsDownOnClick          : thumbsDownOnClickImpl,
+    thumbsUpOnClick            : thumbsUpOnClickImpl,
+    joinMakeOnClick            : joinMakeOnClickImpl,
+    addQuestionOnClick         : addQuestionOnClickImpl,
+    searchRecentQuestions      : searchRecentQuestionsImpl,
+    updateGraph                : updateGraphImpl,
+    enterRoomOwner             : enterRoomOwnerImpl,
+    enterRoom                  : enterRoomImpl,
+    showHomeScreen             : showHomeScreenImpl,
+    updateTopQuestionThreshold : updateTopQuestionThresholdImpl,
+    updateScore                : updateScoreImpl,
+    questionDismissed          : questionDismissedImpl,
+    userWarned                 : userWarnedImpl,
+    questionAdded              : questionAddedImpl,
+    setupUI                    : setupUIImpl
   }
 }();
