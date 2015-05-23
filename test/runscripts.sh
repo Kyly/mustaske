@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-TESTS="selenium_src/*.py"
-
+TESTS="test/selenium_src/*.py"
+FILE="test/selenium_src/test_front.log"
 # Clear prevous log
-rm -rf test_front.log
+rm -rf $FILE
+
+echo "Results are logged to $FILE"
 
 # Run all python files in selenium
 for file in $TESTS
 do
-  echo "Running $file:" >> test_front.log
-  python $file 2>&1 | tee -a test_front.log
+  echo "Running $file:" >> $FILE
+  python $file 2>&1 | tee -a $FILE
 done
