@@ -9,7 +9,7 @@ function Room (data) {
   this.id             = data.room_id; //String
   this.name           = data.room_name; //String
   this.questions      = new Questions(); //questions object
-  this.poll           = new Poll({num_options: 0, poll_id: 'foo'});
+  this.poll           = false;
   this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
@@ -168,7 +168,7 @@ Room.prototype.deleteQuestion = function(data) {
  * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
  */
 Room.prototype.vote = function(data) {
-  if(!this.poll.active)
+  if(this.poll === false)
     return false;
 
   return this.poll.vote({voter_id: data.voter_id, option: data.option})
@@ -181,7 +181,22 @@ Room.prototype.vote = function(data) {
  * @return {starting: Boolean, stopping: Boolean}
  */
 Room.prototype.setActive = function(active) {
-  return this.poll.setActive(active);
+  if (active){
+    if (this.poll === false){
+      this.poll = new Poll();
+      return {changed: true, active: true};
+    }
+    else {
+      return {changed: false, active: true};
+    }
+  }
+  if (this.poll !== false) {
+    delete this.poll;
+    this.poll = false;
+    return {changed: true, active: false};
+  }
+  else
+    return {changed: false, active: false};
 }
 
 module.exports = Room;

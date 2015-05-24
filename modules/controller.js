@@ -192,8 +192,9 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     var activeData = {room_id: data.room_id, user_id: socket.id, active: data.active};
     var returnData = this.rooms.setActive(activeData);
 
-    if (returnData != false) { //poll active state has changed
-      if (returnData.starting)
+    console.log(returnData);
+    if (returnData.changed) { //poll active state has changed
+      if (returnData.active)
         io.sockets.in(data.room_id).emit('start poll');
       else //stopping
         io.sockets.in(data.room_id).emit('stop poll');
