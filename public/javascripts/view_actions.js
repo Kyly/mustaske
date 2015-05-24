@@ -467,6 +467,7 @@ var ViewActions = function () {
    * Sets poll to active
    */
   var clickStartPollImpl = function () {
+    graph.clearData();
     var data = {
       room_id: $('.room-name').data('room-id'),
       active: true
