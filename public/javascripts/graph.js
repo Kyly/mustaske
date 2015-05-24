@@ -40,7 +40,14 @@ Graph.prototype.updateData = function (data) {
   for (var key in data) {
     this.updateValue(key, data[key]);
   }
-  //$.each(data, _this.updateValue);
+}
+
+Graph.prototype.clearData = function () {
+  var bars = this.graph.datasets[0].bars;
+  for (var bar in bars) {
+    bars[bar].value = 0;
+  }
+  this.update();
 }
 
 Graph.prototype.updateValue = function (key, value) {
