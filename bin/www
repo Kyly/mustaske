@@ -97,6 +97,11 @@ io.sockets.on('connection', function (socket) {
     controller.votePoll(io, socket, voteInfo);
   });
 
+  socket.on('set active poll', function(activeInfo) {
+    console.log("I am here!!!!!!!!!!!!");
+    controller.setActivePoll(io, socket, activeInfo);
+  });
+
 });
 
 /**

@@ -219,5 +219,21 @@ Rooms.prototype.vote = function(data) {
   return this.rooms[data.room_id].vote({voter_id: data.voter_id, option: data.option})
 }
 
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param data = {room_id: String, user_id: String, active: Boolean}
+ * @return {starting: Boolean, stopping: Boolean}
+ */
+Rooms.prototype.setActive = function(data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    return false;
+
+  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
+    return false;
+
+  return this.rooms[data.room_id].setActive(data.active);
+}
 
 module.exports = Rooms;

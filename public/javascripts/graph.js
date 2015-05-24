@@ -1,4 +1,4 @@
-var graphDataFormat = {
+var graphData = {
   labels: ['A', 'B', 'C', 'D','E'],
   datasets: [
     {
@@ -7,7 +7,7 @@ var graphDataFormat = {
       strokeColor: 'rgba(220,220,220,0.8)',
       highlightFill: 'rgba(220,220,220,0.75)',
       highlightStroke: 'rgba(220,220,220,1)',
-      data: [20, 70, 10, 40,30]
+      data: [0, 0, 0, 0, 0]
     }
   ]
 };
@@ -15,33 +15,42 @@ var graphDataFormat = {
 /**
  * Contains definition of the graph class for pulls
  */
-function Graph(canvas) {
-  this.graph = {};
-  this.canvas = canvas;
-  this.createGraph(canvas);
+function Graph() {
+  this.hasGraph = false;
 }
 
 Graph.prototype.createGraph = function (canvas) {
+
+  this.canvas = canvas;
   var options = {
     responsive: true,
     maintainAspectRatio: false
   };
-  this.graph = new Chart(canvas).Bar(graphDataFormat, options);
+
+  this.graph = new Chart(canvas).Bar(graphData, options);
+  this.hasGraph = true;
 }
 
 Graph.prototype.update = function () {
-  this.graph.update();
+  if (this.hasGraph)
+    this.graph.update();
+}
+
+Graph.prototype.updateData = function (data) {
+  for (var key in data) {
+    this.updateValue(key, data[key]);
+  }
+  //$.each(data, _this.updateValue);
 }
 
 Graph.prototype.updateValue = function (key, value) {
-  var labels = graphDataFormat.labels;
+  var labels = graphData.labels;
   var index = labels.indexOf(key);
-  if (index > labels.length)
-    return;
+  if (this.hasGraph) {
+    this.graph.datasets[0].bars[index].value = value;
+  }
+  else {
+    graphData.datasets[0].data[index] = value;
+  }
 
-  this.graph.datasets[0].bars[key].value = value;
-  this.graph.update();
 }
-
-Graph.prototype.graph = function () { return this.graph; }
-Graph.prototype.canvas = function () { return this.canvas; }

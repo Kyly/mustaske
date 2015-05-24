@@ -1,7 +1,7 @@
+"use strict";
 /**
  * Functions to interface with the DOM
  */
-
 /**
  * This global, "static" object contains all functions for interacting with
  * the DOM. Additionally, all globals for DOM functions
@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph;
+      BASE_SCORE, roomData, graph, owner;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -23,6 +23,7 @@ var ViewActions = function () {
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
     roomData                 = $('.room-name');
+    owner                    = false;
 
     /**
      * Set up sorted container for top questions.
@@ -42,10 +43,10 @@ var ViewActions = function () {
    * Actions for building graph in modal.
    * @see http://getbootstrap.com/javascript/#modals
    */
-  var initializeGraphImpl = function (event) {
-    var modal = $(this);
+  var initializeGraphImpl = function () {
+    var modal  = $(this);
     var canvas = modal.find('#pull-graph').get(0).getContext("2d");
-    graph = new Graph(canvas);
+    graph.createGraph(canvas);
   }
 
   /**
@@ -64,7 +65,13 @@ var ViewActions = function () {
       roomData.data('owner', true);
       $('.drop-down-room-id').text(roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
-      $('#show-graph-btn').removeClass('hidden').addClass('show');
+      $('body').find('.owner-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+
+      owner = true;
+      graph = new Graph();
+      //$('#show-graph-btn').removeClass('hidden').addClass('show');
       console.log('Room Id: ' + roomInfo.room_id);
     }
   }
@@ -434,20 +441,71 @@ var ViewActions = function () {
    * TODO: find out which vote button user clicked
    */
   var votePollImpl = function () {
-    data = {
+    var data = {
       room_id: $('.room-name').data('room-id'),
-      option: 'fubar'
+      option: $(this).text()
     };
+
+    console.log(data);
     socket.emit('vote poll', data);
   }
   /**
    * Updates the poll results graph
    * TODO: update the graph
    */
-  var updatePollScoreImpl = function () {
-    console.log('it worked!');
+  var updatePollScoreImpl = function (results) {
+    console.log('voted');
+    console.log(results);
+
+    if (owner) {
+      graph.updateData(results);
+      graph.update();
+    }
   }
 
+  /**
+   * Sets poll to active
+   */
+  var clickStartPollImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      active: true
+    };
+    socket.emit('set active poll', data);
+  }
+
+  /**
+   * Sets poll to inactive
+   */
+  var clickStopPollImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      active: false
+    };
+    socket.emit('set active poll', data);
+  }
+
+  var startPollImpl = function () {
+    console.log('poll active');
+
+    if (!owner) {
+      $('#clicker-modal').modal('show');
+    }
+  }
+
+  /**
+   * Sets poll to inactive
+   */
+  var stopPollImpl = function () {
+    console.log('poll inactive');
+    if (!owner) {
+      $('#clicker-modal').modal('hide');
+    }
+  }
+
+  var copyRoomIdImpl = function (event) {
+    event.stopPropagation();
+  }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
@@ -455,6 +513,7 @@ var ViewActions = function () {
 
 
   return {
+    copyRoomId                 : copyRoomIdImpl,
     initializeGraph            : initializeGraphImpl,
     thumbsDownOnClick          : thumbsDownOnClickImpl,
     thumbsUpOnClick            : thumbsUpOnClickImpl,
@@ -472,6 +531,10 @@ var ViewActions = function () {
     questionAdded              : questionAddedImpl,
     setupUI                    : setupUIImpl,
     votePoll                   : votePollImpl,
-    updatePollScore            : updatePollScoreImpl
+    updatePollScore            : updatePollScoreImpl,
+    clickStartPoll             : clickStartPollImpl,
+    clickStopPoll              : clickStopPollImpl,
+    startPoll                  : startPollImpl,
+    stopPoll                   : stopPollImpl
   }
 }();

@@ -16,7 +16,7 @@ var Rooms = require('./rooms');
  * More than likely, this will just be the Rooms() instance.
  */
 function Controller () {
-  this.rooms     = new Rooms();
+  this.rooms = new Rooms();
 }
 
 /**
@@ -177,10 +177,28 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    */
   Controller.prototype.votePoll = function(io, socket, data) {
     var voteData = {room_id: data.room_id, option: data.option, voter_id: socket.id};
-    var returnData = this.rooms.vote({room_id: data.room_id, option: data.option, voter_id: socket.id});
+    var returnData = this.rooms.vote(voteData);
 
-    if (returnData.prev_vote !== returnData.cur_vote)
+    if (returnData != false)
       io.sockets.in(data.room_id).emit('vote poll', returnData);
+  }
+
+  /**
+   * This handles voting on option in the poll
+   * @param socket: Socket IO object
+   * @param data = {room_id: String, user_id: String, active: Boolean}
+   */
+  Controller.prototype.setActivePoll = function(io, socket, data) {
+    var activeData = {room_id: data.room_id, user_id: socket.id, active: data.active};
+    var returnData = this.rooms.setActive(activeData);
+
+    if (returnData.changed) { //poll active state has changed
+      if (returnData.active)
+        io.sockets.in(data.room_id).emit('start poll');
+      else //stopping
+        io.sockets.in(data.room_id).emit('stop poll');
+
+    }
   }
 
 

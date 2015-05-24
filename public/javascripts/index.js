@@ -17,6 +17,8 @@ $(document).ready(function () {
   socket.on('warn user', ViewActions.userWarned);
   socket.on('top questions', ViewActions.updateTopQuestionThreshold);
   socket.on('vote poll', ViewActions.updatePollScore);
+  socket.on('start poll', ViewActions.startPoll);
+  socket.on('stop poll', ViewActions.stopPoll);
 
   /**
    * UI Listeners
@@ -27,6 +29,10 @@ $(document).ready(function () {
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
   body.on('click', 'a.thumbs-up-to-active', ViewActions.thumbsUpOnClick);
   body.on('click', 'a.thumbs-down-to-active', ViewActions.thumbsDownOnClick);
+  body.on('click', '#start-poll-btn', ViewActions.clickStartPoll);
+  body.on('click', '#stop-poll-btn', ViewActions.clickStopPoll);
+  body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
+  body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });
