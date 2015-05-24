@@ -6,7 +6,7 @@
  */
 
 var Poll = require('./poll')
-var uuid     = require('node-uuid');
+var uuid = require('node-uuid');
 
 function Polls() {
 	this.polls = {};  // Hash containing poll objects
