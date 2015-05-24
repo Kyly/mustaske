@@ -444,8 +444,42 @@ var ViewActions = function () {
    * Updates the poll results graph
    * TODO: update the graph
    */
-  var updatePollScoreImpl = function () {
-    console.log('it worked!');
+  var updatePollScoreImpl = function (results) {
+    console.log('voted');
+    console.log(results);
+  }
+
+  /**
+   * Sets poll to active
+   */
+  var clickStartPollImpl = function (results) {
+    data = {
+      room_id: $('.room-name').data('room-id'),
+      active: true
+    };
+    socket.emit('set active poll', data);
+  }
+
+  /**
+   * Sets poll to inactive
+   */
+  var clickStopPollImpl = function (results) {
+    data = {
+      room_id: $('.room-name').data('room-id'),
+      active: false
+    };
+    socket.emit('set active poll', data);
+  }
+
+  var startPollImpl = function () {
+    console.log('poll active');
+  }
+
+  /**
+   * Sets poll to inactive
+   */
+  var stopPollImpl = function () {
+    console.log('poll inactive');
   }
 
 
@@ -472,6 +506,10 @@ var ViewActions = function () {
     questionAdded              : questionAddedImpl,
     setupUI                    : setupUIImpl,
     votePoll                   : votePollImpl,
-    updatePollScore            : updatePollScoreImpl
+    updatePollScore            : updatePollScoreImpl,
+    clickStartPoll             : clickStartPollImpl,
+    clickStopPoll              : clickStopPollImpl,
+    startPoll                  : startPollImpl,
+    stopPoll                   : stopPollImpl
   }
 }();

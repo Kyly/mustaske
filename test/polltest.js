@@ -12,36 +12,27 @@ var expect = require('chai').expect;
 
 var assert = require("assert")
 describe('Poll', function(){
-
-  describe('poll constructor', function(){
-    it('should create a new poll object.', function(){
-      // Assign
-      var poll = new Poll({num_options: 7, poll_id: 'CSE110'});
-
-      // Assert
-      assert(poll.pollID === 'CSE110');
-      assert(poll.numOptions === 7);
-    })
-  })
   describe('#setActive()', function(){
     it('should toggle the active variable in poll.', function(){
       // Set
-      var poll = new Poll({num_options: 7, poll_id: 'CSE110'});
+      var poll = new Poll();
       var activeInfo;
 
       // Assert
       assert(poll.active === false);
-      activeInfo = poll.setActive({toggle: true});
-      assert(activeInfo.poll_id === 'CSE110');
+      activeInfo = poll.setActive(true);
+      assert(activeInfo);
       assert(poll.active === true);
-      poll.setActive({toggle: false});
+      activeInfo = poll.setActive(false);
       assert(poll.active === false);
+      activeInfo = poll.setActive(false);
+      assert(!activeInfo)
     })
   })
   describe('#vote()', function(){
     it('should record user and their vote, updating appropriate fields.', function(){
       // Set
-      var poll = new Poll({num_options: 7, poll_id: 'CSE110'});
+      var poll = new Poll();
       var voteResults;
 
       // Assert

@@ -168,7 +168,20 @@ Room.prototype.deleteQuestion = function(data) {
  * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
  */
 Room.prototype.vote = function(data) {
+  if(!this.poll.active)
+    return false;
+
   return this.poll.vote({voter_id: data.voter_id, option: data.option})
+}
+
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param data = {active: Boolean}
+ * @return {starting: Boolean, stopping: Boolean}
+ */
+Room.prototype.setActive = function(active) {
+  return this.poll.setActive(active);
 }
 
 module.exports = Room;

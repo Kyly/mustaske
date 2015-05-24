@@ -17,13 +17,19 @@ function Poll() {
 /**
  * Set active according to the passed in value
  *
- * @param Data = {toggle: Boolean}
- * @return {poll_id: String}
+ * @param Boolean
+ * @return {starting: Boolean, stopping: Boolean}
  */
-Poll.prototype.setActive = function(data) {
-  this.active = data.toggle;
+Poll.prototype.setActive = function(active) {
+  if(this.active === active)
+    return false;
 
-  return {poll_id : this.pollID};
+  this.active = active;
+
+  if(active)
+    return {starting: true}
+  else
+    return {stopping: true}
 }
 
 /**
@@ -35,9 +41,14 @@ Poll.prototype.setActive = function(data) {
 Poll.prototype.vote = function(data) {
   var prevVote = 0;
 
+  console.log('in poll vote');
   //Check whether the person has voted before; if so, decrement the original vote
   if(data.voter_id in this.voters){
   	prevVote = this.voters[data.voter_id];
+
+    if (prevVote === data.option)
+      return false;
+
   	this.results[prevVote] -= 1;
 
     //Decrement the totalVotes first
@@ -58,13 +69,7 @@ Poll.prototype.vote = function(data) {
   	this.results[data.option] += 1;
   }
 
-  return {
-    poll_id:   this.pollID,
-    voter_id:  data.voter_id,
-    prev_vote: prevVote,
-    cur_vote:  data.option,
-    num_votes: this.totalVotes
-  };
+  return this.results;
 }
 
 /**

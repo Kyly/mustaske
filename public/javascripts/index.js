@@ -17,6 +17,8 @@ $(document).ready(function () {
   socket.on('warn user', ViewActions.userWarned);
   socket.on('top questions', ViewActions.updateTopQuestionThreshold);
   socket.on('vote poll', ViewActions.updatePollScore);
+  socket.on('start poll', ViewActions.startPoll);
+  socket.on('stop poll', ViewActions.stopPoll);
 
   /**
    * UI Listeners
