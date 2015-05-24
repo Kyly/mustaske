@@ -30,6 +30,8 @@ $(document).ready(function () {
   body.on('click', 'a.thumbs-up-to-active', ViewActions.thumbsUpOnClick);
   body.on('click', 'a.thumbs-down-to-active', ViewActions.thumbsDownOnClick);
   body.on('click', '#start-poll-btn', ViewActions.clickStartPoll);
+  body.on('click', '#stop-poll-btn', ViewActions.clickStopPoll);
+  body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });

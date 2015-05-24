@@ -14,23 +14,6 @@ function Poll() {
   this.totalVotes = 0;
 }
 
-/**
- * Set active according to the passed in value
- *
- * @param Boolean
- * @return {starting: Boolean, stopping: Boolean}
- */
-Poll.prototype.setActive = function(active) {
-  if(this.active === active)
-    return false;
-
-  this.active = active;
-
-  if(active)
-    return {starting: true};
-  else
-    return {stopping: true};
-}
 
 /**
  * Update the results according to the user's vote
@@ -41,7 +24,6 @@ Poll.prototype.setActive = function(active) {
 Poll.prototype.vote = function(data) {
   var prevVote = 0;
 
-  console.log('in poll vote');
   //Check whether the person has voted before; if so, decrement the original vote
   if(data.voter_id in this.voters){
   	prevVote = this.voters[data.voter_id];
@@ -69,16 +51,6 @@ Poll.prototype.vote = function(data) {
   	this.results[data.option] += 1;
   }
 
-  return this.results;
-}
-
-/**
- * Return the results hashtable
- *
- * @param none
- * @return Hash
- */
-Poll.prototype.getResults = function() {
   return this.results;
 }
 

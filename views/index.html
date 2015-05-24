@@ -7,8 +7,6 @@
     <link type="text/css" rel="stylesheet"
           href="/javascripts/vendor/bootstrap/dist/css/bootstrap.min.css">
 
-    <link type="text/css" rel="stylesheet"
-          href="/javascripts/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
     <!-- font-awesome -->
     <link href="/javascripts/vendor/font-awesome/css/font-awesome.min.css"
           rel="stylesheet"/>
@@ -144,9 +142,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs poll-controls">
                 <li><a id="stop-poll-btn" class="owner-view hidden"
-                       href=""><span class="fa fa-stop"></span></a></li>
+                       href="#"><span class="fa fa-stop"></span></a></li>
                 <li><a id="start-poll-btn" class="owner-view hidden"
-                       href=""><span class="fa fa-play"></span></a>
+                       href="#"><span class="fa fa-play"></span></a>
                 </li>
                 <li><a id="show-graph-btn" class="owner-view hidden"
                        data-toggle="modal" data-target=".graph-modal-lg" href="#">
@@ -283,6 +281,36 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <canvas id="pull-graph"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div id="clicker-modal" class="modal fade clicker-modal-lg" role="dialog"
+         aria-labelledby="gridSystemModalLabel" aria-hidden="true"> <!-- modal -->
+        <div class="modal-dialog"> <!-- modal-dialog -->
+            <div class="modal-content"> <!-- modal-content -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">Clicker Question</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="clicker-modal-btn-group" class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+                        <a href="#" class="btn btn-default" role="button">A</a>
+                        <a href="#" class="btn btn-default" role="button">B</a>
+                        <a href="#" class="btn btn-default" role="button">C</a>
+                        <a href="#" class="btn btn-default" role="button">D</a>
+                        <a href="#" class="btn btn-default" role="button">E</a>
                     </div>
                 </div>
                 <div class="modal-footer">

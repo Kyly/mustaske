@@ -12,23 +12,7 @@ var expect = require('chai').expect;
 
 var assert = require("assert")
 describe('Poll', function(){
-  describe('#setActive()', function(){
-    it('should toggle the active variable in poll.', function(){
-      // Set
-      var poll = new Poll();
-      var activeInfo;
 
-      // Assert
-      assert(poll.active === false);
-      activeInfo = poll.setActive(true);
-      assert(activeInfo);
-      assert(poll.active === true);
-      activeInfo = poll.setActive(false);
-      assert(poll.active === false);
-      activeInfo = poll.setActive(false);
-      assert(!activeInfo)
-    })
-  })
   describe('#vote()', function(){
     it('should record user and their vote, updating appropriate fields.', function(){
       // Set
@@ -66,25 +50,4 @@ describe('Poll', function(){
       assert(voteResults.num_votes === 2);
     })
   })
-  describe('#getResults()', function(){
-    it('should toggle the active variable in poll.', function(){
-      // Set
-      var poll = new Poll({num_options: 7, poll_id: 'CSE110'});
-      poll.vote({voter_id: 'Voter1', option: 'A'});
-      poll.vote({voter_id: 'Voter2', option: 'A'});
-      poll.vote({voter_id: 'Voter3', option: 'B'});
-
-      // Assign
-      var voteResults = poll.getResults();
-
-      // Assert
-      assert(voteResults.poll_id === 'CSE110');
-      assert(voteResults.results['A'] === 2);
-      assert(voteResults.results['B'] === 1);
-
-
-    })
-  })
-
-
 })

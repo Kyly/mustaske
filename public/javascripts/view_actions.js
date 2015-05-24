@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph;
+      BASE_SCORE, roomData, graph, owner;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -23,6 +23,7 @@ var ViewActions = function () {
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
     roomData                 = $('.room-name');
+    owner                    = false;
 
     /**
      * Set up sorted container for top questions.
@@ -42,10 +43,10 @@ var ViewActions = function () {
    * Actions for building graph in modal.
    * @see http://getbootstrap.com/javascript/#modals
    */
-  var initializeGraphImpl = function (event) {
-    var modal = $(this);
+  var initializeGraphImpl = function () {
+    var modal  = $(this);
     var canvas = modal.find('#pull-graph').get(0).getContext("2d");
-    graph = new Graph(canvas);
+    graph.createGraph(canvas);
   }
 
   /**
@@ -68,6 +69,8 @@ var ViewActions = function () {
         $(this).removeClass('hidden').addClass('show');
       });
 
+      owner = true;
+      graph = new Graph();
       //$('#show-graph-btn').removeClass('hidden').addClass('show');
       console.log('Room Id: ' + roomInfo.room_id);
     }
@@ -440,8 +443,10 @@ var ViewActions = function () {
   var votePollImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      option: 'fubar'
+      option: $(this).text()
     };
+
+    console.log(data);
     socket.emit('vote poll', data);
   }
   /**
@@ -451,12 +456,17 @@ var ViewActions = function () {
   var updatePollScoreImpl = function (results) {
     console.log('voted');
     console.log(results);
+
+    if (owner) {
+      graph.updateData(results);
+      graph.update();
+    }
   }
 
   /**
    * Sets poll to active
    */
-  var clickStartPollImpl = function (results) {
+  var clickStartPollImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
       active: true
@@ -467,7 +477,7 @@ var ViewActions = function () {
   /**
    * Sets poll to inactive
    */
-  var clickStopPollImpl = function (results) {
+  var clickStopPollImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
       active: false
@@ -477,6 +487,10 @@ var ViewActions = function () {
 
   var startPollImpl = function () {
     console.log('poll active');
+
+    if (!owner) {
+      $('#clicker-modal').modal('show');
+    }
   }
 
   /**
@@ -484,6 +498,9 @@ var ViewActions = function () {
    */
   var stopPollImpl = function () {
     console.log('poll inactive');
+    if (!owner) {
+      $('#clicker-modal').modal('hide');
+    }
   }
 
 
