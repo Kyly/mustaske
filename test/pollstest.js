@@ -12,7 +12,7 @@ var expect = require('chai').expect;
 
 var assert = require("assert")
 describe('Polls', function(){
-
+/*
   describe('createPoll()', function(){
     it('should add a new poll object to polls.', function(){
       // Set
@@ -90,6 +90,6 @@ describe('Polls', function(){
       assert(voteInfo.cur_vote === 'B');
     })
   })
-
+*/
 
 })
