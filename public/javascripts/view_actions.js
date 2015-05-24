@@ -503,6 +503,9 @@ var ViewActions = function () {
     }
   }
 
+  var copyRoomIdImpl = function (event) {
+    event.stopPropagation();
+  }
 
   // TODO: Need Poll-related functions, when that functionality firms
   // up in the backend.
@@ -510,6 +513,7 @@ var ViewActions = function () {
 
 
   return {
+    copyRoomId                 : copyRoomIdImpl,
     initializeGraph            : initializeGraphImpl,
     thumbsDownOnClick          : thumbsDownOnClickImpl,
     thumbsUpOnClick            : thumbsUpOnClickImpl,

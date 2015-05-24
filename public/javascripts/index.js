@@ -32,6 +32,7 @@ $(document).ready(function () {
   body.on('click', '#start-poll-btn', ViewActions.clickStartPoll);
   body.on('click', '#stop-poll-btn', ViewActions.clickStopPoll);
   body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
+  body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });
