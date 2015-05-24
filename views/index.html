@@ -128,20 +128,29 @@
                 <span class="navbar-brand room-name">CSE110</span>
 
             </div>
-
             <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs room-controls">
-                <li><a id="show-graph-btn" class="hidden"
-                       data-toggle="modal" data-target=".graph-modal-lg" href="#">
-                    <span class="fa fa-bar-chart"></span></a>
-                </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-cogs"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-expanded="false">
+                        <span class="fa fa-cogs"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
                         <li><a href="#">Leave room<span class="fa fa-sign-out pull-right"></span></a></li>
                     </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs poll-controls">
+                <li><a id="stop-poll-btn" class="owner-view hidden"
+                       href=""><span class="fa fa-stop"></span></a></li>
+                <li><a id="start-poll-btn" class="owner-view hidden"
+                       href=""><span class="fa fa-play"></span></a>
+                </li>
+                <li><a id="show-graph-btn" class="owner-view hidden"
+                       data-toggle="modal" data-target=".graph-modal-lg" href="#">
+                    <span class="fa fa-bar-chart"></span></a>
                 </li>
             </ul>
         </div>

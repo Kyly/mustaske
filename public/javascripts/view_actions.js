@@ -1,7 +1,7 @@
+"use strict";
 /**
  * Functions to interface with the DOM
  */
-
 /**
  * This global, "static" object contains all functions for interacting with
  * the DOM. Additionally, all globals for DOM functions
@@ -64,7 +64,11 @@ var ViewActions = function () {
       roomData.data('owner', true);
       $('.drop-down-room-id').text(roomInfo.room_id);
       $('.login-overlay').addClass('animated slideOutUp');
-      $('#show-graph-btn').removeClass('hidden').addClass('show');
+      $('body').find('.owner-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+
+      //$('#show-graph-btn').removeClass('hidden').addClass('show');
       console.log('Room Id: ' + roomInfo.room_id);
     }
   }
@@ -434,7 +438,7 @@ var ViewActions = function () {
    * TODO: find out which vote button user clicked
    */
   var votePollImpl = function () {
-    data = {
+    var data = {
       room_id: $('.room-name').data('room-id'),
       option: 'fubar'
     };
@@ -453,7 +457,7 @@ var ViewActions = function () {
    * Sets poll to active
    */
   var clickStartPollImpl = function (results) {
-    data = {
+    var data = {
       room_id: $('.room-name').data('room-id'),
       active: true
     };
@@ -464,7 +468,7 @@ var ViewActions = function () {
    * Sets poll to inactive
    */
   var clickStopPollImpl = function (results) {
-    data = {
+    var data = {
       room_id: $('.room-name').data('room-id'),
       active: false
     };

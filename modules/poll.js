@@ -27,9 +27,9 @@ Poll.prototype.setActive = function(active) {
   this.active = active;
 
   if(active)
-    return {starting: true}
+    return {starting: true};
   else
-    return {stopping: true}
+    return {stopping: true};
 }
 
 /**

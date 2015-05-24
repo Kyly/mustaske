@@ -16,7 +16,7 @@ var Rooms = require('./rooms');
  * More than likely, this will just be the Rooms() instance.
  */
 function Controller () {
-  this.rooms     = new Rooms();
+  this.rooms = new Rooms();
 }
 
 /**

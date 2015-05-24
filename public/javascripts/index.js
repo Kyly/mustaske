@@ -29,6 +29,7 @@ $(document).ready(function () {
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
   body.on('click', 'a.thumbs-up-to-active', ViewActions.thumbsUpOnClick);
   body.on('click', 'a.thumbs-down-to-active', ViewActions.thumbsDownOnClick);
+  body.on('click', '#start-poll-btn', ViewActions.clickStartPoll);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });
