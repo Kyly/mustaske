@@ -1,12 +1,8 @@
 @charset "UTF-8";
 
-html, body {
-    height: 98%;
-}
 
 body, html {
     margin: 0;
-    /*overflow: hidden;*/
     height: 100%;
 }
 
@@ -16,15 +12,14 @@ p, a, li, select, input {
 
 .canvas {
     background: #ffffff;
+    height: auto;
+    z-index: 2;
+    position: relative;
 }
 
 .rest .container-fluid {
     padding: 1%;
 }
-
-/*.mobile-offcanvas-menu {*/
-    /*z-index: 1;*/
-/*}*/
 
 .mobile-toggle .navbar-toggle {
     font-size: 2em;
@@ -245,14 +240,6 @@ hr {
     background-color: #226a95;
     outline: none;
 }
-
-/*#show-graph-btn.owner {*/
-    /*visibility: visible;*/
-/*}*/
-
-/*#show-graph-btn {*/
-    /*visibility: hidden;*/
-/*}*/
 
 .nav span.fa {
     font-size: 1.3em;
