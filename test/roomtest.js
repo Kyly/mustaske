@@ -85,4 +85,37 @@ describe('Room', function(){
       assert(!room.hasQuestion('what'));
     })
   })
+  
+  describe('#setActive()', function(){
+    it('should return true if poll is active, else false.', function(){
+      // Set
+      var activeInfo;
+
+      var room = new Room({room_id: '110', owner_id: 'Gary',
+        room_name: 'center hall'});
+
+      // Assert
+      assert(room.activePoll === false);
+
+      activeInfo = room.setActive(false);
+      assert(room.activePoll === false);
+      assert(activeInfo.changed === false);
+      assert(activeInfo.active === false);
+
+      activeInfo = room.setActive(true);
+      assert(room.activePoll === true);
+      assert(activeInfo.changed === true);
+      assert(activeInfo.active === true);
+
+      activeInfo = room.setActive(true);
+      assert(room.activePoll === true);
+      assert(activeInfo.changed === false);
+      assert(activeInfo.active === true);
+
+      activeInfo = room.setActive(false);
+      assert(room.activePoll === false);
+      assert(activeInfo.changed === true);
+      assert(activeInfo.active === false);
+    })
+  })
 })

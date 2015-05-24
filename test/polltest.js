@@ -23,31 +23,24 @@ describe('Poll', function(){
       assert(poll.totalVotes === 0);
       voteResults = poll.vote({voter_id: 'Voter', option: 'A'});
 
-      //check return values are correct
+      //check returned array is correct
       assert(poll.totalVotes === 1);
-      assert(voteResults.num_votes === 1);
-      assert(voteResults.poll_id === 'CSE110');
-      assert(voteResults.prev_vote === 0);
-      assert(voteResults.cur_vote === 'A');
+      assert(voteResults['A'] === 1);
       //check voters and results correctly updated
       assert(poll.voters['Voter'] === 'A');
       assert(poll.results['A'] === 1);
 
       //check return values are correct
-      assert(poll.totalVotes === 1);
-      assert(voteResults.num_votes === 1);
       voteResults = poll.vote({voter_id: 'Voter', option: 'B'});
-      assert(voteResults.poll_id === 'CSE110');
-      assert(voteResults.prev_vote === 'A');
-      assert(voteResults.cur_vote === 'B');
-      //check voters and results correclty updated
+      assert(voteResults['A'] === 0);
+      assert(voteResults['B'] === 1);
       assert(poll.voters['Voter'] === 'B');
       assert(poll.results['A'] === 0);
       assert(poll.results['B'] === 1);
 
       voteResults = poll.vote({voter_id: 'foo', option: 'C'})
+      assert(voteResults['C'] === 1);
       assert(poll.totalVotes === 2);
-      assert(voteResults.num_votes === 2);
     })
   })
 })

@@ -27,6 +27,7 @@ Rooms.prototype.createRoom = function (data) {
     uniqueID = hri.random();
 
   //create new room and add it to rooms
+  data.room_id = uniqueID;
   this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
     room_name: data.room_name});
 
@@ -216,7 +217,7 @@ Rooms.prototype.vote = function(data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].vote({voter_id: data.voter_id, option: data.option})
+  return this.rooms[data.room_id].vote(data)
 }
 
 /**
@@ -230,7 +231,7 @@ Rooms.prototype.setActive = function(data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
+  if (!this.isOwner(data))
     return false;
 
   return this.rooms[data.room_id].setActive(data.active);

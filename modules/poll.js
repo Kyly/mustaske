@@ -8,18 +8,16 @@
  */
 
 function Poll() {
-  this.active     = false;
   this.results    = {};
   this.voters     = {};
   this.totalVotes = 0;
 }
 
-
 /**
  * Update the results according to the user's vote
  *
  * @param {voter_id: String, option: String}
- * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ * @return Hash
  */
 Poll.prototype.vote = function(data) {
   var prevVote = 0;

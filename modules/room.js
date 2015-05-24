@@ -9,7 +9,8 @@ function Room (data) {
   this.id             = data.room_id; //String
   this.name           = data.room_name; //String
   this.questions      = new Questions(); //questions object
-  this.poll           = false;
+  this.poll           = new Poll();
+  this.activePoll     = false;
   this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
@@ -154,7 +155,7 @@ Room.prototype.getQuestions = function() {
   */
 Room.prototype.deleteQuestion = function(data) {
   if (data.owner_id === this.owner) {
-    return this.questions.deleteQuestion(data.question_id);
+    return this.questions.deleteQuestion(data);
   }
   else
     return false;
@@ -171,28 +172,29 @@ Room.prototype.vote = function(data) {
   if(this.poll === false)
     return false;
 
-  return this.poll.vote({voter_id: data.voter_id, option: data.option})
+  return this.poll.vote(data);
 }
 
 /**
  * Delegates to poll. @see poll.js
  *
  * @param data = {active: Boolean}
- * @return {starting: Boolean, stopping: Boolean}
+ * @return {changed: Boolean, active: Boolean}
  */
 Room.prototype.setActive = function(active) {
   if (active){
-    if (this.poll === false){
+    if (this.activePoll === false){
+      delete this.poll;
       this.poll = new Poll();
+      this.activePoll = true;
       return {changed: true, active: true};
     }
     else {
       return {changed: false, active: true};
     }
   }
-  if (this.poll !== false) {
-    delete this.poll;
-    this.poll = false;
+  if (this.activePoll !== false) {
+    this.activePoll = false;
     return {changed: true, active: false};
   }
   else
