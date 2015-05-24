@@ -37,19 +37,20 @@ Graph.prototype.update = function () {
 }
 
 Graph.prototype.updateData = function (data) {
-  $.each(data, this.updateValue);
+  for (var key in data) {
+    this.updateValue(key, data[key]);
+  }
+  //$.each(data, _this.updateValue);
 }
 
 Graph.prototype.updateValue = function (key, value) {
-
-  if (this.hasGraph)
-    this.graph.datasets[0].bars[key].value = value;
-  else
-      var labels = graphData.labels;
-      var index = labels.indexOf(key);
-      graphData.datasets[0].data[index] = value;
+  var labels = graphData.labels;
+  var index = labels.indexOf(key);
+  if (this.hasGraph) {
+    this.graph.datasets[0].bars[index].value = value;
+  }
+  else {
+    graphData.datasets[0].data[index] = value;
+  }
 
 }
-
-Graph.prototype.graph = function () { return this.graph; }
-Graph.prototype.canvas = function () { return this.canvas; }
