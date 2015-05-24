@@ -27,6 +27,7 @@ Rooms.prototype.createRoom = function (data) {
     uniqueID = hri.random();
 
   //create new room and add it to rooms
+  data.room_id = uniqueID;
   this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
     room_name: data.room_name});
 
@@ -99,7 +100,7 @@ Rooms.prototype.isOwner = function(data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, owner_id: String, question_id: String}
  * @return {user_banned: Bool, question_id: String}
@@ -113,7 +114,7 @@ Rooms.prototype.warnUser = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, user_id: String}
  * @return true if user succesfully banned
@@ -127,7 +128,7 @@ Rooms.prototype.banUser = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, user_id: String}
  * @return true if user is banned
@@ -141,7 +142,7 @@ Rooms.prototype.isBanned = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, question_text: String, asker_id: String}
  * @return newly created quesiton object
@@ -155,7 +156,7 @@ Rooms.prototype.addQuestion = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, question_id: String, owner_id: String}
  * @return true if succesfully deleted, else false
@@ -169,7 +170,7 @@ Rooms.prototype.deleteQuestion = function (data) {
 }
 
 /**
- * Delgates to room. @see room.js
+ * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, num_questions: int}
  * @return list of room objects
@@ -203,6 +204,37 @@ Rooms.prototype.downvoteQuestion = function (data) {
     return false;
 
   return this.rooms[data.room_id].downvoteQuestion(data);
+}
+
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param {room_id: String, voter_id: String, option: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ */
+Rooms.prototype.vote = function(data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    return false;
+
+  return this.rooms[data.room_id].vote(data)
+}
+
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param data = {room_id: String, user_id: String, active: Boolean}
+ * @return {starting: Boolean, stopping: Boolean}
+ */
+Rooms.prototype.setActive = function(data) {
+  // Check if room exists
+  if (!this.hasRoom(data.room_id))
+    return false;
+
+  if (!this.isOwner(data))
+    return false;
+
+  return this.rooms[data.room_id].setActive(data.active);
 }
 
 module.exports = Rooms;
