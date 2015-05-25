@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph, owner;
+      BASE_SCORE, roomData, graph, owner, regexJoinRoom;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -24,6 +24,7 @@ var ViewActions = function () {
     BASE_SCORE               = 0;
     roomData                 = $('.room-name');
     owner                    = false;
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d{2})$/;
 
     /**
      * Set up sorted container for top questions.
@@ -49,6 +50,9 @@ var ViewActions = function () {
     graph.createGraph(canvas);
   }
 
+//============================================================================//
+//---------------------------- Join/Make Room --------------------------------//
+//============================================================================//
   /**
    * Enter the room as an owner
    * @param roomInfo = {room_id : string, room_name : string,
@@ -136,6 +140,47 @@ var ViewActions = function () {
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
   }
+
+  /**
+   * Callback for the home screen join and make buttons
+   */
+  var joinMakeOnClickImpl = function () {
+    var textBox  = $('#room-name-field input');
+    var roomName = textBox.val();
+    if (roomName === '') { // TODO: Validation
+      $('#room-name-field').addClass('has-error');
+    }
+    else {
+      var data = {
+        option: $(this).text().toLowerCase().trim(),
+        room_name: textBox.val()
+      };
+
+      switch (data.option) {
+        case 'make':
+          console.log('Creating new room.');
+          socket.emit('create room', data.room_name);
+          break;
+        case 'join':
+          console.log('Joining room.');
+          socket.emit('join room', data.room_name);
+          break;
+      }
+    }
+  }
+
+  var joinMakeInputImpl = function () {
+    var input = $(this).val();
+    if (regexJoinRoom.test(input)) {
+      if ()
+    } else {
+      console.log('Make Room');
+    }
+  }
+
+//============================================================================//
+//---------------------------- ?????????????? --------------------------------//
+//============================================================================//
 
   /**
    * update UI reflecting top questions threshold updated
@@ -264,7 +309,7 @@ var ViewActions = function () {
    * Callback for add question button
    */
   var addQuestionOnClickImpl = function (event) {
-    var textBox = $('#add-question-text');
+    var textBox      = $('#add-question-text');
     var questionText = textBox.val();
     var data = {
       question_text: questionText,
@@ -275,33 +320,6 @@ var ViewActions = function () {
     event.preventDefault();
   }
 
-  /**
-   * Callback for the home screen join and make buttons
-   */
-  var joinMakeOnClickImpl = function () {
-    var textBox = $('#room-name-field input');
-    var roomName = textBox.val();
-    if (roomName === '') { // TODO: Validation
-      $('#room-name-field').addClass('has-error');
-    }
-    else {
-      var data = {
-        option: $(this).text().toLowerCase().trim(),
-        room_name: textBox.val()
-      };
-
-      switch (data.option) {
-        case 'make':
-          console.log('Creating new room.');
-          socket.emit('create room', data.room_name);
-          break;
-        case 'join':
-          console.log('Joining room.');
-          socket.emit('join room', data.room_name);
-          break;
-      }
-    }
-  }
 
   /**
    * Update a field of the graph. Pass it the index of the sum of votes
@@ -436,6 +454,11 @@ var ViewActions = function () {
       topQuestionsContainer.mixItUp('append', question, {sort:'score:desc'});
     }
   }
+
+//============================================================================//
+//-------------------------------- Polls -------------------------------------//
+//============================================================================//
+
   /**
    * Sends out user vote for the poll.
    * TODO: find out which vote button user clicked
@@ -445,8 +468,7 @@ var ViewActions = function () {
       room_id: $('.room-name').data('room-id'),
       option: $(this).text()
     };
-
-    console.log(data);
+    //console.log(data);
     socket.emit('vote poll', data);
   }
   /**
@@ -454,9 +476,8 @@ var ViewActions = function () {
    * TODO: update the graph
    */
   var updatePollScoreImpl = function (results) {
-    console.log('voted');
-    console.log(results);
-
+    //console.log('voted');
+    //console.log(results);
     if (owner) {
       graph.updateData(results);
       graph.update();
@@ -467,7 +488,6 @@ var ViewActions = function () {
    * Sets poll to active
    */
   var clickStartPollImpl = function () {
-    graph.clearData();
     var data = {
       room_id: $('.room-name').data('room-id'),
       active: true
@@ -487,10 +507,11 @@ var ViewActions = function () {
   }
 
   var startPollImpl = function () {
-    console.log('poll active');
-
+    //console.log('poll active');
     if (!owner) {
       $('#clicker-modal').modal('show');
+    } else {
+      graph.clearData();
     }
   }
 
@@ -498,12 +519,24 @@ var ViewActions = function () {
    * Sets poll to inactive
    */
   var stopPollImpl = function () {
-    console.log('poll inactive');
+    //console.log('poll inactive');
     if (!owner) {
       $('#clicker-modal').modal('hide');
     }
   }
 
+  var flexModalImpl = function () {
+    $(this).find('.modal-body').css({
+      width:'auto', //probably not needed
+      height:'auto', //probably not needed
+      'max-height':'100%'
+    });
+  }
+
+
+//============================================================================//
+//----------------------------- Room Controls --------------------------------//
+//============================================================================//
   var copyRoomIdImpl = function (event) {
     event.stopPropagation();
   }
@@ -514,6 +547,8 @@ var ViewActions = function () {
 
 
   return {
+    joinMakeInput              : joinMakeInputImpl,
+    flexModal                  : flexModalImpl,
     copyRoomId                 : copyRoomIdImpl,
     initializeGraph            : initializeGraphImpl,
     thumbsDownOnClick          : thumbsDownOnClickImpl,

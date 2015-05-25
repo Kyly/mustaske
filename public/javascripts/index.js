@@ -33,6 +33,8 @@ $(document).ready(function () {
   body.on('click', '#stop-poll-btn', ViewActions.clickStopPoll);
   body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
   body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
+  body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
+  body.on('input', '#login-info input', ViewActions.joinMakeInput);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });
