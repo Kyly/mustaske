@@ -215,7 +215,7 @@ p, a, li, select, input {
 
 .question {
     font-size: 0.97em;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .top-questions-container .question-content {
@@ -262,6 +262,8 @@ hr {
     font-size: 1.3em;
 }
 
+/*------------------------------- Room Controls ------------------------------*/
+
 nav .room-controls .dropdown-menu {
     color: #bebebe;
 }
@@ -274,6 +276,19 @@ nav .room-controls .dropdown-menu {
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+#test-in-progress-btn.active {
+    color: #ff424e;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+#test-in-progress-btn.active.done {
+    color: #97F10E;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+/*----------------------------/ Room Controls --------------------------------*/
+
 
 .dropdown-menu>li>span {
     display: block;
