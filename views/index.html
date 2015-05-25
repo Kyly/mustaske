@@ -130,29 +130,31 @@
                 <span class="navbar-brand room-name">CSE110</span>
 
             </div>
-            <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs room-controls">
+            <ul class="nav navbar-nav navbar-right hidden-xs room-controls">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-expanded="false">
-                        <span class="fa fa-cogs"></span>
+                        <span class="fa fa-cogs"></span> Room Options
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
-                        <li><a href="#">Leave room<span class="fa fa-sign-out pull-right"></span></a></li>
+                        <li><a href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs poll-controls">
-                <li><a id="stop-poll-btn" class="owner-view hidden"
-                       href="#"><span class="fa fa-stop"></span></a></li>
+            <ul class="nav navbar-nav navbar-right hidden-xs poll-controls">
+
                 <li><a id="start-poll-btn" class="owner-view hidden"
-                       href="#"><span class="fa fa-play"></span></a>
+                       href="#"><span class="fa fa-play"></span> Start Poll</a>
+                </li>
+                <li><a id="stop-poll-btn" class="owner-view hidden"
+                       href="#"><span class="fa fa-stop"></span> Stop Poll</a>
                 </li>
                 <li><a id="show-graph-btn" class="owner-view hidden"
                        data-toggle="modal" data-target=".graph-modal-lg" href="#">
-                    <span class="fa fa-bar-chart"></span></a>
+                    <span class="fa fa-bar-chart"></span> Poll Results</a>
                 </li>
             </ul>
         </div>
@@ -160,11 +162,11 @@
     </nav>
     <div class="rest container-fluid">
         <div id="main-content" class="row">
-            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
+            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar hidden-xs">
                 <!--end selection-->
                 <div class="selection">
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle"
+                        <button class="btn btn-default dropdown-toggle hidden-xs"
                                 type="button" id="dropdownMenu1"
                                 data-toggle="dropdown" aria-expanded="true">
                             top 4 questions <i class="fa fa-chevron-down"></i>
@@ -200,7 +202,7 @@
             <div class="row">
                 <div class="selection col-md-3 col-sm-3 col-xs-12">
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle"
+                        <button class="btn btn-default dropdown-toggle hidden-xs"
                                 type="button" id="dropdownMenu1"
                                 data-toggle="dropdown" aria-expanded="true">
                             most recent &nbsp; &nbsp; <i
@@ -222,9 +224,9 @@
                     <!--end dropdown-->
                 </div>
                 <!--end selection-->
-                <form id="search-questions"
+                <form id="search-questions hidden-xs"
                       class="search col-md-9 col-sm-9 col-xs-12">
-                    <div class="input-group form-group">
+                    <div class="input-group form-group hidden-xs">
                         <input id="search-question-text" type="text"
                                class="form-control"
                                placeholder="search all questions">
