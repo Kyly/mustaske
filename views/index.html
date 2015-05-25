@@ -10,8 +10,7 @@
     <!-- font-awesome -->
     <link href="/javascripts/vendor/font-awesome/css/font-awesome.min.css"
           rel="stylesheet"/>
-    <!-- Our styles -->
-    <link href="/stylesheets/style.css" rel="stylesheet"/>
+
     <!-- Styles for animations -->
     <link href="/stylesheets/animate.css" rel="stylesheet"/>
     <!-- jasny CSS -->
@@ -25,6 +24,8 @@
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
           rel='stylesheet' type='text/css'>
+    <!-- Our styles -->
+    <link href="/stylesheets/style.css" rel="stylesheet"/>
     <title>MustAsk: CSE110</title>
     <link rel="Shortcut Icon" type="image/jpg" href="/images/mustache.png"/>
 </head>
@@ -40,20 +41,23 @@
                 <div class="row form-group">
                     <div id="room-name-field"
                          class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1 has-feedback">
-                        <input type="room-name" class="form-control"
-                               placeholder="Room Name...">
+                        <input type="room-name" class="form-control" placeholder="Room Name...">
                         <span class="glyphicon glyphicon-remove form-control-feedback"
                               aria-hidden="true"></span>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div id="join-create-room" class="btn-group" role="group"
-                         aria-label="Join/Create Room">
-                        <button type="button" class="btn btn-default"> Join
-                        </button>
-                        <button type="button" class="btn btn-default"> Make
-                        </button>
+                    <div id="join-create-room" aria-label="Join/Create Room">
+                        <a id="join-room" class="btn btn-success disabled"> Join
+                        </a>
+                        <a id="make-room" class="btn btn-warning disabled"> Make
+                        </a>
                     </div>
+                </div>
+                <div>
+                    <span class="make-join-warning">
+                        Please select either <em>Make</em> or <em>Join</em>.
+                    </span>
                 </div>
             </form>
         </div>

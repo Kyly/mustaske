@@ -169,14 +169,52 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Call back for join button on login view
+   */
   var joinMakeInputImpl = function () {
     var input = $(this).val();
-    if (regexJoinRoom.test(input)) {
-      if ()
+    var join  = $('#join-room');
+    var make  = $('#make-room');
+
+    if (input !== '') {
+      make.removeClass('disabled');
     } else {
-      console.log('Make Room');
+      make.addClass('disabled');
+      join.addClass('disabled');
+    }
+
+    if (regexJoinRoom.test(input)) {
+      join.removeClass('disabled').addClass('animated bounce');
+    } else {
+      join.addClass('disabled').removeClass('animated bounce');
     }
   }
+
+  /**
+   * Submit callback for login view
+   */
+  var joinMakeSubmitImpl = function (event) {
+    $('.make-join-warning')
+      .css('visibility','visible')
+      .addClass('animated fadeInUp');
+
+    setTimeout(function() {
+      var makeJoin = $('.make-join-warning');
+      makeJoin
+        .removeClass('animated fadeInUp')
+        .addClass('animated fadeOutDown');
+
+      makeJoin
+        .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function () {
+          $(this).removeClass('animated fadeOutDown').css('visibility', 'hidden');
+        }
+      );
+    }, 5000);
+    event.preventDefault();
+  }
+
 
 //============================================================================//
 //---------------------------- ?????????????? --------------------------------//
@@ -511,6 +549,7 @@ var ViewActions = function () {
     if (!owner) {
       $('#clicker-modal').modal('show');
     } else {
+      $('#start-poll-btn').addClass('poll-on');
       graph.clearData();
     }
   }
@@ -522,6 +561,8 @@ var ViewActions = function () {
     //console.log('poll inactive');
     if (!owner) {
       $('#clicker-modal').modal('hide');
+    } else {
+      $('#start-poll-btn').removeClass('poll-on');
     }
   }
 
@@ -547,6 +588,7 @@ var ViewActions = function () {
 
 
   return {
+    joinMakeSubmit             : joinMakeSubmitImpl,
     joinMakeInput              : joinMakeInputImpl,
     flexModal                  : flexModalImpl,
     copyRoomId                 : copyRoomIdImpl,

@@ -26,6 +26,7 @@ $(document).ready(function () {
   var body = $('body');
   body.on('submit', '#add-question', ViewActions.addQuestionOnClick);
   body.on('submit', '#search-questions', ViewActions.searchRecentQuestions);
+  body.on('submit', '#login-info', ViewActions.joinMakeSubmit);
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
   body.on('click', 'a.thumbs-up-to-active', ViewActions.thumbsUpOnClick);
   body.on('click', 'a.thumbs-down-to-active', ViewActions.thumbsDownOnClick);
