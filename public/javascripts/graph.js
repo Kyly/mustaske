@@ -43,11 +43,14 @@ Graph.prototype.updateData = function (data) {
 }
 
 Graph.prototype.clearData = function () {
-  var bars = this.graph.datasets[0].bars;
-  for (var bar in bars) {
-    bars[bar].value = 0;
+  // Can not clear graph if you do not have one
+  if (this.hasGraph) {
+    var bars = this.graph.datasets[0].bars;
+    for (var bar in bars) {
+      bars[bar].value = 0;
+    }
+    this.update();
   }
-  this.update();
 }
 
 Graph.prototype.updateValue = function (key, value) {

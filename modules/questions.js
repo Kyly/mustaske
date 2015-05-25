@@ -14,14 +14,14 @@ function Questions() {
 
   // Set up for markdown filter
   marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: true,
-    smartLists: true,
-    smartypants: false
+    renderer    : new marked.Renderer(),
+    gfm         : true,
+    tables      : true,
+    breaks      : false,
+    pedantic    : false,
+    sanitize    : true,
+    smartLists  : true,
+    smartypants : false
   });
 }
 
@@ -33,9 +33,9 @@ function Questions() {
  */
 Questions.prototype.addQuestion = function (data) {
   var question = new Question({
-      question_id: uuid.v1(),
-      asker_id: data.asker_id,
-      question_text: marked(data.question_text)
+      question_id   : uuid.v1(),
+      asker_id      : data.asker_id,
+      question_text : marked(data.question_text)
     }
   );
 
