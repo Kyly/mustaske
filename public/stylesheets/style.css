@@ -10,6 +10,11 @@ p, a, li, select, input {
     font-family: 'Open Sans', sans-serif;
 }
 
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .canvas {
     background: #ffffff;
     /*height: auto;*/
@@ -87,7 +92,7 @@ p, a, li, select, input {
     top: 51px;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2;
     display: block;
     overflow-x: hidden;
     overflow-y: auto;
@@ -100,6 +105,8 @@ p, a, li, select, input {
 }
 
 .recent-questions-section {
+    background-color: #ffffff;
+    min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 4% 4% 4% 4%;
@@ -226,11 +233,6 @@ p, a, li, select, input {
     margin-bottom: 3%;
 }
 
-hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 /*.sidebar {*/
 /*position: fixed;*/
 /*top: 51px;*/
@@ -277,12 +279,12 @@ nav .room-controls .dropdown-menu {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
-#test-in-progress-btn.active {
+.test-in-progress-btn.active {
     color: #ff424e;
     text-shadow: 2px 0 6px #226a95;
 }
 
-#test-in-progress-btn.active.done {
+.test-in-progress-btn.active.done {
     color: #97F10E;
     text-shadow: 2px 0 6px #226a95;
 }
@@ -336,7 +338,7 @@ nav .room-controls .dropdown-menu {
     bottom: 0px;
     right: 0.08em;
     /*background-color: #ffffff;*/
-    background-image: url(../images/stripes.jpg);
+    /*background-image: url(../images/gray_diagonal_stripes.jpg);*/
     padding-top: 1em;
     padding-bottom: 1em;
     /*padding-right:0px;
@@ -345,17 +347,17 @@ nav .room-controls .dropdown-menu {
     margin-right: -1.2px;
 }
 
-#add-question .special-formatting-text {
+.askquestion .special-formatting-text {
     font-size: 0.7em;
     padding: 0;
     opacity: 0.7;
 }
 
-#add-question {
+.askquestion {
     padding-bottom: .3em;
 }
 
-#add-question .input-group {
+.askquestion .input-group {
     margin-bottom: .1em;
 }
 
@@ -433,6 +435,32 @@ nav .room-controls .dropdown-menu {
     .canvas .room-name {
         font-size:20px   
     }
+}
+
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }
 
 @media only screen and (max-width:900px) {

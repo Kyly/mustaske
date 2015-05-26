@@ -72,11 +72,11 @@
     <ul class="nav navmenu-nav">
         <br>
         <li class="sidenav-header">ROOM OPTIONS<br><hr></li>
-                <li id="sidenav-room-id"><span class="room-id-label">Room id: </span></li>
-                <li><span class="drop-down-room-id"></span></li>
-                <li class="divider"></li>
-                <li class="owner-view hidden"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Delete Room</a></li>
-                <li class="student-view"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
+        <li id="sidenav-room-id"><span class="room-id-label">Room id: </span></li>
+        <li><span class="drop-down-room-id"></span></li>
+        <li class="divider"></li>
+        <li class="owner-view hidden"><a href="#" class="leave-room-btn"><span class="fa fa-sign-out"></span> &nbsp; Delete Room</a></li>
+        <li class="student-view"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
     </ul>
     <br>
     <ul class="nav navmenu-nav">
@@ -197,19 +197,20 @@
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
-                        <li><a href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
+                        <li><a class="leave-room-btn" href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right hidden-xs poll-controls">
 
                 <li><a class="owner-view hidden start-poll-btn"
-                       href="#"><span class="fa fa-play"></span> Start Poll</a>
+                       href="#"><span class="fa fa-play"></span>
+                    <span class="start-poll-text">Start Poll</span></a>
                 </li>
                 <li><a class="owner-view hidden stop-poll-btn"
                        href="#"><span class="fa fa-stop"></span> Stop Poll</a>
                 </li>
-                <li><a id="test-in-progress-btn" class="student-view"
+                <li><a class="test-in-progress-btn student-view"
                        href="#"><span class="fa fa-check-square"></span></a>
                 </li>
                 <li><a class="show-graph-btn owner-view hidden"
@@ -305,16 +306,14 @@
             <div id="recent-questions-container">
             </div>
             <!-- /recent-questions-container -->
-            <form id="add-question"
-                  class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
+            <form class="askquestion col-md-offset-6 col-md-7 col-sm-12 col-xs-12"
                   role="form">
                 <div class="input-group form-group">
-                    <input id="add-question-text" type="text"
-                           class="form-control" placeholder="ask a question!"
+                    <input type="text"
+                           class="form-control add-question-text" placeholder="ask a question!"
                            maxlength="300">
                               <span class="input-group-btn">
-                                <button id="add-question-btn"
-                                        class="btn btn-default" type="submit"><i
+                                <button class="btn btn-default add-question-btn" type="submit"><i
                                         class="fa fa-paper-plane"></i>
                                 </button>
                               </span>

@@ -5,36 +5,42 @@
  * Author: Nick Gibson
  * @param none
  */
-var sec = 0.0;
-var min = 0.0;
-
-function Timer() {};
+function Timer(selector) {
+  this.sec = 0.0;
+  this.min = 0.0;
+  this.target = selector;
+  this.targetText = this.target.text();
+};
 
 Timer.prototype.start = function () {
-  sec = 0.0;
-  min = 0.0;
+  this.sec = 0.0;
+  this.min = 0.0;
 
-  this.timing = setInterval(this.update, 1000);
+  var _this = this;
+  this.timing = setInterval(function () {_this.update();}, 1000);
 }
 
 Timer.prototype.update = function() {
-  sec++;
+  this.sec++;
 
-  if (sec == 60.0) {
-    sec = 0.0;
-    min++;
+  if (this.sec == 60.0) {
+    this.sec = 0.0;
+    this.min++;
   }
 
-  var padSec = sec.toString();
-  var padMin = min.toString();
-  if (sec < 10)
+  var padSec = this.sec.toString();
+  var padMin = this.min.toString();
+  if (this.sec < 10)
     padSec = '0' + padSec;
-  if (min < 10)
+  if (this.min < 10)
     padMin = '0' + padMin;
 
+  this.target.text(padMin + ':' + padSec);
   console.log(padMin + ':' + padSec);
 }
 
 Timer.prototype.stop = function() {
   clearInterval(this.timing);
+  this.target.text(this.targetText);
+
 }
