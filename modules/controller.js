@@ -70,18 +70,33 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    socket.emit('create room', returnData);
  }
 
- /**
-  * This handles the flow of data when a 'close room' emit is received by
-  * the server
-  *
-  * @param socket: Socket IO object
-  * @param roomId: UUID of room to be closed
-  * @return true if room closes, else false
-  */
-  Controller.prototype.closeRoom = function(io, socket, roomId) {
-    var returnData = rooms.closeRoom({owner_id: socket.id, room_id: roomId})
-    io.sockets.in(roomId).emit('close room', returnData);
+/**
+ * This handles the flow of data when a 'leave room' emit is received by
+ * the server
+ *
+ * @param socket: IO object
+ * @param roomId: id of room to leave
+ * @return  true if room exists
+ *          or false if room does not exist
+ */
+Controller.prototype.leaveRoom = function(io, socket, roomID) {
+  if(this.rooms.hasRoom(roomID)) {
+    //Check if the socket leaving the room is the owner
+    //If it is, delete the room and kick everyone
+    if(this.rooms.isOwner({user_id: socket.id, room_id: roomID}))
+    {
+      io.sockets.in(roomID).emit('leave room');
+
+      this.rooms.closeRoom({owner_id: socket.id, room_id: roomID});
+    }
+
+    socket.leave(roomID);
+
+    socket.emit('leave room');
   }
+  else
+    socket.emit('leave room');
+}
 
   /**
    * This handles closing a specified room

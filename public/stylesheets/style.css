@@ -215,7 +215,7 @@ p, a, li, select, input {
 
 .question {
     font-size: 0.97em;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .top-questions-container .question-content {
@@ -249,7 +249,7 @@ hr {
 }
 
 .navbar a {
-    color: #ffffff;
+    color: #e4e3e4;
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav>li>a:focus,
@@ -261,6 +261,8 @@ hr {
 .nav span.fa {
     font-size: 1.3em;
 }
+
+/*------------------------------- Room Controls ------------------------------*/
 
 nav .room-controls .dropdown-menu {
     color: #bebebe;
@@ -274,6 +276,19 @@ nav .room-controls .dropdown-menu {
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+#test-in-progress-btn.active {
+    color: #ff424e;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+#test-in-progress-btn.active.done {
+    color: #97F10E;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+/*----------------------------/ Room Controls --------------------------------*/
+
 
 .dropdown-menu>li>span {
     display: block;
@@ -315,7 +330,8 @@ nav .room-controls .dropdown-menu {
     z-index: 10;
     bottom: 0px;
     right: 0.08em;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
+    background-image: url(../images/stripes.jpg);
     padding-top: 1em;
     padding-bottom: 1em;
     /*padding-right:0px;
@@ -377,7 +393,12 @@ nav .room-controls .dropdown-menu {
 	height:2.5em;
 }*/
 
-@media only screen and (max-width: 750px) {
+.poll-controls a, .room-controls a{
+    font-size: 13px;
+}
+
+
+@media only screen and (max-width: 767px) {
     .top-questions-section {
         height: 100%;
         position: relative;
@@ -395,5 +416,15 @@ nav .room-controls .dropdown-menu {
     .rest {
         top: 0px;
         overflow: scroll;
+    }
+    
+    .canvas .room-name {
+        font-size:20px   
+    }
+}
+
+@media only screen and (max-width:900px) {
+    .canvas .room-name {
+        font-size:15px;
     }
 }
