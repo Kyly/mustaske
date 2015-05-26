@@ -566,6 +566,24 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Calls controller to dismiss a question
+   */
+  var clickDismissQuestionImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      question_id = $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('dismiss question', data);
+  }
+
+  /**
+   * removes question from html
+   */
+  var dismissQuestionImpl = function (question_id) {
+    console.log(question_id);
+  }
+
   var flexModalImpl = function () {
     $(this).find('.modal-body').css({
       width:'auto', //probably not needed
@@ -613,6 +631,8 @@ var ViewActions = function () {
     clickStartPoll             : clickStartPollImpl,
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
-    stopPoll                   : stopPollImpl
+    stopPoll                   : stopPollImpl,
+    clickDismissQuestion       : clickDismissQuestionImpl,
+    dismissQuestion            : dismissQuestionImpl
   }
 }();

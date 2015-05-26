@@ -201,5 +201,25 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
     }
   }
 
+  /**
+   * Calls delete question in rooms
+   * @param socket: Socket IO object
+   * @param data = {room_id: String, question_id: String}
+   */
+  Controller.prototype.dismissQuestion = function(io, socket, data) {
+    var dismissData = {
+      room_id:     data.room_id,
+      question_id: data.question_id,
+      user_id:     socket.id
+    };
+
+    var returnData = this.rooms.deleteQuestion(dismissData);
+
+    if (returnData != false) { //question was deleted
+      io.sockets.in(data.room_id).emit('dismiss question', data.question_id);
+
+    }
+  }
+
 
 module.exports = Controller;

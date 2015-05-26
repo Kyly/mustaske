@@ -19,6 +19,7 @@ $(document).ready(function () {
   socket.on('vote poll', ViewActions.updatePollScore);
   socket.on('start poll', ViewActions.startPoll);
   socket.on('stop poll', ViewActions.stopPoll);
+  socket.on('dismiss question', ViewActions.dismissQuestion);
 
   /**
    * UI Listeners
