@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph, owner, regexJoinRoom;
+      BASE_SCORE, roomData, graph, owner, regexJoinRoom, pollOn;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -24,7 +24,8 @@ var ViewActions = function () {
     BASE_SCORE               = 0;
     roomData                 = $('.room-name');
     owner                    = false;
-    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d{2})$/;
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
+    pollOn                   = false;
 
     /**
      * Set up sorted container for top questions.
@@ -72,6 +73,7 @@ var ViewActions = function () {
       $('body').find('.owner-view').each(function () {
         $(this).removeClass('hidden').addClass('show');
       });
+      $('.student-view').addClass('hidden');
 
       owner = true;
       graph = new Graph();
@@ -511,12 +513,15 @@ var ViewActions = function () {
    * TODO: find out which vote button user clicked
    */
   var votePollImpl = function () {
-    var data = {
-      room_id: $('.room-name').data('room-id'),
-      option: $(this).text()
-    };
-    //console.log(data);
-    socket.emit('vote poll', data);
+    if (!owner) {
+      var data = {
+        room_id: $('.room-name').data('room-id'),
+        option: $(this).text()
+      };
+      //console.log(data);
+      socket.emit('vote poll', data);
+      $('#test-in-progress-btn').addClass('done');
+    }
   }
   /**
    * Updates the poll results graph
@@ -535,27 +540,32 @@ var ViewActions = function () {
    * Sets poll to active
    */
   var clickStartPollImpl = function () {
-    var data = {
-      room_id: $('.room-name').data('room-id'),
-      active: true
-    };
-    socket.emit('set active poll', data);
+    if (owner) {
+      var data = {
+        room_id: $('.room-name').data('room-id'),
+        active: true
+      };
+      socket.emit('set active poll', data);
+    }
   }
 
   /**
    * Sets poll to inactive
    */
   var clickStopPollImpl = function () {
-    var data = {
-      room_id: $('.room-name').data('room-id'),
-      active: false
-    };
-    socket.emit('set active poll', data);
+    if (owner) {
+      var data = {
+        room_id: $('.room-name').data('room-id'),
+        active: false
+      };
+      socket.emit('set active poll', data);
+    }
   }
 
   var startPollImpl = function () {
-    //console.log('poll active');
+    pollOn = true;
     if (!owner) {
+      $('#test-in-progress-btn').addClass('active');
       $('#clicker-modal').modal('show');
     } else {
       $('#start-poll-btn').addClass('poll-on');
@@ -567,11 +577,18 @@ var ViewActions = function () {
    * Sets poll to inactive
    */
   var stopPollImpl = function () {
-    //console.log('poll inactive');
+    pollOn = false;
     if (!owner) {
+      $('#test-in-progress-btn').removeClass('done active');
       $('#clicker-modal').modal('hide');
     } else {
       $('#start-poll-btn').removeClass('poll-on');
+    }
+  }
+
+  var showClickerDialogImpl = function () {
+    if (pollOn && !owner) {
+      $('#clicker-modal').modal('show');
     }
   }
 
@@ -582,7 +599,6 @@ var ViewActions = function () {
       'max-height':'100%'
     });
   }
-
 
 //============================================================================//
 //----------------------------- Room Controls --------------------------------//
@@ -597,6 +613,7 @@ var ViewActions = function () {
 
 
   return {
+    showClickerDialog          : showClickerDialogImpl,
     joinMakeSubmit             : joinMakeSubmitImpl,
     joinMakeInput              : joinMakeInputImpl,
     flexModal                  : flexModalImpl,

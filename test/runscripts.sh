@@ -6,6 +6,8 @@ rm -rf $FILE
 
 echo "Results are logged to $FILE"
 
+npm start
+
 # Run all python files in selenium
 for file in $TESTS
 do
