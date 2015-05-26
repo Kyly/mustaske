@@ -21,9 +21,12 @@ class JoinRoom(unittest.TestCase):
         driver.find_element_by_css_selector("input.form-control").clear()
         driver.find_element_by_css_selector("input.form-control").send_keys("Test_Room")
         driver.find_element_by_id("make-room").click()
-        driver.find_element_by_link_text("Room Options").click()
+
+        #driver.find_element_by_link_text("Room Options").click()
+        driver.find_element_by_css_selector("span.fa.fa-cogs").click()
         room = driver.find_element_by_class_name("drop-down-room-id").text
         driver.execute_script("$(window.open('"+self.base_url+"'))")
+
         driver.switch_to_window(driver.window_handles[-1])
         driver.find_element_by_css_selector("input.form-control").clear()
         driver.find_element_by_css_selector("input.form-control").send_keys(room)
