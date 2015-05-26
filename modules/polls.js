@@ -6,7 +6,7 @@
  */
 
 var Poll = require('./poll')
-var uuid     = require('node-uuid');
+var uuid = require('node-uuid');
 
 function Polls() {
 	this.polls = {};  // Hash containing poll objects
@@ -51,7 +51,7 @@ Polls.prototype.setActive = function (data) {
  * Vote on a poll
  *
  * @param {poll_id: String, voter_id: String, option: String}
- * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
  */
 Polls.prototype.vote = function (data) {
   // Check if poll exists

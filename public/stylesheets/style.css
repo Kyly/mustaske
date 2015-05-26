@@ -1,12 +1,8 @@
 @charset "UTF-8";
 
-html, body {
-    height: 98%;
-}
 
 body, html {
     margin: 0;
-    /*overflow: hidden;*/
     height: 100%;
 }
 
@@ -16,15 +12,14 @@ p, a, li, select, input {
 
 .canvas {
     background: #ffffff;
+    /*height: auto;*/
+    /*z-index: 2;*/
+    /*position: relative;*/
 }
 
 .rest .container-fluid {
     padding: 1%;
 }
-
-/*.mobile-offcanvas-menu {*/
-    /*z-index: 1;*/
-/*}*/
 
 .mobile-toggle .navbar-toggle {
     font-size: 2em;
@@ -59,6 +54,23 @@ p, a, li, select, input {
     letter-spacing: 0.10em;
     color: #ffffff;
 
+}
+
+#join-create-room .btn {
+    /*text-transform: uppercase;*/
+    font-family: monospace;
+    letter-spacing: 0.1em;
+    text-shadow: 1px 1px #999;
+    border-radius: 0;
+}
+
+.make-join-warning {
+    font-size: 1.3em;
+    visibility: hidden;
+    border-radius: .2em;
+    color: rgba(255, 255, 255, 0.60);
+    padding: .5em;
+    margin-top: .5em;
 }
 
 .rest {
@@ -130,6 +142,10 @@ p, a, li, select, input {
     display: none;
 }
 
+.question-content {
+    word-wrap: break-word;
+}
+
 .top-question {
     margin-bottom: 1.5em;
     background-color: #ffffff;
@@ -199,7 +215,7 @@ p, a, li, select, input {
 
 .question {
     font-size: 0.97em;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .top-questions-container .question-content {
@@ -230,6 +246,62 @@ hr {
 
 .navbar {
     border-radius: 0;
+}
+
+.navbar a {
+    color: #ffffff;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav>li>a:focus,
+.nav>li>a:hover {
+    background-color: #226a95;
+    outline: none;
+}
+
+.nav span.fa {
+    font-size: 1.3em;
+}
+
+/*------------------------------- Room Controls ------------------------------*/
+
+nav .room-controls .dropdown-menu {
+    color: #bebebe;
+}
+
+.nav .poll-on {
+    color: rgb(151, 241, 14);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+#test-in-progress-btn.active {
+    color: #ff424e;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+#test-in-progress-btn.active.done {
+    color: #97F10E;
+    text-shadow: 2px 0 6px #226a95;
+}
+
+/*----------------------------/ Room Controls --------------------------------*/
+
+
+.dropdown-menu>li>span {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #414141;
+    white-space: nowrap;
+}
+
+.room-id-label {
+
 }
 
 .vcenter {
@@ -284,6 +356,33 @@ hr {
 .num-votes, .num-comments {
     font-weight: 400;
 }
+
+
+.owner .num-votes {
+    background-color: #D1D1D1;
+    padding:5px;
+}
+
+.owner .warn-user-pic, .owner .dismiss-question-pic{
+
+    padding-left: 0px;
+
+    height: 1.7em;
+    width: 2.8em;
+ 
+}
+
+
+/*.modal-dialog,*/
+/*.modal-content {*/
+    /* 80% of window height */
+    /*height: 80% !important;*/
+/*}*/
+
+/*.modal-body {*/
+    /* 100% = dialog height, 120px = header + footer */
+    /*max-height: calc(100% - 120px);*/
+/*}*/
 
 /*.askQuestion .form-control{
 	width:80%;
