@@ -30,8 +30,8 @@ $(document).ready(function () {
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
   body.on('click', 'a.thumbs-up-to-active', ViewActions.thumbsUpOnClick);
   body.on('click', 'a.thumbs-down-to-active', ViewActions.thumbsDownOnClick);
-  body.on('click', '#start-poll-btn', ViewActions.clickStartPoll);
-  body.on('click', '#stop-poll-btn', ViewActions.clickStopPoll);
+  body.on('click', '.start-poll-btn', ViewActions.clickStartPoll);
+  body.on('click', '.stop-poll-btn', ViewActions.clickStopPoll);
   body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
   body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
   body.on('click', '#test-in-progress-btn', ViewActions.showClickerDialog);

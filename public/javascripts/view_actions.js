@@ -77,7 +77,7 @@ var ViewActions = function () {
 
       owner = true;
       graph = new Graph();
-      //$('#show-graph-btn').removeClass('hidden').addClass('show');
+      //$('.show-graph-btn').removeClass('hidden').addClass('show');
       console.log('Room Id: ' + roomInfo.room_id);
     }
   }
@@ -559,7 +559,7 @@ var ViewActions = function () {
       $('#test-in-progress-btn').addClass('active');
       $('#clicker-modal').modal('show');
     } else {
-      $('#start-poll-btn').addClass('poll-on');
+      $('.start-poll-btn').addClass('poll-on');
       graph.clearData();
     }
   }
@@ -573,7 +573,7 @@ var ViewActions = function () {
       $('#test-in-progress-btn').removeClass('done active');
       $('#clicker-modal').modal('hide');
     } else {
-      $('#start-poll-btn').removeClass('poll-on');
+      $('.start-poll-btn').removeClass('poll-on');
     }
   }
 
