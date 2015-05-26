@@ -285,8 +285,13 @@ nav .room-controls .dropdown-menu {
     white-space: nowrap;
 }
 
-.room-id-label {
+.navmenu-nav .drop-down-room-id{
+    padding-left:1em;
+    font-weight:700;
+}
 
+.navmenu-nav .room-id-label {
+    padding-left:1em;   
 }
 
 .vcenter {
@@ -380,6 +385,13 @@ nav .room-controls .dropdown-menu {
 
 .poll-controls a, .room-controls a{
     font-size: 13px;
+}
+
+.sidenav-header {
+ font-weight:700;
+    color:#000000;
+    padding-left:1em;
+    padding-right:1em;
 }
 
 
