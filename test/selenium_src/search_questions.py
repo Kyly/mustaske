@@ -20,7 +20,7 @@ class SearchQuestions(unittest.TestCase):
         driver.get(self.base_url + "/")
         driver.find_element_by_css_selector("input.form-control").clear()
         driver.find_element_by_css_selector("input.form-control").send_keys("Bla")
-        driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
+        driver.find_element_by_id("make-room").click()
         driver.find_element_by_id("add-question-text").clear()
         driver.find_element_by_id("add-question-text").send_keys("Stuff")
         driver.find_element_by_id("add-question-btn").click()
