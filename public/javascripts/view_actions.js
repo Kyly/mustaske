@@ -103,6 +103,15 @@ var ViewActions = function () {
   }
 
   /**
+   * Sets poll to active
+   */
+  var leaveRoomImpl = function () {
+    var room_id = $('.room-name').data('room-id');
+    
+    socket.emit('leave room', room_id);
+  }
+
+  /**
    * Add all question to user screen. For when room is first joined.
    *
    * @param roomInfo = {room_name : string, room_id : string,
@@ -601,6 +610,7 @@ var ViewActions = function () {
     updateGraph                : updateGraphImpl,
     enterRoomOwner             : enterRoomOwnerImpl,
     enterRoom                  : enterRoomImpl,
+    leaveRoom                  : leaveRoomImpl,
     showHomeScreen             : showHomeScreenImpl,
     updateTopQuestionThreshold : updateTopQuestionThresholdImpl,
     updateScore                : updateScoreImpl,
