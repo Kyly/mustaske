@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph, owner, regexJoinRoom, pollOn;
+      BASE_SCORE, roomData, graph, owner, regexJoinRoom, pollOn, timer;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -18,14 +18,15 @@ var ViewActions = function () {
    */
   var setupUIImpl = function () {
 
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
+    roomData                 = $('.room-name');
+    timer                    = new Timer();
+    owner                    = false;
+    pollOn                   = false;
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
-    roomData                 = $('.room-name');
-    owner                    = false;
-    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
-    pollOn                   = false;
 
     /**
      * Set up sorted container for top questions.
@@ -228,7 +229,7 @@ var ViewActions = function () {
 
 
 //============================================================================//
-//---------------------------- ?????????????? --------------------------------//
+//---------------------------- Question View ---------------------------------//
 //============================================================================//
 
   /**
@@ -518,7 +519,6 @@ var ViewActions = function () {
         room_id: $('.room-name').data('room-id'),
         option: $(this).text()
       };
-      //console.log(data);
       socket.emit('vote poll', data);
       $('#test-in-progress-btn').addClass('done');
     }
@@ -528,8 +528,6 @@ var ViewActions = function () {
    * TODO: update the graph
    */
   var updatePollScoreImpl = function (results) {
-    //console.log('voted');
-    //console.log(results);
     if (owner) {
       graph.updateData(results);
       graph.update();

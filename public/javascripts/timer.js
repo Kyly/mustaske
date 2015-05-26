@@ -5,8 +5,9 @@
  * Author: Nick Gibson
  * @param none
  */
-sec = 0.0;
-min = 0.0;
+var sec = 0.0;
+var min = 0.0;
+
 function Timer() {};
 
 Timer.prototype.start = function () {
