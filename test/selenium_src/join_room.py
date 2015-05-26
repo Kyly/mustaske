@@ -22,16 +22,22 @@ class JoinRoom(unittest.TestCase):
         driver.find_element_by_css_selector("input.form-control").send_keys("Test_Room")
         driver.find_element_by_id("make-room").click()
 
-        #driver.find_element_by_link_text("Room Options").click()
+        ownerRoomName = driver.find_element_by_css_selector("span.navbar-brand.room-name").text
+        self.assertEqual("Test_Room",ownerRoomName)
         driver.find_element_by_css_selector("span.fa.fa-cogs").click()
-        room = driver.find_element_by_class_name("drop-down-room-id").text
+        ownerRoomID = driver.find_element_by_class_name("drop-down-room-id").text
+        
         driver.execute_script("$(window.open('"+self.base_url+"'))")
-
         driver.switch_to_window(driver.window_handles[-1])
         driver.find_element_by_css_selector("input.form-control").clear()
-        driver.find_element_by_css_selector("input.form-control").send_keys(room)
+        driver.find_element_by_css_selector("input.form-control").send_keys(ownerRoomID)
         driver.find_element_by_id("join-room").click()
-        time.sleep(10)
+
+        audienceRoomName = driver.find_element_by_css_selector("span.navbar-brand.room-name").text
+        self.assertEqual(ownerRoomName,audienceRoomName)
+        driver.find_element_by_css_selector("span.fa.fa-cogs").click()
+        audienceRoomID = driver.find_element_by_class_name("drop-down-room-id").text
+        self.assertEqual(ownerRoomID,audienceRoomID)
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
