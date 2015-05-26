@@ -67,14 +67,53 @@
 <div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
+
+    
     <ul class="nav navmenu-nav">
-        <li><span class="room-rid">Slide in</span></li>
-        <li><span class="room-user-status">Push</span></li>
+        <br>
+        <li class="sidenav-header">ROOM OPTIONS<br><hr></li>
+        <li id="sidenav-room-id"><span class="room-id-label">Room id: </span></li>
+        <li><span class="drop-down-room-id"></span></li>
+        <li class="divider"></li>
+        <li class="owner-view hidden"><a href="#" class="leave-room-btn"><span class="fa fa-sign-out"></span> &nbsp; Delete Room</a></li>
+        <li class="student-view"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
     </ul>
+    <br>
     <ul class="nav navmenu-nav">
+        <li class="sidenav-header">QUESTIONS OPTIONS<br><hr></li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Top
-                Questions<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Top 
+                Questions <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li>
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                          <button type="button"
+                                  class="btn btn-default btn-number"
+                                  data-type="minus" data-field="quant[1]"
+                                  disabled="disabled">
+                              <span class="glyphicon glyphicon-minus"></span>
+                          </button>
+                      </span>
+                        <input type="text" name="quant[1]"
+                               class="form-control input-number" value="1"
+                               min="1" max="10">
+                      <span class="input-group-btn">
+                          <button type="button"
+                                  class="btn btn-default btn-number"
+                                  data-type="plus" data-field="quant[1]">
+                              <span class="glyphicon glyphicon-plus"></span>
+                          </button>
+                      </span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        
+        
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent Questions
+                <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
             <ul class="dropdown-menu navmenu-nav">
                 <li>
                     <div class="input-group">
@@ -101,10 +140,24 @@
             </ul>
         </li>
     </ul>
-    <ul class="nav navmenu-nav">
+
+    <br>
+    <ul class="nav navmenu-nav owner-view hidden">
+        <li class="sidenav-header">POLL OPTIONS<br><hr></li>
+                <li><a class="owner-view hidden start-poll-btn"
+                       href="#"><span class="fa fa-play"></span> &nbsp; Start Poll</a>
+                </li>
+                <li><a class="owner-view hidden stop-poll-btn"
+                       href="#"><span class="fa fa-stop"></span> &nbsp; Stop Poll</a>
+                </li>
+                <li><a class="show-graph-btn owner-view hidden"
+                       data-toggle="modal" data-target=".graph-modal-lg" href="#">
+                    <span class="fa fa-bar-chart"></span> &nbsp; Poll Results</a>
+                </li>
+    </ul>
+   <!-- <ul class="nav navmenu-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent
-                Questions<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Options <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
             <ul class="dropdown-menu navmenu-nav">
                 <li><a href="#"></a></li>
                 <li><a href="#">Another action</a></li>
@@ -116,6 +169,10 @@
             </ul>
         </li>
     </ul>
+        <ul class="nav navmenu-nav">
+        <li><span class="room-rid">Slide in</span></li>
+        <li><span class="room-user-status">Push</span></li>
+    </ul>-->
 </div>
 <!-- end Offcanvas menu -->
 <div class="canvas"><!-- Control for offcanvas -->
@@ -140,22 +197,23 @@
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
-                        <li><a href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
+                        <li><a class="leave-room-btn" href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right hidden-xs poll-controls">
 
-                <li><a id="start-poll-btn" class="owner-view hidden"
-                       href="#"><span class="fa fa-play"></span> Start Poll</a>
+                <li><a class="owner-view hidden start-poll-btn"
+                       href="#"><span class="fa fa-play"></span>
+                    <span class="start-poll-text">Start Poll</span></a>
                 </li>
-                <li><a id="stop-poll-btn" class="owner-view hidden"
+                <li><a class="owner-view hidden stop-poll-btn"
                        href="#"><span class="fa fa-stop"></span> Stop Poll</a>
                 </li>
-                <li><a id="test-in-progress-btn" class="student-view"
+                <li><a class="test-in-progress-btn student-view"
                        href="#"><span class="fa fa-check-square"></span></a>
                 </li>
-                <li><a id="show-graph-btn" class="owner-view hidden"
+                <li><a class="show-graph-btn owner-view hidden"
                        data-toggle="modal" data-target=".graph-modal-lg" href="#">
                     <span class="fa fa-bar-chart"></span> Poll Results</a>
                 </li>
@@ -248,16 +306,14 @@
             <div id="recent-questions-container">
             </div>
             <!-- /recent-questions-container -->
-            <form id="add-question"
-                  class="askquestion col-md-offset-6 col-md-7 col-sm-7 col-xs-12"
+            <form class="askquestion col-md-offset-6 col-md-7 col-sm-12 col-xs-12"
                   role="form">
                 <div class="input-group form-group">
-                    <input id="add-question-text" type="text"
-                           class="form-control" placeholder="ask a question!"
+                    <input type="text"
+                           class="form-control add-question-text" placeholder="ask a question!"
                            maxlength="300">
                               <span class="input-group-btn">
-                                <button id="add-question-btn"
-                                        class="btn btn-default" type="submit"><i
+                                <button class="btn btn-default add-question-btn" type="submit"><i
                                         class="fa fa-paper-plane"></i>
                                 </button>
                               </span>
@@ -345,6 +401,7 @@
     <script src="/javascripts/vendor/bootbox/bootbox.js"></script>
     <script src="/javascripts/vendor/handlebars/handlebars.min.js"></script>
     <script src="/javascripts/graph.js"></script>
+    <script src="/javascripts/timer.js"></script>
     <script src="/javascripts/view_actions.js"></script>
     <script src="/javascripts/index.js"></script>
     <script src="/tpl/templates.js"></script>

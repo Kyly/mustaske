@@ -10,7 +10,7 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph, owner, regexJoinRoom, pollOn;
+      BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -18,14 +18,15 @@ var ViewActions = function () {
    */
   var setupUIImpl = function () {
 
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
+    roomData                 = $('.room-name');
+    timer                    = new Timer($('.start-poll-text'));
+    owner                    = false;
+    activePoll               = false;
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
-    roomData                 = $('.room-name');
-    owner                    = false;
-    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
-    pollOn                   = false;
 
     /**
      * Set up sorted container for top questions.
@@ -77,7 +78,7 @@ var ViewActions = function () {
 
       owner = true;
       graph = new Graph();
-      //$('#show-graph-btn').removeClass('hidden').addClass('show');
+
       console.log('Room Id: ' + roomInfo.room_id);
     }
   }
@@ -101,6 +102,11 @@ var ViewActions = function () {
       overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
       addAllQuestions(roomInfo)
+
+      if (roomInfo.active_poll) {
+        activePoll = roomInfo.active_poll;
+        $('.test-in-progress-btn').addClass('active');
+      }
     }
   }
 
@@ -109,7 +115,6 @@ var ViewActions = function () {
    */
   var leaveRoomImpl = function () {
     var room_id = $('.room-name').data('room-id');
-    
     socket.emit('leave room', room_id);
   }
 
@@ -228,7 +233,7 @@ var ViewActions = function () {
 
 
 //============================================================================//
-//---------------------------- ?????????????? --------------------------------//
+//---------------------------- Question View ---------------------------------//
 //============================================================================//
 
   /**
@@ -358,7 +363,7 @@ var ViewActions = function () {
    * Callback for add question button
    */
   var addQuestionOnClickImpl = function (event) {
-    var textBox      = $('#add-question-text');
+    var textBox      = $('.add-question-text');
     var questionText = textBox.val();
     var data = {
       question_text: questionText,
@@ -510,7 +515,6 @@ var ViewActions = function () {
 
   /**
    * Sends out user vote for the poll.
-   * TODO: find out which vote button user clicked
    */
   var votePollImpl = function () {
     if (!owner) {
@@ -518,18 +522,14 @@ var ViewActions = function () {
         room_id: $('.room-name').data('room-id'),
         option: $(this).text()
       };
-      //console.log(data);
       socket.emit('vote poll', data);
-      $('#test-in-progress-btn').addClass('done');
+      $('.test-in-progress-btn').addClass('done');
     }
   }
   /**
    * Updates the poll results graph
-   * TODO: update the graph
    */
   var updatePollScoreImpl = function (results) {
-    //console.log('voted');
-    //console.log(results);
     if (owner) {
       graph.updateData(results);
       graph.update();
@@ -562,13 +562,17 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Show dialog when poll first starts
+   */
   var startPollImpl = function () {
-    pollOn = true;
+    activePoll = true;
     if (!owner) {
-      $('#test-in-progress-btn').addClass('active');
+      $('.test-in-progress-btn').addClass('active');
       $('#clicker-modal').modal('show');
     } else {
-      $('#start-poll-btn').addClass('poll-on');
+      timer.start();
+      $('.start-poll-btn').addClass('poll-on');
       graph.clearData();
     }
   }
@@ -577,21 +581,26 @@ var ViewActions = function () {
    * Sets poll to inactive
    */
   var stopPollImpl = function () {
-    pollOn = false;
+    activePoll = false;
     if (!owner) {
-      $('#test-in-progress-btn').removeClass('done active');
+      $('.test-in-progress-btn').removeClass('done active');
       $('#clicker-modal').modal('hide');
     } else {
-      $('#start-poll-btn').removeClass('poll-on');
+      timer.stop();
+      $('.start-poll-btn').removeClass('poll-on');
     }
   }
 
+  /**
+   * Displays clicker dialog after poll already started
+   */
   var showClickerDialogImpl = function () {
-    if (pollOn && !owner) {
+    if (activePoll && !owner) {
       $('#clicker-modal').modal('show');
     }
   }
 
+  // TODO Don't think this is really working
   var flexModalImpl = function () {
     $(this).find('.modal-body').css({
       width:'auto', //probably not needed
@@ -606,11 +615,6 @@ var ViewActions = function () {
   var copyRoomIdImpl = function (event) {
     event.stopPropagation();
   }
-
-  // TODO: Need Poll-related functions, when that functionality firms
-  // up in the backend.
-
-
 
   return {
     showClickerDialog          : showClickerDialogImpl,

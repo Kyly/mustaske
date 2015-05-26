@@ -83,15 +83,12 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
   if(this.rooms.hasRoom(roomID)) {
     //Check if the socket leaving the room is the owner
     //If it is, delete the room and kick everyone
-    if(this.rooms.isOwner({user_id: socket.id, room_id: roomID}))
-    {
+    if(this.rooms.isOwner({user_id: socket.id, room_id: roomID})) {
       io.sockets.in(roomID).emit('leave room');
-
       this.rooms.closeRoom({owner_id: socket.id, room_id: roomID});
     }
 
     socket.leave(roomID);
-
     socket.emit('leave room');
   }
   else
