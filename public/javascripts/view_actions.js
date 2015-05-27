@@ -112,11 +112,38 @@ var ViewActions = function () {
   }
 
   /**
-   * Sets poll to active
+   * Callback for leave room action.
    */
   var leaveRoomImpl = function () {
     var room_id = $('.room-name').data('room-id');
-    socket.emit('leave room', room_id);
+
+    if (owner) {
+      bootbox.dialog({
+        message: '<div class="delete-room-warning container-fluid"><div class="row">'
+                 + '<div class="col-xs-12 text-center"><img class="img-responsive" src="../images/scary.gif"/></div>'
+                 + '<div class="col-xs-12"><h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4></div>'
+                 + '</div></div>',
+        title: "Are you sure?",
+        buttons: {
+          main:    {
+            label:     "Stay",
+            className: "btn-success"
+          },
+          danger:  {
+            label:     "Delete",
+            className: "btn-danger",
+            callback:  function () {
+              socket.emit('leave room', room_id);
+            }
+          }
+        }
+      });
+    } else {
+      socket.emit('leave room', room_id);
+
+    }
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
   }
 
   /**
