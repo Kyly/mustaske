@@ -75,6 +75,7 @@ var ViewActions = function () {
         $(this).removeClass('hidden').addClass('show');
       });
       $('.student-view').addClass('hidden');
+      $('span.leave-room-text').text('Delete Room');
 
       owner = true;
       graph = new Graph();
