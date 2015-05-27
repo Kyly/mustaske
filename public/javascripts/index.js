@@ -25,7 +25,7 @@ $(document).ready(function () {
    */
   var body = $('body');
   body.on('submit', 'form.askquestion', ViewActions.addQuestionOnClick);
-  body.on('submit', '#search-questions', ViewActions.searchRecentQuestions);
+  body.on('submit', '.search.search-questions', ViewActions.searchRecentQuestions);
   body.on('submit', '#login-info', ViewActions.joinMakeSubmit);
   body.on('input', '#login-info input', ViewActions.joinMakeInput);
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
