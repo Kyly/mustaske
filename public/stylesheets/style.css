@@ -380,6 +380,11 @@ nav .room-controls .dropdown-menu {
  
 }
 
+.delete-room-warning img {
+    display:block;
+    margin:auto;
+    max-height: 30em;
+}
 
 /*.modal-dialog,*/
 /*.modal-content {*/
