@@ -16,7 +16,7 @@ var Rooms = require('./rooms');
  * More than likely, this will just be the Rooms() instance.
  */
 function Controller () {
-  this.rooms     = new Rooms();
+  this.rooms = new Rooms();
 }
 
 /**
@@ -70,18 +70,30 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
    socket.emit('create room', returnData);
  }
 
- /**
-  * This handles the flow of data when a 'close room' emit is received by
-  * the server
-  *
-  * @param socket: Socket IO object
-  * @param roomId: UUID of room to be closed
-  * @return true if room closes, else false
-  */
-  Controller.prototype.closeRoom = function(io, socket, roomId) {
-    var returnData = rooms.closeRoom({owner_id: socket.id, room_id: roomId})
-    io.sockets.in(roomId).emit('close room', returnData);
+/**
+ * This handles the flow of data when a 'leave room' emit is received by
+ * the server
+ *
+ * @param socket: IO object
+ * @param roomId: id of room to leave
+ * @return  true if room exists
+ *          or false if room does not exist
+ */
+Controller.prototype.leaveRoom = function(io, socket, roomID) {
+  if(this.rooms.hasRoom(roomID)) {
+    //Check if the socket leaving the room is the owner
+    //If it is, delete the room and kick everyone
+    if(this.rooms.isOwner({user_id: socket.id, room_id: roomID})) {
+      io.sockets.in(roomID).emit('leave room');
+      this.rooms.closeRoom({owner_id: socket.id, room_id: roomID});
+    }
+
+    socket.leave(roomID);
+    socket.emit('leave room');
   }
+  else
+    socket.emit('leave room');
+}
 
   /**
    * This handles closing a specified room
@@ -168,6 +180,37 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
       room_id: data.room_id};
     var returnData = this.rooms.warnUser(warnData);
     io.sockets.in(data.room_id).emit('warn user', returnData);
+  }
+
+  /**
+   * This handles voting on option in the poll
+   * @param socket : Socket IO object
+   * @param data = {room_id: String, option: String, voter_id: String}
+   */
+  Controller.prototype.votePoll = function(io, socket, data) {
+    var voteData = {room_id: data.room_id, option: data.option, voter_id: socket.id};
+    var returnData = this.rooms.vote(voteData);
+
+    if (returnData != false)
+      io.sockets.in(data.room_id).emit('vote poll', returnData);
+  }
+
+  /**
+   * This handles voting on option in the poll
+   * @param socket: Socket IO object
+   * @param data = {room_id: String, user_id: String, active: Boolean}
+   */
+  Controller.prototype.setActivePoll = function(io, socket, data) {
+    var activeData = {room_id: data.room_id, user_id: socket.id, active: data.active};
+    var returnData = this.rooms.setActive(activeData);
+
+    if (returnData.changed) { //poll active state has changed
+      if (returnData.active)
+        io.sockets.in(data.room_id).emit('start poll');
+      else //stopping
+        io.sockets.in(data.room_id).emit('stop poll');
+
+    }
   }
 
 

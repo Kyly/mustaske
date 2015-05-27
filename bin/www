@@ -61,8 +61,8 @@ io.sockets.on('connection', function (socket) {
     controller.createRoom(io, socket, roomName);
   });
 
-  socket.on('close room', function(roomId) {
-    controller.closeRoom(io, socket, roomId);
+  socket.on('leave room', function(roomId) {
+    controller.leaveRoom(io, socket, roomId);
   });
 
   socket.on('new question', function(question) {
@@ -91,6 +91,15 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('warn user', function(questionInfo) {
     controller.warnUser(io, socket, questionInfo);
+  });
+
+  socket.on('vote poll', function(voteInfo) {
+    controller.votePoll(io, socket, voteInfo);
+  });
+
+  socket.on('set active poll', function(activeInfo) {
+    console.log("I am here!!!!!!!!!!!!");
+    controller.setActivePoll(io, socket, activeInfo);
   });
 
 });

@@ -3,11 +3,14 @@
  */
 
 var Questions = require('./questions');
+var Poll = require('./poll')
 
 function Room (data) {
   this.id             = data.room_id; //String
   this.name           = data.room_name; //String
   this.questions      = new Questions(); //questions object
+  this.poll           = new Poll();
+  this.activePoll     = false;
   this.owner          = data.owner_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
@@ -152,10 +155,50 @@ Room.prototype.getQuestions = function() {
   */
 Room.prototype.deleteQuestion = function(data) {
   if (data.owner_id === this.owner) {
-    return this.questions.deleteQuestion(data.question_id);
+    return this.questions.deleteQuestion(data);
   }
   else
     return false;
+}
+
+/**
+ * Sends necessary info down the chain to vote() in poll. Returns
+ * proper data to controller.js.
+ *
+ * @param {voter_id: String, option: String}
+ * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ */
+Room.prototype.vote = function(data) {
+  if(this.activePoll === false)
+    return false;
+
+  return this.poll.vote(data);
+}
+
+/**
+ * Delegates to poll. @see poll.js
+ *
+ * @param data = {active: Boolean}
+ * @return {changed: Boolean, active: Boolean}
+ */
+Room.prototype.setActive = function(active) {
+  if (active){
+    if (this.activePoll === false){
+      delete this.poll;
+      this.poll = new Poll();
+      this.activePoll = true;
+      return {changed: true, active: true};
+    }
+    else {
+      return {changed: false, active: true};
+    }
+  }
+  if (this.activePoll !== false) {
+    this.activePoll = false;
+    return {changed: true, active: false};
+  }
+  else
+    return {changed: false, active: false};
 }
 
 module.exports = Room;

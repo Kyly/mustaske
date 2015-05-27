@@ -47,12 +47,6 @@ var topQuestionHtml =
   + '                   class=\"fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1\"></i></a>'
   + '           <p class=\"num-comments col-md-offset-6 col-sm-offset-3 col-xs-offset-6 col-md-1 col-sm-1 col-xs-1 col-lg-1\">'
   + '               3</p>'
-  + '           <a href=\"#\" class=\"comment-to-active\"><img'
-  + '                   src=\"/images/comment.png\"'
-  + '                   class=\"col-md-1 col-sm-2 col-xs-2 col-lg-1 comment \"></a>'
-  + '           <a href=\"#\" class=\"comment-to-inactive\"><img'
-  + '                   src=\"/images/comment_active.png\"'
-  + '                   class=\"col-md-1 col-sm-1 col-xs-1 col-lg-1 comment com-active\"></a>'
   + '       </div>'
   + '   </div>'
   + ''
@@ -69,6 +63,29 @@ var topQuestionHtml =
   + '              placeholder="write a comment...">'
   + '   </div>'
   + '   <!--end commentSection-->'
+  + '</div>';
+
+
+
+
+var topQuestionHtmlOwner =
+    '<div question_id=\"{{question_id}}\" class=\"q {{class}}\" data-score=\"{{question_score}}\">'
+  + '   <!--end topquestion_section-->'
+  + '   <div class=\"question-content\">'
+  + '       <p>{{{question_text}}}</p><br>'
+  + ''
+  + '       <div class=\"row question-controls\">'
+  + '           <p class=\"num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1\">'
+  + '               {{question_score}}</p>'
+  + '           <a href=\"#\" class=\"warn-user\"><img'
+  + '                   src=\"/images/people.png\"'
+  + '                   class=\"col-md-offset-6 col-sm-offset-3 col-xs-offset-7 col-md-1 col-sm-1 col-xs-2 warn-user-pic\"></a>'
+  + '           <a href=\"#\" class=\"dismiss-question\"><img'
+  + '                   src=\"/images/trash.png\"'
+  + '                   class=\"col-md-1 col-sm-2 col-xs-2 col-lg-1 dismiss-question-pic \"></a>'
+  + '       </div>'
+  + '   </div>'
+  + ''
   + '</div>';
 
 //TODO var question_comment_format =
