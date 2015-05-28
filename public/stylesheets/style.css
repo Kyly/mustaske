@@ -15,11 +15,17 @@ hr {
     margin-bottom: 10px;
 }
 
+.top-questions-container hr {
+    display: none !important;
+}
+
 .canvas {
-    background: #ffffff;
-    /*height: auto;*/
-    /*z-index: 2;*/
-    /*position: relative;*/
+    position: relative;
+    left: 0;
+    z-index: 2;
+    min-height: 100%;
+    padding: 50px 0 0 0;
+    background: #fff;
 }
 
 .rest .container-fluid {
@@ -79,6 +85,9 @@ hr {
 }
 
 .rest {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     top: 50px;
 }
@@ -100,16 +109,12 @@ hr {
     border-right: 1px solid #eee;
 }
 
-.rest {
-    min-height: 100%;
-}
-
 .recent-questions-section {
     background-color: #ffffff;
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 4% 4% 4% 4%;
+    padding: 0% 4%;
 }
 
 .selection {
@@ -337,8 +342,8 @@ nav .room-controls .dropdown-menu {
     z-index: 10;
     bottom: 0px;
     right: 0.08em;
-    /*background-color: #ffffff;*/
-    /*background-image: url(../images/gray_diagonal_stripes.jpg);*/
+    background-color: #f6f8fe;
+    /*background-image: url(../images/stripes.jpg);*/
     padding-top: 1em;
     padding-bottom: 1em;
     /*padding-right:0px;
@@ -380,6 +385,11 @@ nav .room-controls .dropdown-menu {
  
 }
 
+.delete-room-warning img {
+    display:block;
+    margin:auto;
+    max-height: 30em;
+}
 
 /*.modal-dialog,*/
 /*.modal-content {*/
@@ -411,6 +421,14 @@ nav .room-controls .dropdown-menu {
     padding-right:1em;
 }
 
+.canvas-slid{
+    overflow:hidden;
+}
+
+.votes-p {
+    margin-left:-2.5em;
+}
+
 
 @media only screen and (max-width: 767px) {
     .top-questions-section {
@@ -421,7 +439,7 @@ nav .room-controls .dropdown-menu {
     }
 
     .recent-questions-section {
-        z-index: 10;
+        /*z-index:10*/
         margin-bottom: 10%;
         clear: both;
         position: relative;
@@ -429,11 +447,16 @@ nav .room-controls .dropdown-menu {
 
     .rest {
         top: 0px;
-        overflow: scroll;
+        /*overflow-y: scroll;*/
+        overflow-x: hidden;
     }
     
     .canvas .room-name {
         font-size:20px   
+    }
+    
+    .votes-p {
+        margin-left:-1em;   
     }
 }
 

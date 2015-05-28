@@ -127,7 +127,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     }
     
     if (!this.$element.hasClass('in')) {
-      this.$element.css('visiblity', 'hidden !important').addClass('in')
+      this.$element.css('visibility', 'hidden !important').addClass('in')
     } 
     
     var horizontal = $(window).width() / this.$element.width()
@@ -237,7 +237,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
 
     elements.addClass('canvas-sliding').each(function() {
       if ($(this).data('offcanvas-style') === undefined) $(this).data('offcanvas-style', $(this).attr('style') || '')
-      if ($(this).css('position') === 'static') $(this).css('position', 'relative')
+     // if ($(this).css('position') === 'static')  $(this).css('position', 'relative')
       if (($(this).css(placement) === 'auto' || $(this).css(placement) === '0px') &&
           ($(this).css(opposite) === 'auto' || $(this).css(opposite) === '0px')) {
         $(this).css(placement, 0)
