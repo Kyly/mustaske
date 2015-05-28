@@ -20,10 +20,12 @@ hr {
 }
 
 .canvas {
-    background: #ffffff;
-    /*height: auto;*/
-    /*z-index: 2;*/
-    /*position: relative;*/
+    position: relative;
+    left: 0;
+    z-index: 2;
+    min-height: 100%;
+    padding: 50px 0 0 0;
+    background: #fff;
 }
 
 .rest .container-fluid {
@@ -83,6 +85,9 @@ hr {
 }
 
 .rest {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     top: 50px;
 }
@@ -102,10 +107,6 @@ hr {
     overflow-y: auto;
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
-}
-
-.rest {
-    min-height: 100%;
 }
 
 .recent-questions-section {
@@ -442,7 +443,8 @@ nav .room-controls .dropdown-menu {
 
     .rest {
         top: 0px;
-        overflow: scroll;
+        /*overflow-y: scroll;*/
+        overflow-x: hidden;
     }
     
     .canvas .room-name {
