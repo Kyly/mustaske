@@ -100,11 +100,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('set active poll', function(activeInfo) {
     controller.setActivePoll(io, socket, activeInfo);
   });
-
-  socket.on('dismiss question', function(questionInfo) {
-    controller.dismissQuestion(io, socket, questionInfo);
-  });
-
+  
 });
 
 /**

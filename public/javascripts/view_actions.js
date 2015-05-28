@@ -245,8 +245,8 @@ var ViewActions = function () {
    */
   var questionDismissedImpl = function (questionID) {
     var question = $('div[question_id="'+questionID+'"]');
+    console.log("made it back to viewActions");
     question.remove();
-
   }
 
   /**
@@ -590,19 +590,14 @@ var ViewActions = function () {
   /**
    * Calls controller to dismiss a question
    */
-  var clickDismissQuestionImpl = function () {
+  var clickDismissQuestionImpl = function (foo) {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      question_id = $(this).closest('.q').attr('question_id')
+      //question_id = $(this).closest('.q').attr('question_id')
+      question_id: foo
     };
     socket.emit('dismiss question', data);
   }
-
-  /**
-   * removes question from html
-   */
-  var dismissQuestionImpl = function (question_id) {
-    console.log(question_id);
 
   var showClickerDialogImpl = function () {
     if (pollOn && !owner) {
@@ -659,7 +654,6 @@ var ViewActions = function () {
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
     stopPoll                   : stopPollImpl,
-    clickDismissQuestion       : clickDismissQuestionImpl,
-    dismissQuestion            : dismissQuestionImpl
+    clickDismissQuestion       : clickDismissQuestionImpl
   }
 }();
