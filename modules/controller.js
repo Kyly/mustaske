@@ -141,12 +141,19 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
    * This handles dismissing of questions by the owner of a room
    * @param socket : Socket IO object
    * @param data : {room_id: String, question_id: String}
-   * @return TODO
    */
   Controller.prototype.dismissQuestion = function(io, socket, data) {
-    var questionData = {room_id: data.room_id, question_id: data.question_id, owner_id: socket.id};
-    var returnData = this.rooms.deleteQuestion(questionData);
-    io.sockets.in(data.room_id).emit('dismiss question', returnData);
+    var dismissData = {
+      room_id:     data.room_id,
+      question_id: data.question_id,
+      owner_id:     socket.id
+    };
+
+    var returnData = this.rooms.deleteQuestion(dismissData);
+
+    if (returnData != false) { //question was deleted
+      io.sockets.in(data.room_id).emit('dismiss question', data.question_id);
+    }
   }
 
   /**
@@ -212,6 +219,5 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
 
     }
   }
-
 
 module.exports = Controller;

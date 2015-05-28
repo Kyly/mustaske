@@ -620,6 +620,18 @@ var ViewActions = function () {
   }
 
   /**
+   * Calls controller to dismiss a question
+   */
+  var clickDismissQuestionImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      
+      //copied this from elsewhere, not sure if it's correct
+      question_id = $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('dismiss question', data);
+  }
+  /**
    * Displays clicker dialog after poll already started
    */
   var showClickerDialogImpl = function () {
@@ -672,6 +684,7 @@ var ViewActions = function () {
     clickStartPoll             : clickStartPollImpl,
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
-    stopPoll                   : stopPollImpl
+    stopPoll                   : stopPollImpl,
+    clickDismissQuestion       : clickDismissQuestionImpl
   }
 }();
