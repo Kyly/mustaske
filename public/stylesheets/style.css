@@ -15,6 +15,10 @@ hr {
     margin-bottom: 10px;
 }
 
+.top-questions-container hr {
+    display: none !important;
+}
+
 .canvas {
     background: #ffffff;
     /*height: auto;*/

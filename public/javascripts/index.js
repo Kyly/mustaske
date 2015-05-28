@@ -37,6 +37,7 @@ $(document).ready(function () {
   body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
   body.on('click', '.test-in-progress-btn', ViewActions.showClickerDialog);
   body.on('click', '.leave-room-btn', ViewActions.leaveRoom);
+  body.on('click', '.dismiss-question', ViewActions.dismissQuestion);
   body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
