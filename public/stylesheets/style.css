@@ -114,7 +114,7 @@ hr {
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 1% 4% 4% 4%;
+    padding: 0% 4%;
 }
 
 .selection {
@@ -425,6 +425,10 @@ nav .room-controls .dropdown-menu {
     overflow:hidden;
 }
 
+.votes-p {
+    margin-left:-2.5em;
+}
+
 
 @media only screen and (max-width: 767px) {
     .top-questions-section {
@@ -449,6 +453,10 @@ nav .room-controls .dropdown-menu {
     
     .canvas .room-name {
         font-size:20px   
+    }
+    
+    .votes-p {
+        margin-left:-1em;   
     }
 }
 
