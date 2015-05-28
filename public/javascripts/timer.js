@@ -36,7 +36,6 @@ Timer.prototype.update = function() {
     padMin = '0' + padMin;
 
   this.target.text(padMin + ':' + padSec);
-  console.log(padMin + ':' + padSec);
 }
 
 Timer.prototype.stop = function() {

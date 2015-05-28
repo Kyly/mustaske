@@ -140,10 +140,7 @@ var ViewActions = function () {
       });
     } else {
       socket.emit('leave room', room_id);
-
     }
-    topQuestionsContainer.empty();
-    recentQuestionsContainer.empty();
   }
 
   /**
@@ -179,10 +176,11 @@ var ViewActions = function () {
    * Return to the home screen
    */
   var showHomeScreenImpl = function () {
-    // TODO
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
   }
 
   /**
@@ -288,6 +286,14 @@ var ViewActions = function () {
    */
   var userWarnedImpl = function (userID) {
     bootbox.alert('<h3><strong>Warning!!!!</strong> Must you really ask such a question?</h3>');
+  }
+
+  /**
+   * Update UI reflecting user being banned
+   * @param userId = string, the ID of the offending user
+   */
+  var userBannedImpl = function (userID) {
+    //right now showHomeScreen() is called when user is banned
   }
 
   /**
@@ -627,10 +633,37 @@ var ViewActions = function () {
       room_id: $('.room-name').data('room-id'),
       
       //copied this from elsewhere, not sure if it's correct
-      question_id = $(this).closest('.q').attr('question_id')
+      question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('dismiss question', data);
   }
+
+  /**
+   * Calls controller to warn a user
+   */
+  var clickWarnUserImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      
+      //copied this from elsewhere, not sure if it's correct
+      question_id: $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('warn user', data);
+  }
+
+  /**
+   * Calls controller to ban a user
+   */
+  var clickBanUserImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      
+      //copied this from elsewhere, not sure if it's correct
+      question_id: $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('ban user', data);
+  }
+
   /**
    * Displays clicker dialog after poll already started
    */
@@ -677,6 +710,7 @@ var ViewActions = function () {
     updateScore                : updateScoreImpl,
     questionDismissed          : questionDismissedImpl,
     userWarned                 : userWarnedImpl,
+    userBanned                 : userBannedImpl,
     questionAdded              : questionAddedImpl,
     setupUI                    : setupUIImpl,
     votePoll                   : votePollImpl,
@@ -685,6 +719,8 @@ var ViewActions = function () {
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
     stopPoll                   : stopPollImpl,
-    clickDismissQuestion       : clickDismissQuestionImpl
+    clickDismissQuestion       : clickDismissQuestionImpl,
+    clickWarnUser              : clickWarnUserImpl,
+    clickBanUser               : clickBanUserImpl
   }
 }();

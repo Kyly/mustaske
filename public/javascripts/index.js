@@ -15,6 +15,7 @@ $(document).ready(function () {
   socket.on('downvote question', ViewActions.updateScore);
   socket.on('dismiss question', ViewActions.questionDismissed);
   socket.on('warn user', ViewActions.userWarned);
+  socket.on('ban user', ViewActions.leaveRoom);
   socket.on('top questions', ViewActions.updateTopQuestionThreshold);
   socket.on('vote poll', ViewActions.updatePollScore);
   socket.on('start poll', ViewActions.startPoll);
