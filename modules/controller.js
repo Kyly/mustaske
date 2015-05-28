@@ -154,6 +154,8 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
 
     var returnData = this.rooms.deleteQuestion(dismissData);
 
+    console.log(returnData)
+
     if (returnData != false) { //question was deleted
       io.sockets.in(data.room_id).emit('dismiss question', data.question_id);
     }

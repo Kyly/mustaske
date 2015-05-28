@@ -590,11 +590,12 @@ var ViewActions = function () {
   /**
    * Calls controller to dismiss a question
    */
-  var clickDismissQuestionImpl = function (foo) {
+  var clickDismissQuestionImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      //question_id = $(this).closest('.q').attr('question_id')
-      question_id: foo
+      
+      //copied this from elsewhere, not sure if it's correct
+      question_id = $(this).closest('.q').attr('question_id')
     };
     socket.emit('dismiss question', data);
   }
