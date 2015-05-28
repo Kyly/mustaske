@@ -373,24 +373,37 @@
             <p>{{{question_text}}}</p><br>
 
             <div class="row question-controls">
-                <a href="#" class="student-view thumbs-up-to-active">
-                    <i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1"></i></a>
+                <div class="col-xs-6 question-controls-left">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#" class="student-view thumbs-up-to-active">
+                                <i class="fa fa-thumbs-o-up fa-2x"></i></a>
+                        </li>
+                        <li>
+                            <span class="num-votes">{{question_score}}</span>
+                        </li>
+                        <li>
+                            <span class="owner-view hidden votes-p">votes</span>
+                        </li>
+                        <li>
+                            <a href="#" class="student-view thumbs-down-to-active">
+                                <i class="fa fa-thumbs-o-down"></i></a>
+                        </li>
+                    </ul>
+                </div>
 
-                <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">
-                    {{question_score}} </p>
-
-                <p class="owner-view hidden votes-p col-md-2 col-sm-3 col-xs-3 col-lg-2">
-                    votes</p>
-                <a href="#" class="student-view thumbs-down-to-active">
-                    <i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1"></i></a>
-                <a href="#" class="owner-view hidden warn-user">
-                    <img src="/images/people.png"
-                        class="col-md-offset-4 col-sm-offset-3 col-xs-offset-7 col-md-1 col-sm-1 col-xs-2 col-lg-offset-3 col-lg-1 warn-user-pic">Warn
-                    User</a>
-                <a href="#" class="owner-view hidden dismiss-question">
-                    <img src="/images/trash.png"
-                        class="col-md-offset-2 col-md-1 col-sm-2 col-xs-2 col-lg-offset-2 col-lg-1 dismiss-question-pic">Dismiss
-                    Question</a>
+                <div class="col-xs-6">
+                    <ul class="list-inline text-right">
+                        <li>
+                            <a href="#" class="owner-view hidden warn-user"> Warn User
+                                <i class="fa fa-user"></i></a>
+                        </li>
+                        <li>
+                            <a href="#" class="owner-view hidden dismiss-question">
+                                Dismiss Question<i class="fa fa-trash-o"></i> </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <hr>
         </div>
