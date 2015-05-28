@@ -169,7 +169,7 @@ Room.prototype.deleteQuestion = function(data) {
  * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
  */
 Room.prototype.vote = function(data) {
-  if(this.poll === false)
+  if(this.activePoll === false)
     return false;
 
   return this.poll.vote(data);
