@@ -20,10 +20,12 @@ hr {
 }
 
 .canvas {
-    background: #ffffff;
-    /*height: auto;*/
-    /*z-index: 2;*/
-    /*position: relative;*/
+    position: relative;
+    left: 0;
+    z-index: 2;
+    min-height: 100%;
+    padding: 50px 0 0 0;
+    background: #fff;
 }
 
 .rest .container-fluid {
@@ -83,6 +85,9 @@ hr {
 }
 
 .rest {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     top: 50px;
 }
@@ -104,16 +109,12 @@ hr {
     border-right: 1px solid #eee;
 }
 
-.rest {
-    min-height: 100%;
-}
-
 .recent-questions-section {
     background-color: #ffffff;
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 4% 4% 4% 4%;
+    padding: 0% 4%;
 }
 
 .selection {
@@ -424,6 +425,10 @@ nav .room-controls .dropdown-menu {
     overflow:hidden;
 }
 
+.votes-p {
+    margin-left:-2.5em;
+}
+
 
 @media only screen and (max-width: 767px) {
     .top-questions-section {
@@ -442,11 +447,16 @@ nav .room-controls .dropdown-menu {
 
     .rest {
         top: 0px;
-        overflow: scroll;
+        /*overflow-y: scroll;*/
+        overflow-x: hidden;
     }
     
     .canvas .room-name {
         font-size:20px   
+    }
+    
+    .votes-p {
+        margin-left:-1em;   
     }
 }
 

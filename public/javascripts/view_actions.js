@@ -10,7 +10,8 @@
 var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
-      BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer;
+      BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer,
+      questionTemplate;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -21,6 +22,7 @@ var ViewActions = function () {
     regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
+    questionTemplate         = Handlebars.compile($('#question-template').html());
     roomData                 = $('.room-name');
     timer                    = new Timer($('.start-poll-text'));
     owner                    = false;
@@ -444,7 +446,7 @@ var ViewActions = function () {
    */
   var recentQuestionsDiv = function(questionInfo) {
     var container = '#recent-questions-container';
-    var html      = recentQuestionTpl(questionInfo);
+    var html      = questionTemplate(questionInfo);
     attachQuestion(questionInfo, container, html);
   }
 
@@ -457,7 +459,7 @@ var ViewActions = function () {
     // Add mix class for sorting
     questionInfo.class += ' mix';
     var container       = $('#top-questions-container');
-    var html  = topQuestionTpl(questionInfo);
+    var html  = questionTemplate(questionInfo);
     attachQuestion(questionInfo, container, html);
 
   }

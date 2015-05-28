@@ -364,6 +364,39 @@
     <!-- /.modal -->
 </div>
 <!--end canvas & container fluid-->
+<!-- Question template -->
+<script id="question-template" type="text/html">
+    <div question_id="{{question_id}}" class="q {{class}}"
+         data-score="{{question_score}}">
+        <!--end topquestion_section-->
+        <div class="question-content">
+            <p>{{{question_text}}}</p><br>
+
+            <div class="row question-controls">
+                <a href="#" class="student-view thumbs-up-to-active">
+                    <i class="fa fa-thumbs-o-up fa-2x col-md-1 col-sm-2x col-xs-1 col-lg-1"></i></a>
+
+                <p class="num-votes col-md-1 col-sm-1 col-xs-1 col-lg-1">
+                    {{question_score}} </p>
+
+                <p class="owner-view hidden votes-p col-md-2 col-sm-3 col-xs-3 col-lg-2">
+                    votes</p>
+                <a href="#" class="student-view thumbs-down-to-active">
+                    <i class="fa fa-thumbs-o-down fa-2x col-md-1 col-sm-2 col-xs-1 col-lg-1"></i></a>
+                <a href="#" class="owner-view hidden warn-user">
+                    <img src="/images/people.png"
+                        class="col-md-offset-4 col-sm-offset-3 col-xs-offset-7 col-md-1 col-sm-1 col-xs-2 col-lg-offset-3 col-lg-1 warn-user-pic">Warn
+                    User</a>
+                <a href="#" class="owner-view hidden dismiss-question">
+                    <img src="/images/trash.png"
+                        class="col-md-offset-2 col-md-1 col-sm-2 col-xs-2 col-lg-offset-2 col-lg-1 dismiss-question-pic">Dismiss
+                    Question</a>
+            </div>
+            <hr>
+        </div>
+    </div>
+</script>
+<!-- / Question template -->
 <footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/vendor/jquery/dist/jquery.min.js"></script>
@@ -377,7 +410,6 @@
     <script src="/javascripts/timer.js"></script>
     <script src="/javascripts/view_actions.js"></script>
     <script src="/javascripts/index.js"></script>
-    <script src="/tpl/templates.js"></script>
     <script src="/javascripts/plus_minus_form.js"></script>
     <script src="/javascripts/vendor/Chart.js/Chart.min.js"></script>
 </footer>
