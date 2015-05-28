@@ -341,8 +341,8 @@ nav .room-controls .dropdown-menu {
     z-index: 10;
     bottom: 0px;
     right: 0.08em;
-    /*background-color: #ffffff;*/
-    /*background-image: url(../images/gray_diagonal_stripes.jpg);*/
+    background-color: #f6f8fe;
+    /*background-image: url(../images/stripes.jpg);*/
     padding-top: 1em;
     padding-bottom: 1em;
     /*padding-right:0px;
@@ -420,6 +420,10 @@ nav .room-controls .dropdown-menu {
     padding-right:1em;
 }
 
+.canvas-slid{
+    overflow:hidden;
+}
+
 
 @media only screen and (max-width: 767px) {
     .top-questions-section {
@@ -430,7 +434,7 @@ nav .room-controls .dropdown-menu {
     }
 
     .recent-questions-section {
-        z-index: 10;
+        /*z-index:10*/
         margin-bottom: 10%;
         clear: both;
         position: relative;

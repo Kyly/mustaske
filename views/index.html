@@ -64,7 +64,7 @@
     </div>
 </div>
 <!--end login overlay-->
-<div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
+<div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-xs"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
 
@@ -109,33 +109,9 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent Questions
-                <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
-            <ul class="dropdown-menu navmenu-nav">
-                <li>
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="minus" data-field="quant[1]"
-                                  disabled="disabled">
-                              <span class="glyphicon glyphicon-minus"></span>
-                          </button>
-                      </span>
-                        <input type="text" name="quant[1]"
-                               class="form-control input-number" value="1"
-                               min="1" max="10">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="plus" data-field="quant[1]">
-                              <span class="glyphicon glyphicon-plus"></span>
-                          </button>
-                      </span>
-                    </div>
-                </li>
-            </ul>
+        
+        <li>
+            <a href="#">Recent Questions</a>
         </li>
     </ul>
 
@@ -392,7 +368,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/javascripts/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/javascripts/vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="/javascripts/vendor/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
     <script src="/javascripts/vendor/handlebars/handlebars.min.js"></script>
     <script src="/javascripts/vendor/mixitup/build/jquery.mixitup.min.js"></script>
     <script src="/javascripts/vendor/bootbox/bootbox.js"></script>

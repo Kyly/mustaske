@@ -285,7 +285,7 @@ var ViewActions = function () {
    * Update UI reflecting a warning being issued
    * @param userId = string, the ID of the offending user
    */
-  var userWarnedImpl = function (userID) {
+  var userWarnedImpl = function () {
     bootbox.alert('<h3><strong>Warning!!!!</strong> Must you really ask such a question?</h3>');
   }
 
@@ -653,7 +653,6 @@ var ViewActions = function () {
   var warnUserImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('warn user', data);
@@ -665,7 +664,6 @@ var ViewActions = function () {
   var banUserImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('ban user', data);
