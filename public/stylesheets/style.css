@@ -367,9 +367,15 @@ nav .room-controls .dropdown-menu {
 }
 
 .num-votes, .num-comments {
-    font-weight: 400;
+    padding: 0 .5em;
+    background-color: rgb(144, 144, 144);
+    font-weight: 700;
+    color: #ffffff;
 }
 
+.question-controls .question-controls-left {
+    padding-left: 0;
+}
 
 .owner .num-votes {
     background-color: #D1D1D1;
@@ -426,9 +432,12 @@ nav .room-controls .dropdown-menu {
 }
 
 .votes-p {
-    margin-left:-2.5em;
 }
 
+.dismiss-question i, .warn-user i {
+    padding-left: 0.2em;
+    font-size: 2em;
+}
 
 @media only screen and (max-width: 767px) {
     .top-questions-section {
