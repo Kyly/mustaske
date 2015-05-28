@@ -42,6 +42,7 @@ $(document).ready(function () {
   body.on('click', '.warn-user', ViewActions.warnUser);
   //body.on('click', '.ban-user', ViewActions.banUser);
   body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
+  body.on('show.bs.offcanvas', '#off-canvas-nav', ViewActions.offCanvasFix);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });
