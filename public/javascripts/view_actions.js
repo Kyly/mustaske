@@ -696,7 +696,16 @@ var ViewActions = function () {
     event.stopPropagation();
   }
 
+//============================================================================//
+//--------------------------------- Nav --------------------------------------//
+//============================================================================//
+
+  var offCanvasFixImpl = function() {
+    //$(.css('position','static');
+  }
+
   return {
+    offCanvasFix               : offCanvasFixImpl,
     showClickerDialog          : showClickerDialogImpl,
     joinMakeSubmit             : joinMakeSubmitImpl,
     joinMakeInput              : joinMakeInputImpl,
