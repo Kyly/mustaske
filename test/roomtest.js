@@ -14,12 +14,12 @@ describe('Room', function(){
     it('User should be added to warnedUsers hash after first warning,' +
       'and to bannedUsers hash after second warning.', function(){
       // Set
-      var room = new Room({room_id: '110', owner_id: 'gary',
+      var room = new Room({room_id: '110', user_id: 'gary',
       room_name: 'lecture'});
       var studentID = 'kyly';
       var qID = room.addQuestion({asker_id: studentID, question_text:
       'what is a for loop?'}).question_id;
-      var warnParam = {owner_id: 'gary', question_id: qID};
+      var warnParam = {user_id: 'gary', question_id: qID};
       // Assert
 
       //no warnings
@@ -41,26 +41,35 @@ describe('Room', function(){
   describe('#banUser()', function(){
     it('User should be added to bannedUsers hash.', function(){
       // Set
-      var room = new Room({room_id: '110', owner_id: 'gary', room_name: 'lecture'});
-      var studentID = 'kyly';
-
+      var room = new Room({room_id: '110', user_id: 'gary', room_name: 'lecture'});
+      var newQuestion = {
+        room_id:       'foo',
+        question_text: 'bar',
+        asker_id:      'fubar'
+      };
+      var questionID = room.addQuestion(newQuestion).question_id;
       // Assert
-      assert(!(studentID in room.bannedUsers));
-      room.banUser(studentID);
-      assert(studentID in room.bannedUsers);
+      assert(!('fubar' in room.bannedUsers));
+      room.banUser({user_id: 'gary', question_id: questionID});
+      assert('fubar' in room.bannedUsers);
     })
   })
 
   describe('#isBanned()', function(){
     it('Make sure returns correct values from isBanned hash.', function(){
       // Set
-      var room = new Room({room_id: '110', owner_id: 'gary', room_name: 'lecture'});
-      var studentID = 'kyly';
+      var room = new Room({room_id: '110', user_id: 'gary', room_name: 'lecture'});
+      var newQuestion = {
+        room_id:       'foo',
+        question_text: 'bar',
+        asker_id:      'fubar'
+      };
 
+      var questionID = room.addQuestion(newQuestion).question_id;
       // Assert
-      assert(!room.isBanned(studentID));
-      room.banUser(studentID);
-      assert(room.isBanned(studentID));
+      assert(!room.isBanned('fubar'));
+      room.banUser({user_id: 'gary', question_id: questionID});
+      assert(room.isBanned('fubar'));
     })
   })
 
@@ -71,7 +80,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -92,7 +101,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -114,7 +123,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -139,7 +148,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -165,7 +174,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -187,7 +196,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -210,7 +219,7 @@ describe('Room', function(){
       var ownerID = 'gary';
       var roomName = 'center hall';
 
-      var room = new Room({room_id: roomID, owner_id: ownerID,
+      var room = new Room({room_id: roomID, user_id: ownerID,
         room_name: roomName});
 
       // Assign
@@ -231,7 +240,7 @@ describe('Room', function(){
       // Set
       var activeInfo;
 
-      var room = new Room({room_id: '110', owner_id: 'Gary',
+      var room = new Room({room_id: '110', user_id: 'Gary',
         room_name: 'center hall'});
 
       // Assert

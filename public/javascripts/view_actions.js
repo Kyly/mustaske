@@ -75,6 +75,7 @@ var ViewActions = function () {
         $(this).removeClass('hidden').addClass('show');
       });
       $('.student-view').addClass('hidden');
+      $('span.leave-room-text').text('Delete Room');
 
       owner = true;
       graph = new Graph();
@@ -111,11 +112,36 @@ var ViewActions = function () {
   }
 
   /**
-   * Sets poll to active
+   * Callback for leave room action.
    */
   var leaveRoomImpl = function () {
     var room_id = $('.room-name').data('room-id');
-    socket.emit('leave room', room_id);
+
+    if (owner) {
+      bootbox.dialog({
+        message: '<div class="delete-room-warning container-fluid"><div class="row">'
+                 + '<div class="col-xs-12 text-center"><img class="img-responsive" src="../images/scary.gif"/></div>'
+                 + '<div class="col-xs-12"><h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4></div>'
+                 + '</div></div>',
+        title: "Are you sure?",
+        buttons: {
+          main:    {
+            label:     "Stay",
+            className: "btn-success"
+          },
+          danger:  {
+            label:     "Delete",
+            className: "btn-danger",
+            callback:  function () {
+              socket.emit('leave room', room_id);
+            }
+          }
+        }
+      });
+    } else {
+      socket.emit('leave room', room_id);
+
+    }
   }
 
   /**
@@ -151,10 +177,11 @@ var ViewActions = function () {
    * Return to the home screen
    */
   var showHomeScreenImpl = function () {
-    // TODO
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
   }
 
   /**
@@ -258,8 +285,16 @@ var ViewActions = function () {
    * Update UI reflecting a warning being issued
    * @param userId = string, the ID of the offending user
    */
-  var userWarnedImpl = function (userID) {
+  var userWarnedImpl = function () {
     bootbox.alert('<h3><strong>Warning!!!!</strong> Must you really ask such a question?</h3>');
+  }
+
+  /**
+   * Update UI reflecting user being banned
+   * @param userId = string, the ID of the offending user
+   */
+  var userBannedImpl = function (userID) {
+    //right now showHomeScreen() is called when user is banned
   }
 
   /**
@@ -507,6 +542,16 @@ var ViewActions = function () {
     if (questionInfo.class.indexOf('top-question') > 0) {
       topQuestionsContainer.mixItUp('append', question, {sort:'score:desc'});
     }
+
+    if (owner) {
+      var body = $('body');
+      body.find('.owner-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+      body.find('.student-view').each(function () {
+        $(this).addClass('hidden');
+      });
+    }
   }
 
 //============================================================================//
@@ -592,6 +637,39 @@ var ViewActions = function () {
   }
 
   /**
+   * Calls controller to dismiss a question
+   */
+  var dismissQuestionImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      question_id: $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('dismiss question', data);
+  }
+
+  /**
+   * Calls controller to warn a user
+   */
+  var warnUserImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      question_id: $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('warn user', data);
+  }
+
+  /**
+   * Calls controller to ban a user
+   */
+  var banUserImpl = function () {
+    var data = {
+      room_id: $('.room-name').data('room-id'),
+      question_id: $(this).closest('.q').attr('question_id')
+    };
+    socket.emit('ban user', data);
+  }
+
+  /**
    * Displays clicker dialog after poll already started
    */
   var showClickerDialogImpl = function () {
@@ -637,6 +715,7 @@ var ViewActions = function () {
     updateScore                : updateScoreImpl,
     questionDismissed          : questionDismissedImpl,
     userWarned                 : userWarnedImpl,
+    userBanned                 : userBannedImpl,
     questionAdded              : questionAddedImpl,
     setupUI                    : setupUIImpl,
     votePoll                   : votePollImpl,
@@ -644,6 +723,9 @@ var ViewActions = function () {
     clickStartPoll             : clickStartPollImpl,
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
-    stopPoll                   : stopPollImpl
+    stopPoll                   : stopPollImpl,
+    dismissQuestion            : dismissQuestionImpl,
+    warnUser                   : warnUserImpl,
+    banUser                    : banUserImpl
   }
 }();

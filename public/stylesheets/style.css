@@ -15,6 +15,10 @@ hr {
     margin-bottom: 10px;
 }
 
+.top-questions-container hr {
+    display: none !important;
+}
+
 .canvas {
     background: #ffffff;
     /*height: auto;*/
@@ -380,6 +384,11 @@ nav .room-controls .dropdown-menu {
  
 }
 
+.delete-room-warning img {
+    display:block;
+    margin:auto;
+    max-height: 30em;
+}
 
 /*.modal-dialog,*/
 /*.modal-content {*/
