@@ -47,12 +47,13 @@ Controller.prototype.disconnect = function(socket) {
  */
 Controller.prototype.joinRoom = function(io, socket, roomID) {
   if(this.rooms.hasRoom(roomID)) {
-    var returnData = this.rooms.joinRoom(roomID);
-    socket.join(roomID);
-    socket.emit('join room', returnData);
+    if (!this.rooms.isBanned({user_id: socket.id, room_id: roomID})) {
+      var returnData = this.rooms.joinRoom(roomID);
+      socket.join(roomID);
+      socket.emit('join room', returnData);
+    }
   }
-  else
-    socket.emit('join room', false);
+  socket.emit('join room', false);
 }
 
 /**
@@ -61,10 +62,10 @@ Controller.prototype.joinRoom = function(io, socket, roomID) {
  *
  * @param socket: Socket IO object
  * @param roomName: name of new room
- * @return {room_name: String, room_id: String, owner_id: String}
+ * @return {room_name: String, room_id: String, user_id: String}
  */
  Controller.prototype.createRoom = function(io, socket, roomName) {
-   var createData = {room_name: roomName, owner_id: socket.id};
+   var createData = {room_name: roomName, user_id: socket.id};
    var returnData = this.rooms.createRoom(createData);
    socket.join(returnData.room_id);
    socket.emit('create room', returnData);
@@ -85,7 +86,7 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
     //If it is, delete the room and kick everyone
     if(this.rooms.isOwner({user_id: socket.id, room_id: roomID})) {
       io.sockets.in(roomID).emit('leave room');
-      this.rooms.closeRoom({owner_id: socket.id, room_id: roomID});
+      this.rooms.closeRoom({user_id: socket.id, room_id: roomID});
     }
 
     socket.leave(roomID);
@@ -146,7 +147,7 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
     var dismissData = {
       room_id:     data.room_id,
       question_id: data.question_id,
-      owner_id:     socket.id
+      user_id:     socket.id
     };
 
     var returnData = this.rooms.deleteQuestion(dismissData);
@@ -180,13 +181,43 @@ Controller.prototype.leaveRoom = function(io, socket, roomID) {
   }
 
   /**
-   * TODO
+   * Calls warnUser in rooms, bans user if they have already been warned
+   * @param socket : Socket IO object
+   * @param data = {room_id: String, question_id: String}
    */
   Controller.prototype.warnUser = function(io, socket, data) {
-    var warnData = {owner_id: socket.id, question_id: data.question_id,
-      room_id: data.room_id};
+    var warnData = {
+      user_id:     socket.id,
+      question_id: data.question_id,
+      room_id:     data.room_id
+    };
+
     var returnData = this.rooms.warnUser(warnData);
-    io.sockets.in(data.room_id).emit('warn user', returnData);
+
+    if (returnData != false) {
+      if (returnData.user_banned)
+        io.to(returnData.user_id).emit('ban user');
+      else
+        io.to(returnData.user_id).emit('warn user');
+    }
+  }
+
+  /**
+   * Calls banUser in rooms
+   * @param socket : Socket IO object
+   * @param roomID : String
+   */
+  Controller.prototype.banUser = function(io, socket, data) {
+    var warnData = {
+      user_id:     socket.id,
+      question_id: data.question_id,
+      room_id:     data.room_id
+    };
+
+    var returnData = this.rooms.banUser(warnData);
+
+    if (returnData != false)
+        io.to(returnData.user_id).emit('ban user');
   }
 
   /**

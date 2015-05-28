@@ -93,6 +93,10 @@ io.sockets.on('connection', function (socket) {
     controller.warnUser(io, socket, questionInfo);
   });
 
+  socket.on('ban user', function(questionInfo) {
+    controller.banUser(io, socket, questionInfo);
+  });
+
   socket.on('vote poll', function(voteInfo) {
     controller.votePoll(io, socket, voteInfo);
   });
