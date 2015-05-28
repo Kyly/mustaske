@@ -140,6 +140,7 @@ var ViewActions = function () {
       });
     } else {
       socket.emit('leave room', room_id);
+
     }
   }
 
@@ -541,6 +542,16 @@ var ViewActions = function () {
     if (questionInfo.class.indexOf('top-question') > 0) {
       topQuestionsContainer.mixItUp('append', question, {sort:'score:desc'});
     }
+
+    if (owner) {
+      var body = $('body');
+      body.find('.owner-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+      body.find('.student-view').each(function () {
+        $(this).addClass('hidden');
+      });
+    }
   }
 
 //============================================================================//
@@ -628,11 +639,9 @@ var ViewActions = function () {
   /**
    * Calls controller to dismiss a question
    */
-  var clickDismissQuestionImpl = function () {
+  var dismissQuestionImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
-      
-      //copied this from elsewhere, not sure if it's correct
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('dismiss question', data);
@@ -641,11 +650,10 @@ var ViewActions = function () {
   /**
    * Calls controller to warn a user
    */
-  var clickWarnUserImpl = function () {
+  var warnUserImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
       
-      //copied this from elsewhere, not sure if it's correct
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('warn user', data);
@@ -654,11 +662,10 @@ var ViewActions = function () {
   /**
    * Calls controller to ban a user
    */
-  var clickBanUserImpl = function () {
+  var banUserImpl = function () {
     var data = {
       room_id: $('.room-name').data('room-id'),
       
-      //copied this from elsewhere, not sure if it's correct
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('ban user', data);
@@ -719,8 +726,8 @@ var ViewActions = function () {
     clickStopPoll              : clickStopPollImpl,
     startPoll                  : startPollImpl,
     stopPoll                   : stopPollImpl,
-    clickDismissQuestion       : clickDismissQuestionImpl,
-    clickWarnUser              : clickWarnUserImpl,
-    clickBanUser               : clickBanUserImpl
+    dismissQuestion            : dismissQuestionImpl,
+    warnUser                   : warnUserImpl,
+    banUser                    : banUserImpl
   }
 }();
