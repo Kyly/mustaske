@@ -40,6 +40,9 @@ $(document).ready(function () {
   body.on('click', '.leave-room-btn', ViewActions.leaveRoom);
   body.on('click', '.dismiss-question', ViewActions.dismissQuestion);
   body.on('click', '.warn-user', ViewActions.warnUser);
+  body.on('click', '.offcanvas-show-top-questions', ViewActions.showTopQuestions);
+  body.on('click', '.offcanvas-show-recent-questions', ViewActions.showRecentQuestions);
+  body.on('click', '#offcanvas-nav a.hide-on-click', ViewActions.hideOffcanvas);
   //body.on('click', '.ban-user', ViewActions.banUser);
   body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
   body.on('show.bs.offcanvas', '#off-canvas-nav', ViewActions.offCanvasFix);

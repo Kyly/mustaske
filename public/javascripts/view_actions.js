@@ -19,7 +19,7 @@ var ViewActions = function () {
    */
   var setupUIImpl = function () {
 
-    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d+)$/;
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
     questionTemplate         = Handlebars.compile($('#question-template').html());
@@ -717,12 +717,39 @@ var ViewActions = function () {
 //============================================================================//
 //--------------------------------- Nav --------------------------------------//
 //============================================================================//
+  var showTopQuestionsImpl = function() {
+    var recentSection = $('.recent-questions-section');
+
+    if (!recentSection.hasClass('hidden')) {
+      recentSection.addClass('hidden');
+      $(this).addClass('active');
+      $('.offcanvas-show-recent-questions').removeClass('active');
+    }
+
+
+  }
+
+  var showRecentQuestionsImpl = function() {
+    var recentSection = $('.recent-questions-section');
+    if (recentSection.hasClass('hidden')) {
+      recentSection.removeClass('hidden');
+      $(this).addClass('active');
+      $('.offcanvas-show-top-questions').removeClass('active');
+    }
+  }
+
+  var hideOffcanvasImpl = function () {
+    $('#offcanvas-nav').offcanvas('hide');
+  }
 
   var offCanvasFixImpl = function() {
     //$(.css('position','static');
   }
 
   return {
+    hideOffcanvas              : hideOffcanvasImpl,
+    showRecentQuestions        : showRecentQuestionsImpl,
+    showTopQuestions           : showTopQuestionsImpl,
     offCanvasFix               : offCanvasFixImpl,
     showClickerDialog          : showClickerDialogImpl,
     joinMakeSubmit             : joinMakeSubmitImpl,
