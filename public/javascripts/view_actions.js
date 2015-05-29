@@ -11,7 +11,7 @@ var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
       BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer,
-      questionTemplate;
+      questionTemplate, roomID;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -29,6 +29,7 @@ var ViewActions = function () {
     activePoll               = false;
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
+    roomID                   = '';
 
     /**
      * Set up sorted container for top questions.
@@ -67,11 +68,14 @@ var ViewActions = function () {
       $('#login-info .room-name-field').addClass('has-error');
     }
     else {
+      roomID = roomInfo.room_id;
+      topQuestionsContainer.empty();
+      recentQuestionsContainer.empty();
       $('#room-name-field').removeClass('has-error');
       roomData.html(roomInfo.room_name);
-      roomData.data('room-id', roomInfo.room_id);
+      roomData.data('room-id', roomID);
       roomData.data('owner', true);
-      $('.drop-down-room-id').text(roomInfo.room_id);
+      $('.drop-down-room-id').text(roomID);
       $('.login-overlay').addClass('animated slideOutUp');
       $('body').find('.owner-view').each(function () {
         $(this).removeClass('hidden').addClass('show');
@@ -82,7 +86,7 @@ var ViewActions = function () {
       owner = true;
       graph = new Graph();
 
-      console.log('Room Id: ' + roomInfo.room_id);
+      console.log('Room Id: ' + roomID);
     }
   }
 
@@ -99,12 +103,18 @@ var ViewActions = function () {
     else {
       var overlay = $('.login-overlay');
       $('#room-name-field').removeClass('has-error');
-      roomData.text(roomInfo.room_name);
-      roomData.data('room-id', roomInfo.room_id);
-      $('.drop-down-room-id').text(roomInfo.room_id);
       overlay.addClass('animated slideOutUp');
-      console.log('Room Id: ' + roomInfo.room_id);
-      addAllQuestions(roomInfo);
+
+      if (roomID === '' || roomID !== roomInfo.room_id) {
+        roomID = roomInfo.room_id;
+        roomData.text(roomInfo.room_name);
+        topQuestionsContainer.empty();
+        recentQuestionsContainer.empty();
+        roomData.attr('data-room-id', roomInfo.room_id);
+        $('.drop-down-room-id').text(roomInfo.room_id);
+        console.log('Room Id: ' + roomInfo.room_id);
+        addAllQuestions(roomInfo);
+      }
 
       if (roomInfo.active_poll) {
         activePoll = roomInfo.active_poll;
@@ -135,6 +145,7 @@ var ViewActions = function () {
             label:     "Delete",
             className: "btn-danger",
             callback:  function () {
+              owner = false;
               socket.emit('leave room', room_id);
             }
           }
@@ -142,8 +153,16 @@ var ViewActions = function () {
       });
     } else {
       socket.emit('leave room', room_id);
-
     }
+  }
+
+  /**
+   * Adds some questions for user who are returning to a room.
+   * @param roomInfo = {room_name : string, room_id : string,
+   * questions : array, top_questions : array}
+   */
+  var addSomeQuestions = function(roomInfo) {
+
   }
 
   /**
@@ -182,8 +201,7 @@ var ViewActions = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-    topQuestionsContainer.empty();
-    recentQuestionsContainer.empty();
+
   }
 
   /**
@@ -457,7 +475,7 @@ var ViewActions = function () {
    */
   var topQuestionsDiv = function(questionInfo) {
     // Add mix class for sorting
-    questionInfo.class += ' mix category-1';
+    questionInfo.class += ' mix do-show';
     var container       = $('#top-questions-container');
     var html  = questionTemplate(questionInfo);
     attachQuestion(questionInfo, container, html);
