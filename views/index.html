@@ -163,7 +163,7 @@
                 <span class="navbar-brand room-name">CSE110</span>
 
             </div>
-            <ul class="nav navbar-nav navbar-right hidden-xs room-controls">
+            <ul class="nav navbar-nav navbar-right room-controls hidden-xs hidden-sm">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-expanded="false">
@@ -177,7 +177,7 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right hidden-xs poll-controls">
+            <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm poll-controls">
 
                 <li><a class="owner-view hidden start-poll-btn"
                        href="#"><span class="fa fa-play"></span>
@@ -199,11 +199,11 @@
     </nav>
     <div class="rest container-fluid">
         <div id="main-content" class="row">
-            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar hidden-xs">
+            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar">
                 <!--end selection-->
-                <div class="selection">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle hidden-xs"
+                <div class="selection hidden-xs hidden-sm">
+                    <div class="dropdown hidden-xs">
+                        <button class="btn btn-default dropdown-toggle"
                                 type="button" id="dropdownMenu1"
                                 data-toggle="dropdown" aria-expanded="true">
                             top 4 questions <i class="fa fa-chevron-down"></i>
@@ -228,8 +228,7 @@
                     <!--end dropdown-->
                 </div>
                 <!--end selection-->
-                <div id="top-questions-container"
-                     class="top-questions-container">
+                <div id="top-questions-container" class="top-questions-container">
                 </div>
             </div>
             <!--end top-questions-container-->
