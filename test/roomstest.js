@@ -8,18 +8,18 @@ var assert = require("assert")
 describe('Rooms', function(){
   describe('#createRoom()', function(){
     it('Should have room in rooms after createRoom is called.' +
-      ' Should return correct owner_id and room_name.', function(){
+      ' Should return correct user_id and room_name.', function(){
       // Set
       var rooms = new Rooms();
       ownerID = 'tester';
       roomName = 'gary';
 
       // Assign
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assert
       assert(roomInfo.room_id in rooms.rooms);
-      assert(roomInfo.owner_id === ownerID);
+      assert(roomInfo.user_id === ownerID);
       assert(roomInfo.room_name === roomName);
     })
   })
@@ -29,7 +29,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       ownerID = 'tester';
       roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
       var joinInfo = rooms.joinRoom(roomInfo.room_id);
@@ -47,7 +47,7 @@ describe('Rooms', function(){
       roomName = 'gary';
 
       // Assign
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assert
       assert(rooms.hasRoom(roomInfo.room_id));
@@ -62,11 +62,11 @@ describe('Rooms', function(){
       roomName = 'gary';
 
       // Assign
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assert
       assert(roomInfo.room_id in rooms.rooms);
-      rooms.closeRoom({owner_id: ownerID, room_id: roomInfo.room_id});
+      rooms.closeRoom({user_id: ownerID, room_id: roomInfo.room_id});
       assert(!(roomInfo.room_id in rooms.rooms));
     })
   })
@@ -76,7 +76,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
       is_owner = rooms.isOwner({user_id: ownerID, room_id: roomInfo.room_id});
@@ -93,7 +93,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -107,7 +107,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -121,7 +121,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -135,7 +135,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -149,7 +149,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -163,7 +163,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -177,7 +177,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 
@@ -191,7 +191,7 @@ describe('Rooms', function(){
       var rooms = new Rooms();
       var ownerID = 'tester';
       var roomName = 'gary';
-      var roomInfo = rooms.createRoom({owner_id: ownerID, room_name: roomName});
+      var roomInfo = rooms.createRoom({user_id: ownerID, room_name: roomName});
 
       // Assign
 

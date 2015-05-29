@@ -11,7 +11,7 @@ function Room (data) {
   this.questions      = new Questions(); //questions object
   this.poll           = new Poll();
   this.activePoll     = false;
-  this.owner          = data.owner_id; //String
+  this.owner          = data.user_id; //String
   this.bannedUsers    = {};  // Hash containing banned users
   this.warnedUsers    = {};  // Hash containing warned users
 };
@@ -20,36 +20,43 @@ function Room (data) {
  * Increments warnings for user in warnedUsers Hash.
  * calls banUser if user has already been warned
  *
- * @param {owner_id: String, question_id: String, room_id: String}
- * @return {user_banned: Bool, question_id: String}
+ * @param {user_id: String, question_id: String, room_id: String}
+ * @return {user_banned: Bool, user_id: String}
  */
 Room.prototype.warnUser = function(data) {
-  if (this.owner !== data.owner_id)
+  if (this.owner !== data.user_id)
     return false;
   if (this.questions.hasQuestion(data.question_id)) {
-    var userToWarn = this.questions.warnUser(data.question_id);
+    var userToWarn = this.questions.getAsker(data.question_id);
     if (!(userToWarn in this.warnedUsers)) {
       this.warnedUsers[userToWarn] = true;
-      return {user_banned: false, question_id: data.question_id};
+      return {user_banned: false, user_id: userToWarn};
     }
     else {
-      this.banUser(userToWarn);
-      return {user_banned: true, question_id: data.question_id};
+      this.banUser(data);
+      return {user_banned: true, user_id: userToWarn};
     }
   }
+  return false;
 }
 
 /**
  * Bans user, adding their user_id to bannedUsers Hash
  *
- * @param data = user_id: String
- * @return true if user_id succesfully added to bannedUsers Hash
+ * @param {user_id: String, question_id: String, room_id: String}
+ * @return String
  */
-Room.prototype.banUser = function (user_id) {
+Room.prototype.banUser = function (data) {
 
-  this.bannedUsers[user_id] = true;
-
-  return (this.isBanned(user_id));
+  if (this.owner !== data.user_id)
+    return false;
+  if (this.questions.hasQuestion(data.question_id)) {
+    var userToBan = this.questions.getAsker(data.question_id);
+    this.warnedUsers[userToBan] = true;
+    this.bannedUsers[userToBan] = true;
+    return {user_id: userToBan};
+  }
+  return false;
 }
 
 /**
@@ -150,12 +157,12 @@ Room.prototype.getQuestions = function() {
   * Checks if the person who issued the 'dismiss question' emit is the owner
   * of the room. If they are, then the questions object is told to delete the
   * question.
-  * @param {question_id: String, room_id: String, owner_id: String}
+  * @param {question_id: String, room_id: String, user_id: String}
   * @param {question_id: String} if successful, else false
   */
 Room.prototype.deleteQuestion = function(data) {
-  if (data.owner_id === this.owner) {
-    return this.questions.deleteQuestion(data);
+  if (data.user_id === this.owner) {
+    return this.questions.deleteQuestion(data.question_id);
   }
   else
     return false;

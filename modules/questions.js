@@ -183,7 +183,7 @@ Questions.prototype.deleteQuestion = function (questionID) {
  * @param questionID: String
  * @return asker_id: String
  */
-Questions.prototype.warnUser = function(questionID) {
+Questions.prototype.getAsker = function(questionID) {
   return this.questionHash[questionID].asker;
 }
 

@@ -15,8 +15,8 @@ function Rooms() {
  * Generates a uuid, creates a room object, and stores
  * reference in rooms hash.
  *
- * @param data = {owner_id: Socket id, room_name: String}
- * @return {room_id: String, room_name: String, owner_id: String}
+ * @param data = {user_id: Socket id, room_name: String}
+ * @return {room_id: String, room_name: String, user_id: String}
  */
 Rooms.prototype.createRoom = function (data) {
 
@@ -28,12 +28,12 @@ Rooms.prototype.createRoom = function (data) {
 
   //create new room and add it to rooms
   data.room_id = uniqueID;
-  this.rooms[uniqueID] = new Room({room_id: uniqueID, owner_id: data.owner_id,
+  this.rooms[uniqueID] = new Room({room_id: uniqueID, user_id: data.user_id,
     room_name: data.room_name});
 
   room = this.rooms[uniqueID];
 
-  return {room_id: room.id, room_name: room.name, owner_id: room.owner};
+  return {room_id: room.id, room_name: room.name, user_id: room.owner};
 }
 
 /**
@@ -74,7 +74,7 @@ Rooms.prototype.hasRoom = function (room_id) {
 /**
  * Deletes a room.
  *
- * @param data = {owner_id: String, room_id: String}
+ * @param data = {user_id: String, room_id: String}
  * @return true if caller is owner and room exists
  */
 Rooms.prototype.closeRoom = function (data) {
@@ -82,7 +82,7 @@ Rooms.prototype.closeRoom = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  if (!this.isOwner({user_id: data.owner_id, room_id: data.room_id}))
+  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
     return false;
 
   delete this.rooms[data.room_id];
@@ -104,12 +104,16 @@ Rooms.prototype.isOwner = function(data) {
 /**
  * Delegates to room. @see room.js
  *
- * @param data = {room_id: String, owner_id: String, question_id: String}
- * @return {user_banned: Bool, question_id: String}
+ * @param data = {room_id: String, user_id: String, question_id: String}
+ * @return {user_banned: Bool, user_id: String}
  */
 Rooms.prototype.warnUser = function (data) {
   // Check if room exists
   if (!this.hasRoom(data.room_id))
+    return false;
+
+  // Check if called from owner
+  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
     return false;
 
   return this.rooms[data.room_id].warnUser(data);
@@ -126,7 +130,11 @@ Rooms.prototype.banUser = function (data) {
   if (!this.hasRoom(data.room_id))
     return false;
 
-  return this.rooms[data.room_id].banUser(data.user_id);
+  // Check if called from owner
+  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
+    return false;
+
+  return this.rooms[data.room_id].banUser(data);
 }
 
 /**
@@ -160,7 +168,7 @@ Rooms.prototype.addQuestion = function (data) {
 /**
  * Delegates to room. @see room.js
  *
- * @param data = {room_id: String, question_id: String, owner_id: String}
+ * @param data = {room_id: String, question_id: String, user_id: String}
  * @return true if succesfully deleted, else false
  */
 Rooms.prototype.deleteQuestion = function (data) {

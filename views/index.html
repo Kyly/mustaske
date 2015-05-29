@@ -1,7 +1,9 @@
 <!DOCtype html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> -->
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <!-- bootstrap -->
     <link type="text/css" rel="stylesheet"
@@ -64,7 +66,7 @@
     </div>
 </div>
 <!--end login overlay-->
-<div class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu"
+<div id="off-canvas-nav" class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-xs"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
 
@@ -75,7 +77,7 @@
         <li id="sidenav-room-id"><span class="room-id-label">Room id: </span></li>
         <li><span class="drop-down-room-id"></span></li>
         <li class="divider"></li>
-        <li class="owner-view hidden"><a href="#" class="leave-room-btn"><span class="fa fa-sign-out"></span> &nbsp; Delete Room</a></li>
+        <li class="owner-view hidden"><a href="#" class="leave-room-btn"><span class="fa fa-sign-out"></span>&nbsp;<span class="leave-room-text">Leave Room</span></a></li>
         <li class="student-view"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
     </ul>
     <br>
@@ -109,33 +111,9 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recent Questions
-                <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
-            <ul class="dropdown-menu navmenu-nav">
-                <li>
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="minus" data-field="quant[1]"
-                                  disabled="disabled">
-                              <span class="glyphicon glyphicon-minus"></span>
-                          </button>
-                      </span>
-                        <input type="text" name="quant[1]"
-                               class="form-control input-number" value="1"
-                               min="1" max="10">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="plus" data-field="quant[1]">
-                              <span class="glyphicon glyphicon-plus"></span>
-                          </button>
-                      </span>
-                    </div>
-                </li>
-            </ul>
+        
+        <li>
+            <a href="#">Recent Questions</a>
         </li>
     </ul>
 
@@ -195,7 +173,7 @@
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
-                        <li><a class="leave-room-btn" href="#">Delete Room<span class="fa fa-sign-out pull-right"></span></a></li>
+                        <li><a class="leave-room-btn" href="#"><span class="leave-room-text">Leave Room</span><span class="fa fa-sign-out pull-right"></span></a></li>
                     </ul>
                 </li>
             </ul>
@@ -388,11 +366,57 @@
     <!-- /.modal -->
 </div>
 <!--end canvas & container fluid-->
+<!-- Question template -->
+<script id="question-template" type="text/html">
+    <div question_id="{{question_id}}" class="q {{class}}"
+         data-score="{{question_score}}">
+        <!--end topquestion_section-->
+        <div class="question-content">
+            <p>{{{question_text}}}</p><br>
+
+            <div class="row question-controls">
+                <div class="col-xs-6 question-controls-left">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#" class="student-view thumbs-up-to-active">
+                                <i class="fa fa-thumbs-o-up fa-2x"></i></a>
+                        </li>
+                        <li>
+                            <span class="num-votes">{{question_score}}</span>
+                        </li>
+                        <li>
+                            <span class="owner-view hidden votes-p">votes</span>
+                        </li>
+                        <li>
+                            <a href="#" class="student-view thumbs-down-to-active">
+                                <i class="fa fa-thumbs-o-down"></i></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6">
+                    <ul class="list-inline text-right">
+                        <li>
+                            <a href="#" class="owner-view hidden warn-user"> Warn User
+                                <i class="fa fa-user"></i></a>
+                        </li>
+                        <li>
+                            <a href="#" class="owner-view hidden dismiss-question">
+                                Dismiss Question<i class="fa fa-trash-o"></i> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</script>
+<!-- / Question template -->
 <footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/javascripts/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/javascripts/vendor/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+    <script src="/javascripts/vendor/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
     <script src="/javascripts/vendor/handlebars/handlebars.min.js"></script>
     <script src="/javascripts/vendor/mixitup/build/jquery.mixitup.min.js"></script>
     <script src="/javascripts/vendor/bootbox/bootbox.js"></script>
@@ -401,7 +425,6 @@
     <script src="/javascripts/timer.js"></script>
     <script src="/javascripts/view_actions.js"></script>
     <script src="/javascripts/index.js"></script>
-    <script src="/tpl/templates.js"></script>
     <script src="/javascripts/plus_minus_form.js"></script>
     <script src="/javascripts/vendor/Chart.js/Chart.min.js"></script>
 </footer>
