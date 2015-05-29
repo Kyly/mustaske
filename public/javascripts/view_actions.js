@@ -104,7 +104,7 @@ var ViewActions = function () {
       $('.drop-down-room-id').text(roomInfo.room_id);
       overlay.addClass('animated slideOutUp');
       console.log('Room Id: ' + roomInfo.room_id);
-      addAllQuestions(roomInfo)
+      addAllQuestions(roomInfo);
 
       if (roomInfo.active_poll) {
         activePoll = roomInfo.active_poll;
@@ -319,26 +319,27 @@ var ViewActions = function () {
 
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
-    question.data('score', score);
+    question.attr('data-score', score);
 
     $('.num-votes', question).text(score);
+
     // Check if question is up voted
     if (score > BASE_SCORE) {
       if (!inTopQuestions(question))
         topQuestionAdded(questionInfo);
       else
-      $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
-        .removeClass('category-2')
-        .addClass('category-1');
+        $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
+          .removeClass('dont-show')
+          .addClass('do-show');
     }
     // Hide question from top question has score less than BASE_SCORE
     else if (inTopQuestions(question)) {
       $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
-        .removeClass('category-1')
-        .addClass('category-2');
+        .removeClass('do-show')
+        .addClass('dont-show');
     }
     //invoke mixItUp to sort the div
-    topQuestionsContainer.mixItUp('filter', '.category-1');
+    topQuestionsContainer.mixItUp('filter', '.do-show');
     topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
@@ -353,8 +354,7 @@ var ViewActions = function () {
   var topQuestionAdded = function (topQuestionInfo) {
     var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
     topQuestion.removeClass('recent-question animated pulse');
-    topQuestion.addClass('top-question mix');
-    topQuestion.addClass('category-1');
+    topQuestion.addClass('top-question mix do-show');
     //invoke mixItUp to sort the div
     topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
     topQuestionsContainer.mixItUp('sort', 'score:desc');
@@ -457,7 +457,7 @@ var ViewActions = function () {
    */
   var topQuestionsDiv = function(questionInfo) {
     // Add mix class for sorting
-    questionInfo.class += ' mix';
+    questionInfo.class += ' mix category-1';
     var container       = $('#top-questions-container');
     var html  = questionTemplate(questionInfo);
     attachQuestion(questionInfo, container, html);
