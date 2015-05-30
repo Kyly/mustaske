@@ -11,7 +11,8 @@ var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
       BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer,
-      questionTemplate;
+      questionTemplate, roomID, topQuestionsText, recentQuestionsText,
+      deleteRoomMsg;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -19,16 +20,19 @@ var ViewActions = function () {
    */
   var setupUIImpl = function () {
 
-    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d\d?)$/;
+    regexJoinRoom            = /^([A-Za-z]+-[A-Za-z]+-\d+)$/;
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
     questionTemplate         = Handlebars.compile($('#question-template').html());
+    recentQuestionsText      = $('#recent-question-init-text').html();
+    topQuestionsText         = $('#top-question-init-text').html();
+    deleteRoomMsg            = $('#delete-room-msg').html();
     roomData                 = $('.room-name');
     timer                    = new Timer($('.start-poll-text'));
-    owner                    = false;
     activePoll               = false;
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
+    roomID                   = '';
 
     /**
      * Set up sorted container for top questions.
@@ -67,22 +71,15 @@ var ViewActions = function () {
       $('#login-info .room-name-field').addClass('has-error');
     }
     else {
-      $('#room-name-field').removeClass('has-error');
-      roomData.html(roomInfo.room_name);
-      roomData.data('room-id', roomInfo.room_id);
       roomData.data('owner', true);
-      $('.drop-down-room-id').text(roomInfo.room_id);
-      $('.login-overlay').addClass('animated slideOutUp');
       $('body').find('.owner-view').each(function () {
         $(this).removeClass('hidden').addClass('show');
       });
       $('.student-view').addClass('hidden');
       $('span.leave-room-text').text('Delete Room');
-
       owner = true;
       graph = new Graph();
-
-      console.log('Room Id: ' + roomInfo.room_id);
+      roomInit(roomInfo);
     }
   }
 
@@ -92,25 +89,38 @@ var ViewActions = function () {
    * questions : array, top_questions : array}
    */
   var enterRoomImpl = function (roomInfo) {
-
+    owner = false;
     if (!roomInfo) {
       $('#room-name-field').addClass('has-error');
     }
     else {
-      var overlay = $('.login-overlay');
-      $('#room-name-field').removeClass('has-error');
-      roomData.text(roomInfo.room_name);
-      roomData.data('room-id', roomInfo.room_id);
-      $('.drop-down-room-id').text(roomInfo.room_id);
-      overlay.addClass('animated slideOutUp');
-      console.log('Room Id: ' + roomInfo.room_id);
-      addAllQuestions(roomInfo)
+      if (roomID === '' || roomID !== roomInfo.room_id) {
+        console.log('Room Id: ' + roomInfo.room_id);
+        addAllQuestions(roomInfo);
+        roomInit(roomInfo);
+      } else {
+        $('.login-overlay').addClass('animated slideOutUp');
+      }
 
       if (roomInfo.active_poll) {
         activePoll = roomInfo.active_poll;
         $('.test-in-progress-btn').addClass('active');
       }
     }
+  }
+
+  var roomInit = function (roomInfo) {
+    roomID = roomInfo.room_id;
+    //topQuestionsContainer.empty();
+    //recentQuestionsContainer.empty();
+    topQuestionsContainer.html(topQuestionsText);
+    recentQuestionsContainer.html(recentQuestionsText);
+    $('#room-name-field').removeClass('has-error');
+    roomData.html(roomInfo.room_name);
+    roomData.attr('data-room-id', roomID);
+    $('.login-overlay').addClass('animated slideOutUp');
+    $('.drop-down-room-id').text(roomID);
+
   }
 
   /**
@@ -121,11 +131,8 @@ var ViewActions = function () {
 
     if (owner) {
       bootbox.dialog({
-        message: '<div class="delete-room-warning container-fluid"><div class="row">'
-                 + '<div class="col-xs-12 text-center"><img class="img-responsive" src="../images/scary.gif"/></div>'
-                 + '<div class="col-xs-12"><h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4></div>'
-                 + '</div></div>',
-        title: "Are you sure?",
+        message: deleteRoomMsg,
+        title: "<strong>Are you sure?</strong>",
         buttons: {
           main:    {
             label:     "Stay",
@@ -135,6 +142,7 @@ var ViewActions = function () {
             label:     "Delete",
             className: "btn-danger",
             callback:  function () {
+              owner = false;
               socket.emit('leave room', room_id);
             }
           }
@@ -142,9 +150,9 @@ var ViewActions = function () {
       });
     } else {
       socket.emit('leave room', room_id);
-
     }
   }
+
 
   /**
    * Add all question to user screen. For when room is first joined.
@@ -156,6 +164,12 @@ var ViewActions = function () {
 
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
+
+    if (topQuestions.length > 0)
+      topQuestionsContainer.empty();
+
+    if (questions.length > 0)
+      recentQuestionsContainer.empty();
 
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
@@ -182,8 +196,7 @@ var ViewActions = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-    topQuestionsContainer.empty();
-    recentQuestionsContainer.empty();
+
   }
 
   /**
@@ -265,6 +278,11 @@ var ViewActions = function () {
 //---------------------------- Question View ---------------------------------//
 //============================================================================//
 
+  var removePlaceHolderImpl = function (questionInfo) {
+    $('.init-text').addClass('animated fadeOutDown');
+
+  }
+
   /**
    * update UI reflecting top questions threshold updated
    * @param questions = [Question], New array of top questions
@@ -319,26 +337,27 @@ var ViewActions = function () {
 
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
-    question.data('score', score);
+    question.attr('data-score', score);
 
     $('.num-votes', question).text(score);
+
     // Check if question is up voted
     if (score > BASE_SCORE) {
       if (!inTopQuestions(question))
         topQuestionAdded(questionInfo);
       else
-      $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
-        .removeClass('category-2')
-        .addClass('category-1');
+        $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
+          .removeClass('dont-show')
+          .addClass('do-show');
     }
     // Hide question from top question has score less than BASE_SCORE
     else if (inTopQuestions(question)) {
       $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
-        .removeClass('category-1')
-        .addClass('category-2');
+        .removeClass('do-show')
+        .addClass('dont-show');
     }
     //invoke mixItUp to sort the div
-    topQuestionsContainer.mixItUp('filter', '.category-1');
+    topQuestionsContainer.mixItUp('filter', '.do-show');
     topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
@@ -353,8 +372,7 @@ var ViewActions = function () {
   var topQuestionAdded = function (topQuestionInfo) {
     var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
     topQuestion.removeClass('recent-question animated pulse');
-    topQuestion.addClass('top-question mix');
-    topQuestion.addClass('category-1');
+    topQuestion.addClass('top-question mix do-show');
     //invoke mixItUp to sort the div
     topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
     topQuestionsContainer.mixItUp('sort', 'score:desc');
@@ -457,7 +475,7 @@ var ViewActions = function () {
    */
   var topQuestionsDiv = function(questionInfo) {
     // Add mix class for sorting
-    questionInfo.class += ' mix';
+    questionInfo.class += ' mix do-show';
     var container       = $('#top-questions-container');
     var html  = questionTemplate(questionInfo);
     attachQuestion(questionInfo, container, html);
@@ -699,12 +717,40 @@ var ViewActions = function () {
 //============================================================================//
 //--------------------------------- Nav --------------------------------------//
 //============================================================================//
+  var showTopQuestionsImpl = function() {
+    var recentSection = $('.recent-questions-section');
+
+    if (!recentSection.hasClass('hidden')) {
+      recentSection.addClass('hidden');
+      $(this).addClass('active');
+      $('.offcanvas-show-recent-questions').removeClass('active');
+    }
+
+
+  }
+
+  var showRecentQuestionsImpl = function() {
+    var recentSection = $('.recent-questions-section');
+    if (recentSection.hasClass('hidden')) {
+      recentSection.removeClass('hidden');
+      $(this).addClass('active');
+      $('.offcanvas-show-top-questions').removeClass('active');
+    }
+  }
+
+  var hideOffcanvasImpl = function () {
+    $('#offcanvas-nav').offcanvas('hide');
+  }
 
   var offCanvasFixImpl = function() {
     //$(.css('position','static');
   }
 
   return {
+    removePlaceHolder          : removePlaceHolderImpl,
+    hideOffcanvas              : hideOffcanvasImpl,
+    showRecentQuestions        : showRecentQuestionsImpl,
+    showTopQuestions           : showTopQuestionsImpl,
     offCanvasFix               : offCanvasFixImpl,
     showClickerDialog          : showClickerDialogImpl,
     joinMakeSubmit             : joinMakeSubmitImpl,
