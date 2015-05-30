@@ -15,7 +15,6 @@ hr {
     margin-bottom: 10px;
 }
 
-
 /*============================================================================*/
 /*------------------------------- Main Layout --------------------------------*/
 /*============================================================================*/
@@ -217,6 +216,18 @@ nav .room-controls .dropdown-menu {
 /*------------------------ Recent/Top Questions ------------------------------*/
 /*============================================================================*/
 
+.init-text {
+    color: rgba(190, 190, 190, 0.2);
+    text-transform: uppercase;
+    font-size: 1.9em;
+    margin-top: 6em;
+    font-weight: bold;
+}
+
+.init-text i.fa {
+    font-size: 3em;
+}
+
 .search, .selection {
     margin-top: 2.5em;
 }
@@ -275,11 +286,13 @@ nav .room-controls .dropdown-menu {
     font-size: 15px;
 }
 
-.fa-thumbs-o-up, .fa-thumbs-o-down, .fa-thumbs-up {
+.question-controls .fa-thumbs-o-up,
+.question-controls .fa-thumbs-o-down,
+.question-controls .fa-thumbs-up {
     color: #183F66;
 }
 
-.fa-thumbs-down {
+.question-controls .fa-thumbs-down {
     color: #91031B;
 }
 

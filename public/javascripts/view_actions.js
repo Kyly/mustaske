@@ -11,7 +11,8 @@ var ViewActions = function () {
 
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
       BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer,
-      questionTemplate, roomID;
+      questionTemplate, roomID, topQuestionsText, recentQuestionsText,
+      deleteRoomMsg;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -23,9 +24,11 @@ var ViewActions = function () {
     topQuestionsContainer    = $('#top-questions-container');
     recentQuestionsContainer = $('#recent-questions-container');
     questionTemplate         = Handlebars.compile($('#question-template').html());
+    recentQuestionsText      = $('#recent-question-init-text').html();
+    topQuestionsText         = $('#top-question-init-text').html();
+    deleteRoomMsg            = $('#delete-room-msg').html();
     roomData                 = $('.room-name');
     timer                    = new Timer($('.start-poll-text'));
-    owner                    = false;
     activePoll               = false;
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
@@ -68,25 +71,15 @@ var ViewActions = function () {
       $('#login-info .room-name-field').addClass('has-error');
     }
     else {
-      roomID = roomInfo.room_id;
-      topQuestionsContainer.empty();
-      recentQuestionsContainer.empty();
-      $('#room-name-field').removeClass('has-error');
-      roomData.html(roomInfo.room_name);
-      roomData.data('room-id', roomID);
       roomData.data('owner', true);
-      $('.drop-down-room-id').text(roomID);
-      $('.login-overlay').addClass('animated slideOutUp');
       $('body').find('.owner-view').each(function () {
         $(this).removeClass('hidden').addClass('show');
       });
       $('.student-view').addClass('hidden');
       $('span.leave-room-text').text('Delete Room');
-
       owner = true;
       graph = new Graph();
-
-      console.log('Room Id: ' + roomID);
+      roomInit(roomInfo);
     }
   }
 
@@ -96,24 +89,17 @@ var ViewActions = function () {
    * questions : array, top_questions : array}
    */
   var enterRoomImpl = function (roomInfo) {
-
+    owner = false;
     if (!roomInfo) {
       $('#room-name-field').addClass('has-error');
     }
     else {
-      var overlay = $('.login-overlay');
-      $('#room-name-field').removeClass('has-error');
-      overlay.addClass('animated slideOutUp');
-
       if (roomID === '' || roomID !== roomInfo.room_id) {
-        roomID = roomInfo.room_id;
-        roomData.text(roomInfo.room_name);
-        topQuestionsContainer.empty();
-        recentQuestionsContainer.empty();
-        roomData.attr('data-room-id', roomInfo.room_id);
-        $('.drop-down-room-id').text(roomInfo.room_id);
         console.log('Room Id: ' + roomInfo.room_id);
         addAllQuestions(roomInfo);
+        roomInit(roomInfo);
+      } else {
+        $('.login-overlay').addClass('animated slideOutUp');
       }
 
       if (roomInfo.active_poll) {
@@ -121,6 +107,20 @@ var ViewActions = function () {
         $('.test-in-progress-btn').addClass('active');
       }
     }
+  }
+
+  var roomInit = function (roomInfo) {
+    roomID = roomInfo.room_id;
+    //topQuestionsContainer.empty();
+    //recentQuestionsContainer.empty();
+    topQuestionsContainer.html(topQuestionsText);
+    recentQuestionsContainer.html(recentQuestionsText);
+    $('#room-name-field').removeClass('has-error');
+    roomData.html(roomInfo.room_name);
+    roomData.attr('data-room-id', roomID);
+    $('.login-overlay').addClass('animated slideOutUp');
+    $('.drop-down-room-id').text(roomID);
+
   }
 
   /**
@@ -131,11 +131,8 @@ var ViewActions = function () {
 
     if (owner) {
       bootbox.dialog({
-        message: '<div class="delete-room-warning container-fluid"><div class="row">'
-                 + '<div class="col-xs-12 text-center"><img class="img-responsive" src="../images/scary.gif"/></div>'
-                 + '<div class="col-xs-12"><h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4></div>'
-                 + '</div></div>',
-        title: "Are you sure?",
+        message: deleteRoomMsg,
+        title: "<strong>Are you sure?</strong>",
         buttons: {
           main:    {
             label:     "Stay",
@@ -156,14 +153,6 @@ var ViewActions = function () {
     }
   }
 
-  /**
-   * Adds some questions for user who are returning to a room.
-   * @param roomInfo = {room_name : string, room_id : string,
-   * questions : array, top_questions : array}
-   */
-  var addSomeQuestions = function(roomInfo) {
-
-  }
 
   /**
    * Add all question to user screen. For when room is first joined.
@@ -175,6 +164,12 @@ var ViewActions = function () {
 
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
+
+    if (topQuestions.length > 0)
+      topQuestionsContainer.empty();
+
+    if (questions.length > 0)
+      recentQuestionsContainer.empty();
 
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
@@ -282,6 +277,11 @@ var ViewActions = function () {
 //============================================================================//
 //---------------------------- Question View ---------------------------------//
 //============================================================================//
+
+  var removePlaceHolderImpl = function (questionInfo) {
+    $('.init-text').addClass('animated fadeOutDown');
+
+  }
 
   /**
    * update UI reflecting top questions threshold updated
@@ -747,6 +747,7 @@ var ViewActions = function () {
   }
 
   return {
+    removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
     showRecentQuestions        : showRecentQuestionsImpl,
     showTopQuestions           : showTopQuestionsImpl,

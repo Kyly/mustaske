@@ -216,6 +216,7 @@
                 <!-- /row-->
                 <!-- recent-questions-container -->
                 <div id="recent-questions-container">
+
                 </div>
                 <!-- /recent-questions-container -->
                 <div class="row question-form-container">
@@ -246,32 +247,32 @@
             </div>
             <!--end recent questions-->
             <div class="top-questions-section col-xs-12 col-md-5">
-                <div class="selection hidden-xs hidden-sm">
-                    <div class="dropdown hidden-xs">
-                        <button class="btn btn-default dropdown-toggle"
-                                type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
-                            top 4 questions <i class="fa fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu"
-                            aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">top 5
-                                questions</a>
-                            </li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">bottom 3
-                                questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">bottom 5
-                                questions</a></li>
-                        </ul>
-                    </div>
-                    <!--end dropdown-->
-                </div>
+                <!--<div class="selection hidden-xs hidden-sm">-->
+                    <!--<div class="dropdown hidden-xs">-->
+                        <!--<button class="btn btn-default dropdown-toggle"-->
+                                <!--type="button" id="dropdownMenu1"-->
+                                <!--data-toggle="dropdown" aria-expanded="true">-->
+                            <!--top 4 questions <i class="fa fa-chevron-down"></i>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu" role="menu"-->
+                            <!--aria-labelledby="dropdownMenu1">-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">top 5-->
+                                <!--questions</a>-->
+                            <!--</li>-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">bottom 3-->
+                                <!--questions</a></li>-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">bottom 5-->
+                                <!--questions</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;end dropdown&ndash;&gt;-->
+                <!--</div>-->
                 <!--end selection-->
                 <div id="top-questions-container"
                      class="top-questions-container">
@@ -401,6 +402,30 @@
 
 </script>
 <!-- / Question template -->
+<script id="recent-question-init-text" type="text/html">
+    <div class="first-join-text text-center init-text">
+        <p>Recent questions will go here. Go a head and add your questions below</p>
+        <p><i class="fa fa fa-arrow-down"></i></p>
+    </div>
+</script>
+<script id="top-question-init-text" type="text/html">
+    <div class="first-join-text text-center init-text">
+        <p><i class="fa fa fa-thumbs-up"></i></p>
+        <p>Top questions will appear here once questions are upvoted</p>
+    </div>
+</script>
+<script id="delete-room-msg" type="text/html">
+    <div class="delete-room-warning container-fluid">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <img class="img-responsive" src="../images/scary.gif"/>
+            </div>
+            <div class="col-xs-12">
+                <h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4>
+            </div>
+        </div>
+    </div>
+</script>
 <footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/vendor/jquery/dist/jquery.min.js"></script>
