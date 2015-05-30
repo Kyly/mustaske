@@ -6,7 +6,7 @@ body, html, .main-content {
     height: 100%;
 }
 
-p, a, li, select, input {
+* {
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -65,7 +65,7 @@ hr {
 
 .recent-questions-section {
     background-color: #ffffff;
-    padding: 0 4em;
+    padding: 0 3em;
 }
 
 .recent-questions-section, .top-questions-section {
@@ -76,6 +76,10 @@ hr {
     padding: 0 2.5em;
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
+}
+
+.top-questions-section .section-label {
+    margin-left:1em;
 }
 
 /*============================================================================*/
@@ -260,7 +264,13 @@ nav .room-controls .dropdown-menu {
     margin-top: 2.5em;
 }
 
-.search {
+.section-label {
+    margin-top:3em;   
+    font-weight: 700;
+    color:#20597F;
+}
+
+.search, .section-label {
     margin-bottom: 3%;
 }
 
@@ -299,6 +309,16 @@ nav .room-controls .dropdown-menu {
 
 .question-content {
     word-wrap: break-word;
+    padding-top:0.7em;
+}
+
+.question-content p{
+    margin-bottom: 1.2em;
+    font-size:15px;
+}
+
+.question-content .text-right li{
+    padding: 0 1em;
 }
 
 .top-question {
@@ -398,10 +418,10 @@ nav .room-controls .dropdown-menu {
 }
 
 .num-votes, .num-comments {
-    padding: 0 .5em;
+    padding: 0.1em .5em;
     background-color: rgb(144, 144, 144);
-    font-weight: 700;
     color: #ffffff;
+    font-size:16px;
 }
 
 .question-controls .question-controls-left {
@@ -444,11 +464,26 @@ nav .room-controls .dropdown-menu {
 }
 
 .votes-p {
+    color:#b5b5b5;
 }
 
 .dismiss-question i, .warn-user i {
     padding-left: 0.2em;
     font-size: 2em;
+}
+
+.warn-user, .dismiss-question {
+    color:#20597F;
+}
+
+.warn-user:hover {
+    text-decoration: none;
+    color:#9f0203;
+}
+
+.dismiss-question:hover {
+    text-decoration: none;
+    color:#706e6e;
 }
 
 @media only screen and (max-width: 767px) {
@@ -505,5 +540,15 @@ nav .room-controls .dropdown-menu {
 @media only screen and (max-width: 900px) {
     .canvas .room-name {
         font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+     .search {
+        margin-top:0.5em;   
+    }   
+    
+    .dismiss-question {
+        margin-top:0.5em;   
     }
 }
