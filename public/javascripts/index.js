@@ -10,7 +10,7 @@ $(document).ready(function () {
   socket.on('create room', ViewActions.enterRoomOwner);
   socket.on('join room', ViewActions.enterRoom);
   socket.on('new question', ViewActions.questionAdded);
-  socket.once('new question', ViewActions.removePlaceHolder);
+  //socket.once('new question', ViewActions.removePlaceHolder);
   socket.on('leave room', ViewActions.showHomeScreen);
   socket.on('upvote question', ViewActions.updateScore);
   socket.on('downvote question', ViewActions.updateScore);

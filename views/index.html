@@ -69,7 +69,7 @@
 </div>
 <!--end login overlay-->
 <div id="offcanvas-nav"
-     class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-xs"
+     class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-sm"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
 
@@ -95,38 +95,17 @@
             <hr>
         </li>
         <li class="dropdown">
-            <a href="#" class="offcanvas-show-top-questions dropdown-toggle hide-on-click" data-toggle="dropdown">Top
-                Questions <span class="pull-right">|  &nbsp; &nbsp; <i
-                        class="fa fa-chevron-down pull-right"></i></span></a>
-            <ul class="dropdown-menu navmenu-nav">
-                <li>
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="minus" data-field="quant[1]"
-                                  disabled="disabled">
-                              <span class="glyphicon glyphicon-minus"></span>
-                          </button>
-                      </span>
-                        <input type="text" name="quant[1]"
-                               class="form-control input-number" value="1"
-                               min="1" max="10">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="plus" data-field="quant[1]">
-                              <span class="glyphicon glyphicon-plus"></span>
-                          </button>
-                      </span>
-                    </div>
-                </li>
-            </ul>
+            <a href="#" class="offcanvas-show-top-questions dropdown-toggle hide-on-click">Top Questions</a>
         </li>
-
         <li>
             <a href="#" class="offcanvas-show-recent-questions hide-on-click" >Recent Questions</a>
         </li>
+        <form class="search search-questions right-inner-addon">
+            <i class="fa fa-search"></i>
+            <input type="form-controlsearch-question-text search input-lg"
+                   class="form-control"
+                   placeholder="Search all questions" />
+        </form>
     </ul>
 
     <br>
@@ -159,11 +138,11 @@
                 <span class="navbar-brand room-name">CSE110</span>
 
             </div>
-            <ul class="nav navbar-nav navbar-right room-controls hidden-xs hidden-sm">
+            <ul class="nav navbar-nav navbar-right room-controls hidden-xs">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-expanded="false">
-                        <span class="fa fa-cogs"></span> Room Options
+                        <span class="fa fa-cogs"></span> <span class="visible-md-inline visible-lg-inline">Room Options</span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><span class="room-id-label">Room id: </span></li>
@@ -176,14 +155,14 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm poll-controls">
+            <ul class="nav navbar-nav navbar-right hidden-xs poll-controls">
 
                 <li><a class="owner-view hidden start-poll-btn"
                        href="#"><span class="fa fa-play"></span>
-                    <span class="start-poll-text">Start Poll</span></a>
+                    <span class="start-poll-text visible-md-inline visible-lg-inline">Start Poll</span></a>
                 </li>
                 <li><a class="owner-view hidden stop-poll-btn"
-                       href="#"><span class="fa fa-stop"></span> Stop Poll</a>
+                       href="#"><span class="fa fa-stop"></span><span class="visible-md-inline visible-lg-inline">Stop Poll</span></a>
                 </li>
                 <li><a class="test-in-progress-btn student-view"
                        href="#"><span class="fa fa-check-square"></span></a>
@@ -191,7 +170,7 @@
                 <li><a class="show-graph-btn owner-view hidden"
                        data-toggle="modal" data-target=".graph-modal-lg"
                        href="#">
-                    <span class="fa fa-bar-chart"></span> Poll Results</a>
+                    <span class="fa fa-bar-chart"></span><span class="visible-md-inline visible-lg-inline">Poll Results</span></a>
                 </li>
             </ul>
         </div>
@@ -200,17 +179,18 @@
     <div class="main-content rest container-fluid">
         <!-- main-content -->
         <div class="content-row row">
-            <div class="recent-questions-section col-xs-12 col-md-7 pull-right">
+            <div class="recent-questions-section col-xs-12 col-sm-6 col-md-7 pull-right">
                 <div class="row">
-                    <form class="search search-questions col-md-9 col-sm-9 col-xs-12 pull-right">
-                        <div class="input-group form-group hidden-xs">
-                            <input id="search-question-text" type="text" class="form-control" placeholder="search all questions">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Go!</button>
-                            </span>
-                        </div>
-                        <!-- /input-group -->
-                    </form>
+                    <div class="col-md-4 hidden-sm hidden-xs"><div class="section-label"></div></div>
+                    <!-- Search -->
+                    <div class="col-sm-12 col-md-8 hidden-xs">
+                        <form class="search search-questions right-inner-addon">
+                            <i class="fa fa-search"></i>
+                            <input type="search-question-text search"
+                                   class="form-control"
+                                   placeholder="Search all questions" />
+                        </form>
+                    </div>
                     <!-- /search -->
                 </div>
                 <!-- /row-->
@@ -246,7 +226,7 @@
                 </div>
             </div>
             <!--end recent questions-->
-            <div class="top-questions-section col-xs-12 col-md-5">
+            <div class="top-questions-section col-xs-12 col-sm-6 col-md-5">
                 <!--<div class="selection hidden-xs hidden-sm">-->
                     <!--<div class="dropdown hidden-xs">-->
                         <!--<button class="btn btn-default dropdown-toggle"-->
@@ -399,7 +379,6 @@
             </div>
         </div>
     </div>
-
 </script>
 <!-- / Question template -->
 <script id="recent-question-init-text" type="text/html">

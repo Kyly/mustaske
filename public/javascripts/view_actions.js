@@ -96,8 +96,8 @@ var ViewActions = function () {
     else {
       if (roomID === '' || roomID !== roomInfo.room_id) {
         console.log('Room Id: ' + roomInfo.room_id);
-        addAllQuestions(roomInfo);
         roomInit(roomInfo);
+        addAllQuestions(roomInfo);
       } else {
         $('.login-overlay').addClass('animated slideOutUp');
       }
@@ -111,10 +111,8 @@ var ViewActions = function () {
 
   var roomInit = function (roomInfo) {
     roomID = roomInfo.room_id;
-    //topQuestionsContainer.empty();
-    //recentQuestionsContainer.empty();
-    topQuestionsContainer.html(topQuestionsText);
-    recentQuestionsContainer.html(recentQuestionsText);
+    //topQuestionsContainer.html(topQuestionsText);
+    //recentQuestionsContainer.html(recentQuestionsText);
     $('#room-name-field').removeClass('has-error');
     roomData.html(roomInfo.room_name);
     roomData.attr('data-room-id', roomID);
@@ -165,11 +163,9 @@ var ViewActions = function () {
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
 
-    if (topQuestions.length > 0)
-      topQuestionsContainer.empty();
+    if (topQuestions.length > 0 || questions.length > 0)
+      removePlaceHolderImpl();
 
-    if (questions.length > 0)
-      recentQuestionsContainer.empty();
 
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
@@ -395,7 +391,7 @@ var ViewActions = function () {
    * Search callback
    */
   var searchRecentQuestionsImpl = function (event) {
-    var term = $('#search-question-text').val();
+    var term = $('.search-question-text').val();
     var recentQuestion = $('.recent-question');
 
     if (term === '') {
@@ -671,10 +667,15 @@ var ViewActions = function () {
    * Calls controller to warn a user
    */
   var warnUserImpl = function () {
+    var question = $(this);
+
     var data = {
       room_id: $('.room-name').data('room-id'),
-      question_id: $(this).closest('.q').attr('question_id')
+      question_id: question.closest('.q').attr('question_id')
     };
+
+    console.log($('.warn-user i.fa', question));
+    question.find('.warn-user > i').removeClass('fa-user').addClass('fa-user-times');
     socket.emit('warn user', data);
   }
 
