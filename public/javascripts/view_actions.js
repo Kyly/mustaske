@@ -371,7 +371,7 @@ var ViewActions = function () {
     topQuestion.addClass('top-question mix do-show');
     //invoke mixItUp to sort the div
     topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
-    topQuestionsContainer.mixItUp('sort', 'score:desc');
+    //topQuestionsContainer.mixItUp('sort', 'score:desc');
   }
 
   /**
