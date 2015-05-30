@@ -29,7 +29,7 @@
           rel='stylesheet' type='text/css'>
     <!-- Our styles -->
     <link href="/stylesheets/style.css" rel="stylesheet"/>
-    <title>MustAsk: CSE110</title>
+    <title>MustAske: CSE110</title>
     <link rel="Shortcut Icon" type="image/jpg" href="/images/mustache.png"/>
 </head>
 <body>
@@ -181,7 +181,7 @@
         <div class="content-row row">
             <div class="recent-questions-section col-xs-12 col-sm-6 col-md-7 pull-right">
                 <div class="row">
-                    <div class="section-label col-md-4 hidden-xs">RECENT QUESTIONS</div>
+                    <div class="section-label col-md-4">RECENT QUESTIONS</div>
                     <!-- Search -->
                     <div class="col-sm-12 col-md-8 hidden-xs">
                         <form class="search search-questions right-inner-addon">
@@ -339,42 +339,61 @@
                 {{{question_text}}}
 
                 <div class="row question-controls">
-                    <div class="col-md-5 col-xs-5 question-controls-left">
-                        <ul class="list-inline">
-                            <li>
-                                <a href="#"
-                                   class="student-view thumbs-up-to-active">
-                                    <i class="fa fa-thumbs-o-up fa-lg"></i></a>
-                            </li>
-                            <li>
-                                <span class="num-votes">{{question_score}}</span>
-                            </li>
-                            <li>
-                                <span class="owner-view hidden votes-p">votes</span>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   class="student-view thumbs-down-to-active">
-                                    <i class="fa fa-thumbs-o-down fa-lg"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                    <div class="owner-view hidden">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-2 col-xxs-2 question-controls-left">
+                            <ul class="list-inline">
+                               
+                                <li>
+                                    <span class="num-votes">{{question_score}}</span>
+                                </li>
+                                <li>
+                                    <span class="votes-p">votes</span>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-10 col-xxs-10">
+                            <ul class="list-inline text-right">
+                                <li>
+                                    <a href="#" class="owner-view hidden warn-user">
+                                        Warn User
+                                        <i class="fa fa-user"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="owner-view hidden dismiss-question">
+                                        Dismiss Question<i class="fa fa-trash-o"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    
+                    </div> <!--end owner view-->
+                    
+                    <div class="student-view">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 question-controls-left">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#"
+                                       class="student-view thumbs-up-to-active">
+                                        <i class="fa fa-thumbs-o-up fa-2x"></i></a>
+                                </li>
+                                <li>
+                                    <span class="num-votes">{{question_score}}</span>
+                                </li>
+                                <li class="thumbs-down-li">
+                                    <a href="#"
+                                       class="student-view thumbs-down-to-active">
+                                        <i class="fa fa-thumbs-o-down fa-2x"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    
+                    </div><!--end student view-->
+                    
 
-                    <div class="col-md-7 col-xs-7">
-                        <ul class="list-inline text-right">
-                            <li>
-                                <a href="#" class="owner-view hidden warn-user">
-                                    Warn User
-                                    <i class="fa fa-user"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   class="owner-view hidden dismiss-question">
-                                    Dismiss Question<i class="fa fa-trash-o"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
                 <hr>
             </div>
