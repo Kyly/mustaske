@@ -19,15 +19,7 @@ class PostPoll(unittest.TestCase):
     def test_post_poll(self):
         # Preparing the variables for this tests
         print("Preparing the variables")
-        driver = self.driver
-        driver.get(self.base_url)
-        
-        # Name of the room
-        room = "Test_Room"
-        
-        # Options of the poll
-        options = "ABCDE"
-        
+                
         # The number of audience members that will be on the test. Increse by
         # by one in order to keep the 0 index for the owner member
         audience = int(input("How many audience members are in the room? "))
@@ -41,6 +33,17 @@ class PostPoll(unittest.TestCase):
         random_distr = True
         if(distribution[0] == 'e' or distribution == 'E'):
             random_distr = False
+                    
+        # Preparing the variables for this tests
+        print("Preparing the variables")
+        driver = self.driver
+        driver.get(self.base_url)
+        
+        # Name of the room
+        room = "Test_Room"
+        
+        # Options of the poll
+        options = "ABCDE"
         
         print("Creating a room")
         driver.find_element_by_css_selector("input.form-control").clear()
@@ -53,13 +56,14 @@ class PostPoll(unittest.TestCase):
         print("Accessing a Room as an Audience member")
         time.sleep(2)
         
-        for x in range(1, audience): 
+        for x in range(1, audience):
             driver.execute_script("$(window.open('"+self.base_url+"'))")
             driver.switch_to_window(driver.window_handles[-1])
             driver.find_element_by_css_selector("input.form-control").clear()
             driver.find_element_by_css_selector("input.form-control").send_keys(roomID)
             driver.find_element_by_id("join-room").click()
             self.assertEqual(room, driver.find_element_by_css_selector("span.navbar-brand.room-name").text)
+            time.sleep(1)
         
         print("Switching to Owner view in order to start the poll");
         time.sleep(2)
