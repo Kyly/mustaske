@@ -1,8 +1,9 @@
 <!DOCtype html>
 <html>
 <head>
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no"
+          name="viewport"/>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> -->
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <!-- bootstrap -->
@@ -43,7 +44,8 @@
                 <div class="row form-group">
                     <div id="room-name-field"
                          class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1 has-feedback">
-                        <input type="room-name" class="form-control" placeholder="Room Name...">
+                        <input type="room-name" class="form-control"
+                               placeholder="Room Name...">
                         <span class="glyphicon glyphicon-remove form-control-feedback"
                               aria-hidden="true"></span>
                     </div>
@@ -66,89 +68,62 @@
     </div>
 </div>
 <!--end login overlay-->
-<div id="off-canvas-nav" class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-xs"
+<div id="offcanvas-nav"
+     class="navmenu navmenu-default navmenu-fixed-left mobile-offcanvas-menu offcanvas-sm"
      style="z-index: 1"> <!-- Offcanvas menu -->
     <span class="navmenu-brand hidden-md hidden-lg room-name">Room Name</span>
 
-    
+
     <ul class="nav navmenu-nav">
         <br>
-        <li class="sidenav-header">ROOM OPTIONS<br><hr></li>
-        <li id="sidenav-room-id"><span class="room-id-label">Room id: </span></li>
+        <li class="sidenav-header">ROOM OPTIONS<br>
+            <hr>
+        </li>
+        <li id="sidenav-room-id"><span class="room-id-label">Room id: </span>
+        </li>
         <li><span class="drop-down-room-id"></span></li>
         <li class="divider"></li>
-        <li class="owner-view hidden"><a href="#" class="leave-room-btn"><span class="fa fa-sign-out"></span>&nbsp;<span class="leave-room-text">Leave Room</span></a></li>
-        <li class="student-view"><a href="#"><span class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
+        <li class="owner-view hidden"><a href="#" class="leave-room-btn hide-on-click"><span
+                class="fa fa-sign-out"></span>&nbsp;<span
+                class="leave-room-text">Leave Room</span></a></li>
+        <li class="student-view"><a href="#"><span
+                class="fa fa-sign-out"></span> &nbsp; Leave Room</a></li>
     </ul>
     <br>
     <ul class="nav navmenu-nav">
-        <li class="sidenav-header">QUESTIONS OPTIONS<br><hr></li>
+        <li class="sidenav-header">QUESTIONS OPTIONS<br>
+            <hr>
+        </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Top 
-                Questions <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
-            <ul class="dropdown-menu navmenu-nav">
-                <li>
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="minus" data-field="quant[1]"
-                                  disabled="disabled">
-                              <span class="glyphicon glyphicon-minus"></span>
-                          </button>
-                      </span>
-                        <input type="text" name="quant[1]"
-                               class="form-control input-number" value="1"
-                               min="1" max="10">
-                      <span class="input-group-btn">
-                          <button type="button"
-                                  class="btn btn-default btn-number"
-                                  data-type="plus" data-field="quant[1]">
-                              <span class="glyphicon glyphicon-plus"></span>
-                          </button>
-                      </span>
-                    </div>
-                </li>
-            </ul>
+            <a href="#" class="offcanvas-show-top-questions dropdown-toggle hide-on-click">Top Questions</a>
         </li>
-        
         <li>
-            <a href="#">Recent Questions</a>
+            <a href="#" class="offcanvas-show-recent-questions hide-on-click" >Recent Questions</a>
         </li>
+        <form class="search search-questions right-inner-addon">
+            <i class="fa fa-search"></i>
+            <input type="form-controlsearch-question-text search input-lg"
+                   class="form-control"
+                   placeholder="Search all questions" />
+        </form>
     </ul>
 
     <br>
     <ul class="nav navmenu-nav owner-view hidden">
-        <li class="sidenav-header">POLL OPTIONS<br><hr></li>
-                <li><a class="owner-view hidden start-poll-btn"
-                       href="#"><span class="fa fa-play"></span> &nbsp; Start Poll</a>
-                </li>
-                <li><a class="owner-view hidden stop-poll-btn"
-                       href="#"><span class="fa fa-stop"></span> &nbsp; Stop Poll</a>
-                </li>
-                <li><a class="show-graph-btn owner-view hidden"
-                       data-toggle="modal" data-target=".graph-modal-lg" href="#">
-                    <span class="fa fa-bar-chart"></span> &nbsp; Poll Results</a>
-                </li>
-    </ul>
-   <!-- <ul class="nav navmenu-nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Options <span class="pull-right">|  &nbsp; &nbsp; <i class="fa fa-chevron-down pull-right"></i></span></a>
-            <ul class="dropdown-menu navmenu-nav">
-                <li><a href="#"></a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-            </ul>
+        <li class="sidenav-header">POLL OPTIONS<br>
+            <hr>
+        </li>
+        <li><a class="owner-view hidden start-poll-btn"
+               href="#"><span class="fa fa-play"></span> &nbsp; <span class="start-poll-text">Start Poll</span></a>
+        </li>
+        <li><a class="owner-view hidden stop-poll-btn"
+               href="#"><span class="fa fa-stop"></span> &nbsp; Stop Poll</a>
+        </li>
+        <li><a class="show-graph-btn owner-view hidden"
+               data-toggle="modal" data-target=".graph-modal-lg" href="#">
+            <span class="fa fa-bar-chart"></span> &nbsp; Poll Results</a>
         </li>
     </ul>
-        <ul class="nav navmenu-nav">
-        <li><span class="room-rid">Slide in</span></li>
-        <li><span class="room-user-status">Push</span></li>
-    </ul>-->
 </div>
 <!-- end Offcanvas menu -->
 <div class="canvas"><!-- Control for offcanvas -->
@@ -163,17 +138,20 @@
                 <span class="navbar-brand room-name">CSE110</span>
 
             </div>
-            <ul class="nav navbar-nav navbar-right hidden-xs room-controls">
+            <ul class="nav navbar-nav navbar-right room-controls hidden-xs">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-expanded="false">
-                        <span class="fa fa-cogs"></span> Room Options
+                        <span class="fa fa-cogs"></span> <span class="visible-md-inline visible-lg-inline">Room Options</span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><span class="room-id-label">Room id: </span></li>
                         <li><span class="drop-down-room-id"></span></li>
                         <li class="divider"></li>
-                        <li><a class="leave-room-btn" href="#"><span class="leave-room-text">Leave Room</span><span class="fa fa-sign-out pull-right"></span></a></li>
+                        <li><a class="leave-room-btn" href="#"><span
+                                class="leave-room-text">Leave Room</span><span
+                                class="fa fa-sign-out pull-right"></span></a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -181,237 +159,252 @@
 
                 <li><a class="owner-view hidden start-poll-btn"
                        href="#"><span class="fa fa-play"></span>
-                    <span class="start-poll-text">Start Poll</span></a>
+                    <span class="start-poll-text visible-md-inline visible-lg-inline">Start Poll</span></a>
                 </li>
                 <li><a class="owner-view hidden stop-poll-btn"
-                       href="#"><span class="fa fa-stop"></span> Stop Poll</a>
+                       href="#"><span class="fa fa-stop"></span><span class="visible-md-inline visible-lg-inline">Stop Poll</span></a>
                 </li>
                 <li><a class="test-in-progress-btn student-view"
                        href="#"><span class="fa fa-check-square"></span></a>
                 </li>
                 <li><a class="show-graph-btn owner-view hidden"
-                       data-toggle="modal" data-target=".graph-modal-lg" href="#">
-                    <span class="fa fa-bar-chart"></span> Poll Results</a>
+                       data-toggle="modal" data-target=".graph-modal-lg"
+                       href="#">
+                    <span class="fa fa-bar-chart"></span><span class="visible-md-inline visible-lg-inline">Poll Results</span></a>
                 </li>
             </ul>
         </div>
         <!-- end nav -->
     </nav>
-    <div class="rest container-fluid">
-        <div id="main-content" class="row">
-            <div class="top-questions-section col-md-5 col-sm-5 col-xs-12 scroll sidebar hidden-xs">
-                <!--end selection-->
-                <div class="selection">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle hidden-xs"
-                                type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
-                            top 4 questions <i class="fa fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu"
-                            aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">top 5
-                                questions</a>
-                            </li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">bottom 3
-                                questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1"
-                                                       href="#">bottom 5
-                                questions</a></li>
-                        </ul>
+    <div class="main-content rest container-fluid">
+        <!-- main-content -->
+        <div class="content-row row">
+            <div class="recent-questions-section col-xs-12 col-sm-6 col-md-7 pull-right">
+                <div class="row">
+                    <div class="col-md-4 hidden-sm hidden-xs"><div class="section-label"></div></div>
+                    <!-- Search -->
+                    <div class="col-sm-12 col-md-8 hidden-xs">
+                        <form class="search search-questions right-inner-addon">
+                            <i class="fa fa-search"></i>
+                            <input type="search-question-text search"
+                                   class="form-control"
+                                   placeholder="Search all questions" />
+                        </form>
                     </div>
-                    <!--end dropdown-->
+                    <!-- /search -->
                 </div>
+                <!-- /row-->
+                <!-- recent-questions-container -->
+                <div id="recent-questions-container">
+
+                </div>
+                <!-- /recent-questions-container -->
+                <div class="row question-form-container">
+                    <form class="askquestion col-md-offset-5 col-md-7 col-sm-12 col-xs-12"
+                          role="form">
+                        <div class="input-group form-group">
+                            <input type="text"
+                                   class="form-control add-question-text"
+                                   placeholder="ask a question!"
+                                   maxlength="300">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default add-question-btn" type="submit">
+                                    <i class="fa fa-paper-plane"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="special-formatting-text" aria-hidden="true">
+                            <b>**bold**</b>
+                            <i>_italics_</i>
+                            <code>`code`</code>
+                            <code class="preformatted">```preformatted```</code>
+                            <span class="quote"> &gt;quote</span>
+                        </div>
+                        <!-- /input-group -->
+                    </form>
+                    <!--end askquestion-->
+                </div>
+            </div>
+            <!--end recent questions-->
+            <div class="top-questions-section col-xs-12 col-sm-6 col-md-5">
+                <!--<div class="selection hidden-xs hidden-sm">-->
+                    <!--<div class="dropdown hidden-xs">-->
+                        <!--<button class="btn btn-default dropdown-toggle"-->
+                                <!--type="button" id="dropdownMenu1"-->
+                                <!--data-toggle="dropdown" aria-expanded="true">-->
+                            <!--top 4 questions <i class="fa fa-chevron-down"></i>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu" role="menu"-->
+                            <!--aria-labelledby="dropdownMenu1">-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">top 5-->
+                                <!--questions</a>-->
+                            <!--</li>-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">bottom 3-->
+                                <!--questions</a></li>-->
+                            <!--<li role="presentation"><a role="menuitem"-->
+                                                       <!--tabindex="-1"-->
+                                                       <!--href="#">bottom 5-->
+                                <!--questions</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;end dropdown&ndash;&gt;-->
+                <!--</div>-->
                 <!--end selection-->
                 <div id="top-questions-container"
                      class="top-questions-container">
                 </div>
+                <!--end top-questions-container-->
             </div>
-            <!--end top-questions-container-->
+            <!--end top-questions-section -->
         </div>
-        <!--end top-questions-section -->
-        <div class="recent-questions-section col-md-7 col-sm-7 col-xs-12 col-sm-offset-5">
-            <div class="row">
-                <div class="selection col-md-3 col-sm-3 col-xs-12">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle hidden-xs"
-                                type="button" id="dropdownMenu1"
-                                data-toggle="dropdown" aria-expanded="true">
-                            most recent &nbsp; &nbsp; <i
-                                class="fa fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu"
-                            aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">top
-                                5 questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">bottom
-                                3 questions</a></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       tabindex="-1" href="#">bottom
-                                5 questions</a></li>
-                        </ul>
-                    </div>
-                    <!--end dropdown-->
-                </div>
-                <!--end selection-->
-                <form class="search search-questions col-md-9 col-sm-9 col-xs-12 hidden-xs">
-                    <div class="input-group form-group hidden-xs">
-                        <input id="search-question-text" type="text"
-                               class="form-control"
-                               placeholder="search all questions">
-                                          <span class="input-group-btn">
-                                            <button class="btn btn-default"
-                                                    type="submit">Go!
-                                            </button>
-                                          </span>
-                    </div>
-                    <!-- /input-group -->
-                </form>
-                <!-- /search -->
-            </div>
-            <!-- /row-->
-            <!-- recent-questions-container -->
-            <div id="recent-questions-container">
-            </div>
-            <!-- /recent-questions-container -->
-            <form class="askquestion col-md-offset-6 col-md-7 col-sm-12 col-xs-12"
-                  role="form">
-                <div class="input-group form-group">
-                    <input type="text"
-                           class="form-control add-question-text" placeholder="ask a question!"
-                           maxlength="300">
-                              <span class="input-group-btn">
-                                <button class="btn btn-default add-question-btn" type="submit"><i
-                                        class="fa fa-paper-plane"></i>
-                                </button>
-                              </span>
-                </div>
-                <div class="special-formatting-text" aria-hidden="true">
-                    <b>**bold**</b>
-                    <i>_italics_</i>
-                    <code>`code`</code>
-                    <code class="preformatted">```preformatted```</code>
-                    <span class="quote"> &gt;quote</span>
-                </div>
-                <!-- /input-group -->
-            </form>
-            <!--end askquestion-->
-
-        </div>
-        <!--end recent questions-->
+        <!-- / Main-content -->
     </div>
     <!--end row-->
-    <div id="graph-modal" class="modal fade graph-modal-lg" role="dialog"
-         aria-labelledby="gridSystemModalLabel" aria-hidden="true"> <!-- modal -->
-        <div class="modal-dialog"> <!-- modal-dialog -->
-            <div class="modal-content"> <!-- modal-content -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="gridSystemModalLabel">Clicker Results</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <canvas id="pull-graph"></canvas>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">Close
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-    <div id="clicker-modal" class="modal fade clicker-modal-lg" role="dialog"
-         aria-labelledby="gridSystemModalLabel" aria-hidden="true"> <!-- modal -->
-        <div class="modal-dialog"> <!-- modal-dialog -->
-            <div class="modal-content"> <!-- modal-content -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="gridSystemModalLabel">Clicker Question</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="clicker-modal-btn-group" class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
-                        <a href="#" class="btn btn-default" role="button">A</a>
-                        <a href="#" class="btn btn-default" role="button">B</a>
-                        <a href="#" class="btn btn-default" role="button">C</a>
-                        <a href="#" class="btn btn-default" role="button">D</a>
-                        <a href="#" class="btn btn-default" role="button">E</a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">Close
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 </div>
 <!--end canvas & container fluid-->
-<!-- Question template -->
-<script id="question-template" type="text/html">
-    <div question_id="{{question_id}}" class="q {{class}}"
-         data-score="{{question_score}}">
-        <!--end topquestion_section-->
-        <div class="question-content">
-            <p>{{{question_text}}}</p><br>
-
-            <div class="row question-controls">
-                <div class="col-xs-6 question-controls-left">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#" class="student-view thumbs-up-to-active">
-                                <i class="fa fa-thumbs-o-up fa-2x"></i></a>
-                        </li>
-                        <li>
-                            <span class="num-votes">{{question_score}}</span>
-                        </li>
-                        <li>
-                            <span class="owner-view hidden votes-p">votes</span>
-                        </li>
-                        <li>
-                            <a href="#" class="student-view thumbs-down-to-active">
-                                <i class="fa fa-thumbs-o-down"></i></a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-xs-6">
-                    <ul class="list-inline text-right">
-                        <li>
-                            <a href="#" class="owner-view hidden warn-user"> Warn User
-                                <i class="fa fa-user"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" class="owner-view hidden dismiss-question">
-                                Dismiss Question<i class="fa fa-trash-o"></i> </a>
-                        </li>
-                    </ul>
+<div id="graph-modal" class="modal fade graph-modal-lg" role="dialog"
+     aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <!-- modal -->
+    <div class="modal-dialog"> <!-- modal-dialog -->
+        <div class="modal-content"> <!-- modal-content -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Clicker
+                    Results</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <canvas id="pull-graph"></canvas>
                 </div>
             </div>
-            <hr>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div id="clicker-modal" class="modal fade clicker-modal-lg" role="dialog"
+     aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <!-- modal -->
+    <div class="modal-dialog"> <!-- modal-dialog -->
+        <div class="modal-content"> <!-- modal-content -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Clicker
+                    Question</h4>
+            </div>
+            <div class="modal-body">
+                <div id="clicker-modal-btn-group"
+                     class="btn-group btn-group-lg btn-group-justified"
+                     role="group" aria-label="Justified button group">
+                    <a href="#" class="btn btn-default" role="button">A</a>
+                    <a href="#" class="btn btn-default" role="button">B</a>
+                    <a href="#" class="btn btn-default" role="button">C</a>
+                    <a href="#" class="btn btn-default" role="button">D</a>
+                    <a href="#" class="btn btn-default" role="button">E</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Question template -->
+<script id="question-template" type="text/html">
+    <div class="row">
+        <div question_id="{{question_id}}" class="q col-xs-12 {{class}}"
+             data-score="{{question_score}}">
+            <!--end topquestion_section-->
+            <div class="question-content">
+                <p>{{{question_text}}}</p><br>
+
+                <div class="row question-controls">
+                    <div class="col-xs-6 question-controls-left">
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#"
+                                   class="student-view thumbs-up-to-active">
+                                    <i class="fa fa-thumbs-o-up fa-2x"></i></a>
+                            </li>
+                            <li>
+                                <span class="num-votes">{{question_score}}</span>
+                            </li>
+                            <li>
+                                <span class="owner-view hidden votes-p">votes</span>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="student-view thumbs-down-to-active">
+                                    <i class="fa fa-thumbs-o-down"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <ul class="list-inline text-right">
+                            <li>
+                                <a href="#" class="owner-view hidden warn-user">
+                                    Warn User
+                                    <i class="fa fa-user"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="owner-view hidden dismiss-question">
+                                    Dismiss Question<i class="fa fa-trash-o"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+            </div>
         </div>
     </div>
 </script>
 <!-- / Question template -->
+<script id="recent-question-init-text" type="text/html">
+    <div class="first-join-text text-center init-text">
+        <p>Recent questions will go here. Go a head and add your questions below</p>
+        <p><i class="fa fa fa-arrow-down"></i></p>
+    </div>
+</script>
+<script id="top-question-init-text" type="text/html">
+    <div class="first-join-text text-center init-text">
+        <p><i class="fa fa fa-thumbs-up"></i></p>
+        <p>Top questions will appear here once questions are upvoted</p>
+    </div>
+</script>
+<script id="delete-room-msg" type="text/html">
+    <div class="delete-room-warning container-fluid">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <img class="img-responsive" src="../images/scary.gif"/>
+            </div>
+            <div class="col-xs-12">
+                <h4>Once you leave this room will be gone forever! Well... unless you make a new one.</h4>
+            </div>
+        </div>
+    </div>
+</script>
 <footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/vendor/jquery/dist/jquery.min.js"></script>

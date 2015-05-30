@@ -9,7 +9,7 @@ function Timer(selector) {
   this.sec = 0.0;
   this.min = 0.0;
   this.target = selector;
-  this.targetText = this.target.text();
+  this.targetText = this.target.first().text();
 };
 
 Timer.prototype.start = function () {
