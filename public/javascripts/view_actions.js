@@ -391,23 +391,29 @@ var ViewActions = function () {
    * Search callback
    */
   var searchRecentQuestionsImpl = function (event) {
-    var term = $('.search-question-text').val();
-    var recentQuestion = $('.recent-question');
-
-    if (term === '') {
-      recentQuestion.show();
-      event.preventDefault();
-      return;
-    }
-
-    recentQuestion.hide();
-    recentQuestion.each(function(){
-      if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
-        $(this).show();
-      }
-    });
     event.preventDefault();
 
+    var term_offcanvas = $('#search-text-xs').val();
+    var term_oncanvas  = $('#search-text-sm').val();
+    var term           = '';
+    var recentQuestion = $('.recent-question');
+
+    term = ( term_offcanvas !== "" ) ? term_offcanvas
+      : ( term_oncanvas !== "" ) ? term_oncanvas : '';
+    
+    if (term !== '') {
+      recentQuestion.hide();
+      recentQuestion.each(function(){
+        if($(this).text().toLowerCase().indexOf(term.toLowerCase()) != -1){
+          $(this).show();
+        }
+      });
+    }
+
+    else
+      recentQuestion.show();
+
+    hideOffcanvasImpl();
   }
 
   /**
