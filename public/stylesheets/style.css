@@ -3,7 +3,7 @@
 body, html, .main-content {
     margin: 0;
     overflow: hidden;
-    height:100%;
+    height: 100%;
 }
 
 p, a, li, select, input {
@@ -30,7 +30,7 @@ hr {
 }
 
 .main-content {
-    display:table;
+    display: table;
     width: 100%;
     /*margin-top: -50px;*/
     /*padding: 50px 0 0 0; *//*set left/right padding according to needs*/
@@ -49,18 +49,14 @@ hr {
 }
 
 .content-row .recent-questions-section, .content-row .top-questions-section {
-    /*display: table-cell;*/
+    display: table-cell;
     overflow-y: auto;
     overflow-x: hidden;
-    height:100%;
+    height: 100%;
 }
 
-
 #top-questions-container {
-    /*display: -webkit-flex;*/
-    /*-webkit-flex-flow: row wrap;*/
-    /*-webkit-justify-content: space-between;*/
-    /*-webkit-align-content: flex-start;*/
+    margin-top: 2.6em;
 }
 
 .top-questions-container hr {
@@ -69,7 +65,7 @@ hr {
 
 .recent-questions-section {
     background-color: #ffffff;
-    padding: 0% 4%;
+    padding: 0 4em;
 }
 
 .recent-questions-section, .top-questions-section {
@@ -77,6 +73,7 @@ hr {
 }
 
 .top-questions-section {
+    padding: 0 2.5em;
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
 }
@@ -114,8 +111,8 @@ hr {
     color: #e4e3e4;
 }
 
-.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav>li>a:focus,
-.nav>li>a:hover {
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover, .nav > li > a:focus,
+.nav > li > a:hover {
     background-color: #226a95;
     outline: none;
 }
@@ -128,14 +125,18 @@ nav .room-controls .dropdown-menu {
     color: #bebebe;
 }
 
+#offcanvas-nav .search-questions {
+    margin: 1em;
+}
+
 #offcanvas-nav .poll-on,
 .poll-on {
-    color: rgb(151, 241, 14);
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    color: rgb(151, 241, 14) !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 #offcanvas-nav .test-in-progress-btn.active,
@@ -150,8 +151,7 @@ nav .room-controls .dropdown-menu {
     text-shadow: 2px 0 6px #226a95;
 }
 
-
-.dropdown-menu>li>span {
+.dropdown-menu > li > span {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -161,13 +161,13 @@ nav .room-controls .dropdown-menu {
     white-space: nowrap;
 }
 
-.navmenu-nav .drop-down-room-id{
-    padding-left:1em;
-    font-weight:700;
+.navmenu-nav .drop-down-room-id {
+    padding-left: 1em;
+    font-weight: 700;
 }
 
 .navmenu-nav .room-id-label {
-    padding-left:1em;
+    padding-left: 1em;
 }
 
 /*============================================================================*/
@@ -215,6 +215,34 @@ nav .room-controls .dropdown-menu {
 /*============================================================================*/
 /*------------------------ Recent/Top Questions ------------------------------*/
 /*============================================================================*/
+
+/*------------------------------- Search box ---------------------------------*/
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+/*------------------------------- Search box ---------------------------------*/
 
 .init-text {
     color: rgba(190, 190, 190, 0.2);
@@ -385,7 +413,7 @@ nav .room-controls .dropdown-menu {
     padding: 5px;
 }
 
-.owner .warn-user-pic, .owner .dismiss-question-pic{
+.owner .warn-user-pic, .owner .dismiss-question-pic {
 
     padding-left: 0;
 
@@ -395,25 +423,24 @@ nav .room-controls .dropdown-menu {
 }
 
 .delete-room-warning img {
-    display:block;
-    margin:auto;
+    display: block;
+    margin: auto;
     max-height: 30em;
 }
 
-
-.poll-controls a, .room-controls a{
+.poll-controls a, .room-controls a {
     font-size: 13px;
 }
 
 .sidenav-header {
-    font-weight:700;
-    color:#000000;
-    padding-left:1em;
-    padding-right:1em;
+    font-weight: 700;
+    color: #000000;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
-.canvas-slid{
-    overflow:hidden;
+.canvas-slid {
+    overflow: hidden;
 }
 
 .votes-p {
@@ -426,61 +453,57 @@ nav .room-controls .dropdown-menu {
 
 @media only screen and (max-width: 767px) {
     /*.top-questions-section {*/
-        /*height: 100%;*/
-        /*position: relative;*/
-        /*z-index: 10;*/
-
+    /*height: 100%;*/
+    /*position: relative;*/
+    /*z-index: 10;*/
     /*}*/
-
     /*.recent-questions-section {*/
-        /*z-index:10*/
-        /*margin-bottom: 10%;*/
-        /*clear: both;*/
-        /*position: relative;*/
+    /*z-index:10*/
+    /*margin-bottom: 10%;*/
+    /*clear: both;*/
+    /*position: relative;*/
     /*}*/
-
     /*.rest {*/
-        /*top: 0px;*/
-        /*overflow-y: hidden;*/
+    /*top: 0px;*/
+    /*overflow-y: hidden;*/
     /*}*/
     /**/
     /*.canvas .room-name {*/
-        /*font-size:20px   */
+    /*font-size:20px   */
     /*}*/
     /**/
     /*.votes-p {*/
-        /*margin-left:-1em;   */
+    /*margin-left:-1em;   */
     /*}*/
 }
 
-
 /* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
+@media only screen and (min-width: 320px) {
 
 }
 
 /* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
+@media only screen and (min-width: 480px) {
 
 }
 
 /* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
+@media only screen and (min-width: 768px) {
 
 }
 
 /* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
+@media only screen and (min-width: 992px) {
 
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
+@media only screen and (min-width: 1200px) {
 
 }
 
-@media only screen and (max-width:900px) {
+@media only screen and (max-width: 900px) {
     .canvas .room-name {
-        font-size:15px;
+        font-size: 15px;
     }
 }
