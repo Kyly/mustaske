@@ -102,14 +102,14 @@
         </li>
         <form class="search search-questions right-inner-addon">
             <i class="fa fa-search"></i>
-            <input type="form-controlsearch-question-text search input-lg"
-                   class="form-control"
+            <input id="search-text-xs" type="search"
+                   class="form-control search-question-text search"
                    placeholder="Search all questions" />
         </form>
     </ul>
 
     <br>
-    <ul class="nav navmenu-nav owner-view hidden">
+    <ul class="nav navmenu-nav">
         <li class="sidenav-header">POLL OPTIONS<br>
             <hr>
         </li>
@@ -122,6 +122,9 @@
         <li><a class="show-graph-btn owner-view hidden"
                data-toggle="modal" data-target=".graph-modal-lg" href="#">
             <span class="fa fa-bar-chart"></span> &nbsp; Poll Results</a>
+        </li>
+        <li><a class="test-in-progress-btn student-view"
+               href="#"><span class="fa fa-check-square"></span> &nbsp; Vote on Poll</a>
         </li>
     </ul>
 </div>
@@ -186,8 +189,8 @@
                     <div class="col-sm-12 col-md-8 hidden-xs">
                         <form class="search search-questions right-inner-addon">
                             <i class="fa fa-search"></i>
-                            <input type="search-question-text search"
-                                   class="form-control"
+                            <input id="search-text-sm" type="search"
+                                   class="form-control search-question-text search"
                                    placeholder="Search all questions" />
                         </form>
                     </div>
