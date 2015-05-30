@@ -27,8 +27,14 @@ class DeleteRoom(unittest.TestCase):
 
         driver.find_element_by_css_selector("span.fa.fa-cogs").click()
         roomID = driver.find_element_by_class_name("drop-down-room-id").text
-        driver.find_element_by_xpath("//li/ul/li[4]/a/span").click()
-        driver.find_element_by_css_selector("button.btn.btn-danger")
+        driver.find_element_by_css_selector("a.leave-room-btn").click()
+        driver.find_element_by_css_selector("button.btn.btn-danger").click()
+
+        driver.find_element_by_css_selector("input.form-control").clear()
+        driver.find_element_by_css_selector("input.form-control").send_keys(roomID)
+        driver.find_element_by_id("join-room").click()
+        try: self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "span.glyphicon.glyphicon-remove.form-control-feedback"))
+        except AssertionError as e: self.verificationErrors.append(str(e))
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
