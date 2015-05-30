@@ -12,7 +12,7 @@ class PostPoll(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:3000/"
+        self.base_url = "http://www.mustaske.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
     
@@ -49,8 +49,8 @@ class PostPoll(unittest.TestCase):
         driver.find_element_by_css_selector("input.form-control").clear()
         driver.find_element_by_css_selector("input.form-control").send_keys(room)
         driver.find_element_by_id("make-room").click()
-        self.assertEqual(room, driver.find_element_by_css_selector("span.navbar-brand.room-name").text)
-        #driver.find_element_by_css_selector("span.fa.fa-cogs").click()
+        #self.assertEqual(room, driver.find_element_by_css_selector("span.navbar-brand.room-name").text)
+        driver.find_element_by_css_selector("span.fa.fa-cogs").click()
         roomID = driver.find_element_by_class_name("drop-down-room-id").text
         
         print("Accessing a Room as an Audience member")
@@ -62,7 +62,7 @@ class PostPoll(unittest.TestCase):
             driver.find_element_by_css_selector("input.form-control").clear()
             driver.find_element_by_css_selector("input.form-control").send_keys(roomID)
             driver.find_element_by_id("join-room").click()
-            self.assertEqual(room, driver.find_element_by_css_selector("span.navbar-brand.room-name").text)
+            #self.assertEqual(room, driver.find_element_by_css_selector("span.navbar-brand.room-name").text)
             time.sleep(1)
         
         print("Switching to Owner view in order to start the poll");
