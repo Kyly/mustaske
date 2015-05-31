@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-class AskQuestion(unittest.TestCase):
+class LeaveRoom(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -15,7 +15,7 @@ class AskQuestion(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_ask_question(self):
+    def test_leave_room(self):
         driver = self.driver
         driver.get(self.base_url)
         driver.find_element_by_css_selector("input.form-control").clear()
@@ -38,20 +38,9 @@ class AskQuestion(unittest.TestCase):
         driver.find_element_by_css_selector("span.fa.fa-cogs").click()
         audienceRoomID = driver.find_element_by_class_name("drop-down-room-id").text
         self.assertEqual(ownerRoomID,audienceRoomID)
-        driver.find_element_by_css_selector("span.fa.fa-cogs").click()
-
-        q = "Test_Question"
-        driver.find_element_by_css_selector("input.form-control.add-question-text").clear()
-        driver.find_element_by_css_selector("input.form-control.add-question-text").send_keys(q)
-        driver.find_element_by_css_selector("button.btn.btn-default.add-question-btn").click()
-
-        userQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/p").text
-        self.assertEqual(q, userQ)
-
-        driver.switch_to_window(driver.window_handles[0])
-        ownerQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/p").text
-        self.assertEqual(q, ownerQ)
-
+        driver.find_element_by_xpath("//li/ul/li[4]/a/span").click()
+        try: self.assertTrue(self.is_element_present(By.ID, "join-create-room"))
+        except AssertionError as e: self.verificationErrors.append(str(e))
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
