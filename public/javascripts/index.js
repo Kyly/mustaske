@@ -44,8 +44,9 @@ $(document).ready(function () {
   body.on('click', '.offcanvas-show-top-questions', ViewActions.showTopQuestions);
   body.on('click', '.offcanvas-show-recent-questions', ViewActions.showRecentQuestions);
   body.on('click', '#offcanvas-nav a.hide-on-click', ViewActions.hideOffcanvas);
+  body.on('click', '#graph-modal .refresh-graph-btn', ViewActions.refreshGraph);
   //body.on('click', '.ban-user', ViewActions.banUser);
   body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
-  body.on('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
+  body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
 
 });

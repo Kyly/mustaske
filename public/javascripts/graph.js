@@ -21,11 +21,6 @@ function Graph() {
 
 Graph.prototype.createGraph = function (canvas) {
 
-  if (this.hasGraph) {
-    this.clearData();
-    this.graph.destroy();
-  }
-
   this.canvas = canvas;
   var options = {
     responsive: true,
@@ -34,6 +29,11 @@ Graph.prototype.createGraph = function (canvas) {
 
   this.graph = new Chart(canvas).Bar(graphData, options);
   this.hasGraph = true;
+}
+
+Graph.prototype.refresh = function () {
+  this.graph.destroy();
+  this.createGraph(this.canvas);
 }
 
 Graph.prototype.update = function () {
