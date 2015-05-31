@@ -680,8 +680,9 @@ var ViewActions = function () {
       question_id: question.closest('.q').attr('question_id')
     };
 
+    // TODO This need to work
     console.log($('.warn-user i.fa', question));
-    question.find('.warn-user > i').removeClass('fa-user').addClass('fa-user-times');
+    question.find('.warn-user i').removeClass('fa-user').addClass('fa-user-times');
     socket.emit('warn user', data);
   }
 
@@ -712,6 +713,10 @@ var ViewActions = function () {
       height:'auto', //probably not needed
       'max-height':'100%'
     });
+  }
+
+  var refreshGraphImpl = function () {
+    graph.refresh();
   }
 
 //============================================================================//
@@ -754,6 +759,7 @@ var ViewActions = function () {
   }
 
   return {
+    refreshGraph               : refreshGraphImpl,
     removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
     showRecentQuestions        : showRecentQuestionsImpl,
