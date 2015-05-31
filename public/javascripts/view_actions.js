@@ -116,6 +116,7 @@ var ViewActions = function () {
     $('#room-name-field').removeClass('has-error');
     roomData.html(roomInfo.room_name);
     roomData.attr('data-room-id', roomID);
+    $('.room-name').data('room-id', roomID);
     $('.login-overlay').addClass('animated slideOutUp');
     $('.drop-down-room-id').text(roomID);
 
@@ -125,7 +126,7 @@ var ViewActions = function () {
    * Callback for leave room action.
    */
   var leaveRoomImpl = function () {
-    var room_id = $('.room-name').data('room-id');
+    var room_id = roomID;
 
     if (owner) {
       bootbox.dialog({
@@ -192,7 +193,8 @@ var ViewActions = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
   }
 
   /**
@@ -400,7 +402,7 @@ var ViewActions = function () {
 
     term = ( term_offcanvas !== "" ) ? term_offcanvas
       : ( term_oncanvas !== "" ) ? term_oncanvas : '';
-    
+
     if (term !== '') {
       recentQuestion.hide();
       recentQuestion.each(function(){
@@ -424,11 +426,12 @@ var ViewActions = function () {
     var questionText = textBox.val();
     var data = {
       question_text: questionText,
-      room_id: $('.room-name').data('room-id')
+      room_id: roomID
     };
     socket.emit('new question', data);
     textBox.val('');
     event.preventDefault();
+    //console.log($('.room-name').data('room-id'));
   }
 
 
@@ -586,7 +589,7 @@ var ViewActions = function () {
   var votePollImpl = function () {
     if (!owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         option: $(this).text()
       };
       socket.emit('vote poll', data);
@@ -609,7 +612,7 @@ var ViewActions = function () {
   var clickStartPollImpl = function () {
     if (owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         active: true
       };
       socket.emit('set active poll', data);
@@ -622,7 +625,7 @@ var ViewActions = function () {
   var clickStopPollImpl = function () {
     if (owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         active: false
       };
       socket.emit('set active poll', data);
@@ -658,12 +661,16 @@ var ViewActions = function () {
     }
   }
 
+//============================================================================//
+//------------------------------ Dismiss/Warn --------------------------------//
+//============================================================================//
+
   /**
    * Calls controller to dismiss a question
    */
   var dismissQuestionImpl = function () {
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('dismiss question', data);
@@ -676,13 +683,12 @@ var ViewActions = function () {
     var question = $(this);
 
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: question.closest('.q').attr('question_id')
     };
 
     // TODO This need to work
-    console.log($('.warn-user i.fa', question));
-    question.find('.warn-user i').removeClass('fa-user').addClass('fa-user-times');
+    $('i',$(this)).addClass('text-danger');
     socket.emit('warn user', data);
   }
 
@@ -691,7 +697,7 @@ var ViewActions = function () {
    */
   var banUserImpl = function () {
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('ban user', data);

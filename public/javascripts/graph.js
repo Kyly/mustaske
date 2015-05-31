@@ -32,8 +32,11 @@ Graph.prototype.createGraph = function (canvas) {
 }
 
 Graph.prototype.refresh = function () {
-  this.graph.destroy();
-  this.createGraph(this.canvas);
+  //this.graph.destroy();
+  //delete this.graph;
+  //this.createGraph(this.canvas);
+  this.graph.update();
+  this.graph.clear().resize();
 }
 
 Graph.prototype.update = function () {
@@ -56,7 +59,7 @@ Graph.prototype.clearData = function () {
     }
     this.update();
   }
-  graphData.datasets.data = [0, 0, 0, 0, 0];
+  graphData.datasets[0].data = [0, 0, 0, 0, 0];
 }
 
 Graph.prototype.updateValue = function (key, value) {
