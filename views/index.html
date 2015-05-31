@@ -29,7 +29,7 @@
           rel='stylesheet' type='text/css'>
     <!-- Our styles -->
     <link href="/stylesheets/style.css" rel="stylesheet"/>
-    <title>MustAske: CSE110</title>
+    <title>MustAske</title>
     <link rel="Shortcut Icon" type="image/jpg" href="/images/mustache.png"/>
 </head>
 <body>
@@ -202,7 +202,7 @@
 
                 </div>
                 <!-- /recent-questions-container -->
-                <div class="row question-form-container">
+                <div class="row question-form-container student-view">
                     <form class="askquestion col-md-offset-5 col-md-7 col-sm-12 col-xs-12"
                           role="form">
                         <div class="input-group form-group">
@@ -256,13 +256,13 @@
                 <h4 class="modal-title" id="gridSystemModalLabel">Clicker
                     Results</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="height: 350px">
                 <div class="container-fluid">
-                    <canvas id="pull-graph"></canvas>
+                    <canvas id="pull-graph" height="300px"></canvas>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="refresh-graph-btn btn btn-default pull-left"><i class="fa fa-refresh"></i></button>
+                <!--<button type="button" class="refresh-graph-btn btn btn-default pull-left"><i class="fa fa-refresh"></i></button>-->
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">Close
                 </button>
