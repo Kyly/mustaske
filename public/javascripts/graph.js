@@ -21,6 +21,11 @@ function Graph() {
 
 Graph.prototype.createGraph = function (canvas) {
 
+  if (this.hasGraph) {
+    this.clearData();
+    this.graph.destroy();
+  }
+
   this.canvas = canvas;
   var options = {
     responsive: true,
@@ -51,16 +56,14 @@ Graph.prototype.clearData = function () {
     }
     this.update();
   }
+  graphData.datasets.data = [0, 0, 0, 0, 0];
 }
 
 Graph.prototype.updateValue = function (key, value) {
   var labels = graphData.labels;
   var index = labels.indexOf(key);
-  if (this.hasGraph) {
+  if (this.hasGraph)
     this.graph.datasets[0].bars[index].value = value;
-  }
-  else {
-    graphData.datasets[0].data[index] = value;
-  }
 
+  graphData.datasets[0].data[index] = value;
 }
