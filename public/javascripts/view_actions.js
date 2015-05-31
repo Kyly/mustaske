@@ -658,6 +658,10 @@ var ViewActions = function () {
     }
   }
 
+//============================================================================//
+//------------------------------ Dismiss/Warn --------------------------------//
+//============================================================================//
+
   /**
    * Calls controller to dismiss a question
    */
@@ -681,8 +685,7 @@ var ViewActions = function () {
     };
 
     // TODO This need to work
-    console.log($('.warn-user i.fa', question));
-    question.find('.warn-user i').removeClass('fa-user').addClass('fa-user-times');
+    $('i',$(this)).addClass('text-danger');
     socket.emit('warn user', data);
   }
 
