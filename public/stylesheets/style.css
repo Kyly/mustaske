@@ -441,7 +441,7 @@ hr {
 }
 
 .student-view .list-inline li {
-    padding:1em;
+    padding:0 1em;
 }
 
 .owner .num-votes {
