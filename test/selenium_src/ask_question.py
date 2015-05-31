@@ -45,11 +45,11 @@ class AskQuestion(unittest.TestCase):
         driver.find_element_by_css_selector("input.form-control.add-question-text").send_keys(q)
         driver.find_element_by_css_selector("button.btn.btn-default.add-question-btn").click()
 
-        userQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div/div/div/p[2]").text
+        userQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/p").text
         self.assertEqual(q, userQ)
 
         driver.switch_to_window(driver.window_handles[0])
-        ownerQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div/div/div/p[2]").text
+        ownerQ = driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/p").text
         self.assertEqual(q, ownerQ)
 
 
