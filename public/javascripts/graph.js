@@ -31,6 +31,11 @@ Graph.prototype.createGraph = function (canvas) {
   this.hasGraph = true;
 }
 
+Graph.prototype.refresh = function () {
+  this.graph.destroy();
+  this.createGraph(this.canvas);
+}
+
 Graph.prototype.update = function () {
   if (this.hasGraph)
     this.graph.update();
@@ -51,16 +56,14 @@ Graph.prototype.clearData = function () {
     }
     this.update();
   }
+  graphData.datasets.data = [0, 0, 0, 0, 0];
 }
 
 Graph.prototype.updateValue = function (key, value) {
   var labels = graphData.labels;
   var index = labels.indexOf(key);
-  if (this.hasGraph) {
+  if (this.hasGraph)
     this.graph.datasets[0].bars[index].value = value;
-  }
-  else {
-    graphData.datasets[0].data[index] = value;
-  }
 
+  graphData.datasets[0].data[index] = value;
 }

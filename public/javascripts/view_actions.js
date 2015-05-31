@@ -391,23 +391,29 @@ var ViewActions = function () {
    * Search callback
    */
   var searchRecentQuestionsImpl = function (event) {
-    var term = $('.search-question-text').val();
-    var recentQuestion = $('.recent-question');
-
-    if (term === '') {
-      recentQuestion.show();
-      event.preventDefault();
-      return;
-    }
-
-    recentQuestion.hide();
-    recentQuestion.each(function(){
-      if($(this).text().toUpperCase().indexOf(term.toUpperCase()) != -1){
-        $(this).show();
-      }
-    });
     event.preventDefault();
 
+    var term_offcanvas = $('#search-text-xs').val();
+    var term_oncanvas  = $('#search-text-sm').val();
+    var term           = '';
+    var recentQuestion = $('.recent-question');
+
+    term = ( term_offcanvas !== "" ) ? term_offcanvas
+      : ( term_oncanvas !== "" ) ? term_oncanvas : '';
+    
+    if (term !== '') {
+      recentQuestion.hide();
+      recentQuestion.each(function(){
+        if($(this).text().toLowerCase().indexOf(term.toLowerCase()) != -1){
+          $(this).show();
+        }
+      });
+    }
+
+    else
+      recentQuestion.show();
+
+    hideOffcanvasImpl();
   }
 
   /**
@@ -674,8 +680,9 @@ var ViewActions = function () {
       question_id: question.closest('.q').attr('question_id')
     };
 
+    // TODO This need to work
     console.log($('.warn-user i.fa', question));
-    question.find('.warn-user > i').removeClass('fa-user').addClass('fa-user-times');
+    question.find('.warn-user i').removeClass('fa-user').addClass('fa-user-times');
     socket.emit('warn user', data);
   }
 
@@ -706,6 +713,10 @@ var ViewActions = function () {
       height:'auto', //probably not needed
       'max-height':'100%'
     });
+  }
+
+  var refreshGraphImpl = function () {
+    graph.refresh();
   }
 
 //============================================================================//
@@ -748,6 +759,7 @@ var ViewActions = function () {
   }
 
   return {
+    refreshGraph               : refreshGraphImpl,
     removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
     showRecentQuestions        : showRecentQuestionsImpl,
