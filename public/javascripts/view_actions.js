@@ -58,7 +58,7 @@ var ViewActions = function () {
          *    manually on window resize
          */
         var topQ = $('#top-questions-container');
-        var recQ = $('#recent-questions-container');
+        var recQ = $('.scroll-wrapper');
         var doc = $(document).height();
         var topQOffset = topQ.offset().top;
         var recQOffset = recQ.offset().top + $('.askquestion').outerHeight();
