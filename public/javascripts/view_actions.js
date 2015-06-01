@@ -50,7 +50,7 @@ var ViewActions = function () {
 
 
 
-
+    //TODO remove this once we know we don't need it
     var resizeQuestionContainers = function() {
         /**
          *    css doesn't really let you set the max-height to the parent container,
@@ -334,6 +334,7 @@ var ViewActions = function () {
     questionInfo.class = 'recent-question';
     questionInfo.opt   = 'prepend';
     questionDiv(questionInfo);
+
   }
 
   /**
@@ -589,6 +590,21 @@ var ViewActions = function () {
     }
   }
 
+  //TODO clear commented code out if we don't use nicescroll
+  var attachScrollImpl = function () {
+    //$(".scroll-wrapper").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0, cursorborderradius: '0px'});
+    //$(".top-questions-container").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0});
+    var scrollOptions = {suppressScrollX: true};
+    $(".scroll-wrapper").perfectScrollbar(scrollOptions);
+    $(".top-questions-container").perfectScrollbar(scrollOptions);
+  }
+
+  //TODO clear this out if we don't use nicescroll
+  var resizeScrollImpl = function () {
+    //$(".scroll-wrapper").getNiceScroll().resize();
+    //$(".top-questions-container").getNiceScroll().resize();
+  }
+
 //============================================================================//
 //-------------------------------- Polls -------------------------------------//
 //============================================================================//
@@ -823,6 +839,8 @@ var ViewActions = function () {
     stopPoll                   : stopPollImpl,
     dismissQuestion            : dismissQuestionImpl,
     warnUser                   : warnUserImpl,
-    banUser                    : banUserImpl
+    banUser                    : banUserImpl,
+    attachScroll               : attachScrollImpl,
+    resizeScroll               : resizeScrollImpl
   }
 }();
