@@ -16,17 +16,31 @@ class MarkdownFormatting(unittest.TestCase):
         self.accept_next_alert = True
     
     def test_markdown_formatting(self):
+        #Accesing the application
         driver = self.driver
-        second_driver = self.driver
         driver.get("http://localhost:3000/")
+        
+        #Entering room
         driver.find_element_by_css_selector("input.form-control").clear()
         driver.find_element_by_css_selector("input.form-control").send_keys("Test_Room")
-        time.sleep(2)
         driver.find_element_by_id("make-room").click()
-        driver.find_element_by_id("add-question-text").clear()
-        driver.find_element_by_id("add-question-text").send_keys(">**bold** _italics_ `code` ```pre```")
         time.sleep(0.5)
-        driver.find_element_by_id("add-question-btn").click()
+        
+        #Retrieving room ID
+        driver.find_element_by_css_selector("span.fa.fa-cogs").click()
+        roomID = driver.find_element_by_class_name("drop-down-room-id").text
+        
+        #Opening new window and joining room
+        driver.execute_script("$(window.open('"+self.base_url+"'))")
+        driver.switch_to_window(driver.window_handles[-1])
+        driver.find_element_by_css_selector("input.form-control").clear()
+        driver.find_element_by_css_selector("input.form-control").send_keys(roomID)
+        driver.find_element_by_id("join-room").click()
+        
+        #Adding Question.
+        driver.find_element_by_class_name("add-question-text").clear()
+        driver.find_element_by_class_name("add-question-text").send_keys(">**bold** _italics_ `code` ```pre```")            
+        driver.find_element_by_class_name("add-question-btn").click()
         time.sleep(3)
     
     def is_element_present(self, how, what):
