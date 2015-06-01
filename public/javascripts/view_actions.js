@@ -48,15 +48,7 @@ var ViewActions = function () {
     });
   };
 
-  /**
-   * Actions for building graph in modal.
-   * @see http://getbootstrap.com/javascript/#modals
-   */
-  var initializeGraphImpl = function () {
-    var modal  = $(this);
-    var canvas = modal.find('#pull-graph').get(0).getContext("2d");
-    graph.createGraph(canvas);
-  }
+
 
 //============================================================================//
 //---------------------------- Join/Make Room --------------------------------//
@@ -714,11 +706,21 @@ var ViewActions = function () {
 
   // TODO Don't think this is really working
   var flexModalImpl = function () {
-    $(this).find('.modal-body').css({
+    /*$(this).find('.modal-body').css({
       width:'auto', //probably not needed
       height:'auto', //probably not needed
       'max-height':'100%'
-    });
+    });*/
+  }
+
+  /**
+   * Actions for building graph in modal.
+   * @see http://getbootstrap.com/javascript/#modals
+   */
+  var initializeGraphImpl = function () {
+    var modal  = $(this);
+    var canvas = modal.find('#pull-graph').get(0).getContext("2d");
+    graph.createGraph(canvas);
   }
 
   var refreshGraphImpl = function () {
