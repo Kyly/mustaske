@@ -48,8 +48,7 @@ hr {
 
 .content-row .recent-questions-section, .content-row .top-questions-section {
     display: table-cell;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     min-height: 100%;
 }
 
@@ -61,6 +60,16 @@ hr {
     display: none !important;
 }
 
+/* this enables scrolling in questions containers. */
+.questions-container{
+    /* height: calculated by js on resize */
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    width: 88%;
+}
+
 .recent-questions-section {
     background-color: #ffffff;
     padding: 0 3em;
@@ -68,6 +77,8 @@ hr {
 
 .recent-questions-section, .top-questions-section {
     /*overflow: hidden;*/
+    position:relative;/* enables question scrolling */
+    overflow:hidden;
 }
 
 .top-questions-section {
