@@ -58,6 +58,22 @@ var ViewActions = function () {
     graph.createGraph(canvas);
   }
 
+
+    var resizeQuestionContainers = function() {
+        /**
+         *    css doesn't really let you set the max-height to the parent container,
+         *    then begin scrolling thereafter. As a result, we have to set the height
+         *    manually on window resize
+         */
+        var topQ = $('#top-questions-container');
+        var recQ = $('#recent-questions-container');
+        var doc = $(document).height();
+        var topQOffset = topQ.offset().top;
+        var recQOffset = recQ.offset().top + $('.askquestion').outerHeight();
+        topQ.css('height', doc - topQOffset +'px' );
+        recQ.css('height', doc - recQOffset +'px' );
+    };
+
 //============================================================================//
 //---------------------------- Join/Make Room --------------------------------//
 //============================================================================//
@@ -220,6 +236,7 @@ var ViewActions = function () {
           socket.emit('join room', data.room_name);
           break;
       }
+      ViewActions.resizeQuestionContainers();
     }
   }
 
@@ -740,8 +757,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-recent-questions').removeClass('active');
     }
-
-
+    ViewActions.resizeQuestionContainers();
   }
 
   var showRecentQuestionsImpl = function() {
@@ -751,6 +767,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-top-questions').removeClass('active');
     }
+    ViewActions.resizeQuestionContainers();
   }
 
   var hideOffcanvasImpl = function () {
@@ -765,6 +782,7 @@ var ViewActions = function () {
     refreshGraph               : refreshGraphImpl,
     removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
+    resizeQuestionContainers   : resizeQuestionContainers,
     showRecentQuestions        : showRecentQuestionsImpl,
     showTopQuestions           : showTopQuestionsImpl,
     offCanvasFix               : offCanvasFixImpl,
