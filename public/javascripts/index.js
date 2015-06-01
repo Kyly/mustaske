@@ -51,6 +51,7 @@ $(document).ready(function () {
   //TODO $(window).on('resize', ViewActions.resizeQuestionContainers);
   $('#room-name-field > input').trigger('input').trigger('focus');
   $(document).ready(ViewActions.attachScroll);
+  $(window).on('resize', ViewActions.hideOffcanvas);
   $(window).on('resize', ViewActions.resizeScroll);
 
 });
