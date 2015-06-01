@@ -28,8 +28,8 @@ Graph.prototype.createGraph = function (canvas) {
     responsive: true,
     maintainAspectRatio: false
   };
-  this.originalHeight = canvas.height;
-  this.originalWidth = canvas.width;
+  this.originalHeight = canvas.canvas.height;
+  this.originalWidth = canvas.canvas.width;
   this.graph = new Chart(canvas).Bar(graphData, options);
   this.hasGraph = true;
 }
