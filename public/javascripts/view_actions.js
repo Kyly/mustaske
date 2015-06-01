@@ -439,6 +439,7 @@ var ViewActions = function () {
    * Callback for add question button
    */
   var addQuestionOnClickImpl = function (event) {
+    event.preventDefault();
     var textBox      = $('.add-question-text');
     var questionText = textBox.val();
 
@@ -457,7 +458,7 @@ var ViewActions = function () {
 
     socket.emit('new question', data);
     textBox.val('');
-    event.preventDefault();
+
     //console.log($('.room-name').data('room-id'));
   }
 
