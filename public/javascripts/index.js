@@ -48,5 +48,6 @@ $(document).ready(function () {
   //body.on('click', '.ban-user', ViewActions.banUser);
   //body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
-
+  $(window).on('resize', ViewActions.resizeQuestionContainers);
+  $('#room-name-field > input').trigger('input').trigger('focus');
 });
