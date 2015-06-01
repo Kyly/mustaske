@@ -46,6 +46,12 @@ var ViewActions = function () {
         onMixEnd: checkMaxQuestions
       }
     });
+
+    var options = {
+      trigger: 'manual'
+    };
+
+    $('.add-question-text').tooltip(options);
   };
 
 
@@ -435,10 +441,20 @@ var ViewActions = function () {
   var addQuestionOnClickImpl = function (event) {
     var textBox      = $('.add-question-text');
     var questionText = textBox.val();
+
+    if (questionText.length < 2) {
+      textBox.tooltip('show');
+      setTimeout(function () {
+        textBox.tooltip('hide');
+      }, 5000);
+      return;
+    }
+
     var data = {
       question_text: questionText,
       room_id: roomID
     };
+
     socket.emit('new question', data);
     textBox.val('');
     event.preventDefault();
