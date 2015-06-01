@@ -17,6 +17,8 @@ var graphData = {
  */
 function Graph() {
   this.hasGraph = false;
+  this.originalHeight;
+  this.originaWidth;
 }
 
 Graph.prototype.createGraph = function (canvas) {
@@ -26,17 +28,28 @@ Graph.prototype.createGraph = function (canvas) {
     responsive: true,
     maintainAspectRatio: false
   };
-
+  this.originalHeight = canvas.height;
+  this.originalWidth = canvas.width;
   this.graph = new Chart(canvas).Bar(graphData, options);
   this.hasGraph = true;
 }
 
 Graph.prototype.refresh = function () {
-  //this.graph.destroy();
-  //delete this.graph;
-  //this.createGraph(this.canvas);
+  if(this.hasGraph){
+    this.graph.destroy();
+    delete this.graph;
+    this.hasGraph = false;
+  }
+  var canvas = this.canvas;
+  canvas.height = this.originalHeight;
+  canvas.width = this.originalWidth;
+  var options = {
+    responsive: false,
+    maintainAspectRatio: true
+  };
+  this.graph = new Chart(canvas).Bar(graphData, options);
+  this.hasGraph = true;
   this.graph.update();
-  this.graph.clear().resize();
 }
 
 Graph.prototype.update = function () {
