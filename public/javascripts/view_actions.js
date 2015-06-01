@@ -46,17 +46,32 @@ var ViewActions = function () {
         onMixEnd: checkMaxQuestions
       }
     });
+
+    var options = {
+      trigger: 'manual'
+    };
+
+    $('.add-question-text').tooltip(options);
   };
 
-  /**
-   * Actions for building graph in modal.
-   * @see http://getbootstrap.com/javascript/#modals
-   */
-  var initializeGraphImpl = function () {
-    var modal  = $(this);
-    var canvas = modal.find('#pull-graph').get(0).getContext("2d");
-    graph.createGraph(canvas);
-  }
+
+
+    //TODO remove this once we know we don't need it
+    var resizeQuestionContainers = function() {
+        /**
+         *    css doesn't really let you set the max-height to the parent container,
+         *    then begin scrolling thereafter. As a result, we have to set the height
+         *    manually on window resize
+         */
+        var topQ = $('#top-questions-container');
+        var recQ = $('.scroll-wrapper');
+        var doc = $(document).height();
+        var topQOffset = topQ.offset().top;
+        var recQOffset = recQ.offset().top + $('.askquestion').outerHeight();
+        topQ.css('height', doc - topQOffset +'px' );
+        recQ.css('height', doc - recQOffset +'px' );
+        console.log("resize called :(");
+    };
 
 //============================================================================//
 //---------------------------- Join/Make Room --------------------------------//
@@ -116,6 +131,7 @@ var ViewActions = function () {
     $('#room-name-field').removeClass('has-error');
     roomData.html(roomInfo.room_name);
     roomData.attr('data-room-id', roomID);
+    $('.room-name').data('room-id', roomID);
     $('.login-overlay').addClass('animated slideOutUp');
     $('.drop-down-room-id').text(roomID);
 
@@ -125,7 +141,7 @@ var ViewActions = function () {
    * Callback for leave room action.
    */
   var leaveRoomImpl = function () {
-    var room_id = $('.room-name').data('room-id');
+    var room_id = roomID;
 
     if (owner) {
       bootbox.dialog({
@@ -192,7 +208,8 @@ var ViewActions = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
   }
 
   /**
@@ -220,6 +237,7 @@ var ViewActions = function () {
           socket.emit('join room', data.room_name);
           break;
       }
+      //ViewActions.resizeQuestionContainers();
     }
   }
 
@@ -322,6 +340,7 @@ var ViewActions = function () {
     questionInfo.class = 'recent-question';
     questionInfo.opt   = 'prepend';
     questionDiv(questionInfo);
+
   }
 
   /**
@@ -400,7 +419,7 @@ var ViewActions = function () {
 
     term = ( term_offcanvas !== "" ) ? term_offcanvas
       : ( term_oncanvas !== "" ) ? term_oncanvas : '';
-    
+
     if (term !== '') {
       recentQuestion.hide();
       recentQuestion.each(function(){
@@ -422,13 +441,24 @@ var ViewActions = function () {
   var addQuestionOnClickImpl = function (event) {
     var textBox      = $('.add-question-text');
     var questionText = textBox.val();
+
+    if (questionText.length < 2) {
+      textBox.tooltip('show');
+      setTimeout(function () {
+        textBox.tooltip('hide');
+      }, 5000);
+      return;
+    }
+
     var data = {
       question_text: questionText,
-      room_id: $('.room-name').data('room-id')
+      room_id: roomID
     };
+
     socket.emit('new question', data);
     textBox.val('');
     event.preventDefault();
+    //console.log($('.room-name').data('room-id'));
   }
 
 
@@ -576,6 +606,21 @@ var ViewActions = function () {
     }
   }
 
+  //TODO clear commented code out if we don't use nicescroll
+  var attachScrollImpl = function () {
+    //$(".scroll-wrapper").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0, cursorborderradius: '0px'});
+    //$(".top-questions-container").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0});
+    var scrollOptions = {suppressScrollX: true};
+    $(".scroll-wrapper").perfectScrollbar(scrollOptions);
+    $(".top-questions-container").perfectScrollbar(scrollOptions);
+  }
+
+  //TODO clear this out if we don't use nicescroll
+  var resizeScrollImpl = function () {
+    //$(".scroll-wrapper").getNiceScroll().resize();
+    //$(".top-questions-container").getNiceScroll().resize();
+  }
+
 //============================================================================//
 //-------------------------------- Polls -------------------------------------//
 //============================================================================//
@@ -586,7 +631,7 @@ var ViewActions = function () {
   var votePollImpl = function () {
     if (!owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         option: $(this).text()
       };
       socket.emit('vote poll', data);
@@ -609,7 +654,7 @@ var ViewActions = function () {
   var clickStartPollImpl = function () {
     if (owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         active: true
       };
       socket.emit('set active poll', data);
@@ -622,7 +667,7 @@ var ViewActions = function () {
   var clickStopPollImpl = function () {
     if (owner) {
       var data = {
-        room_id: $('.room-name').data('room-id'),
+        room_id: roomID,
         active: false
       };
       socket.emit('set active poll', data);
@@ -667,7 +712,7 @@ var ViewActions = function () {
    */
   var dismissQuestionImpl = function () {
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('dismiss question', data);
@@ -680,7 +725,7 @@ var ViewActions = function () {
     var question = $(this);
 
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: question.closest('.q').attr('question_id')
     };
 
@@ -694,7 +739,7 @@ var ViewActions = function () {
    */
   var banUserImpl = function () {
     var data = {
-      room_id: $('.room-name').data('room-id'),
+      room_id: roomID,
       question_id: $(this).closest('.q').attr('question_id')
     };
     socket.emit('ban user', data);
@@ -711,11 +756,21 @@ var ViewActions = function () {
 
   // TODO Don't think this is really working
   var flexModalImpl = function () {
-    $(this).find('.modal-body').css({
+    /*$(this).find('.modal-body').css({
       width:'auto', //probably not needed
       height:'auto', //probably not needed
       'max-height':'100%'
-    });
+    });*/
+  }
+
+  /**
+   * Actions for building graph in modal.
+   * @see http://getbootstrap.com/javascript/#modals
+   */
+  var initializeGraphImpl = function () {
+    var modal  = $(this);
+    var canvas = modal.find('#pull-graph').get(0).getContext("2d");
+    graph.createGraph(canvas);
   }
 
   var refreshGraphImpl = function () {
@@ -740,8 +795,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-recent-questions').removeClass('active');
     }
-
-
+    //ViewActions.resizeQuestionContainers();
   }
 
   var showRecentQuestionsImpl = function() {
@@ -751,6 +805,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-top-questions').removeClass('active');
     }
+    //ViewActions.resizeQuestionContainers();
   }
 
   var hideOffcanvasImpl = function () {
@@ -765,6 +820,7 @@ var ViewActions = function () {
     refreshGraph               : refreshGraphImpl,
     removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
+    resizeQuestionContainers   : resizeQuestionContainers,
     showRecentQuestions        : showRecentQuestionsImpl,
     showTopQuestions           : showTopQuestionsImpl,
     offCanvasFix               : offCanvasFixImpl,
@@ -799,6 +855,8 @@ var ViewActions = function () {
     stopPoll                   : stopPollImpl,
     dismissQuestion            : dismissQuestionImpl,
     warnUser                   : warnUserImpl,
-    banUser                    : banUserImpl
+    banUser                    : banUserImpl,
+    attachScroll               : attachScrollImpl,
+    resizeScroll               : resizeScrollImpl
   }
 }();
