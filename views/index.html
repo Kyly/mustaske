@@ -27,6 +27,8 @@
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
           rel='stylesheet' type='text/css'>
+    <!-- Style for Perfect Scrollbar -->
+    <link rel='stylesheet' href='javascripts/vendor/perfect-scrollbar/css/perfect-scrollbar.css' />
     <!-- Our styles -->
     <link href="/stylesheets/style.css" rel="stylesheet"/>
     <title>MustAske</title>
@@ -183,25 +185,27 @@
         <!-- main-content -->
         <div class="content-row row">
             <div class="recent-questions-section col-xs-12 col-sm-6 col-md-7 pull-right">
-                <div class="row">
-                    <div class="section-label col-md-4">RECENT QUESTIONS</div>
-                    <!-- Search -->
-                    <div class="col-sm-12 col-md-8 hidden-xs">
-                        <form class="search search-questions right-inner-addon">
-                            <i class="fa fa-search"></i>
-                            <input id="search-text-sm" type="search"
-                                   class="form-control search-question-text search"
-                                   placeholder="Search all questions" />
-                        </form>
+                <div class="scroll-wrapper">
+                    <div class="row recent-questions-search">
+                        <div class="section-label col-md-4">RECENT QUESTIONS</div>
+                        <!-- Search -->
+                        <div class="col-sm-12 col-md-8 hidden-xs">
+                            <form class="search search-questions right-inner-addon">
+                                <i class="fa fa-search"></i>
+                                <input id="search-text-sm" type="search"
+                                       class="form-control search-question-text search"
+                                       placeholder="Search all questions" />
+                            </form>
+                        </div>
+                        <!-- /search -->
                     </div>
-                    <!-- /search -->
-                </div>
-                <!-- /row-->
-                <!-- recent-questions-container -->
-                <div id="recent-questions-container" class="questions-container">
+                    <!-- /row-->
+                    <!-- recent-questions-container -->
+                    <div id="recent-questions-container" class="recent-questions-container">
 
+                    </div>
+                    <!-- /recent-questions-container -->
                 </div>
-                <!-- /recent-questions-container -->
                 <div class="row question-form-container student-view">
                     <form class="askquestion col-md-offset-5 col-md-7 col-sm-12 col-xs-12"
                           role="form">
@@ -233,7 +237,7 @@
                 <!--end selection-->
                 <div class="row section-label">TOP QUESTIONS</div>
                 <div id="top-questions-container"
-                     class="top-questions-container questions-container">
+                     class="top-questions-container">
                 </div>
                 <!--end top-questions-container-->
             </div>
@@ -418,6 +422,8 @@
     <script src="/javascripts/index.js"></script>
     <script src="/javascripts/plus_minus_form.js"></script>
     <script src="/javascripts/vendor/Chart.js/Chart.min.js"></script>
+  <script src="/javascripts/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!--<script src="/javascripts/vendor/nicescroll/jquery.nicescroll.js"></script>-->
 </footer>
 </body>
 
