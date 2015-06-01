@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-class AskQuestion(unittest.TestCase):
+class UpvoteQuestion(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -15,7 +15,7 @@ class AskQuestion(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_ask_question(self):
+    def test_upvote_question(self):
         driver = self.driver
         driver.get(self.base_url)
         driver.maximize_window()
@@ -80,8 +80,9 @@ class AskQuestion(unittest.TestCase):
         self.assertEqual("fa fa-2x fa-thumbs-up clicked", driver.find_element(By.XPATH, xpath2).get_attribute('class'))
         self.assertEqual("fa fa-2x fa-thumbs-up clicked", driver.find_element(By.XPATH, xpath3).get_attribute('class'))
 
-        for i in range(3,1):
+        for i in range(3,0,-1):
             driver.switch_to_window(driver.window_handles[i])
+            time.sleep(1)
             self.assertEqual("2", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/div/div[2]/div/ul/li[2]/span").text)
             self.assertEqual("1", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[2]/div/div/div/div[2]/div/ul/li[2]/span").text)
             self.assertEqual("0", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[3]/div/div/div/div[2]/div/ul/li[2]/span").text) 
@@ -89,6 +90,7 @@ class AskQuestion(unittest.TestCase):
             self.assertEqual(q2, driver.find_element_by_xpath("//div[@id='top-questions-container']/div[2]/div/div/p").text)
 
         driver.switch_to_window(owner)
+        time.sleep(1)
         self.assertEqual("2", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/div/div/div/ul/li/span").text)
         self.assertEqual("1", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[2]/div/div/div/div/div/ul/li/span").text)
         self.assertEqual("0", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[3]/div/div/div/div/div/ul/li/span").text)
