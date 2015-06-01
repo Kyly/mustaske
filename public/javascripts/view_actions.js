@@ -64,6 +64,7 @@ var ViewActions = function () {
         var recQOffset = recQ.offset().top + $('.askquestion').outerHeight();
         topQ.css('height', doc - topQOffset +'px' );
         recQ.css('height', doc - recQOffset +'px' );
+        console.log("resize called :(");
     };
 
 //============================================================================//
@@ -230,7 +231,7 @@ var ViewActions = function () {
           socket.emit('join room', data.room_name);
           break;
       }
-      ViewActions.resizeQuestionContainers();
+      //ViewActions.resizeQuestionContainers();
     }
   }
 
@@ -762,7 +763,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-recent-questions').removeClass('active');
     }
-    ViewActions.resizeQuestionContainers();
+    //ViewActions.resizeQuestionContainers();
   }
 
   var showRecentQuestionsImpl = function() {
@@ -772,7 +773,7 @@ var ViewActions = function () {
       $(this).addClass('active');
       $('.offcanvas-show-top-questions').removeClass('active');
     }
-    ViewActions.resizeQuestionContainers();
+    //ViewActions.resizeQuestionContainers();
   }
 
   var hideOffcanvasImpl = function () {
