@@ -50,7 +50,8 @@ $(document).ready(function () {
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
   //TODO $(window).on('resize', ViewActions.resizeQuestionContainers);
   $('#room-name-field > input').trigger('input').trigger('focus');
-  $(document).ready(ViewActions.attachScroll);
+  //$(document).ready(ViewActions.attachScroll);
+  $(window).load(ViewActions.attachScroll);
   //$(window).on('resize', ViewActions.hideOffcanvas);
   $(window).on('resize', ViewActions.resizeScroll);
 
