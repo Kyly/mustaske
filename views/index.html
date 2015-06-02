@@ -27,8 +27,8 @@
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
           rel='stylesheet' type='text/css'>
-    <!-- Style for Perfect Scrollbar -->
-    <link rel='stylesheet' href='javascripts/vendor/perfect-scrollbar/css/perfect-scrollbar.css' />
+    <!-- Style for Custom Scrollbar -->
+    <link rel='stylesheet' href='javascripts/vendor/custom-scrollbar/jquery.mCustomScrollbar.min.css' />
     <!-- Our styles -->
     <link href="/stylesheets/style.css" rel="stylesheet"/>
     <title>MustAske</title>
@@ -185,7 +185,7 @@
         <!-- main-content -->
         <div class="content-row row">
             <div class="recent-questions-section col-xs-12 col-sm-6 col-md-7 pull-right">
-                <div class="scroll-wrapper">
+                <div id="scroll-wrapper-recent" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
                     <div class="row recent-questions-search">
                         <div class="section-label col-md-4">RECENT QUESTIONS</div>
                         <!-- Search -->
@@ -238,11 +238,13 @@
             <!--end recent questions-->
             <div class="top-questions-section col-xs-12 col-sm-6 col-md-5">
                 <!--end selection-->
+              <div id="scroll-wrapper-top" class="mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <div class="row section-label">TOP QUESTIONS</div>
                 <div id="top-questions-container"
                      class="top-questions-container">
                 </div>
                 <!--end top-questions-container-->
+              </div>
             </div>
             <!--end top-questions-section -->
         </div>
@@ -425,7 +427,7 @@
     <script src="/javascripts/index.js"></script>
     <script src="/javascripts/plus_minus_form.js"></script>
     <script src="/javascripts/vendor/Chart.js/Chart.min.js"></script>
-  <script src="/javascripts/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="/javascripts/vendor/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <!--<script src="/javascripts/vendor/nicescroll/jquery.nicescroll.js"></script>-->
 </footer>
 </body>

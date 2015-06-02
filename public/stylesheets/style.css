@@ -57,14 +57,14 @@ hr {
 }
 
 .top-questions-container {
-  max-height: 100%;
+/*  max-height: 100%;
   top: 2.6em;
   bottom: 0;
-  /*overflow-x: hidden;
-  overflow-y: scroll;*/
+  overflow-x: hidden;
+  overflow-y: scroll;
   overflow: hidden;
   position: absolute;
-  width: 88%;
+  width: 88%;*/
 }
 
 .top-questions-container hr {
@@ -346,12 +346,17 @@ hr {
   padding: 0 3em;
 }
 
-.recent-questions-section .scroll-wrapper {
-    /*overflow-x: hidden;
-    overflow-y: scroll;*/
+#scroll-wrapper-recent {
     overflow: hidden;
     position: absolute;
-    width: 100%;
+    width: 98%;
+    max-height: 100%;
+}
+
+#scroll-wrapper-top {
+    overflow: hidden;
+    position: absolute;
+    width: 94%;
     max-height: 100%;
 }
 
