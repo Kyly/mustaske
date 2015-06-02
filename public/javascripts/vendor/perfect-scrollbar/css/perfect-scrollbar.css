@@ -7,12 +7,12 @@
     pointer-events: none; }
     .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
       background-color: #eee;
-      opacity: 0; }
+      opacity: 0.9; }
       .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail > .ps-scrollbar-x {
         background-color: #999; }
     .ps-container.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail {
       background-color: #eee;
-      opacity: 0; }
+      opacity: 0.9; }
       .ps-container.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
         background-color: #999; }
   .ps-container > .ps-scrollbar-x-rail {
@@ -81,19 +81,19 @@
     pointer-events: none; }
     .ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
       background-color: #eee;
-      opacity: 0; }
+      opacity: 0.9; }
       .ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail > .ps-scrollbar-x {
         background-color: #999; }
     .ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail {
       background-color: #eee;
-      opacity: 0; }
+      opacity: 0.9; }
       .ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
         background-color: #999; }
   .ps-container:hover > .ps-scrollbar-x-rail, .ps-container:hover > .ps-scrollbar-y-rail {
-    opacity: 0; }
+    opacity: 0.6; }
   .ps-container:hover > .ps-scrollbar-x-rail:hover {
     background-color: #eee;
-    opacity: 0; }
+    opacity: 0.9; }
     .ps-container:hover > .ps-scrollbar-x-rail:hover > .ps-scrollbar-x {
       background-color: #999; }
   .ps-container:hover > .ps-scrollbar-y-rail:hover {

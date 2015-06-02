@@ -615,9 +615,18 @@ var ViewActions = function () {
   var attachScrollImpl = function () {
     //$(".scroll-wrapper").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0, cursorborderradius: '0px'});
     //$(".top-questions-container").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0});
-    var scrollOptions = {suppressScrollX: true};
-    $(".scroll-wrapper").perfectScrollbar(scrollOptions);
-    $(".top-questions-container").perfectScrollbar(scrollOptions);
+  //  var scrollOptions = {suppressScrollX: true};
+    //$(".scroll-wrapper").perfectScrollbar(scrollOptions);
+    //$(".top-questions-container").perfectScrollbar(scrollOptions);
+    var scrollOptions = {
+      axis: "y",
+      theme: "minimal-dark",
+      scrollbarPosition: "inside",
+      scrollInertia: 0,
+      autoExpandScrollbar: true
+    };
+    $(".scroll-wrapper-recent").mCustomScrollbar(scrollOptions);
+    $(".scroll-wrapper-top").mCustomScrollbar(scrollOptions);
   }
 
   //TODO clear this out if we don't use nicescroll
