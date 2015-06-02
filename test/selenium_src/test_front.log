@@ -1,1 +1,19 @@
 Running test/selenium_src/ask_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 7.869s
+
+OK
+Running test/selenium_src/create_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 5.476s
+
+OK
+Running test/selenium_src/delete_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 10.895s
+
+OK
+Running test/selenium_src/downvote_question.py:
