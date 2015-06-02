@@ -44,8 +44,6 @@ server.on('listening', onListening);
 
 var io = require('socket.io').listen(server);
 
-io.set('log level', 1);
-
 io.sockets.on('connection', function (socket) {
   // controller.initialConnect(socket);
 
