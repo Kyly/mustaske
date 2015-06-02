@@ -30,7 +30,7 @@ hr {
 }
 
 .main-content {
-    display: table;
+    /*display: table;*/
     width: 100%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -43,11 +43,11 @@ hr {
 
 .content-row {
     height: 100%;
-    display: table-row;
+    /*display: table-row;*/
 }
 
 .content-row .recent-questions-section, .content-row .top-questions-section {
-    display: table-cell;
+    /*display: table-cell;*/
     overflow: hidden;
     min-height: 100%;
 }
