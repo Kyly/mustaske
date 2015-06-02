@@ -157,6 +157,10 @@ var ViewActions = function () {
             className: "btn-danger",
             callback:  function () {
               owner = false;
+              activePoll = false;
+              timer.stop();
+              graph.clearData();
+              $('.start-poll-btn').removeClass('poll-on');
               socket.emit('leave room', room_id);
             }
           }
