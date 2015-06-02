@@ -52,19 +52,10 @@ hr {
     min-height: 100%;
 }
 
-#top-questions-container {
-    margin-top: 2.6em;
-}
-
 .top-questions-container {
-/*  max-height: 100%;
-  top: 2.6em;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  overflow: hidden;
-  position: absolute;
-  width: 88%;*/
+    /*margin-top: 2.6em;*/
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .top-questions-container hr {
@@ -81,27 +72,33 @@ hr {
     overflow-y: scroll;
     position: absolute;
     width: 88%;
+
+}
+
+.top-questions-container .row, .recent-questions-container .row {
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .recent-questions-section {
     background-color: #ffffff;
-    /*padding: 0 3em;*/
 }
 
 .recent-questions-section, .top-questions-section {
-    /*overflow: hidden;*/
+    padding: 0;
     position:relative;/* enables question scrolling */
     overflow:hidden;
 }
 
 .top-questions-section {
-    padding: 0 2.5em;
+    /*padding: 0 2.5em;*/
     background-color: #f5f5f5;
-    border-right: 1px solid #eee;
+    /*border-right: 1px solid #eee;*/
 }
 
 .top-questions-section .section-label {
-    margin-left:1em;
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
 
 #clicker-modal .modal-body {
@@ -338,7 +335,7 @@ hr {
     /*overflow-y: scroll;*/
     /*position: absolute;*/
     /*width: 88%;*/
-    padding: 0 3em;
+    padding: 0 15px;
     padding-bottom: 4em;
 }
 
@@ -349,15 +346,16 @@ hr {
 #scroll-wrapper-recent {
     overflow: hidden;
     position: absolute;
-    width: 98%;
+    width: 100%;
     max-height: 100%;
 }
 
 #scroll-wrapper-top {
     overflow: hidden;
     position: absolute;
-    width: 94%;
+    width: 100%;
     max-height: 100%;
+    /*padding-right: 30px;*/
 }
 
 #top-questions-container .top-question {
@@ -588,9 +586,9 @@ hr {
         margin-bottom:2%;
     }
 
-    .top-questions-section .section-label {
-        margin-left:0;
-    }
+    /*.top-questions-section .section-label {*/
+        /*margin-left:0;*/
+    /*}*/
 
     .top-question .warn-user {
         margin-bottom:0;
@@ -622,6 +620,20 @@ hr {
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
+    .recent-questions-container {
+        padding: 0 35px;
+        padding-bottom: 4em;
+    }
+
+    .top-questions-container {
+        /*margin-top: 2.6em;*/
+        padding-right: 35px;
+        padding-left: 35px;
+    }
+
+    .top-questions-section .section-label {
+        margin-left: 35px;
+    }
 
 }
 
