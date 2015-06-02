@@ -12,13 +12,13 @@ along with details about things like who is in a room.
 
 Tests
 -----
-### Front end test with Selenium and Python ###
+### Front end tests with Selenium and Python ###
 To run frontend test you will need to have selenium, pyhton selenium webdriver,
 and Firefox browser.
 
-+ [Download Selenium](http://www.seleniumhq.org/projects/ide/)
++ [Download Selenium](http://www.seleniumhq.org/projects/ide/).
 + To install python selenium webdriver on linux run `pip install selenium` for
- more information see [selenium python](http://selenium-python.readthedocs.org/en/latest/installation.html)
+ more information see [selenium python](http://selenium-python.readthedocs.org/en/latest/installation.html).
 
 Then run the following script:
 ```
@@ -29,7 +29,7 @@ by entering the following:
 ```
   sudo chmod +x test/runscripts.sh
 ```
-
+Add your own python selenium tests to `test/selenium_src/` directory.
 ### Server side tests with Mocha ###
 
 First you will need to download mocha to your workstation.
@@ -66,9 +66,9 @@ Add your test to the *test* directory. If you need an example of how these
 should look check out the test in ```roomstest.js```. We have a lot more assertion available to us so look up the documentation if you want to do something more complex.
 
 ### Run all test ###
-To run all test simply run:
+To run all tests simply run:
 ```
   npm test
 ```
-You will need to have all dependencies installed for instruction follow the steps
+You will need to have _all dependencies installed_. For instruction follow the steps
 above.
