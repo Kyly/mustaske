@@ -39,11 +39,18 @@ var ViewActions = function () {
      * @see https://mixitup.kunkalabs.com/docs/#method-instantiate
      */
     topQuestionsContainer.mixItUp({
+      animation: {
+        queueLimit: 200
+      },
       layout: {
         display: 'block'
       },
-      callbacks: {
-        onMixEnd: checkMaxQuestions
+      load: {
+        filter: '.do-show',
+        sort: 'score:desc'
+      },
+      controls: {
+        enable: false
       }
     });
 
@@ -110,7 +117,6 @@ var ViewActions = function () {
     }
     else {
       if (roomID === '' || roomID !== roomInfo.room_id) {
-        console.log('Room Id: ' + roomInfo.room_id);
         roomInit(roomInfo);
         addAllQuestions(roomInfo);
       } else {
@@ -247,11 +253,9 @@ var ViewActions = function () {
 
       switch (data.option) {
         case 'make':
-          console.log('Creating new room.');
           socket.emit('create room', data.room_name);
           break;
         case 'join':
-          console.log('Joining room.');
           socket.emit('join room', data.room_name);
           break;
       }
@@ -366,7 +370,6 @@ var ViewActions = function () {
    * score : int}
    */
   var updateScoreImpl = function(questionInfo) {
-
     var question = $('[question_id="'+questionInfo.question_id+'"]');
     var score    = questionInfo.question_score;
     question.attr('data-score', score);
@@ -375,39 +378,46 @@ var ViewActions = function () {
 
     // Check if question is up voted
     if (score > BASE_SCORE) {
-      if (!inTopQuestions(question))
+      if (!inTopQuestions(questionInfo.question_id)) {
         topQuestionAdded(questionInfo);
-      else
+      }
+      else {
         $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
           .removeClass('dont-show')
           .addClass('do-show');
+      }
     }
     // Hide question from top question has score less than BASE_SCORE
-    else if (inTopQuestions(question)) {
+    else if (inTopQuestions(questionInfo.question_id)) {
       $("[question_id='"+questionInfo.question_id+"']",topQuestionsContainer)
         .removeClass('do-show')
         .addClass('dont-show');
     }
     //invoke mixItUp to sort the div
-    topQuestionsContainer.mixItUp('filter', '.do-show');
-    topQuestionsContainer.mixItUp('sort', 'score:desc');
+    //topQuestionsContainer.mixItUp('filter', '.do-show');
+    //topQuestionsContainer.mixItUp('sort', 'score:desc');
+    //multiMix should have better performance
+    topQuestionsContainer.mixItUp('multiMix', {
+      filter: '.do-show',
+      sort: 'score:desc'
+      });
   }
 
   /**
    * Returns true if question is in top questions.
    * @param question jQuery Object
    */
-  var inTopQuestions = function (question) {
-    return question.parent('#top-questions-container').length > 0;
+  var inTopQuestions = function (questionID) {
+    //return question.parent('#top-questions-container').length > 0;
+    return $('#top-questions-container').has("div[question_id="+questionID+"]").size() > 0
   }
 
   var topQuestionAdded = function (topQuestionInfo) {
     var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
     topQuestion.removeClass('recent-question animated pulse');
     topQuestion.addClass('top-question mix do-show');
-    //invoke mixItUp to sort the div
-    topQuestionsContainer.mixItUp('append', topQuestion, {sort:'score:desc'});
-    //topQuestionsContainer.mixItUp('sort', 'score:desc');
+    //invoke mixItUp to append the div
+    topQuestionsContainer.mixItUp('append', topQuestion);
   }
 
   /**
@@ -476,7 +486,6 @@ var ViewActions = function () {
     socket.emit('new question', data);
     textBox.val('');
 
-    //console.log($('.room-name').data('room-id'));
   }
 
 
