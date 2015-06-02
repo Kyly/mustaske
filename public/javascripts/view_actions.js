@@ -246,17 +246,13 @@ var ViewActions = function () {
       $('#room-name-field').addClass('has-error');
     }
     else {
-      var data = {
-        option: $(this).text().toLowerCase().trim(),
-        room_name: textBox.val()
-      };
-
-      switch (data.option) {
+      var option = $(this).text().toLowerCase().trim();
+      switch (option) {
         case 'make':
-          socket.emit('create room', data.room_name);
+          socket.emit('create room', roomName);
           break;
         case 'join':
-          socket.emit('join room', data.room_name);
+          socket.emit('join room', roomName.toLowerCase());
           break;
       }
     }
@@ -470,11 +466,11 @@ var ViewActions = function () {
     var textBox      = $('.add-question-text');
     var questionText = textBox.val();
 
-    if (questionText.length < 2) {
+    if (questionText.length <= 2) {
       textBox.tooltip('show');
       setTimeout(function () {
         textBox.tooltip('hide');
-      }, 5000);
+      }, 4000);
       return;
     }
 
