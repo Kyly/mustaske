@@ -126,12 +126,25 @@ var ViewActions = function () {
 
   var roomInit = function (roomInfo) {
     roomID = roomInfo.room_id;
-    //topQuestionsContainer.html(topQuestionsText);
-    //recentQuestionsContainer.html(recentQuestionsText);
     $('#room-name-field').removeClass('has-error');
     roomData.html(roomInfo.room_name);
     roomData.attr('data-room-id', roomID);
     $('.room-name').data('room-id', roomID);
+    if(!owner) {
+      $('body').find('.owner-view').each(function () {
+        $(this).removeClass('show').addClass('hidden');
+      });
+      $('body').find('.student-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+    } else {
+      $('body').find('.student-view').each(function () {
+        $(this).removeClass('show').addClass('hidden');
+      });
+      $('body').find('.owner-view').each(function () {
+        $(this).removeClass('hidden').addClass('show');
+      });
+    }
     $('.login-overlay').addClass('animated slideOutUp');
     $('.drop-down-room-id').text(roomID);
 
@@ -214,6 +227,7 @@ var ViewActions = function () {
       .addClass('animated slideInDown');
     topQuestionsContainer.empty();
     recentQuestionsContainer.empty();
+    owner = false;
   }
 
   /**
@@ -241,7 +255,6 @@ var ViewActions = function () {
           socket.emit('join room', data.room_name);
           break;
       }
-      //ViewActions.resizeQuestionContainers();
     }
   }
 
