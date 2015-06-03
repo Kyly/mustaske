@@ -28,6 +28,8 @@ $(document).ready(function () {
   var body = $('body');
   body.on('submit', 'form.askquestion', ViewActions.addQuestionOnClick);
   body.on('submit', '.search.search-questions', ViewActions.searchRecentQuestions);
+  body.on('click', '.search-btn', ViewActions.searchRecentQuestions);
+  body.on('click', '.clear-search-btn', ViewActions.clearSearchRecentQuestions);
   body.on('submit', '#login-info', ViewActions.joinMakeSubmit);
   body.on('input', '#login-info input', ViewActions.joinMakeInput);
   body.on('click', '#join-create-room .btn',ViewActions.joinMakeOnClick);
@@ -48,7 +50,6 @@ $(document).ready(function () {
   //body.on('click', '.ban-user', ViewActions.banUser);
   //body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
-  //TODO $(window).on('resize', ViewActions.resizeQuestionContainers);
   $('#room-name-field > input').trigger('input').trigger('focus');
   //$(document).ready(ViewActions.attachScroll);
   $(window).load(ViewActions.attachScroll);
