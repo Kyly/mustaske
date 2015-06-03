@@ -557,6 +557,10 @@ hr {
     color:#706e6e;
 }
 
+.search-close .fa-times {
+    color:#A52A2A;
+}
+
 
 @media only screen and (max-width: 767px) {
     /*.top-questions-section {*/

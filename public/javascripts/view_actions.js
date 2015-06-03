@@ -132,6 +132,8 @@ var ViewActions = function () {
 
   var roomInit = function (roomInfo) {
     roomID = roomInfo.room_id;
+    topQuestionsContainer.empty();
+    recentQuestionsContainer.empty();
     $('#room-name-field').removeClass('has-error');
     roomData.html(roomInfo.room_name);
     roomData.attr('data-room-id', roomID);
@@ -231,8 +233,8 @@ var ViewActions = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-    topQuestionsContainer.empty();
-    recentQuestionsContainer.empty();
+    //topQuestionsContainer.empty();
+    //recentQuestionsContainer.empty();
     owner = false;
   }
 
