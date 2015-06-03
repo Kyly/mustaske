@@ -74,5 +74,6 @@ You will need to have _all dependencies installed_. For instruction follow the s
 above.
 
 The MIT License (MIT)
-Copyright (c) 2015 Kyly Vass, Brandon Falk, Tanner Turner, Crystal Kwok, Daniel Lee, Jose Valdez, Chris Tetreault, Nick Gibson, Robert Kronebusch 
-[See full license here.](LICENSE.md)
+Copyright (c) 2015 Kyly Vass, Brandon Falk, Tanner Turner, Crystal Kwok, Daniel Lee, Jose Valdez, Chris Tetreault, Nick Gibson, Robert Kronebusch.
+
+[See license details here.](LICENSE.md)
