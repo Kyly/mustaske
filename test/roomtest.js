@@ -189,52 +189,7 @@ describe('Room', function(){
       assert(topInfo[0].question_score === 1);
     })
   })
-  describe('#getTopVoted()', function(){
-    it('should return all questions.', function(){
-      // Set
-      var roomID = '110';
-      var ownerID = 'gary';
-      var roomName = 'center hall';
-
-      var room = new Room({room_id: roomID, user_id: ownerID,
-        room_name: roomName});
-
-      // Assign
-      var questionInfo = {question_text: 'What is a moustache?', asker_id: 'awesomeStudent'};
-      var question = room.addQuestion(questionInfo);
-      room.upvoteQuestion({question_id: question.question_id, voter_id: 'bar'})
-
-      var topInfo = room.getQuestions(1);
-
-      // Assert
-      assert(topInfo[0].question_id === question.question_id);
-      assert(topInfo[0].question_score === 1);
-    })
-  })
   
-  describe('#getTopVoted()', function(){
-    it('should return all questions.', function(){
-      // Set
-      var roomID = '110';
-      var ownerID = 'gary';
-      var roomName = 'center hall';
-
-      var room = new Room({room_id: roomID, user_id: ownerID,
-        room_name: roomName});
-
-      // Assign
-      var questionInfo = {question_text: 'What is a moustache?', asker_id: 'awesomeStudent'};
-      var question = room.addQuestion(questionInfo);
-      room.upvoteQuestion({question_id: question.question_id, voter_id: 'bar'})
-
-      var topInfo = room.getQuestions(1);
-
-      // Assert
-      assert(topInfo[0].question_id === question.question_id);
-      assert(topInfo[0].question_score === 1);
-    })
-  })
-
   describe('#setActive()', function(){
     it('should return true if poll is active, else false.', function(){
       // Set

@@ -123,24 +123,6 @@ Rooms.prototype.warnUser = function (data) {
  * Delegates to room. @see room.js
  *
  * @param data = {room_id: String, user_id: String}
- * @return true if user succesfully banned
- */
-Rooms.prototype.banUser = function (data) {
-  // Check if room exists
-  if (!this.hasRoom(data.room_id))
-    return false;
-
-  // Check if called from owner
-  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
-    return false;
-
-  return this.rooms[data.room_id].banUser(data);
-}
-
-/**
- * Delegates to room. @see room.js
- *
- * @param data = {room_id: String, user_id: String}
  * @return true if user is banned
  */
 Rooms.prototype.isBanned = function (data) {
