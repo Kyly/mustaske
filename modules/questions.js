@@ -61,11 +61,9 @@ Questions.prototype.upvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    //if(data.voter_id !== question.asker) {
-      var prevScore = question.score;
-      retval = question.upvote(data);
-      this.placeOrRemoveupvoted(question,prevScore);
-    //}
+    var prevScore = question.score;
+    retval = question.upvote(data);
+    this.placeOrRemoveupvoted(question,prevScore);
   }
 
   return retval;
