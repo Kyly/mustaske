@@ -285,13 +285,14 @@ To run all tests simply run:
 ```
   npm test
 ```
-You will need to have _all dependencies installed_. For instruction follow the steps
-above.
+You will need to have _all dependencies installed_. For instruction follow the
+installation instruction.
 
 
 Our Story
 ---
 [![Mustaske Dev Story](http://img.youtube.com/vi/-QMxtmNfIBI/0.jpg)](http://www.youtube.com/watch?v=-QMxtmNfIBI)
+[Watch on YouTube](http://www.youtube.com/watch?v=-QMxtmNfIBI)
 
 ###### The MIT License (MIT)
 Copyright (c) 2015 Kyly Vass, Brandon Falk, Tanner Turner, Crystal Kwok,
