@@ -1,3 +1,6 @@
+/**
+ * Captures all events that happen within the application.
+ */
 var socket = io.connect();
 
 $(document).ready(function () {
@@ -10,7 +13,6 @@ $(document).ready(function () {
   socket.on('create room', ViewActions.enterRoomOwner);
   socket.on('join room', ViewActions.enterRoom);
   socket.on('new question', ViewActions.questionAdded);
-  //socket.once('new question', ViewActions.removePlaceHolder);
   socket.on('leave room', ViewActions.showHomeScreen);
   socket.on('upvote question', ViewActions.updateScore);
   socket.on('downvote question', ViewActions.updateScore);
@@ -23,7 +25,7 @@ $(document).ready(function () {
   socket.on('stop poll', ViewActions.stopPoll);
 
   /**
-   * UI Listeners
+   * UI Listeners for the HTML
    */
   var body = $('body');
   body.on('submit', 'form.askquestion', ViewActions.addQuestionOnClick);
@@ -38,7 +40,6 @@ $(document).ready(function () {
   body.on('click', '.start-poll-btn', ViewActions.clickStartPoll);
   body.on('click', '.stop-poll-btn', ViewActions.clickStopPoll);
   body.on('click', '#clicker-modal-btn-group a', ViewActions.votePoll);
-  body.on('click', '.drop-down-room-id', ViewActions.copyRoomId);
   body.on('click', '.test-in-progress-btn', ViewActions.showClickerDialog);
   body.on('click', '.leave-room-btn', ViewActions.leaveRoom);
   body.on('click', '.dismiss-question', ViewActions.dismissQuestion);
@@ -47,13 +48,8 @@ $(document).ready(function () {
   body.on('click', '.offcanvas-show-recent-questions', ViewActions.showRecentQuestions);
   body.on('click', '#offcanvas-nav a.hide-on-click', ViewActions.hideOffcanvas);
   body.on('click', '#graph-modal .refresh-graph-btn', ViewActions.refreshGraph);
-  //body.on('click', '.ban-user', ViewActions.banUser);
-  //body.on('show.bs.modal', '#graph-modal', ViewActions.flexModal);
   body.one('shown.bs.modal', '#graph-modal', ViewActions.initializeGraph);
   $('#room-name-field > input').trigger('input').trigger('focus');
-  //$(document).ready(ViewActions.attachScroll);
   $(window).load(ViewActions.attachScroll);
-  //$(window).on('resize', ViewActions.hideOffcanvas);
-  $(window).on('resize', ViewActions.resizeScroll);
 
 });
