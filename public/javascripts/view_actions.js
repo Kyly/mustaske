@@ -12,7 +12,7 @@ var ViewActions = function () {
   var topQuestionsContainer, recentQuestionsContainer, MAX_TOP_QUESTIONS,
       BASE_SCORE, roomData, graph, owner, regexJoinRoom, activePoll, timer,
       questionTemplate, roomID, topQuestionsText, recentQuestionsText,
-      deleteRoomMsg;
+      deleteRoomMsg, scrollOptions;
 
   /**
    * Sets up the initial state of the page. When this function returns, the page
@@ -33,6 +33,13 @@ var ViewActions = function () {
     MAX_TOP_QUESTIONS        = 5;
     BASE_SCORE               = 0;
     roomID                   = '';
+    scrollOptions            = {
+                                axis: "y",
+                                theme: "minimal-dark",
+                                scrollbarPosition: "inside",
+                                scrollInertia: 0,
+                                autoExpandScrollbar: true
+                              };
 
     /**
      * Set up sorted container for top questions.
@@ -112,6 +119,10 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Initializes the room with all the proper default values based on if the
+   * user is an audience or an owner
+   */
   var roomInit = function (roomInfo) {
     roomID = roomInfo.room_id;
     topQuestionsContainer.empty();
@@ -186,10 +197,6 @@ var ViewActions = function () {
     var topQuestions = roomInfo.top_questions;
     var questions    = roomInfo.questions;
 
-    if (topQuestions.length > 0 || questions.length > 0)
-      removePlaceHolderImpl();
-
-
     if (questions.length !== 0) {
       $.each(questions, function(index, question) {
         question.class = 'recent-question';
@@ -209,19 +216,17 @@ var ViewActions = function () {
   }
 
   /**
-   * Return to the home screen
+   * Returns the user to the home screen
    */
   var showHomeScreenImpl = function () {
     $(".login-overlay")
       .removeClass('animated slideOutUp')
       .addClass('animated slideInDown');
-    //topQuestionsContainer.empty();
-    //recentQuestionsContainer.empty();
     owner = false;
   }
 
   /**
-   * Callback for the home screen join and make buttons
+   * Callback for the home screen Join and Make buttons
    */
   var joinMakeOnClickImpl = function () {
     var textBox  = $('#room-name-field input');
@@ -243,7 +248,8 @@ var ViewActions = function () {
   }
 
   /**
-   * Call back for join button on login view
+   * Call back for join button on login view. Alerts the user on which button
+   * they should push based on their input.
    */
   var joinMakeInputImpl = function () {
     var input = $(this).val();
@@ -293,11 +299,6 @@ var ViewActions = function () {
 //---------------------------- Question View ---------------------------------//
 //============================================================================//
 
-  var removePlaceHolderImpl = function (questionInfo) {
-    $('.init-text').addClass('animated fadeOutDown');
-
-  }
-
   /**
    * update UI reflecting top questions threshold updated
    * @param questions = [Question], New array of top questions
@@ -324,13 +325,6 @@ var ViewActions = function () {
     bootbox.alert('<h3><strong>Warning!!!!</strong> Must you really ask such a question?</h3>');
   }
 
-  /**
-   * Update UI reflecting user being banned
-   * @param userId = string, the ID of the offending user
-   */
-  var userBannedImpl = function (userID) {
-    //right now showHomeScreen() is called when user is banned
-  }
 
   /**
    * Update UI reflecting a question being added
@@ -341,7 +335,6 @@ var ViewActions = function () {
     questionInfo.class = 'recent-question';
     questionInfo.opt   = 'prepend';
     questionDiv(questionInfo);
-
   }
 
   /**
@@ -373,10 +366,7 @@ var ViewActions = function () {
         .removeClass('do-show')
         .addClass('dont-show');
     }
-    //invoke mixItUp to sort the div
-    //topQuestionsContainer.mixItUp('filter', '.do-show');
-    //topQuestionsContainer.mixItUp('sort', 'score:desc');
-    //multiMix should have better performance
+    //invoke mixItUp to filter and sort the div
     topQuestionsContainer.mixItUp('multiMix', {
       filter: '.do-show',
       sort: 'score:desc'
@@ -388,29 +378,20 @@ var ViewActions = function () {
    * @param question jQuery Object
    */
   var inTopQuestions = function (questionID) {
-    //return question.parent('#top-questions-container').length > 0;
     return $('#top-questions-container').has("div[question_id="+questionID+"]").size() > 0
   }
 
+  /**
+   * Clones the upvotd question from 'recent questions' section and adds it to
+   * the 'top questions' section.
+   * @param topQuestionInfo : question Object
+   */
   var topQuestionAdded = function (topQuestionInfo) {
     var topQuestion =  $('[question_id='+ topQuestionInfo.question_id+']').clone();
     topQuestion.removeClass('recent-question animated pulse');
     topQuestion.addClass('top-question mix do-show');
     //invoke mixItUp to append the div
     topQuestionsContainer.mixItUp('append', topQuestion);
-  }
-
-  /**
-   * Call back for MixItUp top questions container. Removes excess question.
-   *
-   * @param state State Object from MixItUp
-   * @see https://mixitup.kunkalabs.com/docs/#state-object
-   */
-  var checkMaxQuestions = function(state) {
-    //var count = state.totalShow;
-    //
-    //for (; count > MAX_TOP_QUESTIONS; --count)
-    //  $('.top-question:last').remove();
   }
 
   /**
@@ -629,28 +610,12 @@ var ViewActions = function () {
     }
   }
 
-  //TODO clear commented code out if we don't use nicescroll
+  /**
+   * Attaches the scroller, the proper html elements
+   */
   var attachScrollImpl = function () {
-    //$(".scroll-wrapper").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0, cursorborderradius: '0px'});
-    //$(".top-questions-container").niceScroll({cursoropacitymin: 0, cursoropacitymax: 0});
-  //  var scrollOptions = {suppressScrollX: true};
-    //$(".scroll-wrapper").perfectScrollbar(scrollOptions);
-    //$(".top-questions-container").perfectScrollbar(scrollOptions);
-    var scrollOptions = {
-      axis: "y",
-      theme: "minimal-dark",
-      scrollbarPosition: "inside",
-      scrollInertia: 0,
-      autoExpandScrollbar: true
-    };
     $(".scroll-wrapper-recent").mCustomScrollbar(scrollOptions);
     $(".scroll-wrapper-top").mCustomScrollbar(scrollOptions);
-  }
-
-  //TODO clear this out if we don't use nicescroll
-  var resizeScrollImpl = function () {
-    //$(".scroll-wrapper").getNiceScroll().resize();
-    //$(".top-questions-container").getNiceScroll().resize();
   }
 
 //============================================================================//
@@ -670,6 +635,7 @@ var ViewActions = function () {
       $('.test-in-progress-btn').addClass('done');
     }
   }
+
   /**
    * Updates the poll results graph
    */
@@ -786,15 +752,6 @@ var ViewActions = function () {
     }
   }
 
-  // TODO Don't think this is really working
-  var flexModalImpl = function () {
-    /*$(this).find('.modal-body').css({
-      width:'auto', //probably not needed
-      height:'auto', //probably not needed
-      'max-height':'100%'
-    });*/
-  }
-
   /**
    * Actions for building graph in modal.
    * @see http://getbootstrap.com/javascript/#modals
@@ -805,20 +762,20 @@ var ViewActions = function () {
     graph.createGraph(canvas);
   }
 
+  /**
+   * Relaunches graph in case the graph failed to load
+   */
   var refreshGraphImpl = function () {
     graph.refresh();
   }
 
-//============================================================================//
-//----------------------------- Room Controls --------------------------------//
-//============================================================================//
-  var copyRoomIdImpl = function (event) {
-    event.stopPropagation();
-  }
 
 //============================================================================//
 //--------------------------------- Nav --------------------------------------//
 //============================================================================//
+  /**
+   * Changes the qustions list shown on mobile to top questions
+   */
   var showTopQuestionsImpl = function() {
     var recentSection = $('.recent-questions-section');
 
@@ -829,6 +786,9 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Changs the questions list shown on mobile to recent questions
+   */
   var showRecentQuestionsImpl = function() {
     var recentSection = $('.recent-questions-section');
     if (recentSection.hasClass('hidden')) {
@@ -838,26 +798,21 @@ var ViewActions = function () {
     }
   }
 
+  /**
+   * Hides the off-canvas menu
+   */
   var hideOffcanvasImpl = function () {
     $('#offcanvas-nav').offcanvas('hide');
   }
 
-  var offCanvasFixImpl = function() {
-    //$(.css('position','static');
-  }
-
   return {
     refreshGraph               : refreshGraphImpl,
-    removePlaceHolder          : removePlaceHolderImpl,
     hideOffcanvas              : hideOffcanvasImpl,
     showRecentQuestions        : showRecentQuestionsImpl,
     showTopQuestions           : showTopQuestionsImpl,
-    offCanvasFix               : offCanvasFixImpl,
     showClickerDialog          : showClickerDialogImpl,
     joinMakeSubmit             : joinMakeSubmitImpl,
     joinMakeInput              : joinMakeInputImpl,
-    flexModal                  : flexModalImpl,
-    copyRoomId                 : copyRoomIdImpl,
     initializeGraph            : initializeGraphImpl,
     thumbsDownOnClick          : thumbsDownOnClickImpl,
     thumbsUpOnClick            : thumbsUpOnClickImpl,
@@ -874,7 +829,6 @@ var ViewActions = function () {
     updateScore                : updateScoreImpl,
     questionDismissed          : questionDismissedImpl,
     userWarned                 : userWarnedImpl,
-    userBanned                 : userBannedImpl,
     questionAdded              : questionAddedImpl,
     setupUI                    : setupUIImpl,
     votePoll                   : votePollImpl,
@@ -886,7 +840,6 @@ var ViewActions = function () {
     dismissQuestion            : dismissQuestionImpl,
     warnUser                   : warnUserImpl,
     banUser                    : banUserImpl,
-    attachScroll               : attachScrollImpl,
-    resizeScroll               : resizeScrollImpl
+    attachScroll               : attachScrollImpl
   }
 }();

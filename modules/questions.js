@@ -1,5 +1,10 @@
 /**
- * Questions model and member funtions.
+ * Questions model
+ * Holds a hash of all the Question objects within a room. Includes
+ * functionality that allow the proper Question to be voted on as well as
+ * sorting all the questions by score.
+ *
+ * @param none
  */
 
 var Heap     = require('heap');
@@ -61,11 +66,9 @@ Questions.prototype.upvoteQuestion = function (data) {
 
   if (this.hasQuestion(data.question_id)) {
     var question = this.questionHash[data.question_id];
-    //if(data.voter_id !== question.asker) {
-      var prevScore = question.score;
-      retval = question.upvote(data);
-      this.placeOrRemoveupvoted(question,prevScore);
-    //}
+    var prevScore = question.score;
+    retval = question.upvote(data);
+    this.placeOrRemoveupvoted(question,prevScore);
   }
 
   return retval;
@@ -115,7 +118,7 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upvotedQuestions.length;
-  
+
   return Heap.nlargest(this.upvotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });

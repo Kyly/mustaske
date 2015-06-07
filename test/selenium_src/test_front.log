@@ -1,19 +1,159 @@
+Running test/selenium_src/answering_poll_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 70.248s
+
+OK
+Preparing the variables
+Creating a room
+Accessing a Room as an Audience member
+Switching to Owner view in order to start the poll
+Switching to Audience view in order to answer poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+End of Test
 Running test/selenium_src/ask_question.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 7.869s
+Ran 1 test in 21.017s
 
 OK
+Running test/selenium_src/ban_user_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 32.522s
+
+OK
+Creating a room
+Accessing a Room as an Audience member
 Running test/selenium_src/create_room.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 5.476s
+Ran 1 test in 14.648s
 
 OK
 Running test/selenium_src/delete_room.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 10.895s
+Ran 1 test in 16.101s
+
+OK
+Running test/selenium_src/dismiss_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 22.406s
 
 OK
 Running test/selenium_src/downvote_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 53.414s
+
+OK
+Running test/selenium_src/get_room_id.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 13.101s
+
+OK
+Running test/selenium_src/join_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 22.033s
+
+OK
+Running test/selenium_src/leave_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 18.743s
+
+OK
+Running test/selenium_src/markdown_formating.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 32.398s
+
+OK
+Running test/selenium_src/post_poll_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 49.382s
+
+OK
+Preparing the variables
+Creating a room
+Accessing a Room as an Audience member
+Switching to Owner view in order to start the poll
+Switching to Audience view in order to answer poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+End of Test
+Running test/selenium_src/search_question_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 42.708s
+
+OK
+Creating a room
+Accessing a Room as an Audience member
+End of Test
+Running test/selenium_src/stop_poll_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 48.522s
+
+OK
+Preparing the variables
+Creating a room
+Accessing a Room as an Audience member
+Switching to Owner view in order to start the poll
+Switching to Audience view in order to answer poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Polls must be done
+Polls must be done
+Polls must be done
+Polls must be done
+Polls must be done
+End of Test
+Running test/selenium_src/upvote_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 55.232s
+
+OK
+Running test/selenium_src/view_poll_results_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 69.450s
+
+OK
+Preparing the variables
+Creating a room
+Accessing a Room as an Audience member
+Switching to Owner view in order to start the poll
+Switching to Audience view in order to answer poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Answering poll
+Switching to Owner view to see the results
+End of Test
+Running test/selenium_src/warn_user_test.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 29.604s
+
+OK
+Creating a room
+Accessing a Room as an Audience member

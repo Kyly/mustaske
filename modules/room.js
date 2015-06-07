@@ -1,5 +1,9 @@
 /**
- * TODO file header
+ * Room Model
+ * Room Objects are created in Rooms.js. Includes all the functionality
+ * required to manipulate data in a single room.
+ *
+ *@param data = {room_id: String, room_name: String, user_id: String}
  */
 
 var Questions = require('./questions');
@@ -17,8 +21,8 @@ function Room (data) {
 };
 
 /**
- * Increments warnings for user in warnedUsers Hash.
- * calls banUser if user has already been warned
+ * Adds user to warnedUsers Hash.
+ * Calls banUser if user has already been warned.
  *
  * @param {user_id: String, question_id: String, room_id: String}
  * @return {user_banned: Bool, user_id: String}
@@ -62,7 +66,7 @@ Room.prototype.banUser = function (data) {
 /**
  * Checks if user_id is in bannedUsers Hash
  *
- * @param data = user_id: String
+ * @param String
  * @return true if user_id in bannedUsers Hash
  */
 Room.prototype.isBanned = function (user_id) {
@@ -70,8 +74,9 @@ Room.prototype.isBanned = function (user_id) {
 }
 
 /**
- * Calls down the chain to the questions object and invokes the addQuestion()
- * function there.
+ * Sends necessary info down the chain to addQuestion() in questions. Returns
+ * proper data to controller.js.
+ *
  * @param {question_text: String, asker_id: String}
  * @return {question_id: String, question_text: String} if it succeeds,
  * else false
@@ -80,11 +85,11 @@ Room.prototype.addQuestion = function(data) {
   return this.questions.addQuestion(data);
 }
 
-/** Checks to see if the question already exists. Adds the question to the
- * Room's Questions object if it doesn't.
+/**
+ * Checks to see if the question exists.
  *
- * @param data = {room_id: String, question_text: String, asker_id: String}
- * @return newly created question
+ * @param String
+ * @return Boolean
  */
 Room.prototype.hasQuestion = function(questionId) {
   return this.questions.hasQuestion(questionId);
@@ -112,7 +117,7 @@ Room.prototype.downvoteQuestion = function(data) {
 
 /**
  * Sends necessary info down the chain to getTopVoted() in questions.
- * Returns proper data to controller.js.
+ * Formats and returns proper data to controller.js.
  * @param n = int, number of top voted questions to return
  * @return array of top n voted questions
  */
@@ -134,7 +139,7 @@ Room.prototype.getTopVoted = function(n) {
 
 /**
  * Sends necessary info down the chan to getQuestions() in questions.
- * Returns proper data to controller.js.
+ * Formats and returns proper data to controller.js.
  * @param none
  * @return array of all the questions in this room
  */
@@ -154,9 +159,10 @@ Room.prototype.getQuestions = function() {
  }
 
  /**
-  * Checks if the person who issued the 'dismiss question' emit is the owner
-  * of the room. If they are, then the questions object is told to delete the
-  * question.
+  * Makes sure owner is making this function call. Sends necessary
+  * info down the chain to deleteQuestion() in question. Returns proper
+  * data to controller.js.
+  *
   * @param {question_id: String, room_id: String, user_id: String}
   * @param {question_id: String} if successful, else false
   */
@@ -169,11 +175,12 @@ Room.prototype.deleteQuestion = function(data) {
 }
 
 /**
- * Sends necessary info down the chain to vote() in poll. Returns
- * proper data to controller.js.
+ * Makes sure poll is active. Sends necessary info down the chain
+ * to vote() in poll. Returns proper data to controller.js.
  *
  * @param {voter_id: String, option: String}
- * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
+ * @return {poll_id: String, voter_id: String, prev_vote: String,
+ *          cur_vote: String, num_votes: int}
  */
 Room.prototype.vote = function(data) {
   if(this.activePoll === false)
@@ -183,7 +190,8 @@ Room.prototype.vote = function(data) {
 }
 
 /**
- * Delegates to poll. @see poll.js
+ * Lets controller know the active state, and if
+ * the active state should be changed to reflect the param.
  *
  * @param data = {active: Boolean}
  * @return {changed: Boolean, active: Boolean}
