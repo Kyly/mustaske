@@ -5,10 +5,10 @@ Mustaske
 Technical Points of Contact
 ---
 
-| Kyly Vass      | Brandon Falk  |
-|----------------|---------------|
-| (702) 533-5959 | (442) 777-3698 |
-| kyly@kylyv.com | bfalk@ucsd.edu |
+| Kyly Vass        |  | Brandon Falk    |
+|:-----------------|--|:----------------|
+| (702) 533-5959   |  | (442) 777-3698  |
+| kyly@kylyv.com   |  | bfalk@ucsd.edu  |
 
 
 Instructions for CSE 110 testers
@@ -311,7 +311,7 @@ Our Story
 
 [Watch on YouTube](http://www.youtube.com/watch?v=-QMxtmNfIBI)
 
-###### The MIT License (MIT)
+#### The MIT License (MIT)
 Copyright (c) 2015 Kyly Vass, Brandon Falk, Tanner Turner, Crystal Kwok,
 Daniel Lee, Jose Valdez, Chris Tetreault, Nick Gibson, Robert Kronebusch.
 
