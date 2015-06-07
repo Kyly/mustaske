@@ -5,16 +5,14 @@ Mustaske
 Technical Points of Contact
 ---
 
-Kyly Vass
-(702) 533-5959
-kyly@kylyv.com
+| Kyly Vass      | Brandon Falk  |
+|----------------|---------------|
+| (702) 533-5959 | (442) 777-3698 |
+| kyly@kylyv.com | bfalk@ucsd.edu |
 
-Brandon Falk
-(442) 777-3698
-BRANDON'S EMAIL
-bfalk@ucsd.edu
 
-Instructions for CSE 110 testers:
+Instructions for CSE 110 testers
+---
 + To test the application, please user our website at www.mustaske.com
 + Please test our application using the latest version of Firefox, with all
 scripts enabled.
