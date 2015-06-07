@@ -20,3 +20,5 @@ done
 echo "\n\nAll test done"
 echo "Stopping node ./bin/www\n"
 pkill -f $APP
+
+exit 0
