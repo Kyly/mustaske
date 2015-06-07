@@ -1,8 +1,6 @@
 /**
  * Poll Object
- * Holds all data about a single poll.
- *
- * Author: Daniel Lee & Nick Gibson
+ * Holds all data about a single poll. Creted in room.js.
  *
  * @param none
  */
@@ -10,7 +8,6 @@
 function Poll() {
   this.results    = {};
   this.voters     = {};
-  this.totalVotes = 0;
 }
 
 /**
@@ -30,13 +27,7 @@ Poll.prototype.vote = function(data) {
       return false;
 
   	this.results[prevVote] -= 1;
-
-    //Decrement the totalVotes first
-    this.totalVotes -= 1;
   }
-
-  //Increment totalVotes
-  this.totalVotes += 1;
 
   //Update the voter's current vote
   this.voters[data.voter_id] = data.option;

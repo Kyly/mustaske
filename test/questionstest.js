@@ -1,5 +1,6 @@
 /**
- * Test functionality for questions module
+ * File: questionstest.js
+ * Tests all functions in questions.js
  */
 
 var Questions = require('../modules/questions');
