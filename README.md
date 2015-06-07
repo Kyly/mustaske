@@ -24,18 +24,15 @@ scripts enabled.
 FAQS
 ---
 + _Why are the top question on my computer different then the ones on my
-naighbors?_
+naighbors?_ Due to server badwidth _top questions_, although correctly accounted on the
+backend, are not guaranteed to be the same on all displays. We call
+_Near Real Time_ updates. Over a given period of time polls across all desktops.
 
-  Due to server badwidth _top questions_, although correctly accounted on the
-  backend, are not guaranteed to be the same on all displays. We call
-  _Near Real Time_ updates. Over a given period of time polls across all desktops.
-
-+ Why do I have to use a room ID and not room name?
-
-  The room ids are your rooms unique identifier. These are required because more
-  one user might want "Joes Meat Shack" and well that's fine, who are we to judge.
-  So name your room whatever you like and it will show up in the sites topbar but
-  to join the room you will need to use the unique room id.
++ Why do I have to use a room ID and not room name? The room ids are your rooms
+unique identifier. These are required because more
+one user might want "Joes Meat Shack" and well that's fine, who are we to judge.
+So name your room whatever you like and it will show up in the sites topbar but
+to join the room you will need to use the unique room id.
 
 Requirements
 ---
