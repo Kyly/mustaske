@@ -291,7 +291,7 @@ above.
 
 Our Story
 ---
-[![Mustaske Dev Story](http://img.youtube.com/vi/https://youtu.be/-QMxtmNfIBI/0.jpg)](http://www.youtube.com/watch?v=-QMxtmNfIBI)
+[![Mustaske Dev Story](http://img.youtube.com/vi/-QMxtmNfIBI/0.jpg)](http://www.youtube.com/watch?v=-QMxtmNfIBI)
 
 ###### The MIT License (MIT)
 Copyright (c) 2015 Kyly Vass, Brandon Falk, Tanner Turner, Crystal Kwok,
