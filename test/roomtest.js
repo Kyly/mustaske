@@ -1,5 +1,6 @@
 /**
- * TODO file header
+ * File: roomtest.js
+ * Tests all functions in roomtest.js
  */
 
 var Room = require('../modules/room');
@@ -189,7 +190,27 @@ describe('Room', function(){
       assert(topInfo[0].question_score === 1);
     })
   })
-  
+  describe('#getQuestions()', function(){
+    it('should return top questions.', function(){
+      // Set
+      var roomID = '110';
+      var ownerID = 'gary';
+      var roomName = 'center hall';
+
+      var room = new Room({room_id: roomID, user_id: ownerID,
+        room_name: roomName});
+
+      // Assign
+      var questionInfo = {question_text: 'What is a moustache?', asker_id: 'awesomeStudent'};
+      var question = room.addQuestion(questionInfo);
+
+      var topInfo = room.getQuestions();
+
+      // Assert
+      assert(topInfo[0].question_id === question.question_id);
+      assert(topInfo[0].question_score === 0);
+    })
+  })
   describe('#setActive()', function(){
     it('should return true if poll is active, else false.', function(){
       // Set

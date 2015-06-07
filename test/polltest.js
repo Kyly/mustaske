@@ -20,11 +20,9 @@ describe('Poll', function(){
       var voteResults;
 
       // Assert
-      assert(poll.totalVotes === 0);
       voteResults = poll.vote({voter_id: 'Voter', option: 'A'});
 
       //check returned array is correct
-      assert(poll.totalVotes === 1);
       assert(voteResults['A'] === 1);
       //check voters and results correctly updated
       assert(poll.voters['Voter'] === 'A');
@@ -40,7 +38,6 @@ describe('Poll', function(){
 
       voteResults = poll.vote({voter_id: 'foo', option: 'C'})
       assert(voteResults['C'] === 1);
-      assert(poll.totalVotes === 2);
     })
   })
 })

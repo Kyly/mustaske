@@ -1,5 +1,7 @@
 /**
  * Questions model and member funtions.
+ *
+ * @param none
  */
 
 var Heap     = require('heap');
