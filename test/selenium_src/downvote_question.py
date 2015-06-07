@@ -91,7 +91,6 @@ class Downvote(unittest.TestCase):
             except AssertionError as e: self.verificationErrors.append(str(e))
 
         driver.switch_to_window(owner)
-        time.sleep(5)
         self.assertEqual("0", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[1]/div/div/div/div/div/ul/li/span").text)
         self.assertEqual("-1", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[2]/div/div/div/div/div/ul/li/span").text)
         self.assertEqual("-2", driver.find_element_by_xpath("//div[@id='recent-questions-container']/div[3]/div/div/div/div/div/ul/li/span").text)

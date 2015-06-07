@@ -1,19 +1,55 @@
 Running test/selenium_src/ask_question.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 7.869s
+Ran 1 test in 21.206s
 
 OK
 Running test/selenium_src/create_room.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 5.476s
+Ran 1 test in 11.934s
 
 OK
 Running test/selenium_src/delete_room.py:
 .
 ----------------------------------------------------------------------
-Ran 1 test in 10.895s
+Ran 1 test in 15.937s
 
 OK
 Running test/selenium_src/downvote_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 50.246s
+
+OK
+Running test/selenium_src/get_room_id.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 13.520s
+
+OK
+Running test/selenium_src/join_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 16.906s
+
+OK
+Running test/selenium_src/leave_room.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 17.682s
+
+OK
+Running test/selenium_src/markdown_formating.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 75.654s
+
+OK
+Running test/selenium_src/upvote_question.py:
+.
+----------------------------------------------------------------------
+Ran 1 test in 51.617s
+
+OK
+Running test/selenium_src/view_poll_results.py:

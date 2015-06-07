@@ -1,6 +1,9 @@
 /**
  * Rooms Model
- * TODO file header
+ * A Rooms Object is created in controller.js. Rooms contains
+ * a Hash of all Room objects.
+ *
+ * @param none
  */
 
 var Questions = require('./questions');
@@ -62,7 +65,7 @@ Rooms.prototype.joinRoom = function (roomID) {
 }
 
 /**
- * Simple boolean returns true if room is in chat
+ * Simple boolean returns true if room exists
  *
  * @param room_id = String
  * @return True if room exists
@@ -72,7 +75,7 @@ Rooms.prototype.hasRoom = function (room_id) {
 }
 
 /**
- * Deletes a room.
+ * Deletes a room from rooms Hash.
  *
  * @param data = {user_id: String, room_id: String}
  * @return true if caller is owner and room exists
@@ -89,7 +92,8 @@ Rooms.prototype.closeRoom = function (data) {
 
   return true;
 }
-/** Checks to see if given user is owner of given room
+/**
+ * Checks to see if given user is owner of given room
  *
  * @param data = {user_id: String, room_id: String}
  * @return true if owner
@@ -102,7 +106,8 @@ Rooms.prototype.isOwner = function(data) {
 }
 
 /**
- * Delegates to room. @see room.js
+ * Checks if room exists. Sends necessary info down the chain to warnUser()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, user_id: String, question_id: String}
  * @return {user_banned: Bool, user_id: String}
@@ -120,25 +125,8 @@ Rooms.prototype.warnUser = function (data) {
 }
 
 /**
- * Delegates to room. @see room.js
- *
- * @param data = {room_id: String, user_id: String}
- * @return true if user succesfully banned
- */
-Rooms.prototype.banUser = function (data) {
-  // Check if room exists
-  if (!this.hasRoom(data.room_id))
-    return false;
-
-  // Check if called from owner
-  if (!this.isOwner({user_id: data.user_id, room_id: data.room_id}))
-    return false;
-
-  return this.rooms[data.room_id].banUser(data);
-}
-
-/**
- * Delegates to room. @see room.js
+ * Checks if room exists. Sends necessary info down the chain to isBanned()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, user_id: String}
  * @return true if user is banned
@@ -152,7 +140,8 @@ Rooms.prototype.isBanned = function (data) {
 }
 
 /**
- * Delegates to room. @see room.js
+ * Checks if room exists. Sends necessary info down the chain to addQuestion()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, question_text: String, asker_id: String}
  * @return newly created quesiton object
@@ -166,7 +155,8 @@ Rooms.prototype.addQuestion = function (data) {
 }
 
 /**
- * Delegates to room. @see room.js
+ * Checks if room exists. Sends necessary info down the chain to deleteQuestion()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, question_id: String, user_id: String}
  * @return true if succesfully deleted, else false
@@ -180,7 +170,8 @@ Rooms.prototype.deleteQuestion = function (data) {
 }
 
 /**
- * Delegates to room. @see room.js
+ * Checks if room exists. Sends necessary info down the chain to getTopVoted()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, num_questions: int}
  * @return list of room objects
@@ -193,7 +184,8 @@ Rooms.prototype.getTopVoted = function (data) {
 }
 
 /**
- * Call upvoteQuestion on room
+ * Checks if room exists. Sends necessary info down the chain to upvoteQuestion()
+ * in rooms. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, question_id: String, voter_id: String}
  */
@@ -206,7 +198,10 @@ Rooms.prototype.upvoteQuestion = function (data) {
 }
 
 /**
- * @paramd ata = {room_id: String, question_id: String, voter_id: String}
+ * Checks if room exists. Sends necessary info down the chain to downvoteQuestion()
+ * in rooms. Returns proper data to controller.js.
+ *
+ * @paramd data = {room_id: String, question_id: String, voter_id: String}
  */
 Rooms.prototype.downvoteQuestion = function (data) {
   // Check if room exists
@@ -217,7 +212,8 @@ Rooms.prototype.downvoteQuestion = function (data) {
 }
 
 /**
- * Delegates to poll. @see poll.js
+ * Checks if room exists. Sends necessary info down the chain to vote()
+ * in poll. Returns proper data to controller.js.
  *
  * @param {room_id: String, voter_id: String, option: String}
  * @return {poll_id: String, voter_id: String, prev_vote: String, cur_vote: String, num_votes: int}
@@ -231,7 +227,9 @@ Rooms.prototype.vote = function(data) {
 }
 
 /**
- * Delegates to poll. @see poll.js
+ * Checks if room exists, and makes sure person who called function
+ * is the owner. Sends necessary info down the chain to setActive() in
+ * poll. Returns proper data to controller.js.
  *
  * @param data = {room_id: String, user_id: String, active: Boolean}
  * @return {starting: Boolean, stopping: Boolean}
