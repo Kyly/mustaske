@@ -1,5 +1,6 @@
 /**
- * TODO file header
+ * File: questiontest.js
+ * Tests all functions in question.js
  */
 
 var Question  = require('../modules/question');

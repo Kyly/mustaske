@@ -182,7 +182,6 @@ describe('Rooms', function(){
       assert(topInfo[0].question_text === '<p>what is a for loop?</p>\n');
       assert(topInfo[0].question_score === 1);
       assert(topInfo[0].time !== undefined);
-
     })
   })
   describe('#upvoteQuestion()', function(){
