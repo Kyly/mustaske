@@ -1,6 +1,26 @@
 
 Mustaske
 =======
+
+Technical Points of Contact
+---
+
+Kyly Vass
+(702) 533-5959
+kyly@kylyv.com
+
+Brandon Falk
+(442) 777-3698
+BRANDON'S EMAIL
+bfalk@ucsd.edu
+
+Instructions for CSE 110 testers:
++ To test the application, please user our website at www.mustaske.com
++ Please test our application using the latest version of Firefox, with all
+scripts enabled.
++ To view our source code, please utilize your cse110sp2015 account to
+`git clone https://github.com/Kyly/mustaske.git` more
+
 FAQS
 ---
 + _Why are the top question on my computer different then the ones on my
@@ -292,6 +312,7 @@ installation instruction.
 Our Story
 ---
 [![Mustaske Dev Story](http://img.youtube.com/vi/-QMxtmNfIBI/0.jpg)](http://www.youtube.com/watch?v=-QMxtmNfIBI)
+
 [Watch on YouTube](http://www.youtube.com/watch?v=-QMxtmNfIBI)
 
 ###### The MIT License (MIT)
