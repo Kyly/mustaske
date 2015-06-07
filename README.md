@@ -13,6 +13,37 @@ well that's fine, who are we to judge. So name your room whatever you like and
 it will show up in the sites topbar but to join the room you will need to use
 the unique room id.
 
+Requirements
+---
+You need to install **npm**, **node**, and a few other goodies to install Mustaske on your server. First you need to install python software properties.
+```
+sudo apt-get install python-software-properties
+```
+You can install the node stuff.
+```
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+```
+Now you should have the most up to date version of node.js. Lets move on to the good stuff.
+
+Installation
+---
+1. Clone the repository to your local directory.
+  ```
+  git clone https://github.com/Kyly/mustaske.git
+  ```
+2. To install the dependencies run the following.
+  ```
+  cd mustaske
+  npm install
+  ```
+3. Now you can start the app with.
+  ```
+  npm start
+  ```
+ Now your up and rolling! Open up your browser and make a room. If you are on local host go to `localhost:3000`.
+
 Desktop
 ---
 #### Create Room
@@ -125,38 +156,6 @@ Mobile
 #### Vote on Poll (Audience)
 + If your voting screen went away, click on the ‘Vote on Poll’ button at the bottom of the dropdown menu and your answers choices will appear again.
 + It turns green if you have voted, and turns red if you have not yet voted.
-
-Requirements
----
-You need to install **npm**, **node**, and a few other goodies to install Mustaske on your server. First you need to install python software properties.
-```
-sudo apt-get install python-software-properties
-```
-You can install the node stuff.
-```
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs
-```
-Now you should have the most up to date version of node.js. Lets move on to the good stuff.
-
-Installation
----
-1. Clone the repository to your local directory.
-```
-git clone https://github.com/Kyly/mustaske.git
-```
-2. To install the dependencies run the following.
-```
-cd mustaske
-npm install
-```
-3. Now you can start the app with.
-```
-npm start
-```
- Now your up and rolling! Open up your browser and make a room. If you are on local host go to `localhost:3000`.
-
 
 Debugging
 -----
