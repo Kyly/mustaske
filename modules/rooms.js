@@ -1,7 +1,8 @@
 /**
  * Rooms Model
  * A Rooms Object is created in controller.js. Rooms contains
- * a Hash of all Room objects.
+ * a Hash of all Room objects on the server. Includes functionality to send
+ * data to and from the correct Room object.
  *
  * @param none
  */

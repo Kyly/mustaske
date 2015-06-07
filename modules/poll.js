@@ -1,6 +1,7 @@
 /**
- * Poll Object
- * Holds all data about a single poll. Creted in room.js.
+ * Poll Model
+ * Holds all data about a single poll. Created in room.js. Includes
+ * functionality to handle the votine on polls.
  *
  * @param none
  */
