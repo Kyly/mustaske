@@ -1,7 +1,7 @@
 /**
  * Question Object
  * Holds all data about a single question. Also contains functions that
- * manipulate that data.
+ * manipulate that data in the form of upvoting and downvoting a question.
  *
  * @param {question_id: String, question_text: String, asker_id: String}
  */

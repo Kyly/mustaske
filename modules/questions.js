@@ -1,5 +1,8 @@
 /**
- * Questions model and member funtions.
+ * Questions model
+ * Holds a hash of all the Question objects within a room. Includes
+ * functionality that allow the proper Question to be voted on as well as
+ * sorting all the questions by score.
  *
  * @param none
  */
@@ -115,7 +118,7 @@ Questions.prototype.getTopVoted = function (n) {
 
   // Default check
   n = typeof n !== 'undefined' ? n : this.upvotedQuestions.length;
-  
+
   return Heap.nlargest(this.upvotedQuestions, n, function (a, b) {
     return a.score - b.score;
   });

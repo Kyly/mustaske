@@ -1,6 +1,7 @@
 /**
  * Room Model
- * Room Objects are created in Rooms.js.
+ * Room Objects are created in Rooms.js. Includes all the functionality
+ * required to manipulate data in a single room.
  *
  *@param data = {room_id: String, room_name: String, user_id: String}
  */
