@@ -2,23 +2,6 @@
 Mustaske
 =======
 
-Technical Points of Contact
----
-
-| Kyly Vass        |  | Brandon Falk    |
-|:-----------------|--|:----------------|
-| (702) 533-5959   |  | (442) 777-3698  |
-| kyly@kylyv.com   |  | bfalk@ucsd.edu  |
-
-
-Instructions for CSE 110 testers
----
-+ To test the application, please user our website at www.mustaske.com
-+ Please test our application using the latest version of Firefox, with all
-scripts enabled.
-+ To view our source code, please utilize your cse110sp2015 account to
-`git clone https://github.com/Kyly/mustaske.git` more
-
 FAQS
 ---
 + _Why are the top question on my computer different then the ones on my
